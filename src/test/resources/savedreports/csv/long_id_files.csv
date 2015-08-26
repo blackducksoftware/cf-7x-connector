@@ -1,0 +1,773 @@
+reportSpecification,17,Seneca TestProject 7.0.2 Report,3/3/2015 14:28,,,,,,,,,,,,,
+disclaimer,"This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.",,,,,,,,,,,,,,,
+sectionTitles,Identified Files,,,,,,,,,,,,,,,
+identifiedFiles,Identified,Code Match,.classpath,599,,,** Testing Purposes ONLY **,,[template] Basic Proprietary Commercial License,File,100%,1.1.1-svn.tgz/1.1.1/.classpath,0,,,No
+identifiedFiles,Identified,Code Match,.project,537,,,** Testing Purposes ONLY **,,[template] Basic Proprietary Commercial License,File,100%,,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/apache-solr-common-1.3.0.jar,"88,496",,,Apache Solr,1.3.0,Apache License 2.0,Component (Dynamic Library),100%,debian.solr-upstream-1.3.0.tar.gz/linuxmaniac-debian.solr-d0457cf/dist/apache-solr-1.3.0.war.---/WEB-INF/lib/apache-solr-common-1.3.0.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/commons-codec-1.3.jar,"46,725",,,Apache Jakarta Commons Codec,1.3,Apache License 2.0,Component (Dynamic Library),100%,bin/commons-codec-1.3.tar.gz/commons-codec-1.3.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/commons-httpclient-3.1.jar,"305,001",,,Apache Jakarta HTTP Client,3.1,Apache License 2.0,Component (Dynamic Library),100%,commons-httpclient-3.1.tar.gz/commons-httpclient-3.1/commons-httpclient-3.1.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/commons-io-1.3.1.jar,"83,613",,,Apache Jakarta Commons IO,1.3.1,Apache License 2.0,Component (Dynamic Library),100%,commons-io-1.3.1.tar.gz/commons-io-1.3.1/commons-io-1.3.1.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/commons-logging-1.0.4.jar,"38,015",,,Apache Jakarta Commons Logging,1.0.4,Apache License 2.0,Component (Dynamic Library),100%,commons-logging-1.0.4.tar.gz/commons-logging-1.0.4/commons-logging.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/commons-math-1.2.jar,"338,488",,,Commons Math,1.2,Apache License 2.0,Component (Dynamic Library),100%,commons-math-1.2.tar.gz/commons-math-1.2/commons-math-1.2.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/commons-math-1.2/commons-math-1.2.jar,"338,488",,,Commons Math,1.2,Apache License 2.0,Component (Dynamic Library),100%,commons-math-1.2.tar.gz/commons-math-1.2/commons-math-1.2.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/jyaml-1.3/jyaml-1.3.jar,"59,324",,,JYaml - jyaml,1.3,"BSD 3-clause ""New"" or ""Revised"" License",Component (Dynamic Library),100%,jyaml-1.3.jar/jyaml-1.3.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/logging-log4j-1.2.11/log4j-1.2.11.jar,"350,627",,,Apache Log4j,1.2.11,Apache License 2.0,Component (Dynamic Library),100%,bin/logging-log4j-1.2.11.tar.gz/logging-log4j-1.2.11/dist/lib/log4j-1.2.11.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/mysql-connector-java-5.0.8/mysql-connector-java-5.0.4-bin.jar,"495,944",,,MySQL Connector/J,5.0.4,GNU General Public License v2.0 or later,Component (Dynamic Library),100%,mysql-connector-java-5.0.4.tar.gz/mysql-connector-java-5.0.4/mysql-connector-java-5.0.4-bin.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/postgresql-8.3-604.jdbc3.jar,"448,141",,,Postgresql JDBC Driver,8.3-604,"BSD 3-clause ""New"" or ""Revised"" License",Component (Dynamic Library),100%,postgresql-8.3-604.jdbc3.jar/postgresql-8.3-604.jdbc3.jar,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,intersection/lib/wstx-asl-3.2.7.jar,"520,969",,,Woodstox,,Apache License 2.0,Component (Dynamic Library),100%,wstx-asl-3.2.7.tar/wstx-asl-3.2.7.jar,0,,,No
+identifiedFiles,Identified,Java Import Statements,intersection/lib/wstx-asl-3.2.7/com/ctc/wstx/dom/DOMWrappingReader.class,"21,119",,,Document Object Model - DOM,,W3C Software Notice and License 20021231,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Identified,Java Import Statements,intersection/lib/wstx-asl-3.2.7/com/ctc/wstx/dom/DOMWrappingWriter.class,"11,258",,,Document Object Model - DOM,,W3C Software Notice and License 20021231,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/ajax_scaffold.js,"14,397",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,None,javascripts/application.js,402,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/calendar_date_select.js,"20,998",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/calendar_date_select/calendar_date_select.js,"20,998",2,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_american.js,"1,122",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_db.js,"1,263",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_euro_24hr.js,317,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_euro_24hr_ymd.js,315,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_finnish.js,"1,207",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_hyphen_ampm.js,"1,273",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_iso_date.js,"1,194",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/format_italian.js,887,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/locale/fi.js,269,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/locale/fr.js,260,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/locale/pl.js,261,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/calendar_date_select/locale/pt.js,247,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,None,javascripts/controls.js,0,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Identified,Code Match,javascripts/dd_belatedpng.js,"7,019",,,Rickies,,License for Rickies,File,100%,ryck.es-master-20110416.tgz/ryck-ryck.es-0c3cc64/js/libs/dd_belatedpng.js,0,"line1
+line2
+line3
+line4",,No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",13,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",7,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",13,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",13,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",13,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",4,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",email address (regex),No
+identifiedFiles,Declared,String Search,javascripts/dd_belatedpng.js,"7,019",5,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,"line1
+line2
+line3
+line4",absolute http/https URL (regex),No
+identifiedFiles,Declared,None,javascripts/dragdrop.js,0,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/effects.js,"38,675",,,JQuery Integration,,Apache License 2.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",1,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",1,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",1,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",1,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",8,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",1,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",3,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",4,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/effects.js,"38,675",1,,JQuery Integration,,Apache License 2.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,Code Match,javascripts/english.stop,"3,589",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/niftycube.js,"8,912",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",252,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",5,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,General Public License keywords,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",2,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",12,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,GNU General Public License v2.0 or later,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",2,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,email address (regex),No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",5,2,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: GPL-2.0+,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",14,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,General Public License keywords,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",245,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",253,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",14,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,GNU General Public License v2.0 or later,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",12,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,General Public License keywords,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",5,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,GNU General Public License v2.0 or later,No
+identifiedFiles,Declared,String Search,javascripts/niftycube.js,"8,912",2,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Identified,String Search,javascripts/niftycube.js,"8,912",2,,Nifty Corners Cube,,GNU General Public License v2.0 or later,Snippet,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,javascripts/overlib/overlib.js,"49,325",1,"1,443",Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",3,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",7,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",12,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",12,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",3,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",3,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib.js,"49,325",12,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,javascripts/overlib/overlib_hideform.js,"4,794",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_hideform.js,"4,794",9,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_hideform.js,"4,794",5,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_hideform.js,"4,794",11,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_hideform.js,"4,794",9,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_hideform.js,"4,794",9,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,javascripts/overlib/overlib_shadow.js,"8,984",1,268,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_shadow.js,"8,984",8,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_shadow.js,"8,984",6,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_shadow.js,"8,984",6,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/overlib/overlib_shadow.js,"8,984",6,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,javascripts/prototype.js,"129,738",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/prototype.js,"129,738",2,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/prototype.js,"129,738",5,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/prototype.js,"129,738",2,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/prototype.js,"129,738","2,723",,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,None,javascripts/rico_corner.js,0,,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,javascripts/sorttable.js,"16,917",,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",372,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",443,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",5,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",14,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",443,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",440,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",304,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",443,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,javascripts/sorttable.js,"16,917",444,,Boost C++ Libraries - boost,,Boost Software License 1.0,Component,1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Declared,Other Supported Languages,libnew/boost_python-vc90-mt-1_38.dll,"216,064",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/boost_python-vc90-mt-1_38.dll,"216,064",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/boost_python-vc90-mt-1_38.dll,"216,064",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/boost_python-vc90-mt-1_38.dll,"216,064",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/CookComputing.XmlRpcV2.dll,"118,784",,,zlib,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,libnew/CookComputing.XmlRpcV2.dll,"118,784",,,zlib,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/ICSharpCode.SharpZipLib.dll,"192,512",,,jquery,,MIT License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,libnew/ICSharpCode.SharpZipLib.dll,"192,512",,,jquery,,MIT License,Component,100%,,0,,,No
+identifiedFiles,Rapid ID: Local Learned,Code Match,libnew/log4net.dll,"270,336",,,Apache-Logging log4net,1.2.10,Apache License 2.0,Component (Dynamic Library),100%,incubating-log4net-1.2.10.zip/log4net-1.2.10/bin/net/2.0/release/log4net.dll,0,,,No
+identifiedFiles,Rapid ID: Local Learned,Code Match,libnew/log4net.dll,"270,336",,,Apache-Logging log4net,1.2.10,Apache License 2.0,Component (Dynamic Library),100%,incubating-log4net-1.2.10.zip/log4net-1.2.10/bin/net/2.0/release/log4net.dll,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Code Match,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Code Match,libnew/mapi32.dll,"634,880",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,libnew/Newtonsoft.Json.dll,"126,976",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Declared,Code Match,libnew/Newtonsoft.Json.dll,"126,976",,,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,100%,,0,,,No
+identifiedFiles,Identified,Code Match,nbproject/ant-deploy.xml,"1,619",,,emaik,,Code Project Open License,File,100%,trunk-20120619-svn.tgz/trunk/archive/panda-jsp/nbproject/ant-deploy.xml,0,This is a one line file comment.,,No
+identifiedFiles,Identified,Code Match,nbproject/utf8_codecvt_facet.cpp,"11,525",2,"2,664",boost-history,,Code Project Open License 1.02,Snippet,93%,,0,,,No
+identifiedFiles,Identified,Code Match,nbproject/utf8_codecvt_facet.h,"6,967",1,213,clipp c++ interpreter framework,,The Code Project Open License (CPOL) 1.02,Snippet,98%,,0,,,No
+identifiedFiles,Identified,Code Match,SelectBox/fade.js,"3,217",2,75,fondo-salud,trunk-20121010-svn,GNU General Public License v3.0 or later,Snippet,83%,trunk-20121010-svn.tgz/trunk-20121010-svn/lib/fade.js,2,,,No
+identifiedFiles,Identified,Code Match,SelectBox/select.js,"10,275",5,330,FossilPlot,,GNU General Public License v2.0 or later,Snippet,78%,trunk-20121019-svn.tgz/trunk-20121019-svn/fossils/select.js,4,,,No
+identifiedFiles,Identified,Code Match,SelectBox/swipe.js,"3,811",2,99,fondo-salud,trunk-20121010-svn,GNU General Public License v3.0 or later,Snippet,89%,trunk-20121010-svn.tgz/trunk-20121010-svn/lib/swipe.js,2,,,No
+identifiedFiles,Identified,Code Match,SelectBox/writeSelect.js,"3,564",2,145,FossilPlot,,GNU General Public License v2.0 or later,Snippet,94%,trunk-20121019-svn.tgz/trunk-20121019-svn/fossils/writeSelect.js,1,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.cpp,"7,219",1,102,Glest Advanced Engine,,"BSD 3-clause ""New"" or ""Revised"" License",Snippet,23%,,0,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.h,"2,197",1,22,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,44%,,0,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.h,"2,197",1,22,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,44%,,0,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.h,"2,197",1,22,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,44%,,0,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.h,"2,197",1,22,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,44%,,0,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.h,"2,197",1,22,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,44%,,0,,,No
+identifiedFiles,Identified,Code Match,SimpleSymbolEngine.h,"2,197",1,22,Seneca TestProject 7.0.2,Unspecified,[template] Basic Proprietary Commercial License,Original Code,44%,,0,,,No
+identifiedFiles,Identified,Code Match,src/archive/Base64.java,"56,205",5,"1,946",Open Terracotta,,Terracotta Public License,Snippet,71%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",19,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",27,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",26,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",20,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",3,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",9,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",12,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",29,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",22,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",33,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",6,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",30,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Import Statements,src/archive/HttpArchiveClient.java,"5,008",16,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,Java Package Statements,src/archive/HttpArchiveClient.java,"5,008",1,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,String Search,src/archive/HttpArchiveClient.java,"5,008",44,,mangaproxy,,GNU General Public License v3.0 or later,Component (Dynamic Library),1%,,0,,absolute http/https URL (regex),No
+identifiedFiles,Identified,Code Match,src/util/AggressiveCleaner.java,"152,696",17,204,math-linux,,GNU General Public License v3.0 or later,Snippet,1%,,0,,,No
+identifiedFiles,Identified,Code Match,src/util/AggressiveCleaner.java,"152,696","1,504",36,dairy_app,master-20110403,Unspecified,Snippet,1%,dairy_app-master-20110403.tgz/Jefers-dairy_app-b8fe32c/vendor/cache/json_pure-1.5.1.gem.---/data.tar.gz.---/java/src/json/ext/Parser.java,475,,,No
+identifiedFiles,Identified,Code Match,src/util/CRC64.java,"2,544",13,38,biojava-legacy,,Creative Commons Attribution 1.0,Snippet,28%,biojava-legacy-master-20101224.tgz/biojava-biojava-legacy-3460caa/core/src/main/java/org/biojavax/utils/CRC64Checksum.java,37,,,No
+identifiedFiles,Identified,Code Match,src/util/PassiveCleaner.java,"149,050",546,66,Snort,,GNU General Public License v2.0 only,Snippet,4%,,0,,,No
+identifiedFiles,Identified,Code Match,src/util/PassiveCleaner.java,"149,050","1,466",36,acm,scotty_09012012,Apache License 2.0,Snippet,1%,acm-scotty_09012012.tar.gz/acm-scotty_09012012/vendor/cache/json_pure-1.6.6.gem.---/data.tar.gz.---/java/src/json/ext/Parser.java,514,,,No
+identifiedFiles,Identified,Code Match,src/util/PausableThreadPoolExecutor.java,"1,990",12,28,goscheduler,trunk-20120905-svn,Apache License 2.0,Snippet,52%,trunk-20120905-svn.tgz/dl/trunk/Go/test/org/go/test/PausableThreadPoolExecutor.java,9,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/aclocal.m4,"271,151",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/aclocal.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/AUTHORS,286,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/AUTHORS,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/BUGS,129,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/BUGS,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/ChangeLog,"134,056",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/ChangeLog,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/CodingGuideLines.txt,"2,249",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/CodingGuideLines.txt,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_create_prefix_config_h.m4,"5,056",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_create_prefix_config_h.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_cxx_have_sstream.m4,739,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_cxx_have_sstream.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_cxx_have_strstream.m4,837,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_cxx_have_strstream.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_cxx_namespaces.m4,717,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_cxx_namespaces.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_cxx_rtti.m4,998,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_cxx_rtti.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_cxx_string_compare_string_first.m4,907,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_cxx_string_compare_string_first.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ac_dll.m4,"1,253",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ac_dll.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ax_cxx_gcc_abi_demangle.m4,"1,117",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ax_cxx_gcc_abi_demangle.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ax_cxx_have_isfinite.m4,731,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ax_cxx_have_isfinite.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/bb_enable_doxygen.m4,"1,274",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/bb_enable_doxygen.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/config.guess,"44,892",,,Autoconf,2.57,GNU General Public License v2.0 w/Autoconf exception,Component,100%,autoconf-arch-2008-1.tar/Autoconf/config.guess,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/config.h.in,"2,621",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/config.h.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/config.sub,"33,387",,,jquery,,MIT License,Component,100%,automake-arch-20.tar/GNU_Automake/config.sub,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/install-sh,"13,620",,,zlib,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/ltmain.sh,"199,984",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/config/ltmain.sh,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/config/missing,"11,135",,,zlib,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/configure,"750,156",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/configure,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/configure.in,"4,307",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/configure.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/contrib/msvc/AddingUnitTestMethod.dsm,"5,147",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/contrib/msvc/AddingUnitTestMethod.dsm,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/contrib/msvc/CppUnit.WWTpl,"11,405",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/contrib/msvc/CppUnit.WWTpl,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/contrib/msvc/readme.txt,462,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/contrib/msvc/readme.txt,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/contrib/xml-xsl/report.xsl,"3,925",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/contrib/xml-xsl/report.xsl,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/contrib/xml-xsl/tests.xml,"1,960",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/contrib/xml-xsl/tests.xml,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/cppunit-config.1,"2,619",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/cppunit-config.1,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/cppunit-config.in,"1,648",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/cppunit-config.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/cppunit.m4,"3,177",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/cppunit.m4,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/cppunit.pc.in,240,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/cppunit.pc.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/cppunit.spec,"1,594",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/cppunit.spec,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/cppunit.spec.in,"1,597",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/cppunit.spec.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/AdditionalMessage.h,"2,276",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/AdditionalMessage.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Asserter.h,"6,119",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Asserter.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/BriefTestProgressListener.h,935,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/BriefTestProgressListener.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/CompilerOutputter.h,"5,317",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/CompilerOutputter.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/config-bcb5.h,"1,212",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/config-bcb5.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/config-evc4.h,"2,099",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/config-evc4.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/config-mac.h,"1,619",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/config-mac.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/config-msvc6.h,"2,234",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/config-msvc6.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/CppUnitApi.h,598,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/CppUnitApi.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/Makefile.am,205,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/Makefile.in,"13,022",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/SelectDllLoader.h,"2,051",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/SelectDllLoader.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/config/SourcePrefix.h,290,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/config/SourcePrefix.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Exception.h,"2,161",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Exception.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/AutoRegisterSuite.h,"2,230",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/AutoRegisterSuite.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/ExceptionTestCaseDecorator.h,"2,847",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/ExceptionTestCaseDecorator.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/HelperMacros.h,"20,574",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/HelperMacros.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/Makefile.am,400,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/Makefile.in,"13,228",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/Orthodox.h,"2,145",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/Orthodox.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/RepeatedTest.h,782,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/RepeatedTest.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestCaseDecorator.h,758,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestCaseDecorator.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestDecorator.h,918,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestDecorator.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestFactory.h,409,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestFactory.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestFactoryRegistry.h,"6,208",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestFactoryRegistry.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestFixtureFactory.h,"1,169",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestFixtureFactory.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestNamer.h,"2,358",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestNamer.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestSetUp.h,590,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestSetUp.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestSuiteBuilderContext.h,"3,806",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestSuiteBuilderContext.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TestSuiteFactory.h,529,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TestSuiteFactory.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/extensions/TypeInfoHelper.h,744,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/extensions/TypeInfoHelper.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Makefile.am,812,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Makefile.in,"17,751",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Message.h,"4,751",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Message.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Outputter.h,368,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Outputter.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/DynamicLibraryManager.h,"4,128",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/DynamicLibraryManager.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/DynamicLibraryManagerException.h,"1,177",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/DynamicLibraryManagerException.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/Makefile.am,228,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/Makefile.in,"13,045",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/PlugInManager.h,"3,024",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/PlugInManager.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/PlugInParameters.h,712,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/PlugInParameters.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/TestPlugIn.h,"7,045",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/TestPlugIn.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/plugin/TestPlugInDefaultImpl.h,"1,193",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/plugin/TestPlugInDefaultImpl.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Portability.h,"5,914",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Portability.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/CppUnitDeque.h,451,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/CppUnitDeque.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/CppUnitMap.h,592,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/CppUnitMap.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/CppUnitSet.h,540,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/CppUnitSet.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/CppUnitStack.h,520,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/CppUnitStack.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/CppUnitVector.h,459,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/CppUnitVector.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/FloatingPoint.h,"2,107",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/FloatingPoint.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/Makefile.am,216,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/Makefile.in,"13,048",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/portability/Stream.h,"6,232",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/portability/Stream.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Protector.h,"2,528",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Protector.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/SourceLine.h,"1,443",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/SourceLine.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/SynchronizedObject.h,"1,752",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/SynchronizedObject.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/Test.h,"4,000",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/Test.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestAssert.h,"16,603",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestAssert.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestCaller.h,"4,866",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestCaller.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestCase.h,"1,124",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestCase.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestComposite.h,923,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestComposite.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestFailure.h,"1,118",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestFailure.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestFixture.h,"2,661",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestFixture.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestLeaf.h,921,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestLeaf.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestListener.h,"4,083",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestListener.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestPath.h,"7,144",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestPath.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestResult.h,"4,590",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestResult.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestResultCollector.h,"2,174",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestResultCollector.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestRunner.h,"3,500",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestSuccessListener.h,843,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestSuccessListener.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TestSuite.h,"1,996",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TestSuite.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TextOutputter.h,"1,431",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TextOutputter.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TextTestProgressListener.h,951,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TextTestProgressListener.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TextTestResult.h,916,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TextTestResult.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/TextTestRunner.h,148,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/TextTestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/tools/Algorithm.h,533,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/tools/Algorithm.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/tools/Makefile.am,145,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/tools/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/tools/Makefile.in,"12,960",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/tools/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/tools/StringTools.h,751,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/tools/StringTools.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/tools/XmlDocument.h,"2,157",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/tools/XmlDocument.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/tools/XmlElement.h,"4,394",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/tools/XmlElement.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/Makefile.in,"15,372",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/mfc/Makefile.am,117,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/mfc/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/mfc/Makefile.in,"12,934",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/mfc/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/mfc/MfcTestRunner.h,"1,698",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/mfc/MfcTestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/mfc/TestRunner.h,430,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/mfc/TestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/qt/Config.h,596,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/qt/Config.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/qt/Makefile.am,126,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/qt/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/qt/Makefile.in,"12,940",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/qt/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/qt/QtTestRunner.h,"1,687",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/qt/QtTestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/qt/TestRunner.h,417,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/qt/TestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/text/Makefile.am,119,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/text/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/text/Makefile.in,"12,939",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/text/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/text/TestRunner.h,424,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/text/TestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/ui/text/TextTestRunner.h,"2,554",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/ui/text/TextTestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/XmlOutputter.h,"5,118",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/XmlOutputter.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/cppunit/XmlOutputterHook.h,"4,920",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/cppunit/XmlOutputterHook.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/Makefile.am,83,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/Makefile.in,"15,400",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/msvc6/DSPlugin/TestRunnerDSPluginVC6.h,"5,151",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/msvc6/DSPlugin/TestRunnerDSPluginVC6.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/msvc6/DSPlugin/TestRunnerDSPluginVC6_i.c,"1,135",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/msvc6/DSPlugin/TestRunnerDSPluginVC6_i.c,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/msvc6/testrunner/TestPlugInInterface.h,"1,330",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/msvc6/testrunner/TestPlugInInterface.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/include/msvc6/testrunner/TestRunner.h,384,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/include/msvc6/testrunner/TestRunner.h,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/INSTALL-unix,"3,579",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/INSTALL-unix,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/INSTALL-WIN32.txt,"8,596",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/INSTALL-WIN32.txt,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/Makefile.am,"2,274",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/Makefile.am,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/Makefile.in,"28,300",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/Makefile.in,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/NEWS,"41,709",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/NEWS,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/README,600,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/README,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/THANKS,902,,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/THANKS,0,,,No
+identifiedFiles,Identified,Code Match,vendor/cppunit-1.12.1/TODO,"1,219",,,AriLocalComp,1,Unspecified,File,100%,acscb-master-20121117.tgz/csrg-utfsm-acscb-f966824/ACS/LGPL/Tools/cppunit/src/cppunit-1.12.1.tar.gz.---/cppunit-1.12.1/TODO,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/64bitcacheset/SetCache.exe,"53,248",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/64bitcacheset/SetCache.exe,"53,248",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Rapid ID: PS Learned ID,Code Match,vendor/microsoft/Exchange/mapi32.dll,"634,880",,,"MSDN MS Commerce Server 2002 Developer ed., Exchange Server 2003 Enterprise ed., Exchange Server 200",,[template] Basic Proprietary Commercial License,Component (Dynamic Library),100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/Exchange2007SP1/Exchange2007SP1_Readme.txt,"2,521",3,1,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/Exchange2007SP1/Exchange2007SP1_Readme.txt,"2,521",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange2007SP1/MAPISP32.EXE,"24,064",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange2007SP1/MAPISP32.EXE,"24,064",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Exchange2007SP1/MAPISP32.EXE,"24,064",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,None,vendor/microsoft/ExchangeMAPISVC/mapisvc.inf,"1,398",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Outlook/mapi32.dll,"137,816",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Outlook/mapi32.dll,"137,816",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/Outlook/mapi32.dll,"137,816",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/Outlook/mapi32.dll,"137,816",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Debug/Microsoft.VC90.DebugCRT.manifest,"1,865",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,None,vendor/microsoft/VS2008/Debug64/Microsoft.VC90.DebugCRT.manifest,"1,867",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,None,vendor/microsoft/VS2008/pull.bat,400,,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release/Microsoft.VC90.CRT.manifest,"1,857",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcm90.dll,"225,280",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcm90.dll,"225,280",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcm90.dll,"225,280",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcm90.dll,"225,280",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release/msvcm90.dll,"225,280",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcp90.dll,"572,928",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcp90.dll,"572,928",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release/msvcp90.dll,"572,928",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release/msvcr90.dll,"655,872",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release/msvcr90.dll,"655,872",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/atl90.dll,"179,704",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/atl90.dll,"179,704",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/badday.h,"2,171",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/badday.h,"2,171",1,58,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/badday.h,"2,171",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/badday.h,"2,171",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/badday.h,"2,171",4,,ZLib compression library,,zlib License,Component,3%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/badday.h,"2,171",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",18,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",29,96,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bastypes.h,"3,700",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/bsearch.h,"7,315",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/bsearch.h,"7,315",1,153,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bsearch.h,"7,315",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bsearch.h,"7,315",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bsearch.h,"7,315",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/bsearch.h,"7,315",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",4,346,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/buscache.h,"7,371",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",1,263,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/busday.h,"10,818",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",25,97,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cashflow.h,"5,323",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cdate.h,"4,645",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cdate.h,"4,645",1,127,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdate.h,"4,645",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdate.h,"4,645",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdate.h,"4,645",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdate.h,"4,645",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cds.h,"16,941",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cds.h,"16,941",4,368,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cds.h,"16,941",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cds.h,"16,941",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cds.h,"16,941",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cds.h,"16,941",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",21,48,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",4,,ZLib compression library,,zlib License,Component,2%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cdsone.h,"2,464",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",1,201,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cerror.h,"6,986",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",44,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",1,196,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfileio.h,"5,548",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",1,112,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cfinanci.h,"4,598",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",1,64,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",4,,ZLib compression library,,zlib License,Component,5%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cgeneral.h,"1,422",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,19,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,18,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cheaders.h,577,4,,ZLib compression library,,zlib License,Component,12%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",1,38,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cmemory.h,"1,024",4,,ZLib compression library,,zlib License,Component,7%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/contingentleg.h,"1,634",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/contingentleg.h,"1,634",1,36,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/contingentleg.h,"1,634",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/contingentleg.h,"1,634",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/contingentleg.h,"1,634",4,,ZLib compression library,,zlib License,Component,4%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/contingentleg.h,"1,634",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",24,53,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/convert.h,"2,649",4,,ZLib compression library,,zlib License,Component,2%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cx.h,"3,811",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cx.h,"3,811",23,96,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cx.h,"3,811",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cx.h,"3,811",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cx.h,"3,811",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cx.h,"3,811",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cxbsearch.h,"2,769",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cxbsearch.h,"2,769",1,61,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxbsearch.h,"2,769",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxbsearch.h,"2,769",4,,ZLib compression library,,zlib License,Component,2%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxbsearch.h,"2,769",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxbsearch.h,"2,769",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cxdatelist.h,"5,296",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cxdatelist.h,"5,296",1,133,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxdatelist.h,"5,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxdatelist.h,"5,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxdatelist.h,"5,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxdatelist.h,"5,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/cxzerocurve.h,"1,963",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/cxzerocurve.h,"1,963",1,70,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxzerocurve.h,"1,963",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxzerocurve.h,"1,963",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxzerocurve.h,"1,963",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/cxzerocurve.h,"1,963",4,,ZLib compression library,,zlib License,Component,3%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",1,111,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/date_sup.h,"4,296",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,1,32,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateadj.h,996,4,,ZLib compression library,,zlib License,Component,7%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",21,101,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dateconv.h,"4,230",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",1,222,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/datelist.h,"5,839",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",23,141,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/dtlist.h,"6,145",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/feeleg.h,"1,741",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/feeleg.h,"1,741",1,56,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/feeleg.h,"1,741",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/feeleg.h,"1,741",4,,ZLib compression library,,zlib License,Component,4%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/feeleg.h,"1,741",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/feeleg.h,"1,741",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",1,36,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",4,,ZLib compression library,,zlib License,Component,6%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/fltrate.h,"1,140",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",1,55,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",4,,ZLib compression library,,zlib License,Component,3%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/gtozc.h,"2,398",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/interp.h,"2,389",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/interp.h,"2,389",1,66,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/interp.h,"2,389",4,,ZLib compression library,,zlib License,Component,3%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/interp.h,"2,389",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/interp.h,"2,389",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/interp.h,"2,389",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",23,126,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/ldate.h,"6,498",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",1,45,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",4,,ZLib compression library,,zlib License,Component,3%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lintrp.h,"2,020",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,1,30,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/lprintf.h,818,4,,ZLib compression library,,zlib License,Component,8%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",1,126,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/macros.h,"3,756",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/mdydate.h,709,1,25,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/mdydate.h,709,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/mdydate.h,709,4,,ZLib compression library,,zlib License,Component,10%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/mdydate.h,709,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/mdydate.h,709,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/metric.h,538,1,22,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/metric.h,538,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/metric.h,538,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/metric.h,538,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/metric.h,538,4,,ZLib compression library,,zlib License,Component,13%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/rtbrent.h,"1,627",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/rtbrent.h,"1,627",1,43,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/rtbrent.h,"1,627",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/rtbrent.h,"1,627",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/rtbrent.h,"1,627",4,,ZLib compression library,,zlib License,Component,4%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/rtbrent.h,"1,627",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",22,82,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/schedule.h,"3,669",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",23,159,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/streamcf.h,"7,332",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/strutil.h,"3,953",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/strutil.h,"3,953",1,114,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/strutil.h,"3,953",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/strutil.h,"3,953",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/strutil.h,"3,953",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/strutil.h,"3,953",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/stub.h,"4,149",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/stub.h,"4,149",1,128,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/stub.h,"4,149",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/stub.h,"4,149",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/stub.h,"4,149",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/stub.h,"4,149",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",1,148,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/tcurve.h,"5,854",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/timeline.h,"1,606",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/timeline.h,"1,606",1,50,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/timeline.h,"1,606",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/timeline.h,"1,606",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/timeline.h,"1,606",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/timeline.h,"1,606",4,,ZLib compression library,,zlib License,Component,4%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/version.h,717,14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/version.h,717,1,23,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/version.h,717,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/version.h,717,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/version.h,717,4,,ZLib compression library,,zlib License,Component,10%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/version.h,717,4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",1,62,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",4,,ZLib compression library,,zlib License,Component,3%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/yearfrac.h,"2,060",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",18,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",24,512,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",4,,ZLib compression library,,zlib License,Component,1%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcprvt.h,"26,321",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",21,71,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",4,,ZLib compression library,,zlib License,Component,2%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zcswdate.h,"3,508",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zerocurve.h,"1,672",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/zerocurve.h,"1,672",1,41,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zerocurve.h,"1,672",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zerocurve.h,"1,672",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zerocurve.h,"1,672",4,,ZLib compression library,,zlib License,Component,4%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zerocurve.h,"1,672",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",1,72,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2coup.h,"3,148",4,,ZLib compression library,,zlib License,Component,2%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",16,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",17,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",15,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",14,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",25,20,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",4,,ZLib compression library,,zlib License,Component,4%,,0,,SPDX: Copyright,No
+identifiedFiles,Declared,String Search,vendor/microsoft/VS2008/Release64/headers/zr2fwd.h,"1,588",4,,ZLib compression library,,zlib License,Component,1%,,0,,Copyright References,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/Microsoft.VC90.ATL.manifest,468,,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/Microsoft.VC90.CRT.manifest,"1,859",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcm90.dll,"245,760",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcm90.dll,"245,760",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcm90.dll,"245,760",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcm90.dll,"245,760",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/msvcm90.dll,"245,760",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcp90.dll,"856,576",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcp90.dll,"856,576",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/msvcp90.dll,"856,576",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VS2008/Release64/msvcr90.dll,"626,688",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Code Match,vendor/microsoft/VS2008/Release64/msvcr90.dll,"626,688",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/2003/vshadow.exe,"352,256",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/2003/vshadow.exe,"352,256",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/2003/vshadow.exe,"352,256",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/2003/vshadow.exe,"352,256",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/vista/vshadow.exe,"216,424",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/xp/vshadow.exe,"294,912",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/xp/vshadow.exe,"294,912",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/xp/vshadow.exe,"294,912",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Declared,Other Supported Languages,vendor/microsoft/VSS/xp/vshadow.exe,"294,912",,,ZLib compression library,,zlib License,Component,100%,,0,,,No
+identifiedFiles,Identified,Code Match,vendor/plugins/NXM/dlldata.c,837,1,34,2Wire - MediaScout,2.3,GNU General Public License v2.0 or later,Snippet,91%,MediaScout2.3.tar.gz/ImageMagick-6.2.5/contrib/win32/ATL/MagickCOM/dlldata.c,1,,,No
+identifiedFiles,Identified,Code Match,vendor/plugins/NXM/NMXSEUTL_i.c,"2,842",3,59,.NET Batch Reference Editor,1.0.0.1,Unspecified,Snippet,48%,refed-1.0.0.1-rc1-src.zip/src/fusionutil/fusion_i.c,3,,,No
+disclaimer,"This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.",,,,,,,,,,,,,,,
