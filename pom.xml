@@ -214,27 +214,14 @@
 	
 	<repositories>
 		<repository>
-			<id>blackduck-artifactory</id>
-			<name>BlackDuck Official</name>
-			<url>http://artifactory.blackducksoftware.com:8081/artifactory/product-protex</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>bintray-bds-tools</id>
+			<name>BDS Bintray for Common Framework</name>
+			<url>http://dl.bintray.com/bds/cf</url>
 		</repository>
-
 		<repository>
-			<id>maven-us.nuxeo</id>
-			<name>Maven US Nexeo</name>
-			<url>https://maven-us.nuxeo.org/nexus/content/repositories/thirdparty-releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>bintray-bds-sdk</id>
+			<name>BDS Bintray for SDK</name>
+			<url>http://dl.bintray.com/bds/sdk</url>
 		</repository>
 	</repositories>
 	
