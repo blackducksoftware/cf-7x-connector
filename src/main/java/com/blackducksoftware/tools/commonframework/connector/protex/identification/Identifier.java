@@ -19,15 +19,54 @@
 package com.blackducksoftware.tools.commonframework.connector.protex.identification;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
-import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchDiscovery;
+import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
+import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 
 public interface Identifier {
-    void makeIdentificationOnFile(String path, CodeMatchDiscovery target)
+
+    /**
+     * Make a Code Match or Declared Identification on the given file.
+     *
+     * @param path
+     * @param target
+     * @throws SdkFault
+     */
+    void makeIdentificationOnFile(String path, Discovery target)
 	    throws SdkFault;
 
+    /**
+     * Make a String Search Identification on the given file.
+     *
+     * @param path
+     * @param target
+     * @param componentId
+     * @param componentVersionId
+     * @throws SdkFault
+     */
+    void makeStringSearchIdentificationOnFile(String path,
+	    StringSearchDiscovery target, String componentId,
+	    String componentVersionId) throws SdkFault;
+
+    /**
+     * Returns true if the BOM should be refreshed after the ID is made.
+     *
+     * @return
+     */
     boolean isFinalBomRefreshRequired();
 
+    /**
+     * Returns true if Identification strategy being used requires multiple
+     * passes (until # pendingIds == 0)
+     *
+     * @return
+     */
     boolean isMultiPassIdStrategy();
 
+    /**
+     * Set the ProtexIdUtils object to use for operations such as looking up
+     * components, etc.
+     * 
+     * @param protexUtils
+     */
     void setProtexUtils(ProtexIdUtils protexUtils);
 }

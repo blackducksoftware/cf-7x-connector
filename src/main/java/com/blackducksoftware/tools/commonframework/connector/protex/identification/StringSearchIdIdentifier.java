@@ -25,21 +25,20 @@ import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.common.BomRefreshMode;
+import com.blackducksoftware.sdk.protex.common.ComponentKey;
 import com.blackducksoftware.sdk.protex.common.UsageLevel;
-import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
-import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeMatchIdentificationDirective;
-import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeMatchIdentificationRequest;
+import com.blackducksoftware.sdk.protex.project.codetree.identification.StringSearchIdentificationRequest;
 
-public class CodeMatchIdIdentifier implements Identifier {
+public class StringSearchIdIdentifier implements Identifier {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
     private String programName;
     private ProtexIdUtils protexUtils;
 
-    public CodeMatchIdIdentifier(String programName) {
+    public StringSearchIdIdentifier(String programName) {
 	this.programName = programName;
     }
 
@@ -58,39 +57,34 @@ public class CodeMatchIdIdentifier implements Identifier {
      * @throws SdkFault
      */
     @Override
-    public void makeIdentificationOnFile(String path, Discovery target)
-	    throws SdkFault {
+    public void makeStringSearchIdentificationOnFile(String path,
+	    StringSearchDiscovery stringSearchDiscoveryTarget,
+	    String componentId, String componentVersionId) throws SdkFault {
 
-	CodeMatchDiscovery codeMatchDiscoveryTarget = (CodeMatchDiscovery) target;
-
-	CodeMatchIdentificationRequest idRequest = new CodeMatchIdentificationRequest();
-	idRequest
-		.setCodeMatchIdentificationDirective(CodeMatchIdentificationDirective.SNIPPET_AND_FILE);
-
-	idRequest.setDiscoveredComponentKey(codeMatchDiscoveryTarget
-		.getDiscoveredComponentKey());
-	idRequest.setIdentifiedComponentKey(codeMatchDiscoveryTarget
-		.getDiscoveredComponentKey());
-	idRequest.setIdentifiedUsageLevel(UsageLevel.COMPONENT);
-
+	StringSearchIdentificationRequest idRequest = new StringSearchIdentificationRequest();
+	idRequest.setFolderLevelIdentification(false);
 	idRequest.setComment("Code Match Id-ed by " + programName + " at "
 		+ new Date());
+	ComponentKey componentKey = new ComponentKey();
+	componentKey.setComponentId(componentId);
+	componentKey.setVersionId(componentVersionId);
+	idRequest.setIdentifiedComponentKey(componentKey);
 
-	log.info("Adding Code Match Identification for "
-		+ path
-		+ ": "
-		+ codeMatchDiscoveryTarget.getDiscoveredComponentKey()
-			.getComponentId()
-		+ " version "
-		+ codeMatchDiscoveryTarget.getDiscoveredComponentKey()
-			.getVersionId() + " match type "
-		+ codeMatchDiscoveryTarget.getCodeMatchType());
+	idRequest.setIdentifiedUsageLevel(UsageLevel.COMPONENT);
+	idRequest.setStringSearchId(stringSearchDiscoveryTarget
+		.getStringSearchId());
+	idRequest.getMatchLocations().addAll(
+		stringSearchDiscoveryTarget.getMatchLocations());
+	log.info("Adding String Search Identification for " + path + ": "
+		+ componentId + " version " + componentVersionId
+		+ " match type "
+		+ stringSearchDiscoveryTarget.getDiscoveryType());
 	protexUtils
 		.getProtexServerWrapper()
 		.getInternalApiWrapper()
 		.getIdentificationApi()
-		.addCodeMatchIdentification(protexUtils.getProjectId(), path,
-			idRequest, BomRefreshMode.SYNCHRONOUS);
+		.addStringSearchIdentification(protexUtils.getProjectId(),
+			path, idRequest, BomRefreshMode.SYNCHRONOUS);
     }
 
     @Override
@@ -101,14 +95,14 @@ public class CodeMatchIdIdentifier implements Identifier {
 
     @Override
     public boolean isMultiPassIdStrategy() {
-	return true;
+	return false;
     }
 
     @Override
-    public void makeStringSearchIdentificationOnFile(String path,
-	    StringSearchDiscovery target, String componentId,
-	    String componentVersionId) throws SdkFault {
+    public void makeIdentificationOnFile(String path, Discovery target)
+	    throws SdkFault {
 	throw new UnsupportedOperationException(
-		"makeStringSearchIdentificationOnFile method not supported");
+		"makeIdentificationOnFile method not supported");
+
     }
 }

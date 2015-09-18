@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.common.ComponentKey;
+import com.blackducksoftware.sdk.protex.common.StringSearchPatternOriginType;
+import com.blackducksoftware.sdk.protex.component.Component;
 import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNode;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeRequest;
@@ -38,6 +40,7 @@ import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchDisc
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchType;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.IdentificationStatus;
+import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
@@ -124,6 +127,39 @@ public class ProtexIdUtils {
     }
 
     /**
+     * Performs a Code Match identification Code Match attempts to do a code
+     * match identification, as opposed to declare file.
+     *
+     * @param path
+     *            the path to the file
+     * @param target
+     *            the discovery to make the identification with
+     * @throws SdkFault
+     */
+    public void makeStringSearchId(String path, Discovery discoveryTarget,
+	    String componentName, String componentVersion) throws SdkFault {
+	StringSearchDiscovery target = (StringSearchDiscovery) discoveryTarget;
+	// log.debug("Making match for: " + target.getFilePath() + ": "
+	// + target.getDiscoveredComponentKey().getComponentId()
+	// + ", type: " + target.getDiscoveryType());
+
+	Component component = getComponentByName(componentName,
+		componentVersion);
+	String componentNameId = component.getComponentKey().getComponentId();
+	String componentVersionId = component.getComponentKey().getVersionId();
+
+	identifier.makeStringSearchIdentificationOnFile(path, target,
+		componentNameId, componentVersionId);
+
+	IdentificationMade idMade = new IdentificationMade(path, target
+		.getMatchLocations().get(0).getFirstLine(), 0, componentName,
+		componentVersion, "<unknown>", 0); // TODO ugly
+
+	identificationsMade.add(idMade);
+	log.debug("Added Identification for " + idMade);
+    }
+
+    /**
      * Load the project of the given name from Protex
      *
      * @param projectName
@@ -150,24 +186,25 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public static CodeMatchDiscovery bestMatch(
-	    List<CodeMatchDiscovery> codeMatchDiscoveries) throws SdkFault {
+	    List<Discovery> codeMatchDiscoveries) throws SdkFault {
 	int maxScore = 0;
 	CodeMatchDiscovery bestCodeMatchDiscovery = null;
-	for (CodeMatchDiscovery match : codeMatchDiscoveries) {
-	    int thisScore = match.getMatchRatioAsPercent();
-	    String versionString = getComponentVersionString(match);
+	for (Discovery match : codeMatchDiscoveries) {
+	    CodeMatchDiscovery codeMatch = (CodeMatchDiscovery) match;
+	    int thisScore = codeMatch.getMatchRatioAsPercent();
+	    String versionString = getComponentVersionString(codeMatch);
 
-	    ComponentKey key = match.getDiscoveredComponentKey();
+	    ComponentKey key = codeMatch.getDiscoveredComponentKey();
 
 	    log.debug("Code Match Discovery: " + key.getComponentId() + "/"
 		    + versionString + "; score: " + thisScore + "; ID status: "
-		    + match.getIdentificationStatus().toString());
+		    + codeMatch.getIdentificationStatus().toString());
 
-	    if (match.getIdentificationStatus() == IdentificationStatus.PENDING_IDENTIFICATION) {
+	    if (codeMatch.getIdentificationStatus() == IdentificationStatus.PENDING_IDENTIFICATION) {
 
 		if (thisScore > maxScore) {
 		    log.debug("\tThis one is the best so far");
-		    bestCodeMatchDiscovery = match;
+		    bestCodeMatchDiscovery = codeMatch;
 		    maxScore = thisScore;
 		} else {
 		    log.debug("\tThis one is NOT the best so far; ignoring it");
@@ -201,6 +238,24 @@ public class ProtexIdUtils {
 	return versionString;
     }
 
+    public static Component getComponentByName(String componentName,
+	    String componentVersion) throws SdkFault {
+	log.info("Looking up: " + componentName + " / " + componentVersion);
+	List<Component> components = protexServerWrapper
+		.getInternalApiWrapper().getComponentApi()
+		.getComponentsByName(componentName, componentVersion);
+	switch (components.size()) {
+	case 0:
+	    return null;
+	case 1:
+	    return components.get(0);
+	default:
+	    log.warn("There are more than one component with name "
+		    + componentName + " / version " + componentVersion);
+	    return components.get(0);
+	}
+    }
+
     /**
      * Get the code match discoveries for a file.
      *
@@ -217,6 +272,27 @@ public class ProtexIdUtils {
 	List<CodeMatchDiscovery> codeMatchDiscoveries = protexServerWrapper
 		.getInternalApiWrapper().getDiscoveryApi()
 		.getCodeMatchDiscoveries(projectId, nodes, codeMatchTypes);
+	return codeMatchDiscoveries;
+    }
+
+    /**
+     * Get the string search discoveries for a file.
+     *
+     * @param tree
+     * @return
+     * @throws SdkFault
+     */
+    public List<StringSearchDiscovery> getStringSearchDiscoveries(
+	    List<CodeTreeNode> nodes) throws SdkFault {
+
+	List<StringSearchPatternOriginType> patternTypes = new ArrayList<>();
+	patternTypes.add(StringSearchPatternOriginType.CUSTOM);
+	patternTypes.add(StringSearchPatternOriginType.PROJECT_LOCAL);
+	patternTypes.add(StringSearchPatternOriginType.STANDARD);
+
+	List<StringSearchDiscovery> codeMatchDiscoveries = protexServerWrapper
+		.getInternalApiWrapper().getDiscoveryApi()
+		.getStringSearchDiscoveries(projectId, nodes, patternTypes);
 	return codeMatchDiscoveries;
     }
 
@@ -274,8 +350,6 @@ public class ProtexIdUtils {
 		if (nodeCountType == NodeCountType.PENDING_ID_CODE_MATCH) {
 		    if (nodeCount.getCount() > 0) {
 			return true;
-		    } else {
-			return false;
 		    }
 		}
 	    }

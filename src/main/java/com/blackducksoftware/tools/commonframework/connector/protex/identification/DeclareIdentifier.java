@@ -27,6 +27,8 @@ import com.blackducksoftware.sdk.protex.common.UsageLevel;
 import com.blackducksoftware.sdk.protex.license.License;
 import com.blackducksoftware.sdk.protex.license.LicenseInfo;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchDiscovery;
+import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
+import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentificationRequest;
 
 public class DeclareIdentifier implements Identifier {
@@ -46,24 +48,27 @@ public class DeclareIdentifier implements Identifier {
     }
 
     @Override
-    public void makeIdentificationOnFile(String path, CodeMatchDiscovery target)
+    public void makeIdentificationOnFile(String path, Discovery target)
 	    throws SdkFault {
+	CodeMatchDiscovery codeMatchDiscoveryTarget = (CodeMatchDiscovery) target;
+
 	IdentificationRequest declRequest = new IdentificationRequest();
 
 	LicenseInfo lic = new LicenseInfo();
 
-	String licenseId = target.getMatchingLicenseInfo().getLicenseId();
+	String licenseId = codeMatchDiscoveryTarget.getMatchingLicenseInfo()
+		.getLicenseId();
 	License thisLicense = protexUtils.getProtexServerWrapper()
 		.getInternalApiWrapper().getLicenseApi()
 		.getLicenseById(licenseId);
 	if (thisLicense != null) {
-	    log.debug(target.getDiscoveredComponentKey().getComponentId()
-		    + ": License: " + thisLicense.getName());
+	    log.debug(codeMatchDiscoveryTarget.getDiscoveredComponentKey()
+		    .getComponentId() + ": License: " + thisLicense.getName());
 	    lic.setLicenseId(thisLicense.getLicenseId());
 	    lic.setName(thisLicense.getName());
 	}
 
-	declRequest.setIdentifiedComponentKey(target
+	declRequest.setIdentifiedComponentKey(codeMatchDiscoveryTarget
 		.getDiscoveredComponentKey());
 
 	if (thisLicense != null) {
@@ -77,8 +82,11 @@ public class DeclareIdentifier implements Identifier {
 	declRequest.setComment("Declare Id-ed by " + programName
 		+ " at \" + new Date()");
 
-	log.info("Adding Declaration for " + path + ": "
-		+ target.getDiscoveredComponentKey().getComponentId());
+	log.info("Adding Declaration for "
+		+ path
+		+ ": "
+		+ codeMatchDiscoveryTarget.getDiscoveredComponentKey()
+			.getComponentId());
 	protexUtils
 		.getProtexServerWrapper()
 		.getInternalApiWrapper()
@@ -96,5 +104,13 @@ public class DeclareIdentifier implements Identifier {
     @Override
     public boolean isMultiPassIdStrategy() {
 	return false;
+    }
+
+    @Override
+    public void makeStringSearchIdentificationOnFile(String path,
+	    StringSearchDiscovery target, String componentId,
+	    String componentVersionId) throws SdkFault {
+	throw new UnsupportedOperationException(
+		"makeStringSearchIdentificationOnFile method not supported");
     }
 }
