@@ -42,7 +42,6 @@ import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.IdentificationStatus;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
-import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.identification.IdentificationMade;
 
@@ -60,16 +59,13 @@ public class ProtexIdUtils {
     /**
      * Constructor
      *
-     * @param config
-     *            a ConfigurationManager with Protex server/username/password
-     *            set.
      * @throws Exception
      *             upon error connecting to or using Protex
      */
     public ProtexIdUtils(
 	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    ConfigurationManager config, Identifier identifier,
-	    Project project, boolean doRefresh) throws Exception {
+	    Identifier identifier, Project project, boolean doRefresh)
+	    throws Exception {
 	this.doRefresh = doRefresh;
 
 	this.protexServerWrapper = protexServerWrapper;
