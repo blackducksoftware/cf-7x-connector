@@ -27,24 +27,27 @@ import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.common.BomRefreshMode;
 import com.blackducksoftware.sdk.protex.common.ComponentKey;
 import com.blackducksoftware.sdk.protex.common.UsageLevel;
+import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.StringSearchIdentificationRequest;
+import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 
 public class StringSearchIdIdentifier implements Identifier {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
     private String programName;
-    private ProtexIdUtils protexUtils;
+    private ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+    private Project project;
 
-    public StringSearchIdIdentifier(String programName) {
+    public StringSearchIdIdentifier(
+	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    Project project, String programName) {
+	this.protexServerWrapper = protexServerWrapper;
+	this.project = project;
 	this.programName = programName;
-    }
-
-    @Override
-    public void setProtexUtils(ProtexIdUtils protexUtils) {
-	this.protexUtils = protexUtils;
     }
 
     /**
@@ -79,12 +82,11 @@ public class StringSearchIdIdentifier implements Identifier {
 		+ componentId + " version " + componentVersionId
 		+ " match type "
 		+ stringSearchDiscoveryTarget.getDiscoveryType());
-	protexUtils
-		.getProtexServerWrapper()
+	protexServerWrapper
 		.getInternalApiWrapper()
 		.getIdentificationApi()
-		.addStringSearchIdentification(protexUtils.getProjectId(),
-			path, idRequest, BomRefreshMode.SYNCHRONOUS);
+		.addStringSearchIdentification(project.getProjectId(), path,
+			idRequest, BomRefreshMode.SYNCHRONOUS);
     }
 
     @Override

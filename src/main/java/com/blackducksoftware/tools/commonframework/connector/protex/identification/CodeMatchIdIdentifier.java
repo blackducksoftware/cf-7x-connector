@@ -26,26 +26,29 @@ import org.slf4j.LoggerFactory;
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.common.BomRefreshMode;
 import com.blackducksoftware.sdk.protex.common.UsageLevel;
+import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeMatchIdentificationDirective;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeMatchIdentificationRequest;
+import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 
 public class CodeMatchIdIdentifier implements Identifier {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
     private String programName;
-    private ProtexIdUtils protexUtils;
+    private ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+    private Project project;
 
-    public CodeMatchIdIdentifier(String programName) {
+    public CodeMatchIdIdentifier(
+	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    Project project, String programName) {
+	this.protexServerWrapper = protexServerWrapper;
+	this.project = project;
 	this.programName = programName;
-    }
-
-    @Override
-    public void setProtexUtils(ProtexIdUtils protexUtils) {
-	this.protexUtils = protexUtils;
     }
 
     /**
@@ -85,11 +88,10 @@ public class CodeMatchIdIdentifier implements Identifier {
 		+ codeMatchDiscoveryTarget.getDiscoveredComponentKey()
 			.getVersionId() + " match type "
 		+ codeMatchDiscoveryTarget.getCodeMatchType());
-	protexUtils
-		.getProtexServerWrapper()
+	protexServerWrapper
 		.getInternalApiWrapper()
 		.getIdentificationApi()
-		.addCodeMatchIdentification(protexUtils.getProjectId(), path,
+		.addCodeMatchIdentification(project.getProjectId(), path,
 			idRequest, BomRefreshMode.SYNCHRONOUS);
     }
 

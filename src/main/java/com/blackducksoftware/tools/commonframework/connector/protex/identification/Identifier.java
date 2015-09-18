@@ -61,12 +61,4 @@ public interface Identifier {
      * @return
      */
     boolean isMultiPassIdStrategy();
-
-    /**
-     * Set the ProtexIdUtils object to use for operations such as looking up
-     * components, etc.
-     * 
-     * @param protexUtils
-     */
-    void setProtexUtils(ProtexIdUtils protexUtils);
 }

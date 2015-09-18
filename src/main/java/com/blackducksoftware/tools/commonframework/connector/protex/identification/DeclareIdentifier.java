@@ -26,25 +26,28 @@ import com.blackducksoftware.sdk.protex.common.BomRefreshMode;
 import com.blackducksoftware.sdk.protex.common.UsageLevel;
 import com.blackducksoftware.sdk.protex.license.License;
 import com.blackducksoftware.sdk.protex.license.LicenseInfo;
+import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentificationRequest;
+import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 
 public class DeclareIdentifier implements Identifier {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
     private String programName;
-    private ProtexIdUtils protexUtils;
+    private ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+    private Project project;
 
-    public DeclareIdentifier(String programName) {
-	programName = this.programName;
-    }
-
-    @Override
-    public void setProtexUtils(ProtexIdUtils protexUtils) {
-	this.protexUtils = protexUtils;
+    public DeclareIdentifier(
+	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    Project project, String programName) {
+	this.protexServerWrapper = protexServerWrapper;
+	this.project = project;
+	this.programName = programName;
     }
 
     @Override
@@ -58,9 +61,8 @@ public class DeclareIdentifier implements Identifier {
 
 	String licenseId = codeMatchDiscoveryTarget.getMatchingLicenseInfo()
 		.getLicenseId();
-	License thisLicense = protexUtils.getProtexServerWrapper()
-		.getInternalApiWrapper().getLicenseApi()
-		.getLicenseById(licenseId);
+	License thisLicense = protexServerWrapper.getInternalApiWrapper()
+		.getLicenseApi().getLicenseById(licenseId);
 	if (thisLicense != null) {
 	    log.debug(codeMatchDiscoveryTarget.getDiscoveredComponentKey()
 		    .getComponentId() + ": License: " + thisLicense.getName());
@@ -87,11 +89,10 @@ public class DeclareIdentifier implements Identifier {
 		+ ": "
 		+ codeMatchDiscoveryTarget.getDiscoveredComponentKey()
 			.getComponentId());
-	protexUtils
-		.getProtexServerWrapper()
+	protexServerWrapper
 		.getInternalApiWrapper()
 		.getIdentificationApi()
-		.addDeclaredIdentification(protexUtils.getProjectId(), path,
+		.addDeclaredIdentification(project.getProjectId(), path,
 			declRequest, BomRefreshMode.SKIP);
     }
 
