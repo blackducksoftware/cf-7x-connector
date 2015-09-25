@@ -41,8 +41,8 @@ import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
  */
 public class CodeTreeHelper extends ApiHelper {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+    private static final Logger log = LoggerFactory
+	    .getLogger(CodeTreeHelper.class.getName());
 
     private static CodeTreeApi codeTreeApi;
 
@@ -64,12 +64,24 @@ public class CodeTreeHelper extends ApiHelper {
      * @return
      */
     public Long getTotalPendingIDCount(ProjectPojo project) {
+	return getTotalPendingIDCount(project, "/");
+    }
+
+    /**
+     * Based on a project, return the total pending id count for a given subset
+     * of the tree, specified by a path. Where total includes all types: Code,
+     * Search, Dependency.
+     *
+     * @param project
+     * @return
+     */
+    public Long getTotalPendingIDCount(ProjectPojo project, String path) {
 	long totalCount = -1;
 	log.debug("Getting Total Pending Count for Project: "
 		+ project.getProjectName());
 
 	try {
-	    totalCount = checkCountForPending(project.getProjectKey(), "/",
+	    totalCount = checkCountForPending(project.getProjectKey(), path,
 		    NodeCountType.PENDING_ID_ALL);
 	    log.debug("Retrieved Total Pending Count for Project: "
 		    + totalCount);
@@ -103,7 +115,13 @@ public class CodeTreeHelper extends ApiHelper {
     private static long checkCountForPending(String projectKey, String path,
 	    NodeCountType... types) throws Exception {
 	CodeTreeNodeRequest ctrRequest = new CodeTreeNodeRequest();
-	ctrRequest.setDepth(CodeTreeUtilities.INFINITE_DEPTH);
+
+	// ctrRequest.setDepth(CodeTreeUtilities.INFINITE_DEPTH);
+	ctrRequest.setDepth(CodeTreeUtilities.SINGLE_NODE); // 9/25/2014 changed
+							    // from
+							    // INFINITE_DEPTH to
+							    // SINGLE_NODE
+
 	ctrRequest.setIncludeParentNode(true);
 	List<CodeTreeNodeType> nodeTypes = ctrRequest.getIncludedNodeTypes();
 	nodeTypes.add(CodeTreeNodeType.FILE);
@@ -117,6 +135,7 @@ public class CodeTreeHelper extends ApiHelper {
 	try {
 	    List<CodeTreeNode> nodes = codeTreeApi.getCodeTreeNodes(projectKey,
 		    path, ctrRequest);
+	    log.debug("Code tree notes fetched: " + nodes.size());
 	    for (CodeTreeNode node : nodes) {
 		Map<NodeCountType, Long> map = CodeTreeUtilities
 			.getNodeCountMap(node);
