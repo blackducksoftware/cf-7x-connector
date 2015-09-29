@@ -32,7 +32,7 @@
 		<protex.sdk.version>7.0.2</protex.sdk.version>
 		<codecenter.sdk.version>7.0.2</codecenter.sdk.version>
 		<!-- Common Framework Version -->
-		<common.framework.version>1.5.0</common.framework.version>
+		<common.framework.version>1.5.1-SNAPSHOT</common.framework.version>
 	</properties>
 
 	<dependencies>

@@ -54,7 +54,7 @@ public class ProtexIdUtils {
     private final Project project;
 
     private final Collection<IdentificationMade> identificationsMade = new ArrayList<IdentificationMade>();
-    private boolean doRefresh;
+    private final boolean doRefresh;
 
     /**
      * Constructor
