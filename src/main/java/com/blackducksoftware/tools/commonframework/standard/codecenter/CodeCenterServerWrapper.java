@@ -19,18 +19,23 @@ package com.blackducksoftware.tools.commonframework.standard.codecenter;
 
 import java.util.List;
 
-import com.blackducksoftware.tools.commonframework.connector.protex.IServerWrapper;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.application.ApplicationManager;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.application.IApplicationManager;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute.AttributeDefinitionManager;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute.IAttributeDefinitionManager;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 
 /**
  * The Class CodeCenterServerWrapper.
  */
-public class CodeCenterServerWrapper implements IServerWrapper {
+public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 
     /** The api wrapper. */
     private final CodeCenterAPIWrapper apiWrapper;
+    private final IAttributeDefinitionManager attributeDefinitionManager;
+    private final IApplicationManager applicationManager;
 
     /** The config manager. */
     private final ConfigurationManager configManager;
@@ -39,6 +44,8 @@ public class CodeCenterServerWrapper implements IServerWrapper {
 	    throws Exception {
 	configManager = manager;
 	apiWrapper = new CodeCenterAPIWrapper(bean, manager);
+	applicationManager = new ApplicationManager(this);
+	attributeDefinitionManager = new AttributeDefinitionManager(this);
     }
 
     @Override
@@ -66,4 +73,13 @@ public class CodeCenterServerWrapper implements IServerWrapper {
 	return configManager;
     }
 
+    @Override
+    public IApplicationManager getApplicationManager() {
+	return applicationManager;
+    }
+
+    @Override
+    public IAttributeDefinitionManager getAttributeDefinitionManager() {
+	return attributeDefinitionManager;
+    }
 }
