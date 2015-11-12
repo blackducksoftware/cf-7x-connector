@@ -17,9 +17,8 @@ import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute
 
 public class ApplicationManager implements IApplicationManager {
     private final ICodeCenterServerWrapper ccsw;
-    private final Map<NameVersion, Application> appsByNameVersion = new HashMap<>();
-    private final Map<String, Application> appsById = new HashMap<>();
-    private final Map<String, List<AttributeValue>> attrValuesByAppId = new HashMap<>();
+    private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
+    private final Map<String, Application> appsByIdCache = new HashMap<>();
 
     public ApplicationManager(ICodeCenterServerWrapper ccsw) {
 	this.ccsw = ccsw;
@@ -29,8 +28,8 @@ public class ApplicationManager implements IApplicationManager {
     public ApplicationPojo getApplicationByNameVersion(String name,
 	    String version) throws CommonFrameworkException {
 	NameVersion nameVersion = new NameVersion(name, version);
-	if (appsByNameVersion.containsKey(nameVersion)) {
-	    Application app = appsByNameVersion.get(nameVersion);
+	if (appsByNameVersionCache.containsKey(nameVersion)) {
+	    Application app = appsByNameVersionCache.get(nameVersion);
 	    return new ApplicationPojo(app.getId().getId(), name, version,
 		    toPojos(app.getAttributeValues()));
 	}
@@ -52,17 +51,16 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     private void addAppToCache(NameVersion nameVersion, Application app) {
-	appsByNameVersion.put(nameVersion, app);
-	appsById.put(app.getId().getId(), app);
-	attrValuesByAppId.put(app.getId().getId(), app.getAttributeValues());
+	appsByNameVersionCache.put(nameVersion, app);
+	appsByIdCache.put(app.getId().getId(), app);
     }
 
     @Override
     public ApplicationPojo getApplicationById(String id)
 	    throws CommonFrameworkException {
 
-	if (appsById.containsKey(id)) {
-	    Application app = appsById.get(id);
+	if (appsByIdCache.containsKey(id)) {
+	    Application app = appsByIdCache.get(id);
 	    return new ApplicationPojo(id, app.getName(), app.getVersion(),
 		    toPojos(app.getAttributeValues()));
 	}
@@ -88,6 +86,13 @@ public class ApplicationManager implements IApplicationManager {
 		app.getVersion(), attrValuePojos);
     }
 
+    /**
+     * Convert the SDK attribute values object to a POJO.
+     *
+     * @param attrValues
+     * @return
+     * @throws CommonFrameworkException
+     */
     private List<AttributeValuePojo> toPojos(List<AttributeValue> attrValues)
 	    throws CommonFrameworkException {
 	List<AttributeValuePojo> pojos = new ArrayList<>();
@@ -96,8 +101,8 @@ public class ApplicationManager implements IApplicationManager {
 		    .getAttributeId();
 	    String attrId = attrIdToken.getId();
 	    AttributeDefinitionPojo attrDefPojo = ccsw
-		    .getAttributeDefinitionManager().getAttributeDefinitionById(
-			    attrId);
+		    .getAttributeDefinitionManager()
+		    .getAttributeDefinitionById(attrId);
 	    String attrName = attrDefPojo.getName();
 
 	    String value = null;

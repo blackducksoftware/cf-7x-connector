@@ -13,8 +13,8 @@ import com.blackducksoftware.tools.commonframework.standard.codecenter.ICodeCent
 
 public class AttributeDefinitionManager implements IAttributeDefinitionManager {
     private final ICodeCenterServerWrapper ccsw;
-    private final Map<String, AbstractAttribute> attrDefsByName = new HashMap<>();
-    private final Map<String, AbstractAttribute> attrDefsById = new HashMap<>();
+    private final Map<String, AbstractAttribute> attrDefsByNameCache = new HashMap<>();
+    private final Map<String, AbstractAttribute> attrDefsByIdCache = new HashMap<>();
 
     public AttributeDefinitionManager(ICodeCenterServerWrapper ccsw) {
 	this.ccsw = ccsw;
@@ -24,7 +24,7 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
     public boolean validateAttributeTypeName(AttributeGroupType type,
 	    String name) {
 	try {
-	    getAttributeValueType(type, name);
+	    getAttributeValueTypeWithinGroup(type, name);
 	    return true;
 	} catch (CommonFrameworkException e) {
 	    return false;
@@ -32,7 +32,7 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
     }
 
     @Override
-    public AttributeValueType getAttributeValueType(
+    public AttributeValueType getAttributeValueTypeWithinGroup(
 	    AttributeGroupType groupType, String attrName)
 	    throws CommonFrameworkException {
 
@@ -57,18 +57,13 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
 		+ attrName + " not found.");
     }
 
-    private void addToCache(AbstractAttribute attrDef) {
-	attrDefsById.put(attrDef.getId().getId(), attrDef);
-	attrDefsByName.put(attrDef.getName(), attrDef);
-    }
-
     @Override
     public AttributeDefinitionPojo getAttributeDefinitionById(String attributeId)
 	    throws CommonFrameworkException {
 	AbstractAttribute attrDef;
 
-	if (attrDefsById.containsKey(attributeId)) {
-	    attrDef = attrDefsById.get(attributeId);
+	if (attrDefsByIdCache.containsKey(attributeId)) {
+	    attrDef = attrDefsByIdCache.get(attributeId);
 	} else {
 	    AttributeIdToken attrToken = new AttributeIdToken();
 	    attrToken.setId(attributeId);
@@ -92,8 +87,8 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
 	    String attributeName) throws CommonFrameworkException {
 	AbstractAttribute attrDef;
 
-	if (attrDefsByName.containsKey(attributeName)) {
-	    attrDef = attrDefsByName.get(attributeName);
+	if (attrDefsByNameCache.containsKey(attributeName)) {
+	    attrDef = attrDefsByNameCache.get(attributeName);
 	} else {
 	    AttributeNameToken attrToken = new AttributeNameToken();
 	    attrToken.setName(attributeName);
@@ -110,5 +105,10 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
 	return new AttributeDefinitionPojo(attrDef.getId().getId(),
 		attrDef.getName(), attrDef.getAttrType(),
 		attrDef.getDescription(), attrDef.getQuestion());
+    }
+
+    private void addToCache(AbstractAttribute attrDef) {
+	attrDefsByIdCache.put(attrDef.getId().getId(), attrDef);
+	attrDefsByNameCache.put(attrDef.getName(), attrDef);
     }
 }
