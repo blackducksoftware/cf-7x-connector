@@ -4,6 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A non-SDK-specific class representing an application.
+ *
+ * TODO: The POJOs in this package and it's sister packages should be merged
+ * with (into) the POJOs in commonframework in
+ * com.blackducksoftware.tools.commonframework.standard.codecenter.pojo. This
+ * application POJO is functionally almost identical to the one in
+ * commonframework. The rest of them are complementary (non-overlapping).
+ *
+ * @author sbillings
+ *
+ */
 public class ApplicationPojo {
     private final String id;
     private final String name;

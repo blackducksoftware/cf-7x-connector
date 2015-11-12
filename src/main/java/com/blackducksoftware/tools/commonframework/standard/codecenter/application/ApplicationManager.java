@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.blackducksoftware.sdk.codecenter.application.data.Application;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationNameVersionToken;
@@ -15,7 +18,25 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
 import com.blackducksoftware.tools.commonframework.standard.codecenter.ICodeCenterServerWrapper;
 import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute.AttributeDefinitionPojo;
 
+/**
+ * Provides a higher level of abstraction for accessing Code Center
+ * applications.
+ *
+ * The objects returned are POJOs, not SDK objects.
+ *
+ * Applications are cached in case they are requested again.
+ *
+ * Attribute values are part of the application to which they are assigned.
+ *
+ * Multiple value attributes are not supported. If a multiple-value attribute is
+ * read, the first value (only) will be used.
+ *
+ * @author sbillings
+ *
+ */
 public class ApplicationManager implements IApplicationManager {
+    private final Logger log = LoggerFactory.getLogger(this.getClass()
+	    .getName());
     private final ICodeCenterServerWrapper ccsw;
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
@@ -87,7 +108,7 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     /**
-     * Convert the SDK attribute values object to a POJO.
+     * Convert a list of attribute values (SDK objects) to POJOs.
      *
      * @param attrValues
      * @return
@@ -97,9 +118,7 @@ public class ApplicationManager implements IApplicationManager {
 	    throws CommonFrameworkException {
 	List<AttributeValuePojo> pojos = new ArrayList<>();
 	for (AttributeValue attrValue : attrValues) {
-	    AttributeIdToken attrIdToken = (AttributeIdToken) attrValue
-		    .getAttributeId();
-	    String attrId = attrIdToken.getId();
+	    String attrId = getAttributeId(attrValue);
 	    AttributeDefinitionPojo attrDefPojo = ccsw
 		    .getAttributeDefinitionManager()
 		    .getAttributeDefinitionById(attrId);
@@ -107,6 +126,10 @@ public class ApplicationManager implements IApplicationManager {
 
 	    String value = null;
 	    List<String> valueList = attrValue.getValues();
+	    if (valueList.size() > 1) {
+		log.warn(attrName
+			+ " has multiple values, which is not supported; using the first value");
+	    }
 	    if ((valueList != null) && (valueList.size() > 0)) {
 		value = attrValue.getValues().get(0);
 	    }
@@ -115,6 +138,13 @@ public class ApplicationManager implements IApplicationManager {
 	    pojos.add(pojo);
 	}
 	return pojos;
+    }
+
+    private String getAttributeId(AttributeValue attrValue) {
+	AttributeIdToken attrIdToken = (AttributeIdToken) attrValue
+		.getAttributeId();
+	String attrId = attrIdToken.getId();
+	return attrId;
     }
 
     private class NameVersion {
