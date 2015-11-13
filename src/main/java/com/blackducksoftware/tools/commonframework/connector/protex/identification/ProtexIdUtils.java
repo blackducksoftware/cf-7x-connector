@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 //import org.apache.log4j.Logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ import com.blackducksoftware.sdk.protex.project.codetree.discovery.CodeMatchType
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.IdentificationStatus;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
+import com.blackducksoftware.tools.commonframework.connector.protex.IProtexServerWrapper;
 import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.identification.IdentificationMade;
@@ -147,7 +149,7 @@ public class ProtexIdUtils {
 	log.debug("Added Identification for " + idMade);
     }
 
-    public ProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper() {
+    public IProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper() {
 	return protexServerWrapper;
     }
 

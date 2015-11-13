@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import org.jsoup.nodes.Document;
 
-import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.commonframework.connector.protex.IProtexServerWrapper;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.HocElement;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.IAdHocParser;
@@ -41,7 +41,7 @@ public class AdHocHTMLParser<T extends HocElement> implements IAdHocParser<T> {
      * Instantiates a new ad hoc parser.
      */
     public AdHocHTMLParser(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper)
+	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper)
 	    throws Exception {
 	actualParser = new AdHocHTMLParserProtex7<T>();
     }
