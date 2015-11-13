@@ -25,7 +25,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.blackducksoftware.tools.commonframework.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.commonframework.connector.protex.IProtexServerWrapper;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.HocElement;
 
@@ -55,7 +55,7 @@ public class ProtexReportHTMLProcessor {
      *             the exception
      */
     public static <T extends HocElement> List<T> getRowsFromBuffer(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
 	    boolean returnRawHtml, LineNumberReader lnr,
 	    Class<T> hocElementClass) throws Exception {
 	List<T> parsedRows = new ArrayList<T>();
@@ -163,7 +163,7 @@ public class ProtexReportHTMLProcessor {
      * @throws Exception
      */
     public static <T extends HocElement> List<T> getReportSectionData(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
 	    Class<T> hocElementClass, int targetSectionIndex,
 	    boolean returnRawHtml) throws Exception {
 	AdHocHTMLParser<T> parser = new AdHocHTMLParser<T>(protexServerWrapper);

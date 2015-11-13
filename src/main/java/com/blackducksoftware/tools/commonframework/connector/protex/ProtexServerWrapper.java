@@ -47,7 +47,7 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
  *
  */
 public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
-	IServerWrapper {
+	IServerWrapper, IProtexServerWrapper<T> {
 
     /** The log. */
     private final Logger log = LoggerFactory.getLogger(this.getClass()
@@ -78,20 +78,11 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 
     }
 
+    @Override
     public CodeTreeHelper getCodeTreeHelper() {
 	return codeTreeHelper;
     }
 
-    /**
-     * Returns a pojo based on name. Throws exception if name does not produce
-     * anything
-     *
-     * @param projectName
-     *            the project name
-     * @return the project by name
-     * @throws Exception
-     *             the exception
-     */
     @Override
     public ProjectPojo getProjectByName(String projectName)
 	    throws CommonFrameworkException {
@@ -118,15 +109,6 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	return pojo;
     }
 
-    /**
-     * Returns project POJO based on ID.
-     *
-     * @param projectID
-     *            the project id
-     * @return the project by id
-     * @throws Exception
-     *             the exception
-     */
     @Override
     public ProjectPojo getProjectByID(String projectID)
 	    throws CommonFrameworkException {
@@ -151,6 +133,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	return pojo;
     }
 
+    @Override
     public String getProjectURL(ProjectPojo pojo) {
 	String bomUrl = serverBean.getServerName()
 		+ "/protex/ProtexIPIdentifyFolderBillOfMaterialsContainer?isAtTop=true&ProtexIPProjectId="
@@ -177,16 +160,6 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	return pojo;
     }
 
-    /**
-     * Returns a list of ProtexProjectPojos populated with necessary date.
-     *
-     * @param <T>
-     *            Your pojo (can be a default ProtexProjectPojo).
-     *
-     * @return the projects
-     * @throws Exception
-     *             the exception
-     */
     @Override
     public <T> List<T> getProjects(Class<T> theProjectClass) throws Exception {
 	ArrayList<T> projectList = new ArrayList<T>();
@@ -245,17 +218,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	return projectList;
     }
 
-    /**
-     * Creates the project.
-     *
-     * @param projectName
-     *            the project name
-     * @param description
-     *            the description
-     * @return the string
-     * @throws Exception
-     *             the exception
-     */
+    @Override
     public String createProject(String projectName, String description)
 	    throws Exception {
 	String projectID = "";

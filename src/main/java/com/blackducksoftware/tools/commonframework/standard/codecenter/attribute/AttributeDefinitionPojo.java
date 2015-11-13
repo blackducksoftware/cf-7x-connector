@@ -36,4 +36,11 @@ public class AttributeDefinitionPojo {
 	return question;
     }
 
+    @Override
+    public String toString() {
+	return "AttributeDefinitionPojo [name=" + name + ", attrType="
+		+ attrType + ", description=" + description + ", question="
+		+ question + "]";
+    }
+
 }
