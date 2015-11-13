@@ -8,6 +8,7 @@
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>
 
+
 	<description>
 		A connector for the 7.X SDK to be used in conjunction with the Common Framework
 	</description>
