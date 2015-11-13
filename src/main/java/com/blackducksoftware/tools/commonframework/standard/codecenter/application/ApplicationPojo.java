@@ -54,4 +54,10 @@ public class ApplicationPojo {
 		    .put(attrValue.getName(), attrValue.getValue());
 	}
     }
+
+    @Override
+    public String toString() {
+	return "ApplicationPojo [name=" + name + ", version=" + version + "]";
+    }
+
 }
