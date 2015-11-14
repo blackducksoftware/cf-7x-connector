@@ -33,6 +33,8 @@ import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.ProjectApi;
 import com.blackducksoftware.sdk.protex.project.ProjectInfo;
 import com.blackducksoftware.sdk.protex.project.ProjectRequest;
+import com.blackducksoftware.tools.commonframework.connector.protex.license.ILicenseManager;
+import com.blackducksoftware.tools.commonframework.connector.protex.license.LicenseManager;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -47,11 +49,13 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
  *
  */
 public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
-	IServerWrapper, IProtexServerWrapper<T> {
+	IProtexServerWrapper<T> {
 
     /** The log. */
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
+
+    private ILicenseManager licenseManager;
 
     /** The api wrapper. */
     private ProtexAPIWrapper apiWrapper;
@@ -75,7 +79,8 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	configManager = manager;
 	apiWrapper = new ProtexAPIWrapper(bean, manager, validate);
 	codeTreeHelper = new CodeTreeHelper(apiWrapper);
-
+	licenseManager = new LicenseManager(
+		(IProtexServerWrapper<ProtexProjectPojo>) this);
     }
 
     @Override
@@ -275,5 +280,10 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	}
 
 	return pojo;
+    }
+
+    @Override
+    public ILicenseManager getLicenseManager() {
+	return licenseManager;
     }
 }

@@ -2,14 +2,16 @@ package com.blackducksoftware.tools.commonframework.connector.protex;
 
 import java.util.List;
 
+import com.blackducksoftware.tools.commonframework.connector.protex.license.ILicenseManager;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 
-public interface IProtexServerWrapper<T extends ProtexProjectPojo> {
+public interface IProtexServerWrapper<T extends ProtexProjectPojo> extends
+	IServerWrapper {
 
-    public abstract CodeTreeHelper getCodeTreeHelper();
+    CodeTreeHelper getCodeTreeHelper();
 
     /**
      * Returns a pojo based on name. Throws exception if name does not produce
@@ -21,7 +23,8 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> {
      * @throws Exception
      *             the exception
      */
-    public abstract ProjectPojo getProjectByName(String projectName)
+    @Override
+    ProjectPojo getProjectByName(String projectName)
 	    throws CommonFrameworkException;
 
     /**
@@ -33,10 +36,11 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> {
      * @throws Exception
      *             the exception
      */
-    public abstract ProjectPojo getProjectByID(String projectID)
+    @Override
+    ProjectPojo getProjectByID(String projectID)
 	    throws CommonFrameworkException;
 
-    public abstract String getProjectURL(ProjectPojo pojo);
+    String getProjectURL(ProjectPojo pojo);
 
     /**
      * Returns a list of ProtexProjectPojos populated with necessary date.
@@ -48,8 +52,8 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> {
      * @throws Exception
      *             the exception
      */
-    public abstract <T> List<T> getProjects(Class<T> theProjectClass)
-	    throws Exception;
+    @Override
+    <T> List<T> getProjects(Class<T> theProjectClass) throws Exception;
 
     /**
      * Creates the project.
@@ -62,11 +66,15 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> {
      * @throws Exception
      *             the exception
      */
-    public abstract String createProject(String projectName, String description)
+    String createProject(String projectName, String description)
 	    throws Exception;
 
-    public abstract ProtexAPIWrapper getInternalApiWrapper();
+    @Override
+    ProtexAPIWrapper getInternalApiWrapper();
 
-    public abstract ConfigurationManager getConfigManager();
+    @Override
+    ConfigurationManager getConfigManager();
+
+    ILicenseManager getLicenseManager();
 
 }

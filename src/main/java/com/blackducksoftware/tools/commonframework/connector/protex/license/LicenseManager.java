@@ -9,6 +9,12 @@ import com.blackducksoftware.tools.commonframework.connector.protex.IProtexServe
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 
+/**
+ * Provide cached license data retrieved from Protex.
+ *
+ * @author sbillings
+ *
+ */
 public class LicenseManager implements ILicenseManager {
     private final IProtexServerWrapper<ProtexProjectPojo> psw;
     private final Map<String, GlobalLicense> licenseByNameCache = new HashMap<>();
@@ -18,7 +24,15 @@ public class LicenseManager implements ILicenseManager {
 	this.psw = psw;
     }
 
-    // TODO comments
+    /**
+     * Get license by name.
+     *
+     * If it's in the cache, return that. Else get it from Protex.
+     *
+     * @param licenseName
+     * @return
+     * @throws CommonFrameworkException
+     */
     @Override
     public LicensePojo getLicenseByName(String licenseName)
 	    throws CommonFrameworkException {
@@ -42,6 +56,15 @@ public class LicenseManager implements ILicenseManager {
 	return licPojo;
     }
 
+    /**
+     * Get license by ID.
+     *
+     * If it's in the cache, return that. Else get it from Protex.
+     *
+     * @param licenseId
+     * @return
+     * @throws CommonFrameworkException
+     */
     @Override
     public LicensePojo getLicenseById(String licenseId)
 	    throws CommonFrameworkException {
@@ -63,6 +86,8 @@ public class LicenseManager implements ILicenseManager {
 	addToCache(globalLicense);
 	return createPojo(globalLicense);
     }
+
+    // Private methods
 
     private void addToCache(GlobalLicense lic) {
 	licenseByIdCache.put(lic.getLicenseId(), lic);
