@@ -1,5 +1,6 @@
 package com.blackducksoftware.tools.commonframework.connector.protex.license;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
  *
  */
 public class LicenseManager implements ILicenseManager {
+    private static final String LICENSE_TEXT_CHAR_ENCODING = "UTF-8";
     private final IProtexServerWrapper<ProtexProjectPojo> psw;
     private final Map<String, GlobalLicense> licenseByNameCache = new HashMap<>();
     private final Map<String, GlobalLicense> licenseByIdCache = new HashMap<>();
@@ -96,10 +98,22 @@ public class LicenseManager implements ILicenseManager {
 
     private LicensePojo createPojo(GlobalLicense lic)
 	    throws CommonFrameworkException {
+	String licenseText;
+
+	try {
+	    licenseText = new String(lic.getText(), LICENSE_TEXT_CHAR_ENCODING);
+	} catch (UnsupportedEncodingException e) {
+	    throw new CommonFrameworkException(
+		    "Error converting license text bytes to a String interpreting them using character encoding "
+			    + LICENSE_TEXT_CHAR_ENCODING
+			    + ": "
+			    + e.getMessage());
+	}
+
 	LicensePojo licPojo = new LicensePojo(lic.getLicenseId(),
 		lic.getName(), lic.getComment(), lic.getExplanation(),
 		lic.getSuffix(), LicensePojo.toApprovalState(lic
-			.getApprovalState()));
+			.getApprovalState()), licenseText);
 	return licPojo;
     }
 

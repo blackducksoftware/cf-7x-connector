@@ -10,6 +10,7 @@ import com.blackducksoftware.tools.commonframework.connector.protex.license.Lice
 
 public class LicensePojoTest {
 
+    private static final String TEST_TEXT = "Test License Text";
     private static final String TEST_SUFFIX = "Test Suffix";
     private static final String TEST_EXPLANATION = "Test Explanation";
     private static final String TEST_COMMENT = "Test Comment";
@@ -28,7 +29,7 @@ public class LicensePojoTest {
     public void test() {
 	LicensePojo lic = new LicensePojo(TEST_ID, TEST_NAME, TEST_COMMENT,
 		TEST_EXPLANATION, TEST_SUFFIX,
-		LicensePojo.ApprovalState.DISAPPROVED);
+		LicensePojo.ApprovalState.DISAPPROVED, TEST_TEXT);
 
 	assertEquals(TEST_ID, lic.getId());
 	assertEquals(TEST_NAME, lic.getName());
@@ -37,5 +38,6 @@ public class LicensePojoTest {
 	assertEquals(TEST_SUFFIX, lic.getSuffix());
 	assertEquals(LicensePojo.ApprovalState.DISAPPROVED,
 		lic.getApprovalState());
+	assertEquals(TEST_TEXT, lic.getLicenseText());
     }
 }

@@ -17,15 +17,18 @@ public class LicensePojo {
     private final String explanation;
     private final String suffix;
     private final ApprovalState approvalState;
+    private final String licenseText;
 
     public LicensePojo(String id, String name, String comment,
-	    String explanation, String suffix, ApprovalState approvalState) {
+	    String explanation, String suffix, ApprovalState approvalState,
+	    String licenseText) {
 	this.id = id;
 	this.name = name;
 	this.comment = comment;
 	this.explanation = explanation;
 	this.suffix = suffix;
 	this.approvalState = approvalState;
+	this.licenseText = licenseText;
     }
 
     public String getId() {
@@ -50,6 +53,10 @@ public class LicensePojo {
 
     public ApprovalState getApprovalState() {
 	return approvalState;
+    }
+
+    public String getLicenseText() {
+	return licenseText;
     }
 
     @Override
