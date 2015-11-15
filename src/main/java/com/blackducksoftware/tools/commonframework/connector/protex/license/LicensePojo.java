@@ -3,6 +3,12 @@ package com.blackducksoftware.tools.commonframework.connector.protex.license;
 import com.blackducksoftware.sdk.protex.license.LicenseApprovalState;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 
+/**
+ * License details.
+ *
+ * @author sbillings
+ *
+ */
 public class LicensePojo {
 
     private final String id;
@@ -52,7 +58,14 @@ public class LicensePojo {
 		+ "]";
     }
 
-    // TODO Move this to ApprovalState enum?
+    /**
+     * Convert an SDK license approval value to an ApprovalState (the generic
+     * equivalent).
+     *
+     * @param sdkApprovalState
+     * @return
+     * @throws CommonFrameworkException
+     */
     static ApprovalState toApprovalState(LicenseApprovalState sdkApprovalState)
 	    throws CommonFrameworkException {
 	switch (sdkApprovalState) {
@@ -70,6 +83,13 @@ public class LicensePojo {
 	}
     }
 
+    /**
+     * Approval state enum (generic, to keep client code free from SDK
+     * references).
+     *
+     * @author sbillings
+     *
+     */
     public enum ApprovalState {
 	APPROVED(LicenseApprovalState.APPROVED), BLANKET_APPROVED(
 		LicenseApprovalState.BLANKET_APPROVED), DISAPPROVED(
