@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.commonframework.standard.protex.license;
+package com.blackducksoftware.tools.commonframework.connector.protex.license;
 
 import static org.junit.Assert.assertEquals;
 
