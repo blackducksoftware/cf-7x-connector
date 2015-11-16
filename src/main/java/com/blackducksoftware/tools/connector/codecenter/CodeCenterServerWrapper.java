@@ -27,6 +27,8 @@ import com.blackducksoftware.tools.connector.codecenter.application.IApplication
 import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionManager;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 import com.blackducksoftware.tools.connector.codecenter.license.LicenseManager;
+import com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager;
+import com.blackducksoftware.tools.connector.codecenter.protexservers.ProtexServerManager;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
@@ -40,6 +42,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
     private final IAttributeDefinitionManager attributeDefinitionManager;
     private final IApplicationManager applicationManager;
     private final ILicenseManager<LicensePojo> licenseManager;
+    private final IProtexServerManager protexServerManager;
 
     /** The config manager. */
     private final ConfigurationManager configManager;
@@ -52,6 +55,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 	applicationManager = new ApplicationManager(apiWrapper,
 		attributeDefinitionManager);
 	licenseManager = new LicenseManager(apiWrapper);
+	protexServerManager = new ProtexServerManager(this, manager);
     }
 
     @Override
@@ -92,5 +96,10 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
     @Override
     public ILicenseManager<LicensePojo> getLicenseManager() {
 	return licenseManager;
+    }
+
+    @Override
+    public IProtexServerManager getProtexServerManager() {
+	return protexServerManager;
     }
 }
