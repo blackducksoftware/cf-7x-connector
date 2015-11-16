@@ -40,6 +40,7 @@ import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.LicenseManager;
+import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
 
 /**
  * Wrapper class around the Protex Server that provides common methods. This is
@@ -283,7 +284,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     }
 
     @Override
-    public ILicenseManager getLicenseManager() {
+    public ILicenseManager<ProtexLicensePojo> getLicenseManager() {
 	return licenseManager;
     }
 }

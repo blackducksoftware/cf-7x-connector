@@ -7,6 +7,7 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
+import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
 
 public interface IProtexServerWrapper<T extends ProtexProjectPojo> extends
 	IServerWrapper {
@@ -75,6 +76,6 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> extends
     @Override
     ConfigurationManager getConfigManager();
 
-    ILicenseManager getLicenseManager();
+    ILicenseManager<ProtexLicensePojo> getLicenseManager();
 
 }
