@@ -15,6 +15,8 @@ import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
 import com.blackducksoftware.sdk.codecenter.common.data.AttributeValue;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
+import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
+import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionPojo;
@@ -43,6 +45,7 @@ public class ApplicationManager implements IApplicationManager {
     private final IAttributeDefinitionManager attrDefMgr;
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
+    private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
 	    IAttributeDefinitionManager attrDefMgr) {
@@ -50,6 +53,11 @@ public class ApplicationManager implements IApplicationManager {
 	this.attrDefMgr = attrDefMgr;
     }
 
+    /**
+     * Get an application by name/version.
+     *
+     * Applications are cached.
+     */
     @Override
     public ApplicationPojo getApplicationByNameVersion(String name,
 	    String version) throws CommonFrameworkException {
@@ -109,6 +117,11 @@ public class ApplicationManager implements IApplicationManager {
 	appsByIdCache.put(app.getId().getId(), app);
     }
 
+    /**
+     * Get an application by ID.
+     *
+     * Applications are cached.
+     */
     @Override
     public ApplicationPojo getApplicationById(String id)
 	    throws CommonFrameworkException {
@@ -215,5 +228,66 @@ public class ApplicationManager implements IApplicationManager {
 	    return (getName().hashCode() << 1) + getVersion().hashCode();
 	}
 
+    }
+
+    /**
+     * Get an application's requests, by application ID.
+     *
+     * Request lists are cached by application ID.
+     */
+    @Override
+    public List<RequestPojo> getRequestsByAppId(String appId)
+	    throws CommonFrameworkException {
+
+	// Check cache first
+	if (requestListsByAppIdCache.containsKey(appId)) {
+	    return createRequestPojoList(appId,
+		    requestListsByAppIdCache.get(appId));
+	}
+
+	ApplicationIdToken appToken = new ApplicationIdToken();
+	appToken.setId(appId);
+
+	RequestPageFilter pageFilter = new RequestPageFilter();
+	pageFilter.setFirstRowIndex(0);
+	pageFilter.setLastRowIndex(Integer.MAX_VALUE);
+	List<RequestSummary> requestSummaries;
+	try {
+	    requestSummaries = ccApiWrapper.getApplicationApi()
+		    .searchApplicationRequests(appToken, null, pageFilter);
+	} catch (SdkFault e) {
+	    throw new CommonFrameworkException(
+		    "Error fetching requests for application ID " + appId
+			    + ": " + e.getMessage());
+	}
+
+	// Cache the request list for this appId
+	requestListsByAppIdCache.put(appId, requestSummaries);
+
+	// Convert from sdk request list to pojo request list
+	List<RequestPojo> requests = createRequestPojoList(appId,
+		requestSummaries);
+
+	return requests;
+    }
+
+    private List<RequestPojo> createRequestPojoList(String appId,
+	    List<RequestSummary> requestSummaries)
+	    throws CommonFrameworkException {
+	List<RequestPojo> requests = new ArrayList<>(requestSummaries.size());
+	for (RequestSummary sdkRequest : requestSummaries) {
+	    RequestPojo request = createRequestPojo(appId, sdkRequest);
+	    requests.add(request);
+	}
+	return requests;
+    }
+
+    private RequestPojo createRequestPojo(String appId,
+	    RequestSummary sdkRequest) throws CommonFrameworkException {
+	RequestPojo request = new RequestPojo(sdkRequest.getId().getId(),
+		appId, sdkRequest.getComponentId().getId(),
+		toPojo(sdkRequest.getApprovalStatus()), sdkRequest
+			.getLicenseInfo().getId().getId());
+	return request;
     }
 }
