@@ -9,9 +9,9 @@ import java.util.Map;
  *
  * TODO: The POJOs in this package and it's sister packages should be merged
  * with (into) the POJOs in commonframework in
- * com.blackducksoftware.tools.connector.codecenter.pojo. This
- * application POJO is functionally almost identical to the one in
- * commonframework. The rest of them are complementary (non-overlapping).
+ * com.blackducksoftware.tools.connector.codecenter.pojo. This application POJO
+ * is functionally almost identical to the one in commonframework. The rest of
+ * them are complementary (non-overlapping).
  *
  * @author sbillings
  *
@@ -21,14 +21,18 @@ public class ApplicationPojo {
     private final String name;
     private final String version;
     private final Map<String, String> attributeValuesByName = new HashMap<>();
+    private final ApprovalStatus approvalStatus;
 
     public ApplicationPojo(String id, String name, String version,
-	    List<AttributeValuePojo> attributeValues) {
+	    List<AttributeValuePojo> attributeValues,
+	    ApprovalStatus approvalStatus) {
 	this.id = id;
 	this.name = name;
 	this.version = version;
 
 	addAttributeValuesToMap(attributeValues);
+
+	this.approvalStatus = approvalStatus;
     }
 
     public String getName() {
@@ -53,6 +57,10 @@ public class ApplicationPojo {
 	    attributeValuesByName
 		    .put(attrValue.getName(), attrValue.getValue());
 	}
+    }
+
+    public ApprovalStatus getApprovalStatus() {
+	return approvalStatus;
     }
 
     @Override

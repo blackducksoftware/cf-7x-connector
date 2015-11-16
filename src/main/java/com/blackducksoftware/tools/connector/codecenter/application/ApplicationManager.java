@@ -12,6 +12,7 @@ import com.blackducksoftware.sdk.codecenter.application.data.Application;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationNameVersionToken;
 import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
+import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
 import com.blackducksoftware.sdk.codecenter.common.data.AttributeValue;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -56,7 +57,8 @@ public class ApplicationManager implements IApplicationManager {
 	if (appsByNameVersionCache.containsKey(nameVersion)) {
 	    Application app = appsByNameVersionCache.get(nameVersion);
 	    return new ApplicationPojo(app.getId().getId(), name, version,
-		    toPojos(app.getAttributeValues()));
+		    toPojos(app.getAttributeValues()),
+		    toPojo(app.getApprovalStatus()));
 	}
 	ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
 	appToken.setName(name);
@@ -71,7 +73,35 @@ public class ApplicationManager implements IApplicationManager {
 	addAppToCache(nameVersion, app);
 
 	return new ApplicationPojo(app.getId().getId(), name, version,
-		toPojos(app.getAttributeValues()));
+		toPojos(app.getAttributeValues()),
+		toPojo(app.getApprovalStatus()));
+    }
+
+    private ApprovalStatus toPojo(ApprovalStatusEnum ccApprovalStatus)
+	    throws CommonFrameworkException {
+	switch (ccApprovalStatus) {
+	case ALL:
+	    return ApprovalStatus.ALL;
+	case APPEALED:
+	    return ApprovalStatus.APPEALED;
+	case APPROVED:
+	    return ApprovalStatus.APPROVED;
+	case CANCELED:
+	    return ApprovalStatus.CANCELLED;
+	case DEFERRED:
+	    return ApprovalStatus.DEFERRED;
+	case MOREINFO:
+	    return ApprovalStatus.MORE_INFO;
+	case NOTSUBMITTED:
+	    return ApprovalStatus.NOT_SUBMITTED;
+	case PENDING:
+	    return ApprovalStatus.PENDING;
+	case REJECTED:
+	    return ApprovalStatus.REJECTED;
+	default:
+	    throw new CommonFrameworkException("Unsupported ApprovalStatus: "
+		    + ccApprovalStatus);
+	}
     }
 
     private void addAppToCache(NameVersion nameVersion, Application app) {
@@ -86,7 +116,8 @@ public class ApplicationManager implements IApplicationManager {
 	if (appsByIdCache.containsKey(id)) {
 	    Application app = appsByIdCache.get(id);
 	    return new ApplicationPojo(id, app.getName(), app.getVersion(),
-		    toPojos(app.getAttributeValues()));
+		    toPojos(app.getAttributeValues()),
+		    toPojo(app.getApprovalStatus()));
 	}
 	ApplicationIdToken appToken = new ApplicationIdToken();
 	appToken.setId(id);
@@ -106,7 +137,8 @@ public class ApplicationManager implements IApplicationManager {
 		.getAttributeValues());
 
 	return new ApplicationPojo(app.getId().getId(), app.getName(),
-		app.getVersion(), attrValuePojos);
+		app.getVersion(), attrValuePojos,
+		toPojo(app.getApprovalStatus()));
     }
 
     /**
