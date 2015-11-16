@@ -15,8 +15,9 @@ import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
 import com.blackducksoftware.sdk.codecenter.common.data.AttributeValue;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.ICodeCenterServerWrapper;
+import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionPojo;
+import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 
 /**
  * Provides a higher level of abstraction for accessing Code Center
@@ -37,12 +38,15 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefin
 public class ApplicationManager implements IApplicationManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
-    private final ICodeCenterServerWrapper ccsw;
+    private final CodeCenterAPIWrapper ccApiWrapper;
+    private final IAttributeDefinitionManager attrDefMgr;
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
 
-    public ApplicationManager(ICodeCenterServerWrapper ccsw) {
-	this.ccsw = ccsw;
+    public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
+	    IAttributeDefinitionManager attrDefMgr) {
+	this.ccApiWrapper = ccApiWrapper;
+	this.attrDefMgr = attrDefMgr;
     }
 
     @Override
@@ -59,8 +63,7 @@ public class ApplicationManager implements IApplicationManager {
 	appToken.setVersion(version);
 	Application app = null;
 	try {
-	    app = ccsw.getInternalApiWrapper().getApplicationApi()
-		    .getApplication(appToken);
+	    app = ccApiWrapper.getApplicationApi().getApplication(appToken);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException("Error getting application "
 		    + name + " / " + version + ": " + e.getMessage());
@@ -89,8 +92,7 @@ public class ApplicationManager implements IApplicationManager {
 	appToken.setId(id);
 	Application app = null;
 	try {
-	    app = ccsw.getInternalApiWrapper().getApplicationApi()
-		    .getApplication(appToken);
+	    app = ccApiWrapper.getApplicationApi().getApplication(appToken);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException(
 		    "Error getting application with ID " + id + ": "
@@ -119,8 +121,7 @@ public class ApplicationManager implements IApplicationManager {
 	List<AttributeValuePojo> pojos = new ArrayList<>();
 	for (AttributeValue attrValue : attrValues) {
 	    String attrId = getAttributeId(attrValue);
-	    AttributeDefinitionPojo attrDefPojo = ccsw
-		    .getAttributeDefinitionManager()
+	    AttributeDefinitionPojo attrDefPojo = attrDefMgr
 		    .getAttributeDefinitionById(attrId);
 	    String attrName = attrDefPojo.getName();
 

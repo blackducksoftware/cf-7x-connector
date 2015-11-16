@@ -48,9 +48,10 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 	    throws Exception {
 	configManager = manager;
 	apiWrapper = new CodeCenterAPIWrapper(bean, manager);
-	applicationManager = new ApplicationManager(this);
-	attributeDefinitionManager = new AttributeDefinitionManager(this);
-	licenseManager = new LicenseManager(this);
+	attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
+	applicationManager = new ApplicationManager(apiWrapper,
+		attributeDefinitionManager);
+	licenseManager = new LicenseManager(apiWrapper);
     }
 
     @Override

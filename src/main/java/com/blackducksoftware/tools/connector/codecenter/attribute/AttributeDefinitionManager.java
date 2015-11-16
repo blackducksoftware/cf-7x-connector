@@ -9,15 +9,15 @@ import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
 import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeNameToken;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.ICodeCenterServerWrapper;
+import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 
 public class AttributeDefinitionManager implements IAttributeDefinitionManager {
-    private final ICodeCenterServerWrapper ccsw;
+    private final CodeCenterAPIWrapper ccApiWrapper;
     private final Map<String, AbstractAttribute> attrDefsByNameCache = new HashMap<>();
     private final Map<String, AbstractAttribute> attrDefsByIdCache = new HashMap<>();
 
-    public AttributeDefinitionManager(ICodeCenterServerWrapper ccsw) {
-	this.ccsw = ccsw;
+    public AttributeDefinitionManager(CodeCenterAPIWrapper ccApiWrapper) {
+	this.ccApiWrapper = ccApiWrapper;
     }
 
     @Override
@@ -38,8 +38,7 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
 
 	List<AbstractAttribute> attrDefs;
 	try {
-	    attrDefs = ccsw
-		    .getInternalApiWrapper()
+	    attrDefs = ccApiWrapper
 		    .getAttributeApi()
 		    .getAllAttributesByAttributeGroupType(groupType.getCcType());
 	} catch (SdkFault e) {
@@ -68,7 +67,7 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
 	    AttributeIdToken attrToken = new AttributeIdToken();
 	    attrToken.setId(attributeId);
 	    try {
-		attrDef = ccsw.getInternalApiWrapper().getAttributeApi()
+		attrDef = ccApiWrapper.getAttributeApi()
 			.getAttribute(attrToken);
 		addToCache(attrDef);
 	    } catch (SdkFault e) {
@@ -93,7 +92,7 @@ public class AttributeDefinitionManager implements IAttributeDefinitionManager {
 	    AttributeNameToken attrToken = new AttributeNameToken();
 	    attrToken.setName(attributeName);
 	    try {
-		attrDef = ccsw.getInternalApiWrapper().getAttributeApi()
+		attrDef = ccApiWrapper.getAttributeApi()
 			.getAttribute(attrToken);
 		addToCache(attrDef);
 	    } catch (SdkFault e) {

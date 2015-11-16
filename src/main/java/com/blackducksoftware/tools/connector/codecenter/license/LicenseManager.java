@@ -5,15 +5,15 @@ import com.blackducksoftware.sdk.codecenter.cola.data.LicenseIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.LicenseNameToken;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.ICodeCenterServerWrapper;
+import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 public class LicenseManager implements ILicenseManager<LicensePojo> {
-    private final ICodeCenterServerWrapper ccsw;
+    private final CodeCenterAPIWrapper ccApiWrapper;
 
-    public LicenseManager(ICodeCenterServerWrapper codeCenterServerWrapper) {
-	ccsw = codeCenterServerWrapper;
+    public LicenseManager(CodeCenterAPIWrapper ccApiWrapper) {
+	this.ccApiWrapper = ccApiWrapper;
     }
 
     @Override
@@ -23,8 +23,7 @@ public class LicenseManager implements ILicenseManager<LicensePojo> {
 	licToken.setName(licenseName);
 	License lic;
 	try {
-	    lic = ccsw.getInternalApiWrapper().getColaApi()
-		    .getLicense(licToken);
+	    lic = ccApiWrapper.getColaApi().getLicense(licToken);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException("Error getting license "
 		    + licenseName + " from Code Center: " + e.getMessage());
@@ -40,8 +39,7 @@ public class LicenseManager implements ILicenseManager<LicensePojo> {
 	licToken.setId(licenseId);
 	License lic;
 	try {
-	    lic = ccsw.getInternalApiWrapper().getColaApi()
-		    .getLicense(licToken);
+	    lic = ccApiWrapper.getColaApi().getLicense(licToken);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException(
 		    "Error getting license for License ID " + licenseId
