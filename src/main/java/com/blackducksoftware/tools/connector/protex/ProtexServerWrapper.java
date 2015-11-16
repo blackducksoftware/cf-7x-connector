@@ -38,7 +38,7 @@ import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
-import com.blackducksoftware.tools.connector.protex.license.ILicenseManager;
+import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.LicenseManager;
 
 /**

@@ -1,5 +1,5 @@
 /**
- * 
+ * Code Center license manager and supporting classes.
  */
 /**
  * @author sbillings

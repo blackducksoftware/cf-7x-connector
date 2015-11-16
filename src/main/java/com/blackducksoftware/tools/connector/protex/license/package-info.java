@@ -1,5 +1,5 @@
 /**
- * 
+ * Protex license manager and supporting classes.
  */
 /**
  * @author sbillings

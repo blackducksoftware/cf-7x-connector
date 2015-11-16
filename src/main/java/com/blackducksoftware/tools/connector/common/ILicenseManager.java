@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.protex.license;
+package com.blackducksoftware.tools.connector.common;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 
@@ -8,7 +8,7 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
  * @author sbillings
  *
  */
-public interface ILicenseManager {
+public interface ILicenseManager<T extends LicensePojo> {
     /**
      * Get license by name.
      *
@@ -16,8 +16,7 @@ public interface ILicenseManager {
      * @return
      * @throws CommonFrameworkException
      */
-    LicensePojo getLicenseByName(String licenseName)
-	    throws CommonFrameworkException;
+    T getLicenseByName(String licenseName) throws CommonFrameworkException;
 
     /**
      * Get license by ID.
@@ -26,6 +25,5 @@ public interface ILicenseManager {
      * @return
      * @throws CommonFrameworkException
      */
-    LicensePojo getLicenseById(String licenseId)
-	    throws CommonFrameworkException;
+    T getLicenseById(String licenseId) throws CommonFrameworkException;
 }

@@ -6,8 +6,10 @@ import com.blackducksoftware.sdk.codecenter.cola.data.LicenseNameToken;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.ICodeCenterServerWrapper;
+import com.blackducksoftware.tools.connector.common.ILicenseManager;
+import com.blackducksoftware.tools.connector.common.LicensePojo;
 
-public class LicenseManager implements ILicenseManager {
+public class LicenseManager implements ILicenseManager<LicensePojo> {
     private final ICodeCenterServerWrapper ccsw;
 
     public LicenseManager(ICodeCenterServerWrapper codeCenterServerWrapper) {

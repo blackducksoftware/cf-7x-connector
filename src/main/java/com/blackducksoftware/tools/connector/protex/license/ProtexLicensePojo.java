@@ -2,6 +2,7 @@ package com.blackducksoftware.tools.connector.protex.license;
 
 import com.blackducksoftware.sdk.protex.license.LicenseApprovalState;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
+import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 /**
  * License details.
@@ -9,34 +10,22 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
  * @author sbillings
  *
  */
-public class LicensePojo {
+public class ProtexLicensePojo extends LicensePojo {
 
-    private final String id;
-    private final String name;
     private final String comment;
     private final String explanation;
     private final String suffix;
     private final ApprovalState approvalState;
-    private final String licenseText;
 
-    public LicensePojo(String id, String name, String comment,
+    public ProtexLicensePojo(String id, String name, String comment,
 	    String explanation, String suffix, ApprovalState approvalState,
 	    String licenseText) {
-	this.id = id;
-	this.name = name;
+	super(id, name, licenseText);
+
 	this.comment = comment;
 	this.explanation = explanation;
 	this.suffix = suffix;
 	this.approvalState = approvalState;
-	this.licenseText = licenseText;
-    }
-
-    public String getId() {
-	return id;
-    }
-
-    public String getName() {
-	return name;
     }
 
     public String getComment() {
@@ -55,14 +44,10 @@ public class LicensePojo {
 	return approvalState;
     }
 
-    public String getLicenseText() {
-	return licenseText;
-    }
-
     @Override
     public String toString() {
-	return "LicensePojo [name=" + name + ", approvalState=" + approvalState
-		+ "]";
+	return "ProtexLicensePojo [name=" + getName() + ", approvalState="
+		+ approvalState + "]";
     }
 
     /**

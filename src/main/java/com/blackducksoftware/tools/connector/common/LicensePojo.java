@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter.license;
+package com.blackducksoftware.tools.connector.common;
 
 
 /**
@@ -33,6 +33,6 @@ public class LicensePojo {
 
     @Override
     public String toString() {
-	return "LicensePojo [id=" + id + ", name=" + name + "]";
+	return "ProtexLicensePojo [id=" + id + ", name=" + name + "]";
     }
 }

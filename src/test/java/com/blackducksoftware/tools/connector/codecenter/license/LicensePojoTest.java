@@ -6,7 +6,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blackducksoftware.tools.connector.codecenter.license.LicensePojo;
+import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 public class LicensePojoTest {
 

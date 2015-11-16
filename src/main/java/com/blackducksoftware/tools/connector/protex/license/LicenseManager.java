@@ -8,6 +8,7 @@ import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.license.GlobalLicense;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
+import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
 
 /**
@@ -16,7 +17,7 @@ import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
  * @author sbillings
  *
  */
-public class LicenseManager implements ILicenseManager {
+public class LicenseManager implements ILicenseManager<ProtexLicensePojo> {
     private static final String LICENSE_TEXT_CHAR_ENCODING = "UTF-8";
     private final IProtexServerWrapper<ProtexProjectPojo> psw;
     private final Map<String, GlobalLicense> licenseByNameCache = new HashMap<>();
@@ -36,7 +37,7 @@ public class LicenseManager implements ILicenseManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public LicensePojo getLicenseByName(String licenseName)
+    public ProtexLicensePojo getLicenseByName(String licenseName)
 	    throws CommonFrameworkException {
 
 	if (licenseByNameCache.containsKey(licenseName)) {
@@ -54,7 +55,7 @@ public class LicenseManager implements ILicenseManager {
 	}
 
 	addToCache(globalLicense);
-	LicensePojo licPojo = createPojo(globalLicense);
+	ProtexLicensePojo licPojo = createPojo(globalLicense);
 	return licPojo;
     }
 
@@ -68,7 +69,7 @@ public class LicenseManager implements ILicenseManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public LicensePojo getLicenseById(String licenseId)
+    public ProtexLicensePojo getLicenseById(String licenseId)
 	    throws CommonFrameworkException {
 
 	if (licenseByIdCache.containsKey(licenseId)) {
@@ -96,7 +97,7 @@ public class LicenseManager implements ILicenseManager {
 	licenseByNameCache.put(lic.getName(), lic);
     }
 
-    private LicensePojo createPojo(GlobalLicense lic)
+    private ProtexLicensePojo createPojo(GlobalLicense lic)
 	    throws CommonFrameworkException {
 	String licenseText;
 
@@ -110,9 +111,9 @@ public class LicenseManager implements ILicenseManager {
 			    + e.getMessage());
 	}
 
-	LicensePojo licPojo = new LicensePojo(lic.getLicenseId(),
+	ProtexLicensePojo licPojo = new ProtexLicensePojo(lic.getLicenseId(),
 		lic.getName(), lic.getComment(), lic.getExplanation(),
-		lic.getSuffix(), LicensePojo.toApprovalState(lic
+		lic.getSuffix(), ProtexLicensePojo.toApprovalState(lic
 			.getApprovalState()), licenseText);
 	return licPojo;
     }

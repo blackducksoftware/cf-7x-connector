@@ -6,7 +6,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blackducksoftware.tools.connector.protex.license.LicensePojo;
+import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
 
 public class LicensePojoTest {
 
@@ -27,16 +27,16 @@ public class LicensePojoTest {
 
     @Test
     public void test() {
-	LicensePojo lic = new LicensePojo(TEST_ID, TEST_NAME, TEST_COMMENT,
+	ProtexLicensePojo lic = new ProtexLicensePojo(TEST_ID, TEST_NAME, TEST_COMMENT,
 		TEST_EXPLANATION, TEST_SUFFIX,
-		LicensePojo.ApprovalState.DISAPPROVED, TEST_TEXT);
+		ProtexLicensePojo.ApprovalState.DISAPPROVED, TEST_TEXT);
 
 	assertEquals(TEST_ID, lic.getId());
 	assertEquals(TEST_NAME, lic.getName());
 	assertEquals(TEST_COMMENT, lic.getComment());
 	assertEquals(TEST_EXPLANATION, lic.getExplanation());
 	assertEquals(TEST_SUFFIX, lic.getSuffix());
-	assertEquals(LicensePojo.ApprovalState.DISAPPROVED,
+	assertEquals(ProtexLicensePojo.ApprovalState.DISAPPROVED,
 		lic.getApprovalState());
 	assertEquals(TEST_TEXT, lic.getLicenseText());
     }

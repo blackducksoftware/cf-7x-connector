@@ -2,7 +2,8 @@ package com.blackducksoftware.tools.connector.codecenter;
 
 import com.blackducksoftware.tools.connector.codecenter.application.IApplicationManager;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
-import com.blackducksoftware.tools.connector.codecenter.license.ILicenseManager;
+import com.blackducksoftware.tools.connector.common.ILicenseManager;
+import com.blackducksoftware.tools.connector.common.LicensePojo;
 import com.blackducksoftware.tools.connector.protex.IServerWrapper;
 
 /**
@@ -42,5 +43,5 @@ public interface ICodeCenterServerWrapper extends IServerWrapper {
      *
      * @return
      */
-    ILicenseManager getLicenseManager();
+    ILicenseManager<LicensePojo> getLicenseManager();
 }
