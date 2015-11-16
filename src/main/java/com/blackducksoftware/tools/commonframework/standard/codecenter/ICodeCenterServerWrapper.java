@@ -3,6 +3,7 @@ package com.blackducksoftware.tools.commonframework.standard.codecenter;
 import com.blackducksoftware.tools.commonframework.connector.protex.IServerWrapper;
 import com.blackducksoftware.tools.commonframework.standard.codecenter.application.IApplicationManager;
 import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute.IAttributeDefinitionManager;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.license.ILicenseManager;
 
 /**
  * A connection to a Code Center server.
@@ -22,7 +23,7 @@ public interface ICodeCenterServerWrapper extends IServerWrapper {
     CodeCenterAPIWrapper getInternalApiWrapper();
 
     /**
-     * Get the ApplicationManager for this Code Center server.
+     * Get the ApplicationManager for this Code Center connection.
      *
      *
      * @return
@@ -30,9 +31,16 @@ public interface ICodeCenterServerWrapper extends IServerWrapper {
     IApplicationManager getApplicationManager();
 
     /**
-     * Get the AttributeDefinitionManager for this Code Center server.
+     * Get the AttributeDefinitionManager for this Code Center connection.
      *
      * @return
      */
     IAttributeDefinitionManager getAttributeDefinitionManager();
+
+    /**
+     * Get the LicenseManager for this Code Center connection.
+     *
+     * @return
+     */
+    ILicenseManager getLicenseManager();
 }

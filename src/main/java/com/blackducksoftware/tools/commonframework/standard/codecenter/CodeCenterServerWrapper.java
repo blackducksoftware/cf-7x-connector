@@ -25,6 +25,8 @@ import com.blackducksoftware.tools.commonframework.standard.codecenter.applicati
 import com.blackducksoftware.tools.commonframework.standard.codecenter.application.IApplicationManager;
 import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute.AttributeDefinitionManager;
 import com.blackducksoftware.tools.commonframework.standard.codecenter.attribute.IAttributeDefinitionManager;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.license.ILicenseManager;
+import com.blackducksoftware.tools.commonframework.standard.codecenter.license.LicenseManager;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 
 /**
@@ -36,6 +38,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
     private final CodeCenterAPIWrapper apiWrapper;
     private final IAttributeDefinitionManager attributeDefinitionManager;
     private final IApplicationManager applicationManager;
+    private final ILicenseManager licenseManager;
 
     /** The config manager. */
     private final ConfigurationManager configManager;
@@ -46,6 +49,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 	apiWrapper = new CodeCenterAPIWrapper(bean, manager);
 	applicationManager = new ApplicationManager(this);
 	attributeDefinitionManager = new AttributeDefinitionManager(this);
+	licenseManager = new LicenseManager(this);
     }
 
     @Override
@@ -81,5 +85,10 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
     @Override
     public IAttributeDefinitionManager getAttributeDefinitionManager() {
 	return attributeDefinitionManager;
+    }
+
+    @Override
+    public ILicenseManager getLicenseManager() {
+	return licenseManager;
     }
 }
