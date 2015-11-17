@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
+import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
+
 /**
  * A non-SDK-specific class representing an application.
  *
@@ -51,6 +54,8 @@ public class ApplicationPojo {
 	return attributeValuesByName.get(name);
     }
 
+    // TODO: This method appears on ComponentPojo too
+    // needs to be centralized in an attr values class or something
     private void addAttributeValuesToMap(
 	    List<AttributeValuePojo> attributeValues) {
 	for (AttributeValuePojo attrValue : attributeValues) {

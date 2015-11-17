@@ -18,7 +18,10 @@ import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
+import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
+import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
+import com.blackducksoftware.tools.connector.codecenter.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionPojo;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 
@@ -85,6 +88,7 @@ public class ApplicationManager implements IApplicationManager {
 		toPojo(app.getApprovalStatus()));
     }
 
+    // Moved to ApprovalStatus; delete this:
     private ApprovalStatus toPojo(ApprovalStatusEnum ccApprovalStatus)
 	    throws CommonFrameworkException {
 	switch (ccApprovalStatus) {
@@ -191,43 +195,6 @@ public class ApplicationManager implements IApplicationManager {
 		.getAttributeId();
 	String attrId = attrIdToken.getId();
 	return attrId;
-    }
-
-    private class NameVersion {
-	private final String name;
-	private final String version;
-
-	public NameVersion(String name, String version) {
-	    this.name = name;
-	    this.version = version;
-	}
-
-	protected String getName() {
-	    return name;
-	}
-
-	protected String getVersion() {
-	    return version;
-	}
-
-	@Override
-	public boolean equals(Object otherObj) {
-	    if (!(otherObj instanceof NameVersion)) {
-		return false;
-	    }
-	    NameVersion otherNameVersion = (NameVersion) otherObj;
-	    if (getName().equals(otherNameVersion.getName())
-		    && getVersion().equals(otherNameVersion.getVersion())) {
-		return true;
-	    }
-	    return false;
-	}
-
-	@Override
-	public int hashCode() {
-	    return (getName().hashCode() << 1) + getVersion().hashCode();
-	}
-
     }
 
     /**

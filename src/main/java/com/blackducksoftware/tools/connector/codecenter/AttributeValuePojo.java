@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter.application;
+package com.blackducksoftware.tools.connector.codecenter;
 
 public class AttributeValuePojo {
     private final String attrId;

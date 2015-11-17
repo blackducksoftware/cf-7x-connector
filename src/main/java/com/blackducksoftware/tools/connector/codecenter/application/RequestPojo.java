@@ -1,5 +1,7 @@
 package com.blackducksoftware.tools.connector.codecenter.application;
 
+import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
+
 public class RequestPojo {
     private final String requestId;
     private final String applicationId;
