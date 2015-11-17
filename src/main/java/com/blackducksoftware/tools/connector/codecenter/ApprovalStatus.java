@@ -3,6 +3,12 @@ package com.blackducksoftware.tools.connector.codecenter;
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 
+/**
+ * The approval status of an object (application or component).
+ *
+ * @author sbillings
+ *
+ */
 public enum ApprovalStatus {
     ALL(ApprovalStatusEnum.ALL), APPEALED(ApprovalStatusEnum.APPEALED), APPROVED(
 	    ApprovalStatusEnum.APPROVED), CANCELLED(ApprovalStatusEnum.CANCELED), DEFERRED(
@@ -16,15 +22,13 @@ public enum ApprovalStatus {
 	this.ccValue = ccValue;
     }
 
-    // TODO this is public, but takes an SDK class arg, which isn't ideal
-    // Only used by a test?
-    public boolean isEquivalent(ApprovalStatusEnum otherCcValue) {
+    boolean isEquivalent(ApprovalStatusEnum otherCcValue) {
 	return ccValue.equals(otherCcValue);
     }
 
     /**
-     * Convert an SDK approval status to the POJO equivalent. Should not be
-     * called from classes outside cf-7x-connector.
+     * Convert an SDK approval status to the POJO equivalent. Intended for use
+     * by cf-7x-connector classes.
      *
      * @param ccApprovalStatus
      * @return

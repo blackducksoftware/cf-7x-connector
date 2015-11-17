@@ -1,5 +1,11 @@
 package com.blackducksoftware.tools.connector.codecenter;
 
+/**
+ * An attribute value.
+ *
+ * @author sbillings
+ *
+ */
 public class AttributeValuePojo {
     private final String attrId;
     private final String name;

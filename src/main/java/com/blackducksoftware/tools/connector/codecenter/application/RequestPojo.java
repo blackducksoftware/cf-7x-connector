@@ -2,6 +2,12 @@ package com.blackducksoftware.tools.connector.codecenter.application;
 
 import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
 
+/**
+ * A request (a component use by an application).
+ *
+ * @author sbillings
+ *
+ */
 public class RequestPojo {
     private final String requestId;
     private final String applicationId;

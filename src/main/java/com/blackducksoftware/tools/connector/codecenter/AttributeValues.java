@@ -14,10 +14,9 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefin
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 
 /**
- * Function for converting an SDK AttributeValue list to an AttributeValuePojo
- * list.
+ * Utility functions for useful when dealing with AttributeValue objects.
  *
- * Intended to be used by Common Framework connector classes only.
+ * Intended to be used by Common Framework connector classes.
  *
  * @author sbillings
  *

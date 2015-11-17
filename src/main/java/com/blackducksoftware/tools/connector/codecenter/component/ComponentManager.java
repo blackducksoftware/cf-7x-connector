@@ -39,6 +39,11 @@ public class ComponentManager implements IComponentManager {
 	this.attrDefMgr = attrDefMgr;
     }
 
+    /**
+     * Get a component by its ID.
+     *
+     * Components fetched are cached.
+     */
     @Override
     public ComponentPojo getComponentById(String componentId)
 	    throws CommonFrameworkException {
@@ -68,6 +73,11 @@ public class ComponentManager implements IComponentManager {
 	return createPojo(sdkComp);
     }
 
+    /**
+     * Get a component by its name/version.
+     *
+     * Components fetched are cached.
+     */
     @Override
     public ComponentPojo getComponentByNameVersion(String componentName,
 	    String componentVersion) throws CommonFrameworkException {
@@ -103,6 +113,10 @@ public class ComponentManager implements IComponentManager {
 	componentsByNameVersionCache.put(nameVersion, sdkComp);
     }
 
+    /**
+     * Get a list of components that correspond to the given list of requests.
+     *
+     */
     @Override
     public List<ComponentPojo> getComponentsForRequests(
 	    List<RequestPojo> requests) throws CommonFrameworkException {

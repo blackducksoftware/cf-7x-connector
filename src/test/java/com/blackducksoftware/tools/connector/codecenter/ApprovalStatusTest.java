@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter.application;
+package com.blackducksoftware.tools.connector.codecenter;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
