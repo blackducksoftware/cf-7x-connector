@@ -46,7 +46,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
     // Overwrite the default  maximum number of characters defined in the parser settings (4096)
-    private final int SETTINGS_MAX_CHARS_PER_COLUMN = Integer.MAX_VALUE;
+    private final int SETTINGS_MAX_CHARS_PER_COLUMN = 10000;//Integer.MAX_VALUE;
     public static Boolean CHUNKING = true;
     public static Boolean NOT_CHUNKING = false;
 
