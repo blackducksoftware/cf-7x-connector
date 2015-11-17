@@ -9,6 +9,8 @@ public class RequestPojo {
     private final ApprovalStatus requestApprovalStatus;
     private final String licenseId;
 
+    // TODO: Add request attribute values
+
     public RequestPojo(String requestId, String applicationId,
 	    String componentId, ApprovalStatus requestApprovalStatus,
 	    String licenseId) {

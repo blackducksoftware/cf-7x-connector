@@ -17,7 +17,7 @@ import com.blackducksoftware.tools.commonframework.core.config.ConfigurationMana
 import com.blackducksoftware.tools.commonframework.core.config.IConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
-import com.blackducksoftware.tools.connector.codecenter.ICodeCenterServerWrapper;
+import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 /**
@@ -41,19 +41,13 @@ public class ProtexServerManager implements IProtexServerManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
-    private final ICodeCenterServerWrapper ccsw;
+    private final CodeCenterAPIWrapper ccApiWrapper;
     private final ConfigurationManager config;
     private final Map<String, NamedProtexServer> protexServerCache = new HashMap<>();
 
-    /**
-     *
-     * @param ccsw
-     *            a ConfigurationManager
-     * @param config
-     */
-    public ProtexServerManager(ICodeCenterServerWrapper ccsw,
+    public ProtexServerManager(CodeCenterAPIWrapper ccApiWrapper,
 	    ConfigurationManager config) {
-	this.ccsw = ccsw;
+	this.ccApiWrapper = ccApiWrapper;
 	this.config = config;
     }
 
@@ -131,8 +125,8 @@ public class ProtexServerManager implements IProtexServerManager {
 	serverNameToken.setName(protexServerName);
 	ProtexServer protexServer;
 	try {
-	    protexServer = ccsw.getInternalApiWrapper().getSettingsApi()
-		    .getServerDetails(serverNameToken);
+	    protexServer = ccApiWrapper.getSettingsApi().getServerDetails(
+		    serverNameToken);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException(
 		    "Error looking up in Code Center settings the Protex server named "
