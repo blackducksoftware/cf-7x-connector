@@ -161,6 +161,8 @@ public class ApplicationManager implements IApplicationManager {
     /**
      * Convert a list of attribute values (SDK objects) to POJOs.
      *
+     * TODO: This method exists here and in ComponentManager. Centralize.
+     *
      * @param attrValues
      * @return
      * @throws CommonFrameworkException
@@ -190,6 +192,7 @@ public class ApplicationManager implements IApplicationManager {
 	return pojos;
     }
 
+    // TODO: This method exists here and in ComponentManager. Centralize.
     private String getAttributeId(AttributeValue attrValue) {
 	AttributeIdToken attrIdToken = (AttributeIdToken) attrValue
 		.getAttributeId();

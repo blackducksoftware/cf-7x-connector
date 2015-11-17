@@ -92,7 +92,8 @@ public class ComponentPojo {
     }
 
     public String getAttributeByName(String name) {
-	return attributeValuesByName.get(name);
+	String value = attributeValuesByName.get(name);
+	return value;
     }
 
     @Override
