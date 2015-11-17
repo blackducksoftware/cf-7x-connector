@@ -29,7 +29,6 @@ public class ComponentManager implements IComponentManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
-    // TODO cache, check cache, add to cache
     private final CodeCenterAPIWrapper codeCenterApiWrapper;
     private final IAttributeDefinitionManager attrDefMgr;
     private final Map<NameVersion, Component> componentsByNameVersionCache = new HashMap<>();
@@ -108,10 +107,14 @@ public class ComponentManager implements IComponentManager {
     @Override
     public List<ComponentPojo> getComponentsForRequests(
 	    List<RequestPojo> requests) throws CommonFrameworkException {
-	// TODO check cache
-	// TODO Auto-generated function stub
-	// TODO put in cache
-	return null;
+
+	List<ComponentPojo> components = new ArrayList<>(requests.size());
+	for (RequestPojo request : requests) {
+	    ComponentPojo comp = getComponentById(request.getComponentId());
+	    components.add(comp);
+	}
+
+	return components;
     }
 
     private ComponentPojo createPojo(Component sdkComp)
