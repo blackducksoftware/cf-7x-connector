@@ -30,7 +30,7 @@ public enum ApprovalStatus {
      * @return
      * @throws CommonFrameworkException
      */
-    public static ApprovalStatus toPojo(ApprovalStatusEnum ccApprovalStatus)
+    public static ApprovalStatus valueOf(ApprovalStatusEnum ccApprovalStatus)
 	    throws CommonFrameworkException {
 	switch (ccApprovalStatus) {
 	case ALL:

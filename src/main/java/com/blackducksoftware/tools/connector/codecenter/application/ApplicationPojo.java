@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 
 /**
  * A non-SDK-specific class representing an application.
@@ -33,7 +34,8 @@ public class ApplicationPojo {
 	this.name = name;
 	this.version = version;
 
-	addAttributeValuesToMap(attributeValues);
+	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
+		attributeValues);
 
 	this.approvalStatus = approvalStatus;
     }
@@ -52,16 +54,6 @@ public class ApplicationPojo {
 
     public String getAttributeByName(String name) {
 	return attributeValuesByName.get(name);
-    }
-
-    // TODO: This method appears on ComponentPojo too
-    // needs to be centralized in an attr values class or something
-    private void addAttributeValuesToMap(
-	    List<AttributeValuePojo> attributeValues) {
-	for (AttributeValuePojo attrValue : attributeValues) {
-	    attributeValuesByName
-		    .put(attrValue.getName(), attrValue.getValue());
-	}
     }
 
     public ApprovalStatus getApprovalStatus() {

@@ -11,18 +11,15 @@ import org.slf4j.LoggerFactory;
 import com.blackducksoftware.sdk.codecenter.application.data.Application;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationNameVersionToken;
-import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
-import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
-import com.blackducksoftware.sdk.codecenter.common.data.AttributeValue;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.NameVersion;
-import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionPojo;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 
 /**
@@ -68,8 +65,9 @@ public class ApplicationManager implements IApplicationManager {
 	if (appsByNameVersionCache.containsKey(nameVersion)) {
 	    Application app = appsByNameVersionCache.get(nameVersion);
 	    return new ApplicationPojo(app.getId().getId(), name, version,
-		    toPojos(app.getAttributeValues()),
-		    toPojo(app.getApprovalStatus()));
+		    AttributeValues.valueOf(attrDefMgr,
+			    app.getAttributeValues()),
+		    ApprovalStatus.valueOf(app.getApprovalStatus()));
 	}
 	ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
 	appToken.setName(name);
@@ -84,36 +82,8 @@ public class ApplicationManager implements IApplicationManager {
 	addAppToCache(nameVersion, app);
 
 	return new ApplicationPojo(app.getId().getId(), name, version,
-		toPojos(app.getAttributeValues()),
-		toPojo(app.getApprovalStatus()));
-    }
-
-    // Moved to ApprovalStatus; delete this:
-    private ApprovalStatus toPojo(ApprovalStatusEnum ccApprovalStatus)
-	    throws CommonFrameworkException {
-	switch (ccApprovalStatus) {
-	case ALL:
-	    return ApprovalStatus.ALL;
-	case APPEALED:
-	    return ApprovalStatus.APPEALED;
-	case APPROVED:
-	    return ApprovalStatus.APPROVED;
-	case CANCELED:
-	    return ApprovalStatus.CANCELLED;
-	case DEFERRED:
-	    return ApprovalStatus.DEFERRED;
-	case MOREINFO:
-	    return ApprovalStatus.MORE_INFO;
-	case NOTSUBMITTED:
-	    return ApprovalStatus.NOT_SUBMITTED;
-	case PENDING:
-	    return ApprovalStatus.PENDING;
-	case REJECTED:
-	    return ApprovalStatus.REJECTED;
-	default:
-	    throw new CommonFrameworkException("Unsupported ApprovalStatus: "
-		    + ccApprovalStatus);
-	}
+		AttributeValues.valueOf(attrDefMgr, app.getAttributeValues()),
+		ApprovalStatus.valueOf(app.getApprovalStatus()));
     }
 
     private void addAppToCache(NameVersion nameVersion, Application app) {
@@ -133,8 +103,9 @@ public class ApplicationManager implements IApplicationManager {
 	if (appsByIdCache.containsKey(id)) {
 	    Application app = appsByIdCache.get(id);
 	    return new ApplicationPojo(id, app.getName(), app.getVersion(),
-		    toPojos(app.getAttributeValues()),
-		    toPojo(app.getApprovalStatus()));
+		    AttributeValues.valueOf(attrDefMgr,
+			    app.getAttributeValues()),
+		    ApprovalStatus.valueOf(app.getApprovalStatus()));
 	}
 	ApplicationIdToken appToken = new ApplicationIdToken();
 	appToken.setId(id);
@@ -150,54 +121,12 @@ public class ApplicationManager implements IApplicationManager {
 		app.getVersion());
 	addAppToCache(nameVersion, app);
 
-	List<AttributeValuePojo> attrValuePojos = toPojos(app
-		.getAttributeValues());
+	List<AttributeValuePojo> attrValuePojos = AttributeValues.valueOf(
+		attrDefMgr, app.getAttributeValues());
 
 	return new ApplicationPojo(app.getId().getId(), app.getName(),
-		app.getVersion(), attrValuePojos,
-		toPojo(app.getApprovalStatus()));
-    }
-
-    /**
-     * Convert a list of attribute values (SDK objects) to POJOs.
-     *
-     * TODO: This method exists here and in ComponentManager. Centralize.
-     *
-     * @param attrValues
-     * @return
-     * @throws CommonFrameworkException
-     */
-    private List<AttributeValuePojo> toPojos(List<AttributeValue> attrValues)
-	    throws CommonFrameworkException {
-	List<AttributeValuePojo> pojos = new ArrayList<>();
-	for (AttributeValue attrValue : attrValues) {
-	    String attrId = getAttributeId(attrValue);
-	    AttributeDefinitionPojo attrDefPojo = attrDefMgr
-		    .getAttributeDefinitionById(attrId);
-	    String attrName = attrDefPojo.getName();
-
-	    String value = null;
-	    List<String> valueList = attrValue.getValues();
-	    if (valueList.size() > 1) {
-		log.warn(attrName
-			+ " has multiple values, which is not supported; using the first value");
-	    }
-	    if ((valueList != null) && (valueList.size() > 0)) {
-		value = attrValue.getValues().get(0);
-	    }
-	    AttributeValuePojo pojo = new AttributeValuePojo(attrId, attrName,
-		    value);
-	    pojos.add(pojo);
-	}
-	return pojos;
-    }
-
-    // TODO: This method exists here and in ComponentManager. Centralize.
-    private String getAttributeId(AttributeValue attrValue) {
-	AttributeIdToken attrIdToken = (AttributeIdToken) attrValue
-		.getAttributeId();
-	String attrId = attrIdToken.getId();
-	return attrId;
+		app.getVersion(), attrValuePojos, ApprovalStatus.valueOf(app
+			.getApprovalStatus()));
     }
 
     /**
@@ -256,8 +185,8 @@ public class ApplicationManager implements IApplicationManager {
 	    RequestSummary sdkRequest) throws CommonFrameworkException {
 	RequestPojo request = new RequestPojo(sdkRequest.getId().getId(),
 		appId, sdkRequest.getComponentId().getId(),
-		toPojo(sdkRequest.getApprovalStatus()), sdkRequest
-			.getLicenseInfo().getId().getId());
+		ApprovalStatus.valueOf(sdkRequest.getApprovalStatus()),
+		sdkRequest.getLicenseInfo().getId().getId());
 	return request;
     }
 }

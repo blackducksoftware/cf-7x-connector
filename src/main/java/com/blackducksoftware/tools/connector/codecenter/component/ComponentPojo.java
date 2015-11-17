@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 public class ComponentPojo {
@@ -40,7 +41,8 @@ public class ComponentPojo {
 	this.applicationComponent = applicationComponent;
 	this.applicationId = applicationId;
 	this.deprecated = deprecated;
-	addAttributeValuesToMap(attributeValues);
+	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
+		attributeValues);
     }
 
     public String getId() {
@@ -101,15 +103,5 @@ public class ComponentPojo {
 	return "ComponentPojo [name=" + name + ", version=" + version
 		+ ", applicationComponent=" + applicationComponent
 		+ ", applicationId=" + applicationId + "]";
-    }
-
-    // TODO: This method appears on ApplicationPojo too
-    // needs to be centralized in an attr values class or something
-    private void addAttributeValuesToMap(
-	    List<AttributeValuePojo> attributeValues) {
-	for (AttributeValuePojo attrValue : attributeValues) {
-	    attributeValuesByName
-		    .put(attrValue.getName(), attrValue.getValue());
-	}
     }
 }

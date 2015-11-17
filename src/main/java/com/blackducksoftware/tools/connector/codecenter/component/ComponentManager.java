@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
-import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.ColaApi;
 import com.blackducksoftware.sdk.codecenter.cola.data.Component;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentIdToken;
@@ -19,10 +18,10 @@ import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.application.RequestPojo;
-import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionPojo;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 
 public class ComponentManager implements IComponentManager {
@@ -120,7 +119,8 @@ public class ComponentManager implements IComponentManager {
     private ComponentPojo createPojo(Component sdkComp)
 	    throws CommonFrameworkException {
 	List<AttributeValue> sdkAttrValues = sdkComp.getAttributeValues();
-	List<AttributeValuePojo> attrValues = toPojos(sdkAttrValues);
+	List<AttributeValuePojo> attrValues = AttributeValues.valueOf(
+		attrDefMgr, sdkAttrValues);
 
 	ApplicationIdToken appIdToken = sdkComp.getApplicationId();
 	String appId;
@@ -132,7 +132,7 @@ public class ComponentManager implements IComponentManager {
 
 	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
 		sdkComp.getName(), sdkComp.getVersion(),
-		ApprovalStatus.toPojo(sdkComp.getApprovalStatus()),
+		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
 		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(), sdkComp
 			.getKbComponentId().getId(), sdkComp.getKbReleaseId()
 			.getId(), sdkComp.isApplicationComponent(), appId,
@@ -140,49 +140,4 @@ public class ComponentManager implements IComponentManager {
 	return comp;
     }
 
-    /**
-     * Convert a list of attribute values (SDK objects) to POJOs.
-     *
-     * TODO: This method exists here and in ApplicationManager. Centralize.
-     *
-     * @param attrValues
-     * @return
-     * @throws CommonFrameworkException
-     */
-    private List<AttributeValuePojo> toPojos(List<AttributeValue> attrValues)
-	    throws CommonFrameworkException {
-	List<AttributeValuePojo> pojos = new ArrayList<>();
-	for (AttributeValue attrValue : attrValues) {
-	    String attrId = getAttributeId(attrValue);
-	    AttributeDefinitionPojo attrDefPojo = attrDefMgr
-		    .getAttributeDefinitionById(attrId);
-	    String attrName = attrDefPojo.getName();
-
-	    String value = null;
-	    List<String> valueList = attrValue.getValues();
-	    if (valueList.size() > 1) {
-		log.warn("Attribute "
-			+ attrName
-			+ " has multiple values, which is not supported; using the first value");
-	    }
-	    if ((valueList != null) && (valueList.size() > 0)) {
-		value = attrValue.getValues().get(0);
-	    }
-	    log.info("Processing attr id " + attrId + ", name " + attrName
-		    + ", value " + value);
-
-	    AttributeValuePojo pojo = new AttributeValuePojo(attrId, attrName,
-		    value);
-	    pojos.add(pojo);
-	}
-	return pojos;
-    }
-
-    // TODO: This method exists here and in ApplicationManager. Centralize.
-    private String getAttributeId(AttributeValue attrValue) {
-	AttributeIdToken attrIdToken = (AttributeIdToken) attrValue
-		.getAttributeId();
-	String attrId = attrIdToken.getId();
-	return attrId;
-    }
 }
