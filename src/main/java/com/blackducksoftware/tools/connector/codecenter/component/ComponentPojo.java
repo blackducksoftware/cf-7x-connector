@@ -10,6 +10,12 @@ import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
+/**
+ * A component.
+ *
+ * @author sbillings
+ *
+ */
 public class ComponentPojo {
     private final String id;
     private final String name;
