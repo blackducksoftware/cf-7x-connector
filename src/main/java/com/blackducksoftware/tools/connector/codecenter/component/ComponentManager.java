@@ -140,13 +140,18 @@ public class ComponentManager implements IComponentManager {
     }
 
     @Override
-    public List<ComponentPojo> getApprovedComponentsForRequests(
-	    List<RequestPojo> requests) throws CommonFrameworkException {
+    public List<ComponentPojo> getComponentsForRequests(
+	    List<RequestPojo> requests,
+	    List<ApprovalStatus> limitToApprovalStatusValues)
+	    throws CommonFrameworkException {
 
 	List<ComponentPojo> components = new ArrayList<>(requests.size());
 	for (RequestPojo request : requests) {
 	    ComponentPojo comp = getComponentById(request.getComponentId());
-	    if (comp.getApprovalStatus() == ApprovalStatus.APPROVED) {
+	    if ((limitToApprovalStatusValues == null)
+		    || (limitToApprovalStatusValues.size() == 0)
+		    || (limitToApprovalStatusValues.contains(comp
+			    .getApprovalStatus()))) {
 		components.add(comp);
 	    }
 	}

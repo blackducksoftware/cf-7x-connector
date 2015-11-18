@@ -3,6 +3,7 @@ package com.blackducksoftware.tools.connector.codecenter.component;
 import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
+import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
@@ -40,13 +41,19 @@ public interface IComponentManager {
 	    throws CommonFrameworkException;
 
     /**
-     * Get the list of approved components named in a list of requests.
+     * Get the list of components named in a list of requests, limited to those
+     * with one of the ApprovalStatus values in the provided list.
      *
      * @param requests
+     * @param limitToApprovalStatusValues
+     *            If not null and not empty, components included in the return
+     *            value are limited to those with an ApprovalStatus that appears
+     *            in the given list of ApprovalStatus values.
      * @return
      * @throws CommonFrameworkException
      */
-    List<ComponentPojo> getApprovedComponentsForRequests(
-	    List<RequestPojo> requests) throws CommonFrameworkException;
+    List<ComponentPojo> getComponentsForRequests(List<RequestPojo> requests,
+	    List<ApprovalStatus> limitToApprovalStatusValues)
+	    throws CommonFrameworkException;
 
 }

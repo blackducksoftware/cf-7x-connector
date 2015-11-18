@@ -178,29 +178,30 @@ public class ApplicationManager implements IApplicationManager {
     @Override
     public List<ComponentPojo> getComponentsRecursivelyByAppId(String appId)
 	    throws CommonFrameworkException {
-	List<ComponentPojo> allLevelComponents = collectComponents(appId, false);
+	List<ComponentPojo> allLevelComponents = collectComponents(appId, null);
 	return allLevelComponents;
     }
 
     @Override
     public List<ComponentPojo> getApprovedComponentsRecursivelyByAppId(
 	    String appId) throws CommonFrameworkException {
-	List<ComponentPojo> allLevelComponents = collectComponents(appId, true);
+	List<ApprovalStatus> limitToApprovalStatusValues = new ArrayList<>(1);
+	limitToApprovalStatusValues.add(ApprovalStatus.APPROVED);
+	List<ComponentPojo> allLevelComponents = collectComponents(appId,
+		limitToApprovalStatusValues);
 	return allLevelComponents;
     }
 
     // Private methods
 
     private List<ComponentPojo> collectComponents(String appId,
-	    boolean onlyApproved) throws CommonFrameworkException {
+	    List<ApprovalStatus> limitToApprovalStatusValues)
+	    throws CommonFrameworkException {
 	List<RequestPojo> requests = getRequestsByAppId(appId);
 	List<ComponentPojo> thisLevelComponents;
-	if (onlyApproved) {
-	    thisLevelComponents = compMgr
-		    .getApprovedComponentsForRequests(requests);
-	} else {
-	    thisLevelComponents = compMgr.getComponentsForRequests(requests);
-	}
+
+	thisLevelComponents = compMgr.getComponentsForRequests(requests,
+		limitToApprovalStatusValues);
 
 	List<ComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
 	for (ComponentPojo comp : thisLevelComponents) {
@@ -209,7 +210,7 @@ public class ApplicationManager implements IApplicationManager {
 	    if ((comp.getApplicationId() != null)
 		    && (comp.getApplicationId().length() > 0)) {
 		List<ComponentPojo> appCompsMinusApps = collectComponents(
-			comp.getApplicationId(), onlyApproved);
+			comp.getApplicationId(), limitToApprovalStatusValues);
 		thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
 	    } else {
 		thisLevelAndBelowComponentsMinusApps.add(comp);
