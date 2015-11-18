@@ -68,10 +68,10 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 
  
     /**
-     * Disabling this test for now
      * Summary section does not have a header.
      * @throws Exception
      */
+    @Test
     public void testBasicSummaryCount() throws Exception {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
 		SECTION_SUMMARY);
@@ -161,6 +161,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
      * No headers causes failure, come back to this.
      * @throws Exception
      */
+    @Test
     public void testAnalysisummaryCountFromCombined() throws Exception {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
 		SECTION_ANALYSIS_SUMMARY);
