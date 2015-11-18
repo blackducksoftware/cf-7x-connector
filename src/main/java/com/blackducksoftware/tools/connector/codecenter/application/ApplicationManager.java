@@ -176,13 +176,6 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     @Override
-    public List<ComponentPojo> getComponentsRecursivelyByAppId(String appId)
-	    throws CommonFrameworkException {
-	List<ComponentPojo> allLevelComponents = collectComponents(appId, null);
-	return allLevelComponents;
-    }
-
-    @Override
     public List<ComponentPojo> getComponentsRecursivelyByAppId(String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException {
