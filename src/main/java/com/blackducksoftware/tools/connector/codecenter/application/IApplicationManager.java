@@ -3,6 +3,7 @@ package com.blackducksoftware.tools.connector.codecenter.application;
 import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
+import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
@@ -62,7 +63,8 @@ public interface IApplicationManager {
 	    throws CommonFrameworkException;
 
     /**
-     * Get an application's approved components recursively, by application ID.
+     * Get an application's components recursively, by application ID, limited
+     * to components with an approval status that is in the provided list.
      *
      * For each component (at any level in the tree) that is an application
      * published as a component, returns the approved components pointed to the
@@ -70,9 +72,14 @@ public interface IApplicationManager {
      * itself.
      *
      * @param appId
+     * @param limitToApprovalStatusValues
+     *            If not null and not empty, components included in the return
+     *            value are limited to those with an ApprovalStatus that appears
+     *            in the given list of ApprovalStatus values.
      * @return
      * @throws CommonFrameworkException
      */
-    List<ComponentPojo> getApprovedComponentsRecursivelyByAppId(String appId)
+    List<ComponentPojo> getComponentsRecursivelyByAppId(String appId,
+	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException;
 }
