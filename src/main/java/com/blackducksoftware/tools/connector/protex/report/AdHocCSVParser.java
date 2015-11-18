@@ -46,11 +46,11 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
-    
-    
-    // This is the value in the report that we are looking for combined with sectionName
+
+    // This is the value in the report that we are looking for combined with
+    // sectionName
     private final String HEADER_PREFIX = "header";
-    
+
     // Overwrite the default maximum number of characters defined in the parser
     // settings (4096)
     private final int SETTINGS_MAX_CHARS_PER_COLUMN = 10000;// Integer.MAX_VALUE;
@@ -69,8 +69,6 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     protected AdHocElement headerForChunking;
 
     private Boolean isParserFinished = false;
-
-   
 
     public AdHocCSVParser(Class<T> hocElementClass, String sectionName) {
 	this.hocElementClass = hocElementClass;
@@ -125,14 +123,11 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 	    CsvParserSettings settings = new CsvParserSettings();
 	    settings.setMaxCharsPerColumn(SETTINGS_MAX_CHARS_PER_COLUMN);
 	    reader = new CsvParser(settings);
-
-	    // TODO: Add the chunking implementation
 	    reader.beginParsing(inputReader);
 	    adHocHeader = findHeader();
-	    
-	    if(adHocHeader == null)
+
+	    if (adHocHeader == null)
 		throw new CommonFrameworkException("No headers found for CSV");
-	   
 
 	} catch (Exception e) {
 	    log.error("Unable to parse headers");
@@ -143,37 +138,34 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     }
 
     /**
-     * Find the header in the CSV
-     * The expectation is that a row exists with the first column value set to: <sectionName+header>
-     * Will iterate through all rows until it finds something.  
+     * Find the header in the CSV The expectation is that a row exists with the
+     * first column value set to: <sectionName+header> Will iterate through all
+     * rows until it finds something.
      * 
      * @param reader
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
-    private AdHocElement findHeader() throws Exception 
-    {
+    private AdHocElement findHeader() throws Exception {
 	String[] potentialRow = reader.parseNext();
-	
-	if(potentialRow == null)
-	    throw new CommonFrameworkException("Parsing rows during header processing encountered a null row, did parsing begin?");
-	if(sectionName == null || sectionName.length() == 0)
-	    throw new CommonFrameworkException("Parsing rows during header processing encountered a null row, section name is missing!");
-	
-	
+
+	if (potentialRow == null)
+	    throw new CommonFrameworkException(
+		    "Parsing rows during header processing encountered a null row, did parsing begin?");
+	if (sectionName == null || sectionName.length() == 0)
+	    throw new CommonFrameworkException(
+		    "Parsing rows during header processing encountered a null row, section name is missing!");
+
 	String firstColumnValue = potentialRow[0];
-	if(firstColumnValue.equalsIgnoreCase(sectionName+HEADER_PREFIX))
-	{
+	if (firstColumnValue.equalsIgnoreCase(sectionName + HEADER_PREFIX)) {
 	    AdHocElement headerRow = new AdHocElement();
 	    // We want to start with index of 1 not 0, as the
-	    for(int column = 1; column < potentialRow.length; column++)
-	    {
+	    for (int column = 1; column < potentialRow.length; column++) {
 		String headerName = potentialRow[column];
 		headerRow.setCoordinate(column, headerName);
 	    }
 	    return headerRow;
-	}
-	else
+	} else
 	    return findHeader();
     }
 
@@ -189,38 +181,43 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
      */
     protected List<T> parseRows(AdHocElement header, boolean chunk)
 	    throws Exception {
-
+	List<String[]> allRows = new ArrayList<String[]>();
 	Long internalCounter = new Long(0);
 	List<T> rows = new ArrayList<T>();
 	convertSectionName();
 
-//	if (chunk) {
-//	    // NOT IMPLEMENTED YET
-//	    // while (internalCounter < this.rowChunk) {
-//	    // String[] rec = reader.parseNext();
-//	    //
-//	    // // This is the equivalent of iterator.next() == null
-//	    // if (rec == null) {
-//	    // log.debug("No more rows, closing CSV reader.");
-//	    // setIsParserFinished(true);
-//	    // reader.stopParsing();
-//	    // break;
-//	    // }
-//	    //
-//	    // allRows.add(rec);
-//	    // internalCounter++;
-//	    // }
-//	} else {
-//	    //allRows = reader.parseAll(inputReader);
-//	    log.info("Parsed all rows, count: " + allRows.size());
-//	}
+	if (chunk) {
+	    while (internalCounter < this.rowChunk) {
+		String[] rec = reader.parseNext();
+
+		// This is the equivalent of iterator.next() == null
+		if (rec == null) {
+		    log.debug("No more rows, closing CSV reader.");
+		    setIsParserFinished(true);
+		    reader.stopParsing();
+		    break;
+		}
+
+		allRows.add(rec);
+		internalCounter++;
+	    }
+	} else {
+	   // allRows = reader.parseAll(inputReader);
+	    String[] record;
+	    while ((record = reader.parseNext()) != null) {
+		allRows.add(record);
+	    }
+	    log.info("Parsed all rows, count: " + allRows.size());
+
+	}
 
 	try {
 	    boolean isHeaderVertical = checkHeaderOrientation(header);
 	    T adHocRow = generateNewInstance(hocElementClass);
-	    // At this point, due to previous header processing we should be jumping directly into the content.
-	    String[] record;
-	    while ((record = reader.parseNext()) != null) {		
+	    // At this point, due to previous header processing we should be
+	    // jumping directly into the content.
+
+	    for (String[] record : allRows) {
 		log.debug("Parsing row: " + internalCounter);
 
 		// The first column is our section, it must match for us to
