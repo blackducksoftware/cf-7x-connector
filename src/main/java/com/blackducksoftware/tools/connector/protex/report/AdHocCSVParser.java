@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.protex.report.Report;
+import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.AdHocElement;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.HocElement;
 import com.google.common.base.Preconditions;
@@ -36,17 +37,23 @@ import com.univocity.parsers.csv.CsvParserSettings;
 /**
  * Current version does not collect headers because our CSV files do not contain
  * any. Awaiting 7.1 Protex.
- *
+ * 
  * @author akamen
- *
+ * 
  * @param <T>
  */
 public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
-    // Overwrite the default  maximum number of characters defined in the parser settings (4096)
-    private final int SETTINGS_MAX_CHARS_PER_COLUMN = 10000;//Integer.MAX_VALUE;
+    
+    
+    // This is the value in the report that we are looking for combined with sectionName
+    private final String HEADER_PREFIX = "header";
+    
+    // Overwrite the default maximum number of characters defined in the parser
+    // settings (4096)
+    private final int SETTINGS_MAX_CHARS_PER_COLUMN = 10000;// Integer.MAX_VALUE;
     public static Boolean CHUNKING = true;
     public static Boolean NOT_CHUNKING = false;
 
@@ -63,6 +70,8 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
     private Boolean isParserFinished = false;
 
+   
+
     public AdHocCSVParser(Class<T> hocElementClass, String sectionName) {
 	this.hocElementClass = hocElementClass;
 	this.sectionName = sectionName;
@@ -72,54 +81,58 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     /**
      * Returns ALL the rows for a report filtered for that report section. The
      * section is specified within the Report object.
-     *
+     * 
      * @param report
      * @param tempHeader
      * @return
      * @throws Exception
      */
-    public List<T> getAllRowsFromReport(Report report, AdHocElement tempHeader)
-	    throws Exception {
+    public List<T> getAllRowsFromReport(Report report) throws Exception {
 	this.report = report;
 
 	List<T> rows = new ArrayList<T>();
 	try {
-
 	    AdHocElement adHocHeader = parseHeader(AdHocCSVParser.NOT_CHUNKING);
-	    if (tempHeader != null) {
-		adHocHeader = tempHeader;
-	    }
 	    rows = parseRows(adHocHeader, false);
 
 	} catch (Exception e) {
-	    log.error("General error in parsing CSV");
+	    log.error("General error in parsing CSV: " + e.getMessage());
 	    throw new Exception(e);
 	}
 
 	return rows;
     }
 
-    // TODO: This is currently gutted
-    // because there are no actual headers in the CSV report
-    // https://jira/browse/PROTEX-18812
+    /**
+     * Generates the header coordinates Requires at least Protex 7.1 to work
+     * (https://jira/browse/PROTEX-18812)
+     * 
+     * @param chunking
+     *            - not supported
+     * @return
+     * @throws Exception
+     */
     protected AdHocElement parseHeader(boolean chunking) throws Exception {
-	AdHocElement adHocHeader = new AdHocElement();
+	AdHocElement adHocHeader;
 	try {
 	    Preconditions.checkNotNull(report.getFileContent());
 
 	    InputStream is = report.getFileContent().getInputStream();
 	    inputReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-	    // inputReader.readLine();
 
+	    // Initialize the reader (this will be used later by the main row
+	    // processing
 	    CsvParserSettings settings = new CsvParserSettings();
 	    settings.setMaxCharsPerColumn(SETTINGS_MAX_CHARS_PER_COLUMN);
 	    reader = new CsvParser(settings);
-	    
-	    // settings.getFormat().setLineSeparator("n");
 
-	    if (chunking) {
-		reader.beginParsing(inputReader);
-	    }
+	    // TODO: Add the chunking implementation
+	    reader.beginParsing(inputReader);
+	    adHocHeader = findHeader();
+	    
+	    if(adHocHeader == null)
+		throw new CommonFrameworkException("No headers found for CSV");
+	   
 
 	} catch (Exception e) {
 	    log.error("Unable to parse headers");
@@ -130,49 +143,84 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     }
 
     /**
+     * Find the header in the CSV
+     * The expectation is that a row exists with the first column value set to: <sectionName+header>
+     * Will iterate through all rows until it finds something.  
+     * 
+     * @param reader
+     * @return
+     * @throws Exception 
+     */
+    private AdHocElement findHeader() throws Exception 
+    {
+	String[] potentialRow = reader.parseNext();
+	
+	if(potentialRow == null)
+	    throw new CommonFrameworkException("Parsing rows during header processing encountered a null row, did parsing begin?");
+	if(sectionName == null || sectionName.length() == 0)
+	    throw new CommonFrameworkException("Parsing rows during header processing encountered a null row, section name is missing!");
+	
+	
+	String firstColumnValue = potentialRow[0];
+	if(firstColumnValue.equalsIgnoreCase(sectionName+HEADER_PREFIX))
+	{
+	    AdHocElement headerRow = new AdHocElement();
+	    // We want to start with index of 1 not 0, as the
+	    for(int column = 1; column < potentialRow.length; column++)
+	    {
+		String headerName = potentialRow[column];
+		headerRow.setCoordinate(column, headerName);
+	    }
+	    return headerRow;
+	}
+	else
+	    return findHeader();
+    }
+
+    /**
      * Parses our weird CSV The notable things that need to be done 1) Find only
      * those that rows that have the first column match the name of the section
      * 2) Start the data on Column 1. 3) The name of the header is just the
      * position
-     *
+     * 
      * @param header
      * @return
      * @throws Exception
      */
     protected List<T> parseRows(AdHocElement header, boolean chunk)
 	    throws Exception {
+
 	Long internalCounter = new Long(0);
 	List<T> rows = new ArrayList<T>();
 	convertSectionName();
 
-	List<String[]> allRows = new ArrayList<String[]>();
-
-	if (chunk) {
-
-	    while (internalCounter < this.rowChunk) {
-		String[] rec = reader.parseNext();
-
-		// This is the equivalent of iterator.next() == null
-		if (rec == null) {
-		    log.debug("No more rows, closing CSV reader.");
-		    setIsParserFinished(true);
-		    reader.stopParsing();
-		    break;
-		}
-
-		allRows.add(rec);
-		internalCounter++;
-	    }
-	} else {
-	    allRows = reader.parseAll(inputReader);
-	    log.info("Parsed all rows, count: " + allRows.size());
-	}
+//	if (chunk) {
+//	    // NOT IMPLEMENTED YET
+//	    // while (internalCounter < this.rowChunk) {
+//	    // String[] rec = reader.parseNext();
+//	    //
+//	    // // This is the equivalent of iterator.next() == null
+//	    // if (rec == null) {
+//	    // log.debug("No more rows, closing CSV reader.");
+//	    // setIsParserFinished(true);
+//	    // reader.stopParsing();
+//	    // break;
+//	    // }
+//	    //
+//	    // allRows.add(rec);
+//	    // internalCounter++;
+//	    // }
+//	} else {
+//	    //allRows = reader.parseAll(inputReader);
+//	    log.info("Parsed all rows, count: " + allRows.size());
+//	}
 
 	try {
-	    // At this point, the first row (header) is already processed
 	    boolean isHeaderVertical = checkHeaderOrientation(header);
 	    T adHocRow = generateNewInstance(hocElementClass);
-	    for (String[] record : allRows) {
+	    // At this point, due to previous header processing we should be jumping directly into the content.
+	    String[] record;
+	    while ((record = reader.parseNext()) != null) {		
 		log.debug("Parsing row: " + internalCounter);
 
 		// The first column is our section, it must match for us to
@@ -193,7 +241,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 			    adHocRow.setPair(columnName, value);
 
 			} else {
-			    // For non-verticular sheets, create a fresh new
+			    // For non-vertical sheets, create a fresh new
 			    // row.
 			    adHocRow = generateNewInstance(hocElementClass);
 
@@ -225,7 +273,6 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 			continue;
 		    }
 		}
-
 	    } // All the rows
 
 	} catch (Exception e) {
@@ -239,7 +286,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     /**
      * Determines what kind of header we have. Vertical header is unconventional
      * and would only happen if no coordinates are assigned.
-     *
+     * 
      * @param header
      * @return
      */
