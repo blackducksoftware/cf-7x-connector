@@ -39,4 +39,14 @@ public interface IComponentManager {
     List<ComponentPojo> getComponentsForRequests(List<RequestPojo> requests)
 	    throws CommonFrameworkException;
 
+    /**
+     * Get the list of approved components named in a list of requests.
+     *
+     * @param requests
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<ComponentPojo> getApprovedComponentsForRequests(
+	    List<RequestPojo> requests) throws CommonFrameworkException;
+
 }

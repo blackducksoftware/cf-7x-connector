@@ -139,6 +139,23 @@ public class ComponentManager implements IComponentManager {
 	return components;
     }
 
+    @Override
+    public List<ComponentPojo> getApprovedComponentsForRequests(
+	    List<RequestPojo> requests) throws CommonFrameworkException {
+
+	List<ComponentPojo> components = new ArrayList<>(requests.size());
+	for (RequestPojo request : requests) {
+	    ComponentPojo comp = getComponentById(request.getComponentId());
+	    if (comp.getApprovalStatus() == ApprovalStatus.APPROVED) {
+		components.add(comp);
+	    }
+	}
+
+	return components;
+    }
+
+    // Private methods
+
     private ComponentPojo createPojo(Component sdkComp)
 	    throws CommonFrameworkException {
 	List<AttributeValue> sdkAttrValues = sdkComp.getAttributeValues();
@@ -152,7 +169,8 @@ public class ComponentManager implements IComponentManager {
 	List<LicensePojo> licenses = Licenses.valueOf(licenseManager,
 		sdkComp.getDeclaredLicenses());
 	log.info("Component: " + sdkComp.getName() + " / "
-		+ sdkComp.getVersion());
+		+ sdkComp.getVersion() + "; Approval: "
+		+ sdkComp.getApprovalStatus());
 	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
 		sdkComp.getName(), sdkComp.getVersion(),
 		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),

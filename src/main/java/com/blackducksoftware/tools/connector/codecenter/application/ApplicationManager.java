@@ -178,26 +178,38 @@ public class ApplicationManager implements IApplicationManager {
     @Override
     public List<ComponentPojo> getComponentsRecursivelyByAppId(String appId)
 	    throws CommonFrameworkException {
-	List<ComponentPojo> allLevelComponents = collectComponents(appId);
+	List<ComponentPojo> allLevelComponents = collectComponents(appId, false);
+	return allLevelComponents;
+    }
+
+    @Override
+    public List<ComponentPojo> getApprovedComponentsRecursivelyByAppId(
+	    String appId) throws CommonFrameworkException {
+	List<ComponentPojo> allLevelComponents = collectComponents(appId, true);
 	return allLevelComponents;
     }
 
     // Private methods
 
-    private List<ComponentPojo> collectComponents(String appId)
-	    throws CommonFrameworkException {
+    private List<ComponentPojo> collectComponents(String appId,
+	    boolean onlyApproved) throws CommonFrameworkException {
 	List<RequestPojo> requests = getRequestsByAppId(appId);
-	List<ComponentPojo> thisLevelComponents = compMgr
-		.getComponentsForRequests(requests);
+	List<ComponentPojo> thisLevelComponents;
+	if (onlyApproved) {
+	    thisLevelComponents = compMgr
+		    .getApprovedComponentsForRequests(requests);
+	} else {
+	    thisLevelComponents = compMgr.getComponentsForRequests(requests);
+	}
 
 	List<ComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
 	for (ComponentPojo comp : thisLevelComponents) {
-	    log.info("Component: " + comp.getName() + " / " + comp.getVersion()
-		    + "; Application ID: " + comp.getApplicationId());
+	    log.debug("Component: " + comp.getName() + " / "
+		    + comp.getVersion());
 	    if ((comp.getApplicationId() != null)
 		    && (comp.getApplicationId().length() > 0)) {
-		List<ComponentPojo> appCompsMinusApps = collectComponents(comp
-			.getApplicationId());
+		List<ComponentPojo> appCompsMinusApps = collectComponents(
+			comp.getApplicationId(), onlyApproved);
 		thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
 	    } else {
 		thisLevelAndBelowComponentsMinusApps.add(comp);

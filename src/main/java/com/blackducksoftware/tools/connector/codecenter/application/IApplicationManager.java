@@ -60,4 +60,19 @@ public interface IApplicationManager {
      */
     List<ComponentPojo> getComponentsRecursivelyByAppId(String appId)
 	    throws CommonFrameworkException;
+
+    /**
+     * Get an application's approved components recursively, by application ID.
+     *
+     * For each component (at any level in the tree) that is an application
+     * published as a component, returns the approved components pointed to the
+     * published application's requests instead of the published application
+     * itself.
+     *
+     * @param appId
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<ComponentPojo> getApprovedComponentsRecursivelyByAppId(String appId)
+	    throws CommonFrameworkException;
 }
