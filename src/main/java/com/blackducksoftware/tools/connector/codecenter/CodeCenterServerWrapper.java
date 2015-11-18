@@ -54,13 +54,19 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 	    throws Exception {
 	configManager = manager;
 	apiWrapper = new CodeCenterAPIWrapper(bean, manager);
-	attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
-	applicationManager = new ApplicationManager(apiWrapper,
-		attributeDefinitionManager);
+
+	// Low-level managers, no dependencies on other managers
 	licenseManager = new LicenseManager(apiWrapper);
-	protexServerManager = new ProtexServerManager(apiWrapper, manager);
+	attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
+
+	// Higher-level managers with dependencies on other managers
 	componentManager = new ComponentManager(apiWrapper,
 		attributeDefinitionManager, licenseManager);
+	applicationManager = new ApplicationManager(apiWrapper,
+		attributeDefinitionManager, componentManager);
+
+	protexServerManager = new ProtexServerManager(apiWrapper, manager);
+
     }
 
     @Override

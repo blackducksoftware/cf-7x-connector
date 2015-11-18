@@ -13,6 +13,8 @@ import com.blackducksoftware.sdk.codecenter.cola.ColaApi;
 import com.blackducksoftware.sdk.codecenter.cola.data.Component;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentNameVersionToken;
+import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentIdToken;
+import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentReleaseIdToken;
 import com.blackducksoftware.sdk.codecenter.common.data.AttributeValue;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -143,6 +145,47 @@ public class ComponentManager implements IComponentManager {
 	List<AttributeValuePojo> attrValues = AttributeValues.valueOf(
 		attrDefMgr, sdkAttrValues);
 
+	String appId = getAppId(sdkComp);
+	String kbComponentId = getKbComponentId(sdkComp);
+	String kbComponentReleaseId = getKbComponentReleaseId(sdkComp);
+
+	List<LicensePojo> licenses = Licenses.valueOf(licenseManager,
+		sdkComp.getDeclaredLicenses());
+	log.info("Component: " + sdkComp.getName() + " / "
+		+ sdkComp.getVersion());
+	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
+		sdkComp.getName(), sdkComp.getVersion(),
+		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
+		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(),
+		kbComponentId, kbComponentReleaseId,
+		sdkComp.isApplicationComponent(), appId,
+		sdkComp.isDeprecated(), attrValues, licenses);
+	return comp;
+    }
+
+    private String getKbComponentReleaseId(Component sdkComp) {
+	KbComponentReleaseIdToken kbCompIdToken = sdkComp.getKbReleaseId();
+	String kbComponentReleaseId;
+	if (kbCompIdToken == null) {
+	    kbComponentReleaseId = null;
+	} else {
+	    kbComponentReleaseId = kbCompIdToken.getId();
+	}
+	return kbComponentReleaseId;
+    }
+
+    private String getKbComponentId(Component sdkComp) {
+	KbComponentIdToken kbCompIdToken = sdkComp.getKbComponentId();
+	String kbComponentId;
+	if (kbCompIdToken == null) {
+	    kbComponentId = null;
+	} else {
+	    kbComponentId = kbCompIdToken.getId();
+	}
+	return kbComponentId;
+    }
+
+    private String getAppId(Component sdkComp) {
 	ApplicationIdToken appIdToken = sdkComp.getApplicationId();
 	String appId;
 	if (appIdToken == null) {
@@ -150,18 +193,7 @@ public class ComponentManager implements IComponentManager {
 	} else {
 	    appId = appIdToken.getId();
 	}
-
-	List<LicensePojo> licenses = Licenses.valueOf(licenseManager,
-		sdkComp.getDeclaredLicenses());
-
-	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
-		sdkComp.getName(), sdkComp.getVersion(),
-		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
-		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(), sdkComp
-			.getKbComponentId().getId(), sdkComp.getKbReleaseId()
-			.getId(), sdkComp.isApplicationComponent(), appId,
-		sdkComp.isDeprecated(), attrValues, licenses);
-	return comp;
+	return appId;
     }
 
 }

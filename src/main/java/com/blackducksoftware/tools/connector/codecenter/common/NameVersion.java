@@ -5,34 +5,39 @@ public class NameVersion {
     private final String version;
 
     public NameVersion(String name, String version) {
-        this.name = name;
-        this.version = version;
+	this.name = name;
+	this.version = version;
     }
 
     protected String getName() {
-        return name;
+	return name;
     }
 
     protected String getVersion() {
-        return version;
+	return version;
+    }
+
+    @Override
+    public String toString() {
+	return "NameVersion [name=" + name + ", version=" + version + "]";
     }
 
     @Override
     public boolean equals(Object otherObj) {
-        if (!(otherObj instanceof NameVersion)) {
-    	return false;
-        }
-        NameVersion otherNameVersion = (NameVersion) otherObj;
-        if (getName().equals(otherNameVersion.getName())
-    	    && getVersion().equals(otherNameVersion.getVersion())) {
-    	return true;
-        }
-        return false;
+	if (!(otherObj instanceof NameVersion)) {
+	    return false;
+	}
+	NameVersion otherNameVersion = (NameVersion) otherObj;
+	if (getName().equals(otherNameVersion.getName())
+		&& getVersion().equals(otherNameVersion.getVersion())) {
+	    return true;
+	}
+	return false;
     }
 
     @Override
     public int hashCode() {
-        return (getName().hashCode() << 1) + getVersion().hashCode();
+	return (getName().hashCode() << 1) + getVersion().hashCode();
     }
 
 }

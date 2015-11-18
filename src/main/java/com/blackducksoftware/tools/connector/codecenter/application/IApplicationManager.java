@@ -3,6 +3,7 @@ package com.blackducksoftware.tools.connector.codecenter.application;
 import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
+import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
 /**
@@ -44,5 +45,19 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<RequestPojo> getRequestsByAppId(String appId)
+	    throws CommonFrameworkException;
+
+    /**
+     * Get an application's components recursively, by application ID.
+     *
+     * For each component (at any level in the tree) that is an application
+     * published as a component, returns the components pointed to the published
+     * application's requests instead of the published application itself.
+     *
+     * @param appId
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<ComponentPojo> getComponentsRecursivelyByAppId(String appId)
 	    throws CommonFrameworkException;
 }

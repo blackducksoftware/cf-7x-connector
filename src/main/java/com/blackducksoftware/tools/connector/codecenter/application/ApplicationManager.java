@@ -20,8 +20,10 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefi
 import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
+import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
+import com.blackducksoftware.tools.connector.codecenter.component.IComponentManager;
 
 /**
  * Provides a higher level of abstraction for accessing Code Center
@@ -44,14 +46,16 @@ public class ApplicationManager implements IApplicationManager {
 	    .getName());
     private final CodeCenterAPIWrapper ccApiWrapper;
     private final IAttributeDefinitionManager attrDefMgr;
+    private final IComponentManager compMgr;
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
     private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
-	    IAttributeDefinitionManager attrDefMgr) {
+	    IAttributeDefinitionManager attrDefMgr, IComponentManager compMgr) {
 	this.ccApiWrapper = ccApiWrapper;
 	this.attrDefMgr = attrDefMgr;
+	this.compMgr = compMgr;
     }
 
     /**
@@ -171,6 +175,38 @@ public class ApplicationManager implements IApplicationManager {
 	return requests;
     }
 
+    @Override
+    public List<ComponentPojo> getComponentsRecursivelyByAppId(String appId)
+	    throws CommonFrameworkException {
+	List<ComponentPojo> allLevelComponents = collectComponents(appId);
+	return allLevelComponents;
+    }
+
+    // Private methods
+
+    private List<ComponentPojo> collectComponents(String appId)
+	    throws CommonFrameworkException {
+	List<RequestPojo> requests = getRequestsByAppId(appId);
+	List<ComponentPojo> thisLevelComponents = compMgr
+		.getComponentsForRequests(requests);
+
+	List<ComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
+	for (ComponentPojo comp : thisLevelComponents) {
+	    log.info("Component: " + comp.getName() + " / " + comp.getVersion()
+		    + "; Application ID: " + comp.getApplicationId());
+	    if ((comp.getApplicationId() != null)
+		    && (comp.getApplicationId().length() > 0)) {
+		List<ComponentPojo> appCompsMinusApps = collectComponents(comp
+			.getApplicationId());
+		thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
+	    } else {
+		thisLevelAndBelowComponentsMinusApps.add(comp);
+	    }
+	}
+
+	return thisLevelAndBelowComponentsMinusApps;
+    }
+
     private List<RequestPojo> createRequestPojoList(String appId,
 	    List<RequestSummary> requestSummaries)
 	    throws CommonFrameworkException {
@@ -190,4 +226,5 @@ public class ApplicationManager implements IApplicationManager {
 		sdkRequest.getLicenseInfo().getId().getId());
 	return request;
     }
+
 }

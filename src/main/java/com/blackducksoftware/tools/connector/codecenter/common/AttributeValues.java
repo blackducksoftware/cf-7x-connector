@@ -52,7 +52,7 @@ public class AttributeValues {
 	    if ((valueList != null) && (valueList.size() > 0)) {
 		value = attrValue.getValues().get(0);
 	    }
-	    log.info("Processing attr id " + attrId + ", name " + attrName
+	    log.debug("Processing attr id " + attrId + ", name " + attrName
 		    + ", value " + value);
 
 	    AttributeValuePojo pojo = new AttributeValuePojo(attrId, attrName,
