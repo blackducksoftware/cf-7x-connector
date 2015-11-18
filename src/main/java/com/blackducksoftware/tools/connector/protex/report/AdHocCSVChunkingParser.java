@@ -58,9 +58,6 @@ public class AdHocCSVChunkingParser<T extends HocElement> extends
 
 	// Instantiate the reader
 	try {
-	    // TODO: The header is useless now because our CSV does not contain
-	    // any :(
-	    // ** HOWEVER** This also starts the reader.
 	    headerForChunking = parseHeader(AdHocCSVParser.CHUNKING);
 
 	} catch (Exception e) {

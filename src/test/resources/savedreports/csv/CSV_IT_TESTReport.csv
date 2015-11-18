@@ -1,92 +1,93 @@
-"reportSpecification","15","CSV_IT_TEST Report","November 26, 2014  11:05 AM","","","","","","","","","","",""
-"disclaimer","This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.","","","","","","","","","","","","",""
-"sectionTitles","Summary","Analysis Summary","Bill of Materials","Licenses in Effect","License Conflicts","","","","","","","","",""
-"summary","Name:","CSV_IT_TEST","","","","","","","","","","","",""
-"summary","Project Creator:","Unit Tester","","","","","","","","","","","",""
-"summary","License:","[template] Basic Proprietary Commercial License","","","","","","","","","","","",""
-"summary","Description:","Project used to test CSV reports.  Do not change or modify this in any way!","","","","","","","","","","","",""
-"summary","Number of Files:","132","","","","","","","","","","","",""
-"summary","Files Pending Identification:","78 (59.09%)","","","","","","","","","","","",""
-"summary","Files with Violations:","6 (4.55%)","","","","","","","","","","","",""
-"summary","Server:","se-menger.blackducksoftware.com","","","","","","","","","","","",""
-"analysisSummary","Last Updated:","November 26, 2014  11:03 AM","","","","","","","","","","","",""
-"analysisSummary","Scan Started:","","","","","","","","","","","","",""
-"analysisSummary","Scan Finished:","","","","","","","","","","","","",""
-"analysisSummary","Files Analyzed:","132 Files","","","","","","","","","","","",""
-"analysisSummary","Bytes Analyzed:","5.767 MB (6,047,257 B)","","","","","","","","","","","",""
-"analysisSummary","Files Skipped:","0 Files","","","","","","","","","","","",""
-"analysisSummary","Bytes Skipped:","0 B","","","","","","","","","","","",""
-"analysisSummary","Analysis Release Description:","Product version 7.0.2 KB update 116","","","","","","","","","","","",""
-"analysisSummary","Analyzed From Host:","BDS00829.blackducksoftware.com","","","","","","","","","","","",""
-"analysisSummary","Analyzed By:","Unit Tester (unitTester@blackducksoftware.com)","","","","","","","","","","","",""
-"analysisSummary","Analyzed With OS:","Windows 7","","","","","","","","","","","",""
-"analysisSummary","Analyzed With Locale:","en-US","","","","","","","","","","","",""
-"analysisSummary","Analyzed With Options:","","","","","","","","","","","","",""
-"analysisSummary","File Matches -","Yes","","","","","","","","","","","",""
-"analysisSummary","Snippet Matches -","Yes","","","","","","","","","","","",""
-"analysisSummary","Snippet Match Sensitivity -","8 - Default","","","","","","","","","","","",""
-"analysisSummary","Java Import Statements -","Yes","","","","","","","","","","","",""
-"analysisSummary","Java Package Statements -","Yes","","","","","","","","","","","",""
-"analysisSummary","Binary Dependencies -","Yes","","","","","","","","","","","",""
-"analysisSummary","String Searches -","Yes","","","","","","","","","","","",""
-"analysisSummary","Allow wild cards (*) in string search queries -","Yes","","","","","","","","","","","",""
-"analysisSummary","Allow regular expression search queries -","No","","","","","","","","","","","",""
-"analysisSummary","Decompress Compressed Files -","Yes","","","","","","","","","","","",""
-"analysisSummary","Discard Rejected Code Matches -","No","","","","","","","","","","","",""
-"analysisSummary","Keep Only To Discoveries To Codeprinted Components -","No","","","","","","","","","","","",""
-"analysisSummary","Keep Only Discoveries To Components With Best Matching Source Path -","No","","","","","","","","","","","",""
-"analysisSummary","Keep Only Discoveries To Components Released On Or After -","No","","","","","","","","","","","",""
-"analysisSummary","Keep Only Discoveries To Top Component Matches -","No","","","","","","","","","","","",""
-"analysisSummary","Keep Only Discoveries To Maven Artifacts -","No","","","","","","","","","","","",""
-"analysisSummary","Expand Archive Files -","No","","","","","","","","","","","",""
-"analysisSummary","Enable Multi-User File Comparison -","Yes","","","","","","","","","","","",""
-"analysisSummary","Store non-precision matches -","No","","","","","","","","","","","",""
-"analysisSummary","Enable Rapid Identification -","No","","","","","","","","","","","",""
-"billOfMaterials","Pending Approval","No Conflicts","ArgoPrint","0.1","http://argoprint.tigris.org/","","BSD 3-clause ""New"" or ""Revised"" License","File","Ship","1","0","0","0",""
-"billOfMaterials","Pending Approval","Component License Conflict","astr","trunk-20111101-svn","http://code.google.com/p/astr/","","Mozilla Public License 1.1","File","Ship","1","0","0","0",""
-"billOfMaterials","Pending Approval","Declared License Conflict and Component License Conflict","Code::Blocks","1.0-beta2","http://codeblocks.tigris.org/","","GNU General Public License v2.0 or later","File","Ship","1","0","0","0",""
-"billOfMaterials","Pending Approval","Declared License Conflict and Component License Conflict","Common Lisp ORB","0.5","http://clorb.sourceforge.net","","GNU General Public License v2.0 or later","File","Ship","1","0","0","0",""
-"billOfMaterials","Pending Approval","Declared License Conflict and Component License Conflict","Common Trash Bin","0.0.1","http://sourceforge.net/projects/tra/","","GNU General Public License v2.0 or later","Snippet","Ship","1","0","0","0",""
-"billOfMaterials","N/A","N/A","CSV_IT_TEST","Unspecified","","","[template] Basic Proprietary Commercial License","Original Code","Ship","40","0","0","0",""
-"billOfMaterials","Pending Approval","Component License Conflict","Firebird - firebird","Unspecified","http://firebird.sourceforge.net/","","InterBase Public License v1","File","Ship","2","0","0","0",""
-"billOfMaterials","Pending Approval","No Conflicts","Handle","master-20100823","http://github.com/lsehub/Handle/","","Unspecified","Snippet","Ship","1","0","0","0",""
-"licensesInEffect","[template] Basic Proprietary Commercial License","Ship","","","","","","","","","","","",""
-"licensesInEffect","BSD 3-clause ""New"" or ""Revised"" License","Ship","","","","","","","","","","","",""
-"licensesInEffect","GNU General Public License v2.0 or later","Ship","","","","","","","","","","","",""
-"licensesInEffect","InterBase Public License v1","Ship","","","","","","","","","","","",""
-"licensesInEffect","Mozilla Public License 1.1","Ship","","","","","","","","","","","",""
-"licensesInEffect","Unspecified","Ship","","","","","","","","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to modify the code.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are not entitled to impose a fee related to what Recipient may do with the code.","Recipient will be expected to pay a fee.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).","You are not entitled to distribute source code.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to copy the code.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to reverse engineer the code.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","Firebird - firebird","","InterBase Public License v1","You are not entitled to place additional restrictions on what Recipient may do with the code.","There are (or You intend to place) additional restrictions.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","Firebird - firebird","","InterBase Public License v1","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","You are required to license the entire File under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","astr","trunk-20111101-svn","Mozilla Public License 1.1","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","You are required to license the entire File under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to modify the code.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are not entitled to impose a fee related to what Recipient may do with the code.","Recipient will be expected to pay a fee.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).","You are not entitled to distribute source code.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to copy the code.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to reverse engineer the code.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","Firebird - firebird","","InterBase Public License v1","You are not entitled to place additional restrictions on what Recipient may do with the code.","There are (or You intend to place) additional restrictions.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","Firebird - firebird","","InterBase Public License v1","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","You are required to license the entire File under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","astr","trunk-20111101-svn","Mozilla Public License 1.1","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","You are required to license the entire File under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to modify the code.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).","You are not entitled to distribute source code.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are not entitled to impose a fee related to what Recipient may do with the code.","Recipient will be expected to pay a fee.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to reverse engineer the code.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","CSV_IT_TEST","","[template] Basic Proprietary Commercial License","You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).","You are not entitled to grant the right to copy the code.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","Firebird - firebird","","InterBase Public License v1","You are not entitled to place additional restrictions on what Recipient may do with the code.","There are (or You intend to place) additional restrictions.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","Firebird - firebird","","InterBase Public License v1","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","You are required to license the entire File under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","astr","trunk-20111101-svn","Mozilla Public License 1.1","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","You are required to license the entire File under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Firebird - firebird","","InterBase Public License v1","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","There are (or You intend to place) additional restrictions.","You are not entitled to place additional restrictions on what Recipient may do with the code.","No","","","","",""
-"licenseConflicts","Firebird - firebird","","InterBase Public License v1","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","You are required to license the entire File under the same terms as the original code.","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Firebird - firebird","","InterBase Public License v1","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","There are (or You intend to place) additional restrictions.","You are not entitled to place additional restrictions on what Recipient may do with the code.","No","","","","",""
-"licenseConflicts","Firebird - firebird","","InterBase Public License v1","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","You are required to license the entire File under the same terms as the original code.","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","No","","","","",""
-"licenseConflicts","Firebird - firebird","","InterBase Public License v1","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","There are (or You intend to place) additional restrictions.","You are not entitled to place additional restrictions on what Recipient may do with the code.","No","","","","",""
-"licenseConflicts","Firebird - firebird","","InterBase Public License v1","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","You are required to license the entire File under the same terms as the original code.","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","No","","","","",""
-"licenseConflicts","astr","trunk-20111101-svn","Mozilla Public License 1.1","Code::Blocks","1.0-beta2","GNU General Public License v2.0 or later","You are required to license the entire File under the same terms as the original code.","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","No","","","","",""
-"licenseConflicts","astr","trunk-20111101-svn","Mozilla Public License 1.1","Common Lisp ORB","0.5","GNU General Public License v2.0 or later","You are required to license the entire File under the same terms as the original code.","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","No","","","","",""
-"licenseConflicts","astr","trunk-20111101-svn","Mozilla Public License 1.1","Common Trash Bin","0.0.1","GNU General Public License v2.0 or later","You are required to license the entire File under the same terms as the original code.","You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.","No","","","","",""
-"disclaimer","This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.","","","","","","","","","","","","",""
+reportSpecification,15,CSV_IT_TEST Report,11/26/2014 11:05,,,,,,,,,,,,
+disclaimer,"This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.",,,,,,,,,,,,,,
+sectionTitles,Summary,Analysis Summary,Bill of Materials,Licenses in Effect,License Conflicts,,,,,,,,,,
+summary,Name:,CSV_IT_TEST,,,,,,,,,,,,,
+summary,Project Creator:,Unit Tester,,,,,,,,,,,,,
+summary,License:,[template] Basic Proprietary Commercial License,,,,,,,,,,,,,
+summary,Description:,Project used to test CSV reports.  Do not change or modify this in any way!,,,,,,,,,,,,,
+summary,Number of Files:,132,,,,,,,,,,,,,
+summary,Files Pending Identification:,78 (59.09%),,,,,,,,,,,,,
+summary,Files with Violations:,6 (4.55%),,,,,,,,,,,,,
+summary,Server:,se-menger.blackducksoftware.com,,,,,,,,,,,,,
+analysisSummary,Last Updated:,11/26/2014 11:03,,,,,,,,,,,,,
+analysisSummary,Scan Started:,,,,,,,,,,,,,,
+analysisSummary,Scan Finished:,,,,,,,,,,,,,,
+analysisSummary,Files Analyzed:,132 Files,,,,,,,,,,,,,
+analysisSummary,Bytes Analyzed:,"5.767 MB (6,047,257 B)",,,,,,,,,,,,,
+analysisSummary,Files Skipped:,0 Files,,,,,,,,,,,,,
+analysisSummary,Bytes Skipped:,0 B,,,,,,,,,,,,,
+analysisSummary,Analysis Release Description:,Product version 7.0.2 KB update 116,,,,,,,,,,,,,
+analysisSummary,Analyzed From Host:,BDS00829.blackducksoftware.com,,,,,,,,,,,,,
+analysisSummary,Analyzed By:,Unit Tester (unitTester@blackducksoftware.com),,,,,,,,,,,,,
+analysisSummary,Analyzed With OS:,Windows 7,,,,,,,,,,,,,
+analysisSummary,Analyzed With Locale:,en-US,,,,,,,,,,,,,
+analysisSummary,Analyzed With Options:,,,,,,,,,,,,,,
+analysisSummary,File Matches -,Yes,,,,,,,,,,,,,
+analysisSummary,Snippet Matches -,Yes,,,,,,,,,,,,,
+analysisSummary,Snippet Match Sensitivity -,8 - Default,,,,,,,,,,,,,
+analysisSummary,Java Import Statements -,Yes,,,,,,,,,,,,,
+analysisSummary,Java Package Statements -,Yes,,,,,,,,,,,,,
+analysisSummary,Binary Dependencies -,Yes,,,,,,,,,,,,,
+analysisSummary,String Searches -,Yes,,,,,,,,,,,,,
+analysisSummary,Allow wild cards (*) in string search queries -,Yes,,,,,,,,,,,,,
+analysisSummary,Allow regular expression search queries -,No,,,,,,,,,,,,,
+analysisSummary,Decompress Compressed Files -,Yes,,,,,,,,,,,,,
+analysisSummary,Discard Rejected Code Matches -,No,,,,,,,,,,,,,
+analysisSummary,Keep Only To Discoveries To Codeprinted Components -,No,,,,,,,,,,,,,
+analysisSummary,Keep Only Discoveries To Components With Best Matching Source Path -,No,,,,,,,,,,,,,
+analysisSummary,Keep Only Discoveries To Components Released On Or After -,No,,,,,,,,,,,,,
+analysisSummary,Keep Only Discoveries To Top Component Matches -,No,,,,,,,,,,,,,
+analysisSummary,Keep Only Discoveries To Maven Artifacts -,No,,,,,,,,,,,,,
+analysisSummary,Expand Archive Files -,No,,,,,,,,,,,,,
+analysisSummary,Enable Multi-User File Comparison -,Yes,,,,,,,,,,,,,
+analysisSummary,Store non-precision matches -,No,,,,,,,,,,,,,
+analysisSummary,Enable Rapid Identification -,No,,,,,,,,,,,,,
+billOfMaterialsHeader,Approval Status,License Conflict,Component,Version,Home Page,Component Comment,License,External IDs,Usage,Ship Status,# Manual Code Match,# Rapid ID Code Match,# Depends,# Search,Used By
+billOfMaterials,Pending Approval,No Conflicts,ArgoPrint,0.1,http://argoprint.tigris.org/,,"BSD 3-clause ""New"" or ""Revised"" License",File,Ship,1,0,0,0,,
+billOfMaterials,Pending Approval,Component License Conflict,astr,trunk-20111101-svn,http://code.google.com/p/astr/,,Mozilla Public License 1.1,File,Ship,1,0,0,0,,
+billOfMaterials,Pending Approval,Declared License Conflict and Component License Conflict,Code::Blocks,1.0-beta2,http://codeblocks.tigris.org/,,GNU General Public License v2.0 or later,File,Ship,1,0,0,0,,
+billOfMaterials,Pending Approval,Declared License Conflict and Component License Conflict,Common Lisp ORB,0.5,http://clorb.sourceforge.net,,GNU General Public License v2.0 or later,File,Ship,1,0,0,0,,
+billOfMaterials,Pending Approval,Declared License Conflict and Component License Conflict,Common Trash Bin,0.0.1,http://sourceforge.net/projects/tra/,,GNU General Public License v2.0 or later,Snippet,Ship,1,0,0,0,,
+billOfMaterials,N/A,N/A,CSV_IT_TEST,Unspecified,,,[template] Basic Proprietary Commercial License,Original Code,Ship,40,0,0,0,,
+billOfMaterials,Pending Approval,Component License Conflict,Firebird - firebird,Unspecified,http://firebird.sourceforge.net/,,InterBase Public License v1,File,Ship,2,0,0,0,,
+billOfMaterials,Pending Approval,No Conflicts,Handle,master-20100823,http://github.com/lsehub/Handle/,,Unspecified,Snippet,Ship,1,0,0,0,,
+licensesInEffect,[template] Basic Proprietary Commercial License,Ship,,,,,,,,,,,,,
+licensesInEffect,"BSD 3-clause ""New"" or ""Revised"" License",Ship,,,,,,,,,,,,,
+licensesInEffect,GNU General Public License v2.0 or later,Ship,,,,,,,,,,,,,
+licensesInEffect,InterBase Public License v1,Ship,,,,,,,,,,,,,
+licensesInEffect,Mozilla Public License 1.1,Ship,,,,,,,,,,,,,
+licensesInEffect,Unspecified,Ship,,,,,,,,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to modify the code.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are not entitled to impose a fee related to what Recipient may do with the code.,Recipient will be expected to pay a fee.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).,You are not entitled to distribute source code.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to copy the code.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to reverse engineer the code.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,Firebird - firebird,,InterBase Public License v1,You are not entitled to place additional restrictions on what Recipient may do with the code.,There are (or You intend to place) additional restrictions.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,Firebird - firebird,,InterBase Public License v1,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,You are required to license the entire File under the same terms as the original code.,No,,,,,,
+licenseConflicts,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,astr,trunk-20111101-svn,Mozilla Public License 1.1,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,You are required to license the entire File under the same terms as the original code.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to modify the code.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are not entitled to impose a fee related to what Recipient may do with the code.,Recipient will be expected to pay a fee.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).,You are not entitled to distribute source code.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to copy the code.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to reverse engineer the code.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,Firebird - firebird,,InterBase Public License v1,You are not entitled to place additional restrictions on what Recipient may do with the code.,There are (or You intend to place) additional restrictions.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,Firebird - firebird,,InterBase Public License v1,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,You are required to license the entire File under the same terms as the original code.,No,,,,,,
+licenseConflicts,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,astr,trunk-20111101-svn,Mozilla Public License 1.1,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,You are required to license the entire File under the same terms as the original code.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to modify the code.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).,You are not entitled to distribute source code.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are not entitled to impose a fee related to what Recipient may do with the code.,Recipient will be expected to pay a fee.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to reverse engineer the code.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,CSV_IT_TEST,,[template] Basic Proprietary Commercial License,You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).,You are not entitled to grant the right to copy the code.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,Firebird - firebird,,InterBase Public License v1,You are not entitled to place additional restrictions on what Recipient may do with the code.,There are (or You intend to place) additional restrictions.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,Firebird - firebird,,InterBase Public License v1,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,You are required to license the entire File under the same terms as the original code.,No,,,,,,
+licenseConflicts,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,astr,trunk-20111101-svn,Mozilla Public License 1.1,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,You are required to license the entire File under the same terms as the original code.,No,,,,,,
+licenseConflicts,Firebird - firebird,,InterBase Public License v1,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,There are (or You intend to place) additional restrictions.,You are not entitled to place additional restrictions on what Recipient may do with the code.,No,,,,,,
+licenseConflicts,Firebird - firebird,,InterBase Public License v1,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,You are required to license the entire File under the same terms as the original code.,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,No,,,,,,
+licenseConflicts,Firebird - firebird,,InterBase Public License v1,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,There are (or You intend to place) additional restrictions.,You are not entitled to place additional restrictions on what Recipient may do with the code.,No,,,,,,
+licenseConflicts,Firebird - firebird,,InterBase Public License v1,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,You are required to license the entire File under the same terms as the original code.,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,No,,,,,,
+licenseConflicts,Firebird - firebird,,InterBase Public License v1,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,There are (or You intend to place) additional restrictions.,You are not entitled to place additional restrictions on what Recipient may do with the code.,No,,,,,,
+licenseConflicts,Firebird - firebird,,InterBase Public License v1,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,You are required to license the entire File under the same terms as the original code.,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,No,,,,,,
+licenseConflicts,astr,trunk-20111101-svn,Mozilla Public License 1.1,Code::Blocks,1.0-beta2,GNU General Public License v2.0 or later,You are required to license the entire File under the same terms as the original code.,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,No,,,,,,
+licenseConflicts,astr,trunk-20111101-svn,Mozilla Public License 1.1,Common Lisp ORB,0.5,GNU General Public License v2.0 or later,You are required to license the entire File under the same terms as the original code.,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,No,,,,,,
+licenseConflicts,astr,trunk-20111101-svn,Mozilla Public License 1.1,Common Trash Bin,0.0.1,GNU General Public License v2.0 or later,You are required to license the entire File under the same terms as the original code.,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,No,,,,,,
+disclaimer,"This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.",,,,,,,,,,,,,,
