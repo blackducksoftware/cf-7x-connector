@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter;
+package com.blackducksoftware.tools.connector.codecenter.common;
 
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;

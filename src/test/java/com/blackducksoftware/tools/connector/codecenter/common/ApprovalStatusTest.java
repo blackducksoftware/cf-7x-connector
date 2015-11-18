@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter;
+package com.blackducksoftware.tools.connector.codecenter.common;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
-import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
+import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 
 public class ApprovalStatusTest {
 

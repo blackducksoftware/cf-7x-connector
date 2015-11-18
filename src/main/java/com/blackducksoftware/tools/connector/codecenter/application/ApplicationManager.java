@@ -15,12 +15,13 @@ import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
-import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
-import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
-import com.blackducksoftware.tools.connector.codecenter.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
+import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
+import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
+import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
+import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
 /**
  * Provides a higher level of abstraction for accessing Code Center

@@ -3,7 +3,8 @@ package com.blackducksoftware.tools.connector.codecenter.component;
 import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.application.RequestPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
 public interface IComponentManager {
 

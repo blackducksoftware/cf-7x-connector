@@ -1,6 +1,5 @@
-package com.blackducksoftware.tools.connector.codecenter.application;
+package com.blackducksoftware.tools.connector.codecenter.common;
 
-import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
 
 /**
  * A request (a component use by an application).

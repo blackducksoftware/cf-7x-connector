@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter;
+package com.blackducksoftware.tools.connector.codecenter.common;
 
 /**
  * An attribute value.

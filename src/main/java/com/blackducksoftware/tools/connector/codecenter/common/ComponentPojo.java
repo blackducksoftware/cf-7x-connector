@@ -1,12 +1,9 @@
-package com.blackducksoftware.tools.connector.codecenter.component;
+package com.blackducksoftware.tools.connector.codecenter.common;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
-import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
-import com.blackducksoftware.tools.connector.codecenter.AttributeValues;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 /**

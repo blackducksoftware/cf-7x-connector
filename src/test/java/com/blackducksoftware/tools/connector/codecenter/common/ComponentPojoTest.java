@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter.component;
+package com.blackducksoftware.tools.connector.codecenter.common;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,8 +9,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blackducksoftware.tools.connector.codecenter.ApprovalStatus;
-import com.blackducksoftware.tools.connector.codecenter.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
+import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 public class ComponentPojoTest {
