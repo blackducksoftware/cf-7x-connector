@@ -73,8 +73,22 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
     public AdHocCSVParser(Class<T> hocElementClass, String sectionName) {
 	this.hocElementClass = hocElementClass;
-	this.sectionName = sectionName;
+	this.sectionName = cleanUpSectionName(sectionName);
 	Preconditions.checkNotNull(sectionName);
+    }
+
+    /**
+     * Cleans up the section name by removing all spaces and underscores and flatterning the capitalization
+     * @param sectionName2
+     * @return
+     */
+    private String cleanUpSectionName(String section) {
+	String newSection = section.replace("_", "");
+	newSection = newSection.replace(" ", "");
+	newSection = newSection.toLowerCase();
+	log.info("Cleaned up section name from '{}' to '{}'", section, newSection);
+	
+	return newSection;
     }
 
     /**
@@ -178,8 +192,8 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 	}
 
 	String firstColumnValue = potentialRow[0];
-	// Only interested in our section
-	sectionName = sectionName.toLowerCase();
+	// Only interested in our section, reduce both to lower case
+	firstColumnValue = firstColumnValue.toLowerCase();
 	if (firstColumnValue.startsWith(sectionName)) {
 	    // Only interested in the header
 	    if (firstColumnValue.equalsIgnoreCase(sectionName + HEADER_PREFIX)) {
