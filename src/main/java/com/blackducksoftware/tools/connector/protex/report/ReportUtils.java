@@ -97,7 +97,7 @@ public class ReportUtils {
 
 	    List<AdHocElement> rowsToParse = getReportSection(
 		    protexServerWrapper, project, reportSection, reportFormat,
-		    AdHocElement.class, null);
+		    AdHocElement.class);
 	    if (rowsToParse != null) {
 		populateSectionData(templateReader, sheet, wb, rowsToParse);
 	    }
@@ -205,8 +205,7 @@ public class ReportUtils {
     public <T extends HocElement> List<T> getReportSection(
 	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
 	    ProjectPojo project, String reportSection,
-	    ReportFormat reportFormat, Class<T> adHocClass,
-	    AdHocElement tempHeader) throws Exception {
+	    ReportFormat reportFormat, Class<T> adHocClass) throws Exception {
 
 	List<T> returnRows = null;
 
@@ -261,7 +260,7 @@ public class ReportUtils {
 	} else if (reportFormat == ReportFormat.CSV) {
 	    ProtexReportCSVProcessor<T> csvProcessor = new ProtexReportCSVProcessor<T>(
 		    sectionType.name());
-	    csvProcessor.setTemporaryHeader(tempHeader);
+
 	    try {
 		Report report = reportAPI.generateAdHocProjectReport(
 			project.getProjectKey(), reportReq, ReportFormat.CSV,

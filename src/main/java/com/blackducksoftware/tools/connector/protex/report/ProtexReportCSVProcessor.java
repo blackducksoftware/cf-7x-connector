@@ -74,7 +74,7 @@ public class ProtexReportCSVProcessor<T extends HocElement> {
 	    log.info("Getting CSV report for section: " + sectionName);
 	    AdHocCSVParser<T> parser = new AdHocCSVParser<T>(hocElementClass,
 		    sectionName);
-	    parsedRows = parser.getAllRowsFromReport(report, this.tempHeader);
+	    parsedRows = parser.getAllRowsFromReport(report);
 	    log.info("CSV parsed, found following number of rows: "
 		    + parsedRows.size());
 	} catch (Exception e) {
@@ -126,11 +126,6 @@ public class ProtexReportCSVProcessor<T extends HocElement> {
 
     private void setIsFinished(Boolean isFinished) {
 	this.isFinished = isFinished;
-    }
-
-    public void setTemporaryHeader(AdHocElement adHocHeader) {
-	this.tempHeader = adHocHeader;
-
     }
 
 }
