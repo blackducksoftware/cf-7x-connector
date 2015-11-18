@@ -179,6 +179,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
 	String firstColumnValue = potentialRow[0];
 	// Only interested in our section
+	sectionName = sectionName.toLowerCase();
 	if (firstColumnValue.startsWith(sectionName)) {
 	    // Only interested in the header
 	    if (firstColumnValue.equalsIgnoreCase(sectionName + HEADER_PREFIX)) {
