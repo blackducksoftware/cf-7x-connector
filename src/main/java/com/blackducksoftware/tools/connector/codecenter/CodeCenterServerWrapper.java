@@ -60,7 +60,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 	licenseManager = new LicenseManager(apiWrapper);
 	protexServerManager = new ProtexServerManager(apiWrapper, manager);
 	componentManager = new ComponentManager(apiWrapper,
-		attributeDefinitionManager);
+		attributeDefinitionManager, licenseManager);
     }
 
     @Override

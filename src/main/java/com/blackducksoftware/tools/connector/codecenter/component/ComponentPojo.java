@@ -1,6 +1,5 @@
 package com.blackducksoftware.tools.connector.codecenter.component;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class ComponentPojo {
     private final String name;
     private final String version;
     private final ApprovalStatus approvalStatus;
-    private final List<LicensePojo> licenses = new ArrayList<>();
+    private final List<LicensePojo> licenses;
     private final String homepage;
     private final String intendedAudiences;
     private final String kbComponentId;
@@ -35,7 +34,8 @@ public class ComponentPojo {
 	    ApprovalStatus approvalStatus, String homepage,
 	    String intendedAudiences, String kbComponentId, String kbReleaseId,
 	    boolean applicationComponent, String applicationId,
-	    boolean deprecated, List<AttributeValuePojo> attributeValues) {
+	    boolean deprecated, List<AttributeValuePojo> attributeValues,
+	    List<LicensePojo> licenses) {
 	this.id = id;
 	this.name = name;
 	this.version = version;
@@ -49,6 +49,7 @@ public class ComponentPojo {
 	this.deprecated = deprecated;
 	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
 		attributeValues);
+	this.licenses = licenses;
     }
 
     public String getId() {

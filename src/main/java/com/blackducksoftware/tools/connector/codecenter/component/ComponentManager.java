@@ -23,6 +23,9 @@ import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.application.RequestPojo;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
+import com.blackducksoftware.tools.connector.common.ILicenseManager;
+import com.blackducksoftware.tools.connector.common.LicensePojo;
+import com.blackducksoftware.tools.connector.common.Licenses;
 
 public class ComponentManager implements IComponentManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
@@ -30,13 +33,16 @@ public class ComponentManager implements IComponentManager {
 
     private final CodeCenterAPIWrapper codeCenterApiWrapper;
     private final IAttributeDefinitionManager attrDefMgr;
+    private final ILicenseManager licenseManager;
     private final Map<NameVersion, Component> componentsByNameVersionCache = new HashMap<>();
     private final Map<String, Component> componentsByIdCache = new HashMap<>();
 
     public ComponentManager(CodeCenterAPIWrapper codeCenterApiWrapper,
-	    IAttributeDefinitionManager attrDefMgr) {
+	    IAttributeDefinitionManager attrDefMgr,
+	    ILicenseManager licenseManager) {
 	this.codeCenterApiWrapper = codeCenterApiWrapper;
 	this.attrDefMgr = attrDefMgr;
+	this.licenseManager = licenseManager;
     }
 
     /**
@@ -144,13 +150,16 @@ public class ComponentManager implements IComponentManager {
 	    appId = appIdToken.getId();
 	}
 
+	List<LicensePojo> licenses = Licenses.valueOf(licenseManager,
+		sdkComp.getDeclaredLicenses());
+
 	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
 		sdkComp.getName(), sdkComp.getVersion(),
 		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
 		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(), sdkComp
 			.getKbComponentId().getId(), sdkComp.getKbReleaseId()
 			.getId(), sdkComp.isApplicationComponent(), appId,
-		sdkComp.isDeprecated(), attrValues);
+		sdkComp.isDeprecated(), attrValues, licenses);
 	return comp;
     }
 
