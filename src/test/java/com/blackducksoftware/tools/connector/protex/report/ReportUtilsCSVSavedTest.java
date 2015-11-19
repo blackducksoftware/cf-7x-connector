@@ -52,13 +52,18 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
     private static final String SECTION_SUMMARY = "summary";
     private static final String SECTION_ANALYSIS_SUMMARY = "analysisSummary";
     private static final String SECTION_BOM = "billOfMaterials";
+    private static final String SECTION_OBLIGATIONS = "obligations";
 
     // Individual Sections
     private static final String ID_FILES_CSV = "src/test/resources/savedreports/csv/csv_id_files.csv";
     private static final String ID_FILES_LONG_CSV = "src/test/resources/savedreports/csv/long_id_files.csv";
     private static final String SUMMARY_CSV = "src/test/resources/savedreports/csv/csv_summary.csv";
     private static final String BOM_CSV = "src/test/resources/savedreports/csv/csv_bom.csv";
+    private static final String OBLIGATIONS_CSV = "src/test/resources/savedreports/csv/obligations.csv";
 
+    
+    private static final int EXPECTED_COUNT_OBLIGATIONS = 164;
+    
     // All the sections
     private static final String COMBINED_CSV = "src/test/resources/savedreports/csv/CSV_IT_TESTReport.csv";
 
@@ -176,6 +181,18 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 	assertEquals(33, rows.size());
     }
 
+
+    @Test
+    public void testObligationsCount() throws Exception {
+    	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(SECTION_OBLIGATIONS);
+    	// Mock the report object for the parser
+    	Report report = mockTheReportBySection(OBLIGATIONS_CSV);
+
+    	List<AdHocElement> rows = csvProcessor.getRows(report, AdHocElement.class);
+
+    	assertEquals(EXPECTED_COUNT_OBLIGATIONS, rows.size());
+    }
+    
     /**
      * The mock here is the actual data source, naming is not relevant.
      *
