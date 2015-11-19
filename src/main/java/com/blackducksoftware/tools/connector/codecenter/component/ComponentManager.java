@@ -36,13 +36,13 @@ public class ComponentManager implements IComponentManager {
 
     private final CodeCenterAPIWrapper codeCenterApiWrapper;
     private final IAttributeDefinitionManager attrDefMgr;
-    private final ILicenseManager licenseManager;
+    private final ILicenseManager<LicensePojo> licenseManager;
     private final Map<NameVersion, Component> componentsByNameVersionCache = new HashMap<>();
     private final Map<String, Component> componentsByIdCache = new HashMap<>();
 
     public ComponentManager(CodeCenterAPIWrapper codeCenterApiWrapper,
 	    IAttributeDefinitionManager attrDefMgr,
-	    ILicenseManager licenseManager) {
+	    ILicenseManager<LicensePojo> licenseManager) {
 	this.codeCenterApiWrapper = codeCenterApiWrapper;
 	this.attrDefMgr = attrDefMgr;
 	this.licenseManager = licenseManager;
