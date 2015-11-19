@@ -205,7 +205,16 @@ public class ApplicationManager implements IApplicationManager {
 		List<ComponentPojo> appCompsMinusApps = collectComponents(
 			comp.getApplicationId(), limitToApprovalStatusValues,
 			recursive);
-		thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
+		// thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
+		ComponentPojo appComp = new ComponentPojo(comp.getId(),
+			comp.getName(), comp.getVersion(),
+			comp.getApprovalStatus(), comp.getHomepage(),
+			comp.getIntendedAudiences(), comp.getKbComponentId(),
+			comp.getKbReleaseId(), comp.isApplicationComponent(),
+			comp.getApplicationId(), comp.isDeprecated(),
+			comp.getAttributeValuesByName(), comp.getLicenses(),
+			appCompsMinusApps);
+		thisLevelAndBelowComponentsMinusApps.add(appComp);
 	    } else {
 		thisLevelAndBelowComponentsMinusApps.add(comp);
 	    }

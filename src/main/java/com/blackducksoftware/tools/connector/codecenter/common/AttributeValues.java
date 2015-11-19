@@ -63,11 +63,10 @@ public class AttributeValues {
     }
 
     public static void addAttributeValuesToMap(
-	    Map<String, String> attributeValuesByName,
+	    Map<String, AttributeValuePojo> attributeValuesByName,
 	    List<AttributeValuePojo> attributeValues) {
 	for (AttributeValuePojo attrValue : attributeValues) {
-	    attributeValuesByName
-		    .put(attrValue.getName(), attrValue.getValue());
+	    attributeValuesByName.put(attrValue.getName(), attrValue);
 	}
     }
 

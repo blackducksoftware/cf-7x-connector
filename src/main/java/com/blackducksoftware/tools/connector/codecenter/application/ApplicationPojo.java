@@ -24,7 +24,7 @@ public class ApplicationPojo {
     private final String id;
     private final String name;
     private final String version;
-    private final Map<String, String> attributeValuesByName = new HashMap<>();
+    private final Map<String, AttributeValuePojo> attributeValuesByName = new HashMap<>();
     private final ApprovalStatus approvalStatus;
 
     public ApplicationPojo(String id, String name, String version,
@@ -53,7 +53,7 @@ public class ApplicationPojo {
     }
 
     public String getAttributeByName(String name) {
-	return attributeValuesByName.get(name);
+	return attributeValuesByName.get(name).getValue();
     }
 
     public ApprovalStatus getApprovalStatus() {

@@ -186,7 +186,7 @@ public class ComponentManager implements IComponentManager {
 		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
 		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(),
 		kbComponentId, kbComponentReleaseId, applicationComponent,
-		appId, sdkComp.isDeprecated(), attrValues, licenses);
+		appId, sdkComp.isDeprecated(), attrValues, licenses, null);
 	return comp;
     }
 
