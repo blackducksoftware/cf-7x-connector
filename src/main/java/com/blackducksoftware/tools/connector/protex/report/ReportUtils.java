@@ -46,6 +46,7 @@ import com.blackducksoftware.tools.commonframework.standard.protex.report.HocEle
 import com.blackducksoftware.tools.commonframework.standard.protex.report.model.TemplateColumn;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.model.TemplateSheet;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.template.TemplateReader;
+import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
 import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 /**
@@ -203,7 +204,7 @@ public class ReportUtils {
      *             the exception
      */
     public <T extends HocElement> List<T> getReportSection(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
 	    ProjectPojo project, String reportSection,
 	    ReportFormat reportFormat, Class<T> adHocClass) throws Exception {
 
