@@ -176,13 +176,17 @@ public class ComponentManager implements IComponentManager {
 	log.info("Component: " + sdkComp.getName() + " / "
 		+ sdkComp.getVersion() + "; Approval: "
 		+ sdkComp.getApprovalStatus());
+
+	// sdkComp.isApplicationComponent() always returns false,
+	// so set flag in pojo based on whether or not
+	// applicationId has a value
+	boolean applicationComponent = sdkComp.getApplicationId() != null;
 	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
 		sdkComp.getName(), sdkComp.getVersion(),
 		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
 		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(),
-		kbComponentId, kbComponentReleaseId,
-		sdkComp.isApplicationComponent(), appId,
-		sdkComp.isDeprecated(), attrValues, licenses);
+		kbComponentId, kbComponentReleaseId, applicationComponent,
+		appId, sdkComp.isDeprecated(), attrValues, licenses);
 	return comp;
     }
 
