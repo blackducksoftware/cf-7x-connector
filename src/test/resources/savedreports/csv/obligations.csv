@@ -1,0 +1,342 @@
+reportSpecification,9,EndToEndTest Report,11/18/2015 19:41,,,,,
+disclaimer,"This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.",,,,,,,
+sectionTitles,Obligations,,,,,,,
+obligationsHeader,Component,License,Fulfilled,Obligation,Category,Type,Description,Used By
+obligations,adhc,Microsoft Public License,No,You may only make binary-only distributions of the covered software under a license that complies with all the provisions of this license.,Legal,License,"3. Conditions and Limitations
+...
+     D. ...If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.",
+obligations,adhc,Microsoft Public License,No,You must not remove or obscure attribution and proprietary notices from this software.,Legal,License,"3. Conditions and Limitations
+...
+     C. If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.",
+obligations,adhc,Microsoft Public License,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,adhc,Microsoft Public License,No,This license has a patent retaliation clause.,Legal,License,,
+obligations,adhc,Microsoft Public License,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,adhc,Microsoft Public License,No,This license has an express patent license.,Legal,License,,
+obligations,adhc,Microsoft Public License,No,You are expressly forbidden from using the name of the author(s) or distributor(s) to promote or advertise the software.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,Specific instructions for handling modifications: You must cause the files modified to carry promine(...),Legal,License,You must cause the files modified to carry prominent notices stating that you changed the files and the date of any change.,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,Terms for distribution of source code.: Offer for distribution of source code must be vali(...),Legal,License,Offer for distribution of source code must be valid for 3 Years.,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,Specific instructions for handling attributions: You must keep intact all the notices that refer to(...),Legal,License,"<p>You must keep intact all the notices that refer to this License.</p>
+<p>
+Use this text in the source code:
+one line to give the library's name and an idea of what it does.
+Copyright (C) year name of author 
+</p><p>
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+</p>
+<p>
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+</p><p>
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software<br>
+Foundation, Inc., 59 Temple Place, Suite 330, <br> Boston, MA 02111-1307 USA<br>
+</p>",
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to ensure that the software displays a particular notice at runtime.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to distribute the source code of the Dynamic Library (per LGPL).,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to grant the right to reverse engineer the Dynamic Library (per LGPL).,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to license the entire Dynamic Library (per LGPL) under the same terms as the original code.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,AGWTWebBasedManagement Console,GNU Lesser General Public License v2.1 or later,No,You are required to grant the right to copy the Dynamic Library (per LGPL).,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,Specific instructions for handling modifications: You must cause the files modified to carry promine(...),Legal,License,You must cause the files modified to carry prominent notices stating that you changed the files and the date of any change.,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,Terms for distribution of source code.: Offer for distribution of source code must be vali(...),Legal,License,Offer for distribution of source code must be valid for 3 Years.,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,Specific instructions for handling attributions: You must keep intact all the notices that refer to(...),Legal,License,"<p>You must keep intact all the notices that refer to this License.</p>
+<p>
+Use this text in the source code:
+one line to give the library's name and an idea of what it does.
+Copyright (C) year name of author 
+</p><p>
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+</p>
+<p>
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+</p><p>
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software<br>
+Foundation, Inc., 59 Temple Place, Suite 330, <br> Boston, MA 02111-1307 USA<br>
+</p>",
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to grant the right to copy the Dynamic Library (per LGPL).,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to distribute the source code of the Dynamic Library (per LGPL).,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to license the entire Dynamic Library (per LGPL) under the same terms as the original code.,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to grant the right to reverse engineer the Dynamic Library (per LGPL).,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to ensure that the software displays a particular notice at runtime.,Legal,License,,
+obligations,Android-Recipes,GNU Lesser General Public License v2.1 or later,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,Allowed Platforms: Platform Limitation- The licenses granted in secti(...),Legal,License,<p>Platform Limitation- The licenses granted in sections 2(A) & 2(B) extend only to the software or derivative works that you create that run on a Microsoft Windows operating system product.</p>,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,Terms for distribution of source code.: If you distribute the software or derivative works(...),Legal,License,"<p>If you distribute the software or derivative works in source code form you may do so only under this license (i.e., you must include a complete copy of this license with your distribution), and if you distribute the software or derivative works in compiled or object code form you may only do so under a license that complies with this license.</p>",
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,Specific instructions for handling attributions: If you distribute copies of the software or deriva(...),Legal,License,"<p>If you distribute copies of the software or derivative works, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.</p>",
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,This license has a patent retaliation clause.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,There are (or You intend to place) additional restrictions.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,You are expressly forbidden from using the name of the author(s) or distributor(s) to promote or advertise the software.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,COP3330_Messenger_Project,Microsoft Limited Permissive License (Ms-LPL),No,This license has an express patent license.,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,Transferability Restrictions: This program may be transferred a single time.,Legal,License,This program may be transferred a single time.,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,Jurisdiction or Venue: This license is governed by the law of the Commonw(...),Legal,License,This license is governed by the law of the Commonwealth of Massachusetts and the United States of America.,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,You are not entitled to grant the right to modify the code.,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,You are not entitled to grant the right to reverse engineer the code.,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,You are not entitled to grant the right to copy the code.,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,You are not entitled to distribute source code.,Legal,License,,
+obligations,EndToEndTest,[template] Basic Proprietary Commercial License,No,Recipient will be expected to pay a fee.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,Specific instructions for handling attributions: ,Legal,License,"You may convey verbatim copies of the Program's source code as you receive it, in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice; keep intact all notices stating that this License and any non-permissive terms added in accord with section 7 apply to the code; keep intact all notices of the absence of any warranty; and give all recipients a copy of this License along with the Program.
+",
+obligations,Ext JS,GNU General Public License v3.0 or later,No,Terms for distribution of source code.:,Legal,License,"You may convey a covered work in object code form under the terms of sections 4 and 5, provided that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these ways:
+
+   a) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by the Corresponding Source fixed on a durable physical medium customarily used for software interchange.
+   b) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by a written offer, valid for at least three years and valid for as long as you offer spare parts or customer support for that product model, to give anyone who possesses the object code either (1) a copy of the Corresponding Source for all the software in the product that is covered by this License, on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or (2) access to copy the Corresponding Source from a network server at no charge.
+   c) Convey individual copies of the object code with a copy of the written offer to provide the Corresponding Source. This alternative is allowed only occasionally and noncommercially, and only if you received the object code with such an offer, in accord with subsection 6b.
+   d) Convey the object code by offering access from a designated place (gratis or for a charge), and offer equivalent access to the Corresponding Source in the same way through the same place at no further charge. You need not require recipients to copy the Corresponding Source along with the object code. If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party) that supports equivalent copying facilities, provided you maintain clear directions next to the object code saying where to find the Corresponding Source. Regardless of what server hosts the Corresponding Source, you remain obligated to ensure that it is available for as long as needed to satisfy these requirements.
+   e) Convey the object code using peer-to-peer transmission, provided you inform other peers where the object code and Corresponding Source of the work are being offered to the general public at no charge under subsection 6d.",
+obligations,Ext JS,GNU General Public License v3.0 or later,No,Specific instructions for handling modifications: ,Legal,License,"If you convey a User Product you are required to provide Installation Information:
+
+A ""User Product"" is either (1) a ""consumer product"", which means any tangible personal property which is normally used for personal, family, or household purposes, or (2) anything designed or sold for incorporation into a dwelling. In determining whether a product is a consumer product, doubtful cases shall be resolved in favor of coverage. For a particular product received by a particular user, ""normally used"" refers to a typical or common use of that class of product, regardless of the status of the particular user or of the way in which the particular user actually uses, or expects or is expected to use, the product. A product is a consumer product regardless of whether the product has substantial commercial, industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product.
+
+""Installation Information"" for a User Product means any methods, procedures, authorization keys, or other information required to install and execute modified versions of a covered work in that User Product from a modified version of its Corresponding Source. The information must suffice to ensure that the continued functioning of the modified object code is in no case prevented or interfered with solely because modification has been made.",
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to grant the right to modify the Work Based on the Licensed Code (per GPL).,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to grant the right to reverse engineer the Work Based on the Licensed Code (per GPL).,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to grant the right to copy the Work Based on the Licensed Code (per GPL).,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,This license contains anti-DRM provisions.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,This license has an express patent license.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to license any modifications back to the original licensor.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to license the entire Work Based on the Licensed Code (per GPL) under the same terms as the original code.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,You are required to distribute the source code of the Work Based on the Licensed Code (per GPL).,Legal,License,,
+obligations,Ext JS,GNU General Public License v3.0 or later,No,This license has a patent retaliation clause.,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,Transferability Restrictions: This program may be transferred a single time.,Legal,License,This program may be transferred a single time.,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,Jurisdiction or Venue: This license is governed by the law of the Commonw(...),Legal,License,This license is governed by the law of the Commonwealth of Massachusetts and the United States of America.,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,You are not entitled to distribute source code.,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,You are not entitled to grant the right to reverse engineer the code.,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,Recipient will be expected to pay a fee.,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,You are not entitled to grant the right to copy the code.,Legal,License,,
+obligations,highcharts.com,[template] Basic Proprietary Commercial License,No,You are not entitled to grant the right to modify the code.,Legal,License,,
+obligations,jQuery JavaScript Library,MIT License,No,Specific instructions for handling attributions: The above copyright notice and this permission not(...),Legal,License,The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.,
+obligations,jQuery JavaScript Library,MIT License,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,jQuery JavaScript Library,MIT License,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,jQuery JavaScript Library,MIT License,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,jqueryjs,MIT License,No,Specific instructions for handling attributions: The above copyright notice and this permission not(...),Legal,License,The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.,
+obligations,jqueryjs,MIT License,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,jqueryjs,MIT License,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,jqueryjs,MIT License,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,Specific instructions for handling attributions:,Legal,License,"You may convey verbatim copies of the Program's source code as you receive it, in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice; keep intact all notices stating that this License and any non-permissive terms added in accord with section 7 apply to the code; keep intact all notices of the absence of any warranty; and give all recipients a copy of this License along with the Program.",
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,Terms for distribution of source code.:,Legal,License,"You may convey a covered work in object code form under the terms of sections 4 and 5, provided that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these ways:
+
+   a) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by the Corresponding Source fixed on a durable physical medium customarily used for software interchange.
+   b) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by a written offer, valid for at least three years and valid for as long as you offer spare parts or customer support for that product model, to give anyone who possesses the object code either (1) a copy of the Corresponding Source for all the software in the product that is covered by this License, on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or (2) access to copy the Corresponding Source from a network server at no charge.
+   c) Convey individual copies of the object code with a copy of the written offer to provide the Corresponding Source. This alternative is allowed only occasionally and noncommercially, and only if you received the object code with such an offer, in accord with subsection 6b.
+   d) Convey the object code by offering access from a designated place (gratis or for a charge), and offer equivalent access to the Corresponding Source in the same way through the same place at no further charge. You need not require recipients to copy the Corresponding Source along with the object code. If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party) that supports equivalent copying facilities, provided you maintain clear directions next to the object code saying where to find the Corresponding Source. Regardless of what server hosts the Corresponding Source, you remain obligated to ensure that it is available for as long as needed to satisfy these requirements.
+   e) Convey the object code using peer-to-peer transmission, provided you inform other peers where the object code and Corresponding Source of the work are being offered to the general public at no charge under subsection 6d.
+---
+You may convey a Combined Work under terms of your choice that, taken together, effectively do not restrict modification of the portions of the Library contained in the Combined Work and reverse engineering for debugging such modifications, if you also do each of the following:
+
+    a) Give prominent notice with each copy of the Combined Work that the Library is used in it and that the Library and its use are covered by this License.
+    b) Accompany the Combined Work with a copy of the GNU GPL and this license document.
+    c) For a Combined Work that displays copyright notices during execution, include the copyright notice for the Library among these notices, as well as a reference directing the user to the copies of the GNU GPL and this license document.
+    d) Do one of the following:
+          0) Convey the Minimal Corresponding Source under the terms of this License, and the Corresponding Application Code in a form suitable for, and under terms that permit, the user to recombine or relink the Application with a modified version of the Linked Version to produce a modified Combined Work, in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.
+          1) Use a suitable shared library mechanism for linking with the Library. A suitable mechanism is one that (a) uses at run time a copy of the Library already present on the user's computer system, and (b) will operate properly with a modified version of the Library that is interface-compatible with the Linked Version.
+    e) Provide Installation Information, but only if you would otherwise be required to provide such information under section 6 of the GNU GPL, and only to the extent that such information is necessary to install and execute a modified version of the Combined Work produced by recombining or relinking the Application with a modified version of the Linked Version. (If you use option 4d0, the Installation Information must accompany the Minimal Corresponding Source and Corresponding Application Code. If you use option 4d1, you must provide the Installation Information in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.)
+
+5. Combined Libraries.
+
+You may place library facilities that are a work based on the Library side by side in a single library together with other library facilities that are not Applications and are not covered by this License, and convey such a combined library under terms of your choice, if you do both of the following:
+
+    a) Accompany the combined library with a copy of the same work based on the Library, uncombined with any other library facilities, conveyed under the terms of this License.
+    b) Give prominent notice with the combined library that part of it is a work based on the Library, and explaining where to find the accompanying uncombined form of the same work.
+",
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,Specific instructions for handling modifications:,Legal,License,"If you modify a copy of the Library, and, in your modifications, a facility refers to a function or data to be supplied by an Application that uses the facility (other than as an argument passed when the facility is invoked), then you may convey a copy of the modified version:
+
+    a) under this License, provided that you make a good faith effort to ensure that, in the event an Application does not supply the function or data, the facility still operates, and performs whatever part of its purpose remains meaningful, or
+    b) under the GNU GPL, with none of the additional permissions of this License applicable to that copy.
+
+-----
+If you convey a User Product you are required to provide Installation Information:
+
+A ""User Product"" is either (1) a ""consumer product"", which means any tangible personal property which is normally used for personal, family, or household purposes, or (2) anything designed or sold for incorporation into a dwelling. In determining whether a product is a consumer product, doubtful cases shall be resolved in favor of coverage. For a particular product received by a particular user, ""normally used"" refers to a typical or common use of that class of product, regardless of the status of the particular user or of the way in which the particular user actually uses, or expects or is expected to use, the product. A product is a consumer product regardless of whether the product has substantial commercial, industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product.
+
+""Installation Information"" for a User Product means any methods, procedures, authorization keys, or other information required to install and execute modified versions of a covered work in that User Product from a modified version of its Corresponding Source. The information must suffice to ensure that the continued functioning of the modified object code is in no case prevented or interfered with solely because modification has been made.",
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,This license has a patent retaliation clause.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,This license contains anti-DRM provisions.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to distribute the source code of the Dynamic Library (per LGPL).,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to modify the Dynamic Library (per LGPL).,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to copy the Dynamic Library (per LGPL).,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to license any modifications back to the original licensor.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,This license has an express patent license.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to license the entire Dynamic Library (per LGPL) under the same terms as the original code.,Legal,License,,
+obligations,jXLS,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to reverse engineer the Dynamic Library (per LGPL).,Legal,License,,
+obligations,kevoree,Unspecified,No,Miscellaneous Requirements: The license has not been identified.,Legal,License,The license has not been identified.,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,Specific instructions for handling attributions:,Legal,License,"You may convey verbatim copies of the Program's source code as you receive it, in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice; keep intact all notices stating that this License and any non-permissive terms added in accord with section 7 apply to the code; keep intact all notices of the absence of any warranty; and give all recipients a copy of this License along with the Program.",
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,Terms for distribution of source code.:,Legal,License,"You may convey a covered work in object code form under the terms of sections 4 and 5, provided that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these ways:
+
+   a) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by the Corresponding Source fixed on a durable physical medium customarily used for software interchange.
+   b) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by a written offer, valid for at least three years and valid for as long as you offer spare parts or customer support for that product model, to give anyone who possesses the object code either (1) a copy of the Corresponding Source for all the software in the product that is covered by this License, on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or (2) access to copy the Corresponding Source from a network server at no charge.
+   c) Convey individual copies of the object code with a copy of the written offer to provide the Corresponding Source. This alternative is allowed only occasionally and noncommercially, and only if you received the object code with such an offer, in accord with subsection 6b.
+   d) Convey the object code by offering access from a designated place (gratis or for a charge), and offer equivalent access to the Corresponding Source in the same way through the same place at no further charge. You need not require recipients to copy the Corresponding Source along with the object code. If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party) that supports equivalent copying facilities, provided you maintain clear directions next to the object code saying where to find the Corresponding Source. Regardless of what server hosts the Corresponding Source, you remain obligated to ensure that it is available for as long as needed to satisfy these requirements.
+   e) Convey the object code using peer-to-peer transmission, provided you inform other peers where the object code and Corresponding Source of the work are being offered to the general public at no charge under subsection 6d.
+---
+You may convey a Combined Work under terms of your choice that, taken together, effectively do not restrict modification of the portions of the Library contained in the Combined Work and reverse engineering for debugging such modifications, if you also do each of the following:
+
+    a) Give prominent notice with each copy of the Combined Work that the Library is used in it and that the Library and its use are covered by this License.
+    b) Accompany the Combined Work with a copy of the GNU GPL and this license document.
+    c) For a Combined Work that displays copyright notices during execution, include the copyright notice for the Library among these notices, as well as a reference directing the user to the copies of the GNU GPL and this license document.
+    d) Do one of the following:
+          0) Convey the Minimal Corresponding Source under the terms of this License, and the Corresponding Application Code in a form suitable for, and under terms that permit, the user to recombine or relink the Application with a modified version of the Linked Version to produce a modified Combined Work, in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.
+          1) Use a suitable shared library mechanism for linking with the Library. A suitable mechanism is one that (a) uses at run time a copy of the Library already present on the user's computer system, and (b) will operate properly with a modified version of the Library that is interface-compatible with the Linked Version.
+    e) Provide Installation Information, but only if you would otherwise be required to provide such information under section 6 of the GNU GPL, and only to the extent that such information is necessary to install and execute a modified version of the Combined Work produced by recombining or relinking the Application with a modified version of the Linked Version. (If you use option 4d0, the Installation Information must accompany the Minimal Corresponding Source and Corresponding Application Code. If you use option 4d1, you must provide the Installation Information in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.)
+
+5. Combined Libraries.
+
+You may place library facilities that are a work based on the Library side by side in a single library together with other library facilities that are not Applications and are not covered by this License, and convey such a combined library under terms of your choice, if you do both of the following:
+
+    a) Accompany the combined library with a copy of the same work based on the Library, uncombined with any other library facilities, conveyed under the terms of this License.
+    b) Give prominent notice with the combined library that part of it is a work based on the Library, and explaining where to find the accompanying uncombined form of the same work.
+",
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,Specific instructions for handling modifications:,Legal,License,"If you modify a copy of the Library, and, in your modifications, a facility refers to a function or data to be supplied by an Application that uses the facility (other than as an argument passed when the facility is invoked), then you may convey a copy of the modified version:
+
+    a) under this License, provided that you make a good faith effort to ensure that, in the event an Application does not supply the function or data, the facility still operates, and performs whatever part of its purpose remains meaningful, or
+    b) under the GNU GPL, with none of the additional permissions of this License applicable to that copy.
+
+-----
+If you convey a User Product you are required to provide Installation Information:
+
+A ""User Product"" is either (1) a ""consumer product"", which means any tangible personal property which is normally used for personal, family, or household purposes, or (2) anything designed or sold for incorporation into a dwelling. In determining whether a product is a consumer product, doubtful cases shall be resolved in favor of coverage. For a particular product received by a particular user, ""normally used"" refers to a typical or common use of that class of product, regardless of the status of the particular user or of the way in which the particular user actually uses, or expects or is expected to use, the product. A product is a consumer product regardless of whether the product has substantial commercial, industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product.
+
+""Installation Information"" for a User Product means any methods, procedures, authorization keys, or other information required to install and execute modified versions of a covered work in that User Product from a modified version of its Corresponding Source. The information must suffice to ensure that the continued functioning of the modified object code is in no case prevented or interfered with solely because modification has been made.",
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to modify the Dynamic Library (per LGPL).,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to distribute the source code of the Dynamic Library (per LGPL).,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to license any modifications back to the original licensor.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,This license has a patent retaliation clause.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to copy the Dynamic Library (per LGPL).,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,This license has an express patent license.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,This license contains anti-DRM provisions.,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to reverse engineer the Dynamic Library (per LGPL).,Legal,License,,
+obligations,mshmemoria-two,GNU Lesser General Public License v3.0 or later,No,You are required to license the entire Dynamic Library (per LGPL) under the same terms as the original code.,Legal,License,,
+obligations,Prototype JavaScript Framework,MIT License,No,Specific instructions for handling attributions: The above copyright notice and this permission not(...),Legal,License,The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.,
+obligations,Prototype JavaScript Framework,MIT License,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,Prototype JavaScript Framework,MIT License,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,Prototype JavaScript Framework,MIT License,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,proxy_tester,Unknown License,No,Miscellaneous Requirements: The license has not been identified.,Legal,License,The license has not been identified.,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,Specific instructions for handling attributions:,Legal,License,"You may convey verbatim copies of the Program's source code as you receive it, in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice; keep intact all notices stating that this License and any non-permissive terms added in accord with section 7 apply to the code; keep intact all notices of the absence of any warranty; and give all recipients a copy of this License along with the Program.",
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,Terms for distribution of source code.:,Legal,License,"You may convey a covered work in object code form under the terms of sections 4 and 5, provided that you also convey the machine-readable Corresponding Source under the terms of this License, in one of these ways:
+
+   a) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by the Corresponding Source fixed on a durable physical medium customarily used for software interchange.
+   b) Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by a written offer, valid for at least three years and valid for as long as you offer spare parts or customer support for that product model, to give anyone who possesses the object code either (1) a copy of the Corresponding Source for all the software in the product that is covered by this License, on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or (2) access to copy the Corresponding Source from a network server at no charge.
+   c) Convey individual copies of the object code with a copy of the written offer to provide the Corresponding Source. This alternative is allowed only occasionally and noncommercially, and only if you received the object code with such an offer, in accord with subsection 6b.
+   d) Convey the object code by offering access from a designated place (gratis or for a charge), and offer equivalent access to the Corresponding Source in the same way through the same place at no further charge. You need not require recipients to copy the Corresponding Source along with the object code. If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party) that supports equivalent copying facilities, provided you maintain clear directions next to the object code saying where to find the Corresponding Source. Regardless of what server hosts the Corresponding Source, you remain obligated to ensure that it is available for as long as needed to satisfy these requirements.
+   e) Convey the object code using peer-to-peer transmission, provided you inform other peers where the object code and Corresponding Source of the work are being offered to the general public at no charge under subsection 6d.
+---
+You may convey a Combined Work under terms of your choice that, taken together, effectively do not restrict modification of the portions of the Library contained in the Combined Work and reverse engineering for debugging such modifications, if you also do each of the following:
+
+    a) Give prominent notice with each copy of the Combined Work that the Library is used in it and that the Library and its use are covered by this License.
+    b) Accompany the Combined Work with a copy of the GNU GPL and this license document.
+    c) For a Combined Work that displays copyright notices during execution, include the copyright notice for the Library among these notices, as well as a reference directing the user to the copies of the GNU GPL and this license document.
+    d) Do one of the following:
+          0) Convey the Minimal Corresponding Source under the terms of this License, and the Corresponding Application Code in a form suitable for, and under terms that permit, the user to recombine or relink the Application with a modified version of the Linked Version to produce a modified Combined Work, in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.
+          1) Use a suitable shared library mechanism for linking with the Library. A suitable mechanism is one that (a) uses at run time a copy of the Library already present on the user's computer system, and (b) will operate properly with a modified version of the Library that is interface-compatible with the Linked Version.
+    e) Provide Installation Information, but only if you would otherwise be required to provide such information under section 6 of the GNU GPL, and only to the extent that such information is necessary to install and execute a modified version of the Combined Work produced by recombining or relinking the Application with a modified version of the Linked Version. (If you use option 4d0, the Installation Information must accompany the Minimal Corresponding Source and Corresponding Application Code. If you use option 4d1, you must provide the Installation Information in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.)
+
+5. Combined Libraries.
+
+You may place library facilities that are a work based on the Library side by side in a single library together with other library facilities that are not Applications and are not covered by this License, and convey such a combined library under terms of your choice, if you do both of the following:
+
+    a) Accompany the combined library with a copy of the same work based on the Library, uncombined with any other library facilities, conveyed under the terms of this License.
+    b) Give prominent notice with the combined library that part of it is a work based on the Library, and explaining where to find the accompanying uncombined form of the same work.
+",
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,Specific instructions for handling modifications:,Legal,License,"If you modify a copy of the Library, and, in your modifications, a facility refers to a function or data to be supplied by an Application that uses the facility (other than as an argument passed when the facility is invoked), then you may convey a copy of the modified version:
+
+    a) under this License, provided that you make a good faith effort to ensure that, in the event an Application does not supply the function or data, the facility still operates, and performs whatever part of its purpose remains meaningful, or
+    b) under the GNU GPL, with none of the additional permissions of this License applicable to that copy.
+
+-----
+If you convey a User Product you are required to provide Installation Information:
+
+A ""User Product"" is either (1) a ""consumer product"", which means any tangible personal property which is normally used for personal, family, or household purposes, or (2) anything designed or sold for incorporation into a dwelling. In determining whether a product is a consumer product, doubtful cases shall be resolved in favor of coverage. For a particular product received by a particular user, ""normally used"" refers to a typical or common use of that class of product, regardless of the status of the particular user or of the way in which the particular user actually uses, or expects or is expected to use, the product. A product is a consumer product regardless of whether the product has substantial commercial, industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product.
+
+""Installation Information"" for a User Product means any methods, procedures, authorization keys, or other information required to install and execute modified versions of a covered work in that User Product from a modified version of its Corresponding Source. The information must suffice to ensure that the continued functioning of the modified object code is in no case prevented or interfered with solely because modification has been made.",
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to distribute the source code of the Dynamic Library (per LGPL).,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,This license has an express patent license.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to copy the Dynamic Library (per LGPL).,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to license any modifications back to the original licensor.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,This license contains anti-DRM provisions.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,This license has a patent retaliation clause.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to license the entire Dynamic Library (per LGPL) under the same terms as the original code.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to modify the Dynamic Library (per LGPL).,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,sav4,GNU Lesser General Public License v3.0 or later,No,You are required to grant the right to reverse engineer the Dynamic Library (per LGPL).,Legal,License,,
+obligations,script.aculo.us JavaScripts,MIT License,No,Specific instructions for handling attributions: The above copyright notice and this permission not(...),Legal,License,The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.,
+obligations,script.aculo.us JavaScripts,MIT License,No,You are required to limit the liability of others (beyond reproducing a license that contains a limitation of liability).,Legal,License,,
+obligations,script.aculo.us JavaScripts,MIT License,No,You are required to disclaim warranties on behalf of others.,Legal,License,,
+obligations,script.aculo.us JavaScripts,MIT License,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,sencha-livecoding,Unknown License,No,Miscellaneous Requirements: The license has not been identified.,Legal,License,The license has not been identified.,
+obligations,Yahoo UI Extensions Library,"BSD 3-clause ""New"" or ""Revised"" License",No,Terms for distribution of source code.: Redistributions of source code must retain the abo(...),Legal,License,"<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. 
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. 
+<li>Neither the name of the &lt;ORGANIZATION&gt; nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. 
+</ul>",
+obligations,Yahoo UI Extensions Library,"BSD 3-clause ""New"" or ""Revised"" License",No,Specific instructions for handling attributions: Redistributions of source code must retain the abo(...),Legal,License,"<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. 
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. 
+<li>Neither the name of the &lt;ORGANIZATION&gt; nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. 
+</ul>",
+obligations,Yahoo UI Extensions Library,"BSD 3-clause ""New"" or ""Revised"" License",No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,Yahoo UI Extensions Library,"BSD 3-clause ""New"" or ""Revised"" License",No,You are expressly forbidden from using the name of the author(s) or distributor(s) to promote or advertise the software.,Legal,License,,
+obligations,YUI Library,"BSD 3-clause ""New"" or ""Revised"" License",No,Terms for distribution of source code.: Redistributions of source code must retain the abo(...),Legal,License,"<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. 
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. 
+<li>Neither the name of the &lt;ORGANIZATION&gt; nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. 
+</ul>",
+obligations,YUI Library,"BSD 3-clause ""New"" or ""Revised"" License",No,Specific instructions for handling attributions: Redistributions of source code must retain the abo(...),Legal,License,"<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. 
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. 
+<li>Neither the name of the &lt;ORGANIZATION&gt; nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. 
+</ul>",
+obligations,YUI Library,"BSD 3-clause ""New"" or ""Revised"" License",No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,YUI Library,"BSD 3-clause ""New"" or ""Revised"" License",No,You are expressly forbidden from using the name of the author(s) or distributor(s) to promote or advertise the software.,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You may only use LGPL 2.1 - no later version is permitted.,Legal,License,"This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation[,][;] version 2.1 of the License.",
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are not entitled to impose a fee related to what Recipient may do with the code.,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to grant the right to reverse engineer the Dynamic Library (per LGPL).,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to distribute the source code of the Dynamic Library (per LGPL).,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are not entitled to place additional restrictions on what Recipient may do with the code.,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to grant the right to modify the Dynamic Library (per LGPL).,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to grant the right to copy the Dynamic Library (per LGPL).,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to include a copy of the license in distributions that you make.,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to make notes of changes You made.,Legal,License,,
+obligations,zlib,GNU Lesser General Public License v2.1 only,No,You are required to license the entire Dynamic Library (per LGPL) under the same terms as the original code.,Legal,License,,
+disclaimer,"This report was created using Black Duck(TM) Protex software compliance management products and services. The results contained in the report reflect the user's analysis and decision making. Recipient of the results bears all of the risks relating to use of, or reliance upon, such results or any other content contained in this report. Black Duck Software makes no representation or warranty to any party regarding the contents of this report, its accuracy, completeness or correctness, and Black Duck Software hereby disclaims any and all warranties (both express and implied) with respect thereto.",,,,,,,
