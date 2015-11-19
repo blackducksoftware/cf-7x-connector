@@ -176,19 +176,19 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     @Override
-    public List<ComponentPojo> getComponentsRecursivelyByAppId(String appId,
-	    List<ApprovalStatus> limitToApprovalStatusValues)
+    public List<ComponentPojo> getComponentsByAppId(String appId,
+	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 
 	List<ComponentPojo> allLevelComponents = collectComponents(appId,
-		limitToApprovalStatusValues);
+		limitToApprovalStatusValues, recursive);
 	return allLevelComponents;
     }
 
     // Private methods
 
     private List<ComponentPojo> collectComponents(String appId,
-	    List<ApprovalStatus> limitToApprovalStatusValues)
+	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 	List<RequestPojo> requests = getRequestsByAppId(appId);
 	List<ComponentPojo> thisLevelComponents;
@@ -200,10 +200,11 @@ public class ApplicationManager implements IApplicationManager {
 	for (ComponentPojo comp : thisLevelComponents) {
 	    log.debug("Component: " + comp.getName() + " / "
 		    + comp.getVersion());
-	    if ((comp.getApplicationId() != null)
+	    if (recursive && (comp.getApplicationId() != null)
 		    && (comp.getApplicationId().length() > 0)) {
 		List<ComponentPojo> appCompsMinusApps = collectComponents(
-			comp.getApplicationId(), limitToApprovalStatusValues);
+			comp.getApplicationId(), limitToApprovalStatusValues,
+			recursive);
 		thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
 	    } else {
 		thisLevelAndBelowComponentsMinusApps.add(comp);

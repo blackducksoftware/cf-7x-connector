@@ -49,23 +49,25 @@ public interface IApplicationManager {
 	    throws CommonFrameworkException;
 
     /**
-     * Get an application's components recursively, by application ID, limited
-     * to components with an approval status that is in the provided list.
+     * Get an application's components, optionally recursively, by application
+     * ID, limited to components with an approval status that is in the provided
+     * list.
      *
-     * For each component (at any level in the tree) that is an application
-     * published as a component, returns the approved components pointed to the
-     * published application's requests instead of the published application
-     * itself.
+     * If recursive: For each component (at any level in the tree) that is an
+     * application published as a component, returns the approved components
+     * pointed to the published application's requests instead of the published
+     * application itself.
      *
      * @param appId
      * @param limitToApprovalStatusValues
      *            If not null and not empty, components included in the return
      *            value are limited to those with an ApprovalStatus that appears
      *            in the given list of ApprovalStatus values.
+     * @param recursive
      * @return
      * @throws CommonFrameworkException
      */
-    List<ComponentPojo> getComponentsRecursivelyByAppId(String appId,
-	    List<ApprovalStatus> limitToApprovalStatusValues)
+    List<ComponentPojo> getComponentsByAppId(String appId,
+	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException;
 }
