@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -72,8 +73,22 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
     public AdHocCSVParser(Class<T> hocElementClass, String sectionName) {
 	this.hocElementClass = hocElementClass;
-	this.sectionName = sectionName;
+	this.sectionName = cleanUpSectionName(sectionName);
 	Preconditions.checkNotNull(sectionName);
+    }
+
+    /**
+     * Cleans up the section name by removing all spaces and underscores and flatterning the capitalization
+     * @param sectionName2
+     * @return
+     */
+    private String cleanUpSectionName(String section) {
+	String newSection = section.replace("_", "");
+	newSection = newSection.replace(" ", "");
+	newSection = newSection.toLowerCase();
+	log.info("Cleaned up section name from '{}' to '{}'", section, newSection);
+	
+	return newSection;
     }
 
     /**
@@ -126,11 +141,24 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 	    reader.beginParsing(inputReader);
 	    adHocHeader = findHeader();
 
-	    if (adHocHeader == null)
-		throw new CommonFrameworkException("No headers found for CSV");
-
+	    // If standard header...
+	    if (!adHocHeader.isVertical()) {
+		// Should not be empty...
+		if (adHocHeader.isEmpty())
+		    throw new CommonFrameworkException(
+			    "No headers found for CSV sectio: " +  this.sectionName);
+	    } else {
+		/// Otherwise we are dealing with a vertical sheet, means the reader
+		// has been spun through to the end.
+		// Reset the reader.
+		reader = null;
+		is = report.getFileContent().getInputStream();
+		inputReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		reader = new CsvParser(settings);
+		reader.beginParsing(inputReader);
+	    }
 	} catch (Exception e) {
-	    log.error("Unable to parse headers");
+	    log.error("Unable to parse headers: " + e.getMessage());
 	    throw new Exception(e);
 	}
 
@@ -147,26 +175,61 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
      * @throws Exception
      */
     private AdHocElement findHeader() throws Exception {
+	AdHocElement headerRow = new AdHocElement();
+	// Validate we have a good section name
+	if (sectionName == null || sectionName.length() == 0)
+	    throw new CommonFrameworkException(
+		    "Header processing encountered an error, section name is missing!");
+
 	String[] potentialRow = reader.parseNext();
 
 	if (potentialRow == null)
-	    throw new CommonFrameworkException(
-		    "Parsing rows during header processing encountered a null row, did parsing begin?");
-	if (sectionName == null || sectionName.length() == 0)
-	    throw new CommonFrameworkException(
-		    "Parsing rows during header processing encountered a null row, section name is missing!");
+	{
+	    // This means we just looked through the entire sheet and did not find a header
+	    // for our section!
+	    headerRow.setIsVertical(true);
+	    return headerRow;
+	}
 
 	String firstColumnValue = potentialRow[0];
-	if (firstColumnValue.equalsIgnoreCase(sectionName + HEADER_PREFIX)) {
-	    AdHocElement headerRow = new AdHocElement();
-	    // We want to start with index of 1 not 0, as the
-	    for (int column = 1; column < potentialRow.length; column++) {
-		String headerName = potentialRow[column];
-		headerRow.setCoordinate(column, headerName);
+	// Only interested in our section, reduce both to lower case
+	firstColumnValue = firstColumnValue.toLowerCase();
+	if (firstColumnValue.startsWith(sectionName)) {
+	    // Only interested in the header
+	    if (firstColumnValue.equalsIgnoreCase(sectionName + HEADER_PREFIX)) {
+
+		// We want to start with index of 1 not 0, as the
+		for (int column = 1; column < potentialRow.length; column++) {
+		    String headerName = potentialRow[column];
+		    headerRow.setCoordinate(column, headerName);
+		}
+
+		return headerRow;
 	    }
-	    return headerRow;
-	} else
-	    return findHeader();
+	}
+
+	return findHeader();
+    }
+
+    /**
+     * Removes null cells which
+     * 
+     * @param potentialRow
+     * @return
+     */
+    private String[] stripNulls(String[] potentialRow) {
+
+	// We can create a newly resized row based on length because the nulls do not register
+	String[] resizedRows = new String[potentialRow.length];
+	String lastCell = potentialRow[potentialRow.length - 1];
+
+	if (lastCell == null)
+	{
+	    resizedRows = Arrays.copyOf(potentialRow, resizedRows.length-1);
+	    return resizedRows;
+	}
+	
+	return potentialRow;
     }
 
     /**
@@ -202,7 +265,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 		internalCounter++;
 	    }
 	} else {
-	   // allRows = reader.parseAll(inputReader);
+	    // allRows = reader.parseAll(inputReader);
 	    String[] record;
 	    while ((record = reader.parseNext()) != null) {
 		allRows.add(record);
