@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
+import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
 import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
@@ -54,6 +55,47 @@ public interface IComponentManager {
      */
     List<ComponentPojo> getComponentsForRequests(List<RequestPojo> requests,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
+	    throws CommonFrameworkException;
+
+    /**
+     * Get attachment details for a given set of attachments from the given
+     * Component.
+     *
+     * @param componentId
+     * @param searchString
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<AttachmentDetails> searchAttachments(String componentId,
+	    String searchString) throws CommonFrameworkException;
+
+    /**
+     * Download a Component attachment to the given directory.
+     *
+     * @param attachmentId
+     * @param targetDirPath
+     * @throws CommonFrameworkException
+     */
+    void downloadAttachment(String componentId, String filename,
+	    String targetDirPath) throws CommonFrameworkException;
+
+    /**
+     * Attach the named file to the given Component.
+     *
+     * @param componentId
+     * @param sourceFilePath
+     * @param description
+     * @throws CommonFrameworkException
+     */
+    void attachFile(String componentId, String sourceFilePath,
+	    String description) throws CommonFrameworkException;
+
+    /**
+     * Delete the given attachment from the given component.
+     *
+     * @param attachmentId
+     */
+    void deleteAttachment(String componentId, String filename)
 	    throws CommonFrameworkException;
 
 }
