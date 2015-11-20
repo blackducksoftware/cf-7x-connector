@@ -7,9 +7,8 @@ import java.util.Map;
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.license.GlobalLicense;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
-import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
+import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
 
 /**
  * Provide cached license data retrieved from Protex.
@@ -19,12 +18,12 @@ import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
  */
 public class LicenseManager implements ILicenseManager<ProtexLicensePojo> {
     private static final String LICENSE_TEXT_CHAR_ENCODING = "UTF-8";
-    private final IProtexServerWrapper<ProtexProjectPojo> psw;
+    private final ProtexAPIWrapper apiWrapper;
     private final Map<String, GlobalLicense> licenseByNameCache = new HashMap<>();
     private final Map<String, GlobalLicense> licenseByIdCache = new HashMap<>();
 
-    public LicenseManager(IProtexServerWrapper<ProtexProjectPojo> psw) {
-	this.psw = psw;
+    public LicenseManager(ProtexAPIWrapper apiWrapper) {
+	this.apiWrapper = apiWrapper;
     }
 
     /**
@@ -46,8 +45,8 @@ public class LicenseManager implements ILicenseManager<ProtexLicensePojo> {
 
 	GlobalLicense globalLicense;
 	try {
-	    globalLicense = psw.getInternalApiWrapper().getLicenseApi()
-		    .getLicenseByName(licenseName);
+	    globalLicense = apiWrapper.getLicenseApi().getLicenseByName(
+		    licenseName);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException(
 		    "Error getting license for license name " + licenseName
@@ -78,7 +77,7 @@ public class LicenseManager implements ILicenseManager<ProtexLicensePojo> {
 
 	GlobalLicense globalLicense;
 	try {
-	    globalLicense = psw.getInternalApiWrapper().getLicenseApi()
+	    globalLicense = apiWrapper.getLicenseApi()
 		    .getLicenseById(licenseId);
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException(

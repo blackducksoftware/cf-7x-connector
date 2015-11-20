@@ -41,6 +41,8 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.LicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
+import com.blackducksoftware.tools.connector.protex.report.IReportManager;
+import com.blackducksoftware.tools.connector.protex.report.ReportManager;
 
 /**
  * Wrapper class around the Protex Server that provides common methods. This is
@@ -57,6 +59,8 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	    .getName());
 
     private ILicenseManager licenseManager;
+
+    private IReportManager reportManager;
 
     /** The api wrapper. */
     private ProtexAPIWrapper apiWrapper;
@@ -80,8 +84,8 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	configManager = manager;
 	apiWrapper = new ProtexAPIWrapper(bean, manager, validate);
 	codeTreeHelper = new CodeTreeHelper(apiWrapper);
-	licenseManager = new LicenseManager(
-		(IProtexServerWrapper<ProtexProjectPojo>) this);
+	licenseManager = new LicenseManager(apiWrapper);
+	reportManager = new ReportManager(apiWrapper);
     }
 
     @Override
@@ -286,5 +290,10 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     @Override
     public ILicenseManager<ProtexLicensePojo> getLicenseManager() {
 	return licenseManager;
+    }
+
+    @Override
+    public IReportManager getReportManager() {
+	return reportManager;
     }
 }
