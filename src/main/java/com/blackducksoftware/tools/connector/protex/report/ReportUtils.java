@@ -43,7 +43,6 @@ import com.blackducksoftware.tools.commonframework.standard.protex.report.model.
 import com.blackducksoftware.tools.commonframework.standard.protex.report.model.TemplateSheet;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.template.TemplateReader;
 import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
-import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 /**
  * Higher-level abstraction for getting Protex reports using the
@@ -72,7 +71,7 @@ public class ReportUtils {
      * @throws Exception
      */
     public Workbook getReportSectionBySection(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
 	    String protexProjectName, File templateFile,
 	    ConfigurationManager config, Format reportFormat) throws Exception {
 
