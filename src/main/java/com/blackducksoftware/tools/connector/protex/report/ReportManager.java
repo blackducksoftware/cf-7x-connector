@@ -21,14 +21,16 @@ public class ReportManager implements IReportManager {
 
     @Override
     public ReportPojo generateAdHocProjectReportSingleSection(String projectId,
-	    ReportSectionSelection pojoSection, String name, Format format,
-	    boolean includeTableOfContents) throws CommonFrameworkException {
+	    ReportSectionSelection pojoSection, String name,
+	    String sectionTitle, Format format, boolean includeTableOfContents)
+	    throws CommonFrameworkException {
 
+	log.info("Generating " + sectionTitle + " report");
 	ReportTemplateRequest reportReq = new ReportTemplateRequest();
 
 	ReportSection ccSection = new ReportSection();
 	ccSection.setSectionType(pojoSection.getCcType());
-	ccSection.setLabel(name);
+	ccSection.setLabel(sectionTitle);
 	reportReq.getSections().add(ccSection);
 
 	reportReq.setTitle(name);
@@ -39,7 +41,6 @@ public class ReportManager implements IReportManager {
 	    ccReport = ccApiWrapper.getReportApi().generateAdHocProjectReport(
 		    projectId, reportReq, format.getCcFormat(), false);
 	} catch (SdkFault e) {
-	    // TODO Auto-generated catch block
 	    throw new CommonFrameworkException(
 		    "Error generating Protex report " + name
 			    + " for Project ID " + projectId + ": "

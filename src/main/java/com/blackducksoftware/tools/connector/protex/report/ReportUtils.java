@@ -253,7 +253,7 @@ public class ReportUtils {
 
 	if (reportFormat == ReportFormat.HTML) {
 	    LineNumberReader lnr = getLineNumberReader(protexServerWrapper,
-		    project, sectionType);
+		    project, sectionType, reportSection);
 	    returnRows = ProtexReportHTMLProcessor.getRowsFromBuffer(
 		    protexServerWrapper, false, lnr, adHocClass);
 	} else if (reportFormat == ReportFormat.CSV) {
@@ -268,7 +268,8 @@ public class ReportUtils {
 		ReportPojo report = protexServerWrapper.getReportManager()
 			.generateAdHocProjectReportSingleSection(
 				project.getProjectKey(), sectionType,
-				sectionType.name(), Format.CSV, false);
+				sectionType.name(), reportSection, Format.CSV,
+				false);
 
 		returnRows = csvProcessor.getRows(report, adHocClass);
 
@@ -282,8 +283,8 @@ public class ReportUtils {
 
     private static LineNumberReader getLineNumberReader(
 	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    ProjectPojo project, ReportSectionSelection section)
-	    throws Exception {
+	    ProjectPojo project, ReportSectionSelection section,
+	    String sectionTitle) throws Exception {
 
 	InputStream is = null;
 	BufferedReader br = null;
@@ -302,8 +303,8 @@ public class ReportUtils {
 		String sectionName = section.name();
 		ReportPojo report = reportManager
 			.generateAdHocProjectReportSingleSection(projectId,
-				section, sectionName, Format.HTML,
-				includeTableOfContents);
+				section, sectionName, sectionTitle,
+				Format.HTML, includeTableOfContents);
 
 		is = report.getFileContent().getInputStream();
 
