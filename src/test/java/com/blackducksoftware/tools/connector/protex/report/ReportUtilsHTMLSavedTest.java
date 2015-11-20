@@ -220,7 +220,7 @@ public class ReportUtilsHTMLSavedTest extends SavedTest {
 	ConfigurationManager config = initConfig(SERVER_NAME_PROTEX7);
 	Workbook wb = (new ReportUtils()).getReportSectionBySection(
 		mockProtexServerWrapper, projectName, templateFile, config,
-		ReportFormat.HTML);
+		Format.HTML);
 
 	// Write the generated report to a file
 	String reportFilename = TestUtils.getTempReportFilePath();

@@ -34,8 +34,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blackducksoftware.sdk.protex.report.ReportApi;
-import com.blackducksoftware.sdk.protex.report.ReportFormat;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
@@ -76,8 +74,7 @@ public class ReportUtils {
     public Workbook getReportSectionBySection(
 	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
 	    String protexProjectName, File templateFile,
-	    ConfigurationManager config, ReportFormat reportFormat)
-	    throws Exception {
+	    ConfigurationManager config, Format reportFormat) throws Exception {
 
 	// Generate a workbook from a template file, and populate the template
 	// map.
@@ -203,16 +200,10 @@ public class ReportUtils {
      */
     public <T extends HocElement> List<T> getReportSection(
 	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    ProjectPojo project, String reportSection,
-	    ReportFormat reportFormat, Class<T> adHocClass) throws Exception {
+	    ProjectPojo project, String reportSection, Format reportFormat,
+	    Class<T> adHocClass) throws Exception {
 
 	List<T> returnRows = null;
-
-	ReportApi reportAPI = protexServerWrapper.getInternalApiWrapper()
-		.getReportApi();
-
-	com.blackducksoftware.sdk.protex.report.ReportTemplateRequest reportReq = new com.blackducksoftware.sdk.protex.report.ReportTemplateRequest();
-	com.blackducksoftware.sdk.protex.report.ReportSection section = new com.blackducksoftware.sdk.protex.report.ReportSection();
 
 	// TODO: Figure out translation mechanism from sheet to enum
 	ReportSectionSelection sectionType = null;
@@ -245,31 +236,23 @@ public class ReportUtils {
 	    log.warn("Code Label report section is not supported.");
 	    return null;
 	}
-	// section.setSectionType(sectionType); TODO delete
-	// section.setLabel(sectionType.name());
-	// reportReq.getSections().add(section);
-	// reportReq.setTitle(reportSection);
-	// reportReq.setName(reportSection);
 
-	if (reportFormat == ReportFormat.HTML) {
+	if (reportFormat == Format.HTML) {
 	    LineNumberReader lnr = getLineNumberReader(protexServerWrapper,
 		    project, sectionType, reportSection);
 	    returnRows = ProtexReportHTMLProcessor.getRowsFromBuffer(
 		    protexServerWrapper, false, lnr, adHocClass);
-	} else if (reportFormat == ReportFormat.CSV) {
+	} else if (reportFormat == Format.CSV) {
 	    ProtexReportCSVProcessor<T> csvProcessor = new ProtexReportCSVProcessor<T>(
 		    sectionType.name());
 
 	    try {
-		// Report report = reportAPI.generateAdHocProjectReport( TODO
-		// delete
-		// project.getProjectKey(), reportReq, ReportFormat.CSV,
-		// false);
+
 		ReportPojo report = protexServerWrapper.getReportManager()
 			.generateAdHocProjectReportSingleSection(
 				project.getProjectKey(), sectionType,
-				sectionType.name(), reportSection, Format.CSV,
-				false);
+				sectionType.name(), reportSection,
+				reportFormat, false);
 
 		returnRows = csvProcessor.getRows(report, adHocClass);
 
