@@ -275,10 +275,6 @@ public class ReportUtils {
 
 	try {
 	    if (lnr == null) {
-		// Report report = reportAPI.generateAdHocProjectReport( TODO
-		// delete
-		// project.getProjectKey(), reportReq, ReportFormat.HTML,
-		// includeTableOfContents);
 		IReportManager reportManager = protexServerWrapper
 			.getReportManager();
 		String projectId = project.getProjectKey();
