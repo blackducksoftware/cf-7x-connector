@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -230,20 +232,26 @@ public class ComponentManager implements IComponentManager {
     public void attachFile(String componentId, String sourceFilePath,
 	    String description) throws CommonFrameworkException {
 
-	String filename = FilePaths.getFilename(sourceFilePath);
-
+	File file = new File(sourceFilePath);
+	
 	Component comp = getSdkComponentById(componentId);
 	ComponentAttachmentCreate attachmentCreateBean = new ComponentAttachmentCreate();
 	attachmentCreateBean.setComponentId(comp.getId());
-	attachmentCreateBean.setFileName(filename);
+	attachmentCreateBean.setFileName(file.getName());
 	attachmentCreateBean.setDescription(description);
-	attachmentCreateBean.setName(filename);
+	attachmentCreateBean.setName(file.getName());
 
-	URL url = FilePaths.createFilePathUrl(sourceFilePath);
+	URL url = null;
+	try {
+	    url = new File(sourceFilePath).toURI().toURL();
+	} catch (MalformedURLException mue) {
+	    throw new CommonFrameworkException(mue.getMessage());
+	}
 
 	DataHandler dataHandler = new DataHandler(url);
 	attachmentCreateBean.setAttachmentContent(dataHandler);
 	try {
+	    
 	    codeCenterApiWrapper.getColaApi().createComponentAttachment(
 		    attachmentCreateBean);
 	} catch (SdkFault e) {
