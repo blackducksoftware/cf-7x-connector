@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.report.Report;
-import com.blackducksoftware.sdk.protex.report.ReportFormat;
 import com.blackducksoftware.sdk.protex.report.ReportSection;
 import com.blackducksoftware.sdk.protex.report.ReportTemplateRequest;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -22,9 +21,8 @@ public class ReportManager implements IReportManager {
 
     @Override
     public ReportPojo generateAdHocProjectReportSingleSection(String projectId,
-	    ReportSectionSelection pojoSection, String title, String name,
-	    Format format, boolean includeTableOfContents)
-	    throws CommonFrameworkException {
+	    ReportSectionSelection pojoSection, String name, Format format,
+	    boolean includeTableOfContents) throws CommonFrameworkException {
 
 	ReportTemplateRequest reportReq = new ReportTemplateRequest();
 
@@ -33,13 +31,13 @@ public class ReportManager implements IReportManager {
 	ccSection.setLabel(name);
 	reportReq.getSections().add(ccSection);
 
-	reportReq.setTitle(title);
+	reportReq.setTitle(name);
 	reportReq.setName(name);
 
 	Report ccReport;
 	try {
 	    ccReport = ccApiWrapper.getReportApi().generateAdHocProjectReport(
-		    projectId, reportReq, ReportFormat.CSV, false);
+		    projectId, reportReq, format.getCcFormat(), false);
 	} catch (SdkFault e) {
 	    // TODO Auto-generated catch block
 	    throw new CommonFrameworkException(

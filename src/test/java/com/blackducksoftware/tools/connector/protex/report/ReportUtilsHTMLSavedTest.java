@@ -51,7 +51,6 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
 import com.blackducksoftware.tools.commonframework.test.TestUtils;
 import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
 import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
-import com.blackducksoftware.tools.connector.protex.report.ReportUtils;
 
 /**
  * These tests make sure ReportUtils correctly generates excel reports from
@@ -96,9 +95,12 @@ public class ReportUtilsHTMLSavedTest extends SavedTest {
 	mockReportApi = mock(ReportApi.class);
 	mockPolicyApi = mock(PolicyApi.class);
 	mockProjectApi = mock(ProjectApi.class);
+	IReportManager reportManager = new ReportManager(mockApiWrapper);
 
 	when(mockProtexServerWrapper.getInternalApiWrapper()).thenReturn(
 		mockApiWrapper);
+	when(mockProtexServerWrapper.getReportManager()).thenReturn(
+		reportManager);
 	when(mockApiWrapper.getReportApi()).thenReturn(mockReportApi);
 	when(mockApiWrapper.getPolicyApi()).thenReturn(mockPolicyApi);
 	when(mockApiWrapper.getProjectApi()).thenReturn(mockProjectApi);

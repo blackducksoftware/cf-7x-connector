@@ -10,7 +10,6 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
  */
 public interface IReportManager {
     ReportPojo generateAdHocProjectReportSingleSection(String projectId,
-	    ReportSectionSelection section, String title, String name,
-	    Format format, boolean includeTableOfContents)
-	    throws CommonFrameworkException;
+	    ReportSectionSelection section, String name, Format format,
+	    boolean includeTableOfContents) throws CommonFrameworkException;
 }

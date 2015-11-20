@@ -16,4 +16,9 @@ public enum Format {
     public boolean isEquivalent(ReportFormat otherCcFormat) {
 	return ccFormat.equals(otherCcFormat);
     }
+
+    ReportFormat getCcFormat() {
+	return ccFormat;
+    }
+
 }

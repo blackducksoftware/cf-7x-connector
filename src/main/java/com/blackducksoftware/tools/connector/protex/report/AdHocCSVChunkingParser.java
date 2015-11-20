@@ -23,7 +23,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blackducksoftware.sdk.protex.report.Report;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.HocElement;
 import com.google.common.base.Preconditions;
 
@@ -48,7 +47,7 @@ public class AdHocCSVChunkingParser<T extends HocElement> extends
      * @throws Exception
      */
     public AdHocCSVChunkingParser(Class<T> hocElementClass, String sectionName,
-	    Report report, long rowChunk) throws Exception {
+	    ReportPojo report, long rowChunk) throws Exception {
 
 	super(hocElementClass, sectionName);
 	super.rowChunk = rowChunk;
@@ -74,7 +73,7 @@ public class AdHocCSVChunkingParser<T extends HocElement> extends
      * @return
      * @throws Exception
      */
-    public List<T> getLimitedRowsFromReport(Report report) throws Exception {
+    public List<T> getLimitedRowsFromReport(ReportPojo report) throws Exception {
 	this.report = report;
 
 	List<T> rows = new ArrayList<T>();

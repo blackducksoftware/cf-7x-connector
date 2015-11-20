@@ -34,10 +34,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blackducksoftware.sdk.protex.report.Report;
 import com.blackducksoftware.sdk.protex.report.ReportApi;
 import com.blackducksoftware.sdk.protex.report.ReportFormat;
-import com.blackducksoftware.sdk.protex.report.ReportSectionType;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
@@ -217,24 +215,24 @@ public class ReportUtils {
 	com.blackducksoftware.sdk.protex.report.ReportSection section = new com.blackducksoftware.sdk.protex.report.ReportSection();
 
 	// TODO: Figure out translation mechanism from sheet to enum
-	ReportSectionType sectionType = null;
+	ReportSectionSelection sectionType = null;
 
 	try {
-	    sectionType = ReportSectionType
-		    .valueOf(reportSection.toUpperCase());
+	    sectionType = ReportSectionSelection.valueOf(reportSection
+		    .toUpperCase());
 	} catch (Exception e) {
 	    String reportSectionNameUpper = reportSection.toUpperCase();
 	    if (reportSectionNameUpper.startsWith("FILE_DISCOVERY_PATTERN_MAT")) {
-		sectionType = ReportSectionType.FILE_DISCOVERY_PATTERN_MATCHES_PENDING_IDENTIFICATION;
+		sectionType = ReportSectionSelection.FILE_DISCOVERY_PATTERN_MATCHES_PENDING_IDENTIFICATION;
 	    } else if (reportSectionNameUpper
 		    .startsWith("DEPENDENCIES_JAVA_IMPORT")) {
-		sectionType = ReportSectionType.DEPENDENCIES_JAVA_IMPORT_STATEMENTS;
+		sectionType = ReportSectionSelection.DEPENDENCIES_JAVA_IMPORT_STATEMENTS;
 	    } else if (reportSectionNameUpper
 		    .startsWith("DEPENDENCIES_JAVA_PACKAGE")) {
-		sectionType = ReportSectionType.DEPENDENCIES_JAVA_PACKAGE_STATEMENTS;
+		sectionType = ReportSectionSelection.DEPENDENCIES_JAVA_PACKAGE_STATEMENTS;
 	    } else if (reportSectionNameUpper
 		    .startsWith("CODE_MATCHES_PENDING")) {
-		sectionType = ReportSectionType.CODE_MATCHES_PENDING_IDENTIFICATION_PRECISION;
+		sectionType = ReportSectionSelection.CODE_MATCHES_PENDING_IDENTIFICATION_PRECISION;
 	    } else {
 		throw new Exception(
 			"Unable to determine section type for section key: "
@@ -247,15 +245,15 @@ public class ReportUtils {
 	    log.warn("Code Label report section is not supported.");
 	    return null;
 	}
-	section.setSectionType(sectionType);
-	section.setLabel(sectionType.name());
-	reportReq.getSections().add(section);
-	reportReq.setTitle(reportSection);
-	reportReq.setName(reportSection);
+	// section.setSectionType(sectionType); TODO delete
+	// section.setLabel(sectionType.name());
+	// reportReq.getSections().add(section);
+	// reportReq.setTitle(reportSection);
+	// reportReq.setName(reportSection);
 
 	if (reportFormat == ReportFormat.HTML) {
-	    LineNumberReader lnr = getLineNumberReader(reportAPI, project,
-		    reportReq);
+	    LineNumberReader lnr = getLineNumberReader(protexServerWrapper,
+		    project, sectionType);
 	    returnRows = ProtexReportHTMLProcessor.getRowsFromBuffer(
 		    protexServerWrapper, false, lnr, adHocClass);
 	} else if (reportFormat == ReportFormat.CSV) {
@@ -263,9 +261,14 @@ public class ReportUtils {
 		    sectionType.name());
 
 	    try {
-		Report report = reportAPI.generateAdHocProjectReport(
-			project.getProjectKey(), reportReq, ReportFormat.CSV,
-			false);
+		// Report report = reportAPI.generateAdHocProjectReport( TODO
+		// delete
+		// project.getProjectKey(), reportReq, ReportFormat.CSV,
+		// false);
+		ReportPojo report = protexServerWrapper.getReportManager()
+			.generateAdHocProjectReportSingleSection(
+				project.getProjectKey(), sectionType,
+				sectionType.name(), Format.CSV, false);
 
 		returnRows = csvProcessor.getRows(report, adHocClass);
 
@@ -278,9 +281,8 @@ public class ReportUtils {
     }
 
     private static LineNumberReader getLineNumberReader(
-	    ReportApi reportAPI,
-	    ProjectPojo project,
-	    com.blackducksoftware.sdk.protex.report.ReportTemplateRequest reportReq)
+	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+	    ProjectPojo project, ReportSectionSelection section)
 	    throws Exception {
 
 	InputStream is = null;
@@ -290,9 +292,18 @@ public class ReportUtils {
 
 	try {
 	    if (lnr == null) {
-		Report report = reportAPI.generateAdHocProjectReport(
-			project.getProjectKey(), reportReq, ReportFormat.HTML,
-			includeTableOfContents);
+		// Report report = reportAPI.generateAdHocProjectReport( TODO
+		// delete
+		// project.getProjectKey(), reportReq, ReportFormat.HTML,
+		// includeTableOfContents);
+		IReportManager reportManager = protexServerWrapper
+			.getReportManager();
+		String projectId = project.getProjectKey();
+		String sectionName = section.name();
+		ReportPojo report = reportManager
+			.generateAdHocProjectReportSingleSection(projectId,
+				section, sectionName, Format.HTML,
+				includeTableOfContents);
 
 		is = report.getFileContent().getInputStream();
 

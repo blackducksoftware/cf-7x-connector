@@ -29,9 +29,7 @@ import javax.activation.FileDataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blackducksoftware.sdk.protex.report.Report;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.AdHocElement;
-import com.blackducksoftware.tools.connector.protex.report.ProtexReportCSVProcessor;
 
 /**
  * This tests the parser for CSV, but does so against an existing set of saved
@@ -61,9 +59,8 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
     private static final String BOM_CSV = "src/test/resources/savedreports/csv/csv_bom.csv";
     private static final String OBLIGATIONS_CSV = "src/test/resources/savedreports/csv/obligations.csv";
 
-    
     private static final int EXPECTED_COUNT_OBLIGATIONS = 164;
-    
+
     // All the sections
     private static final String COMBINED_CSV = "src/test/resources/savedreports/csv/CSV_IT_TESTReport.csv";
 
@@ -71,9 +68,9 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
     public static void setUpBeforeClass() throws Exception {
     }
 
- 
     /**
      * Summary section does not have a header.
+     *
      * @throws Exception
      */
     @Test
@@ -81,7 +78,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
 		SECTION_SUMMARY);
 	// Mock the report object for the parser
-	Report report = mockTheReportBySection(SUMMARY_CSV);
+	ReportPojo report = mockTheReportBySection(SUMMARY_CSV);
 
 	List<AdHocElement> rows = csvProcessor.getRows(report,
 		AdHocElement.class);
@@ -96,7 +93,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
 		SECTION_IDENTIFIED_FILES);
 	// Mock the report object for the parser
-	Report report = mockTheReportBySection(ID_FILES_CSV);
+	ReportPojo report = mockTheReportBySection(ID_FILES_CSV);
 
 	List<AdHocElement> rows = csvProcessor.getRows(report,
 		AdHocElement.class);
@@ -111,7 +108,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
 		SECTION_IDENTIFIED_FILES);
 	// Mock the report object for the parser
-	Report report = mockTheReportBySection(ID_FILES_LONG_CSV);
+	ReportPojo report = mockTheReportBySection(ID_FILES_LONG_CSV);
 
 	List<AdHocElement> rows = csvProcessor.getRows(report,
 		AdHocElement.class);
@@ -125,7 +122,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
     public void testBasicBOMCount() throws Exception {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(SECTION_BOM);
 	// Mock the report object for the parser
-	Report report = mockTheReportBySection(BOM_CSV);
+	ReportPojo report = mockTheReportBySection(BOM_CSV);
 
 	List<AdHocElement> rows = csvProcessor.getRows(report,
 		AdHocElement.class);
@@ -145,7 +142,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
     public void testBOMCountInChunks() throws Exception {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(SECTION_BOM);
 	// Mock the report object for the parser
-	Report report = mockTheReportBySection(BOM_CSV);
+	ReportPojo report = mockTheReportBySection(BOM_CSV);
 
 	int totalCount = 0;
 
@@ -162,8 +159,9 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 
     /**
      * This pulls the analysis summary report, but from the combined report
-     * TODO:  Disabling this report because these sections have no headers
-     * No headers causes failure, come back to this.
+     * TODO: Disabling this report because these sections have no headers No
+     * headers causes failure, come back to this.
+     *
      * @throws Exception
      */
     @Test
@@ -171,7 +169,7 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
 		SECTION_ANALYSIS_SUMMARY);
 	// Mock the report object for the parser
-	Report report = mockTheReportBySection(COMBINED_CSV);
+	ReportPojo report = mockTheReportBySection(COMBINED_CSV);
 
 	List<AdHocElement> rows = csvProcessor.getRows(report,
 		AdHocElement.class);
@@ -181,31 +179,33 @@ public class ReportUtilsCSVSavedTest extends SavedTest {
 	assertEquals(33, rows.size());
     }
 
-
     @Test
     public void testObligationsCount() throws Exception {
-    	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(SECTION_OBLIGATIONS);
-    	// Mock the report object for the parser
-    	Report report = mockTheReportBySection(OBLIGATIONS_CSV);
+	csvProcessor = new ProtexReportCSVProcessor<AdHocElement>(
+		SECTION_OBLIGATIONS);
+	// Mock the report object for the parser
+	ReportPojo report = mockTheReportBySection(OBLIGATIONS_CSV);
 
-    	List<AdHocElement> rows = csvProcessor.getRows(report, AdHocElement.class);
+	List<AdHocElement> rows = csvProcessor.getRows(report,
+		AdHocElement.class);
 
-    	assertEquals(EXPECTED_COUNT_OBLIGATIONS, rows.size());
+	assertEquals(EXPECTED_COUNT_OBLIGATIONS, rows.size());
     }
-    
+
     /**
      * The mock here is the actual data source, naming is not relevant.
      *
      * @param section_file
      * @return
      */
-    private Report mockTheReportBySection(String section_file) {
-	Report report = new Report();
+    private ReportPojo mockTheReportBySection(String section_file) {
+
 	DataSource dataSource = new FileDataSource(section_file);
 	DataHandler dataHandler = new DataHandler(dataSource);
-
-	report.setFileContent(dataHandler);
-	report.setFileName(getFullPathOfLocalFile(section_file));
+	ReportPojo report = new ReportPojo(dataHandler,
+		getFullPathOfLocalFile(section_file));
+	// report.setFileContent(dataHandler); TODO delete
+	// report.setFileName(getFullPathOfLocalFile(section_file));
 
 	return report;
     }

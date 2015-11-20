@@ -23,7 +23,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blackducksoftware.sdk.protex.report.Report;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.AdHocElement;
 import com.blackducksoftware.tools.commonframework.standard.protex.report.HocElement;
 import com.google.common.base.Preconditions;
@@ -67,7 +66,7 @@ public class ProtexReportCSVProcessor<T extends HocElement> {
      * @return
      * @throws Exception
      */
-    public List<T> getRows(Report report, Class<T> hocElementClass)
+    public List<T> getRows(ReportPojo report, Class<T> hocElementClass)
 	    throws Exception {
 	List<T> parsedRows = new ArrayList<T>();
 	try {
@@ -93,7 +92,7 @@ public class ProtexReportCSVProcessor<T extends HocElement> {
      * @return
      * @throws Exception
      */
-    public List<T> getRowChunk(Report report, Class<T> hocElementClass,
+    public List<T> getRowChunk(ReportPojo report, Class<T> hocElementClass,
 	    Integer rowChunk) throws Exception {
 
 	List<T> parsedRows = new ArrayList<T>();
