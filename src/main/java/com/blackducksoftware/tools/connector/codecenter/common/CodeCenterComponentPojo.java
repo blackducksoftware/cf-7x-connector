@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.blackducksoftware.tools.connector.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 /**
@@ -13,24 +14,19 @@ import com.blackducksoftware.tools.connector.common.LicensePojo;
  * @author sbillings
  *
  */
-public class CodeCenterComponentPojo {
+public class CodeCenterComponentPojo extends ComponentPojo {
     private final String id;
-    private final String name;
-    private final String version;
-    private final ApprovalStatus approvalStatus;
-    private final List<LicensePojo> licenses;
-    private final String homepage;
     private final String intendedAudiences;
+    private final List<LicensePojo> licenses;
     private final String kbComponentId;
     private final String kbReleaseId;
     private final boolean applicationComponent;
     private final String applicationId;
-    private final boolean deprecated;
     private final Map<String, AttributeValuePojo> attributeValuesByName;
     private final List<CodeCenterComponentPojo> subComponents;
 
     /**
-     * This constructor acceps a list of attribute values.
+     * This constructor accepts a list of attribute values.
      *
      * @param id
      * @param name
@@ -52,18 +48,15 @@ public class CodeCenterComponentPojo {
 	    String intendedAudiences, String kbComponentId, String kbReleaseId,
 	    boolean applicationComponent, String applicationId,
 	    boolean deprecated, List<AttributeValuePojo> attributeValues,
-	    List<LicensePojo> licenses, List<CodeCenterComponentPojo> subComponents) {
+	    List<LicensePojo> licenses,
+	    List<CodeCenterComponentPojo> subComponents) {
+	super(name, version, approvalStatus, homepage, deprecated);
 	this.id = id;
-	this.name = name;
-	this.version = version;
-	this.approvalStatus = approvalStatus;
-	this.homepage = homepage;
 	this.intendedAudiences = intendedAudiences;
 	this.kbComponentId = kbComponentId;
 	this.kbReleaseId = kbReleaseId;
 	this.applicationComponent = applicationComponent;
 	this.applicationId = applicationId;
-	this.deprecated = deprecated;
 	attributeValuesByName = new HashMap<>(attributeValues.size());
 	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
 		attributeValues);
@@ -101,18 +94,15 @@ public class CodeCenterComponentPojo {
 	    boolean applicationComponent, String applicationId,
 	    boolean deprecated,
 	    Map<String, AttributeValuePojo> attributeValues,
-	    List<LicensePojo> licenses, List<CodeCenterComponentPojo> subComponents) {
+	    List<LicensePojo> licenses,
+	    List<CodeCenterComponentPojo> subComponents) {
+	super(name, version, approvalStatus, homepage, deprecated);
 	this.id = id;
-	this.name = name;
-	this.version = version;
-	this.approvalStatus = approvalStatus;
-	this.homepage = homepage;
 	this.intendedAudiences = intendedAudiences;
 	this.kbComponentId = kbComponentId;
 	this.kbReleaseId = kbReleaseId;
 	this.applicationComponent = applicationComponent;
 	this.applicationId = applicationId;
-	this.deprecated = deprecated;
 	attributeValuesByName = new HashMap<>(attributeValues);
 	this.licenses = licenses;
 	if ((subComponents != null) && (subComponents.size() > 0)) {
@@ -127,28 +117,12 @@ public class CodeCenterComponentPojo {
 	return id;
     }
 
-    public String getName() {
-	return name;
-    }
-
-    public String getVersion() {
-	return version;
-    }
-
-    public ApprovalStatus getApprovalStatus() {
-	return approvalStatus;
+    public String getIntendedAudiences() {
+	return intendedAudiences;
     }
 
     public List<LicensePojo> getLicenses() {
 	return licenses;
-    }
-
-    public String getHomepage() {
-	return homepage;
-    }
-
-    public String getIntendedAudiences() {
-	return intendedAudiences;
     }
 
     public String getKbComponentId() {
@@ -165,10 +139,6 @@ public class CodeCenterComponentPojo {
 
     public String getApplicationId() {
 	return applicationId;
-    }
-
-    public boolean isDeprecated() {
-	return deprecated;
     }
 
     public String getAttributeByName(String name) {
@@ -196,15 +166,18 @@ public class CodeCenterComponentPojo {
 
     @Override
     public String toString() {
-	return "CodeCenterComponentPojo [name=" + name + ", version=" + version + "]";
+	return "CodeCenterComponentPojo [name=" + getName() + ", version="
+		+ getVersion() + "]";
     }
 
     @Override
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
-	result = prime * result + ((version == null) ? 0 : version.hashCode());
+	result = prime * result
+		+ ((getName() == null) ? 0 : getName().hashCode());
+	result = prime * result
+		+ ((getVersion() == null) ? 0 : getVersion().hashCode());
 	return result;
     }
 
@@ -220,18 +193,18 @@ public class CodeCenterComponentPojo {
 	    return false;
 	}
 	CodeCenterComponentPojo other = (CodeCenterComponentPojo) obj;
-	if (name == null) {
-	    if (other.name != null) {
+	if (getName() == null) {
+	    if (other.getName() != null) {
 		return false;
 	    }
-	} else if (!name.equals(other.name)) {
+	} else if (!getName().equals(other.getName())) {
 	    return false;
 	}
-	if (version == null) {
-	    if (other.version != null) {
+	if (getVersion() == null) {
+	    if (other.getVersion() != null) {
 		return false;
 	    }
-	} else if (!version.equals(other.version)) {
+	} else if (!getVersion().equals(other.getVersion())) {
 	    return false;
 	}
 	return true;

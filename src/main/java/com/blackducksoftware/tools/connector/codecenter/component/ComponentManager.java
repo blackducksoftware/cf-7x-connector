@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,8 +86,9 @@ public class ComponentManager implements IComponentManager {
      * Components fetched are cached.
      */
     @Override
-    public CodeCenterComponentPojo getComponentByNameVersion(String componentName,
-	    String componentVersion) throws CommonFrameworkException {
+    public CodeCenterComponentPojo getComponentByNameVersion(
+	    String componentName, String componentVersion)
+	    throws CommonFrameworkException {
 	NameVersion nameVersion = new NameVersion(componentName,
 		componentVersion);
 
@@ -124,9 +124,11 @@ public class ComponentManager implements IComponentManager {
     public List<CodeCenterComponentPojo> getComponentsForRequests(
 	    List<RequestPojo> requests) throws CommonFrameworkException {
 
-	List<CodeCenterComponentPojo> components = new ArrayList<>(requests.size());
+	List<CodeCenterComponentPojo> components = new ArrayList<>(
+		requests.size());
 	for (RequestPojo request : requests) {
-	    CodeCenterComponentPojo comp = getComponentById(request.getComponentId());
+	    CodeCenterComponentPojo comp = getComponentById(request
+		    .getComponentId());
 	    components.add(comp);
 	}
 
@@ -139,9 +141,11 @@ public class ComponentManager implements IComponentManager {
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException {
 
-	List<CodeCenterComponentPojo> components = new ArrayList<>(requests.size());
+	List<CodeCenterComponentPojo> components = new ArrayList<>(
+		requests.size());
 	for (RequestPojo request : requests) {
-	    CodeCenterComponentPojo comp = getComponentById(request.getComponentId());
+	    CodeCenterComponentPojo comp = getComponentById(request
+		    .getComponentId());
 	    if ((limitToApprovalStatusValues == null)
 		    || (limitToApprovalStatusValues.size() == 0)
 		    || (limitToApprovalStatusValues.contains(comp
@@ -233,7 +237,7 @@ public class ComponentManager implements IComponentManager {
 	    String description) throws CommonFrameworkException {
 
 	File file = new File(sourceFilePath);
-	
+
 	Component comp = getSdkComponentById(componentId);
 	ComponentAttachmentCreate attachmentCreateBean = new ComponentAttachmentCreate();
 	attachmentCreateBean.setComponentId(comp.getId());
@@ -251,7 +255,7 @@ public class ComponentManager implements IComponentManager {
 	DataHandler dataHandler = new DataHandler(url);
 	attachmentCreateBean.setAttachmentContent(dataHandler);
 	try {
-	    
+
 	    codeCenterApiWrapper.getColaApi().createComponentAttachment(
 		    attachmentCreateBean);
 	} catch (SdkFault e) {
@@ -337,8 +341,8 @@ public class ComponentManager implements IComponentManager {
 	// so set flag in pojo based on whether or not
 	// applicationId has a value
 	boolean applicationComponent = sdkComp.getApplicationId() != null;
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(sdkComp.getId().getId(),
-		sdkComp.getName(), sdkComp.getVersion(),
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(sdkComp
+		.getId().getId(), sdkComp.getName(), sdkComp.getVersion(),
 		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
 		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(),
 		kbComponentId, kbComponentReleaseId, applicationComponent,
