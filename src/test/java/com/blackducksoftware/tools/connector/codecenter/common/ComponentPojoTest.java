@@ -52,7 +52,7 @@ public class ComponentPojoTest {
 		TEST_LICENSE_TEXT2);
 	licenses.add(license);
 
-	ComponentPojo comp = new ComponentPojo(COMP_ID1, COMP_NAME1,
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(COMP_ID1, COMP_NAME1,
 		COMP_VERSION, ApprovalStatus.PENDING, COMP_HOMEPAGE,
 		TEST_AUDIENCES, TEST_KB_COMP_ID, TEST_KB_RELEASE_ID, false,
 		null, false, attrValues, licenses, null);
@@ -97,14 +97,14 @@ public class ComponentPojoTest {
 		TEST_LICENSE_TEXT2);
 	licenses.add(license);
 
-	ComponentPojo subComp = new ComponentPojo(COMP_ID1, COMP_NAME1,
+	CodeCenterComponentPojo subComp = new CodeCenterComponentPojo(COMP_ID1, COMP_NAME1,
 		COMP_VERSION, ApprovalStatus.PENDING, COMP_HOMEPAGE,
 		TEST_AUDIENCES, TEST_KB_COMP_ID, TEST_KB_RELEASE_ID, false,
 		null, false, attrValues, licenses, null);
-	List<ComponentPojo> subComponents = new ArrayList<>();
+	List<CodeCenterComponentPojo> subComponents = new ArrayList<>();
 	subComponents.add(subComp);
 
-	ComponentPojo comp = new ComponentPojo(COMP_ID2, COMP_NAME2,
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(COMP_ID2, COMP_NAME2,
 		COMP_VERSION, ApprovalStatus.PENDING, COMP_HOMEPAGE,
 		TEST_AUDIENCES, TEST_KB_COMP_ID, TEST_KB_RELEASE_ID, false,
 		null, false, attrValues, licenses, subComponents);

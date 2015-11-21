@@ -41,7 +41,7 @@ import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
-import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 import com.blackducksoftware.tools.connector.common.FilePaths;
@@ -73,7 +73,7 @@ public class ComponentManager implements IComponentManager {
      * Components fetched are cached.
      */
     @Override
-    public ComponentPojo getComponentById(String componentId)
+    public CodeCenterComponentPojo getComponentById(String componentId)
 	    throws CommonFrameworkException {
 
 	Component sdkComp = getSdkComponentById(componentId);
@@ -87,7 +87,7 @@ public class ComponentManager implements IComponentManager {
      * Components fetched are cached.
      */
     @Override
-    public ComponentPojo getComponentByNameVersion(String componentName,
+    public CodeCenterComponentPojo getComponentByNameVersion(String componentName,
 	    String componentVersion) throws CommonFrameworkException {
 	NameVersion nameVersion = new NameVersion(componentName,
 		componentVersion);
@@ -121,12 +121,12 @@ public class ComponentManager implements IComponentManager {
      *
      */
     @Override
-    public List<ComponentPojo> getComponentsForRequests(
+    public List<CodeCenterComponentPojo> getComponentsForRequests(
 	    List<RequestPojo> requests) throws CommonFrameworkException {
 
-	List<ComponentPojo> components = new ArrayList<>(requests.size());
+	List<CodeCenterComponentPojo> components = new ArrayList<>(requests.size());
 	for (RequestPojo request : requests) {
-	    ComponentPojo comp = getComponentById(request.getComponentId());
+	    CodeCenterComponentPojo comp = getComponentById(request.getComponentId());
 	    components.add(comp);
 	}
 
@@ -134,14 +134,14 @@ public class ComponentManager implements IComponentManager {
     }
 
     @Override
-    public List<ComponentPojo> getComponentsForRequests(
+    public List<CodeCenterComponentPojo> getComponentsForRequests(
 	    List<RequestPojo> requests,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException {
 
-	List<ComponentPojo> components = new ArrayList<>(requests.size());
+	List<CodeCenterComponentPojo> components = new ArrayList<>(requests.size());
 	for (RequestPojo request : requests) {
-	    ComponentPojo comp = getComponentById(request.getComponentId());
+	    CodeCenterComponentPojo comp = getComponentById(request.getComponentId());
 	    if ((limitToApprovalStatusValues == null)
 		    || (limitToApprovalStatusValues.size() == 0)
 		    || (limitToApprovalStatusValues.contains(comp
@@ -317,7 +317,7 @@ public class ComponentManager implements IComponentManager {
 	return sdkComp;
     }
 
-    private ComponentPojo createPojo(Component sdkComp)
+    private CodeCenterComponentPojo createPojo(Component sdkComp)
 	    throws CommonFrameworkException {
 	List<AttributeValue> sdkAttrValues = sdkComp.getAttributeValues();
 	List<AttributeValuePojo> attrValues = AttributeValues.valueOf(
@@ -337,7 +337,7 @@ public class ComponentManager implements IComponentManager {
 	// so set flag in pojo based on whether or not
 	// applicationId has a value
 	boolean applicationComponent = sdkComp.getApplicationId() != null;
-	ComponentPojo comp = new ComponentPojo(sdkComp.getId().getId(),
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(sdkComp.getId().getId(),
 		sdkComp.getName(), sdkComp.getVersion(),
 		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
 		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(),

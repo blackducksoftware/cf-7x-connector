@@ -414,7 +414,7 @@ public class CodeCenterApplicationDao implements ApplicationDao {
 	    ComponentIdToken compIdToken = request.getComponentId();
 	    Component component = colaApi.getCatalogComponent(compIdToken);
 
-	    // Generate the ComponentPojo
+	    // Generate the CodeCenterComponentPojo
 	    String kbComponentId = null;
 	    KbComponentIdToken kbComponentIdToken = component
 		    .getKbComponentId();

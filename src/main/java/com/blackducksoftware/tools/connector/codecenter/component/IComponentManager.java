@@ -5,7 +5,7 @@ import java.util.List;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
-import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
 public interface IComponentManager {
@@ -17,7 +17,7 @@ public interface IComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    ComponentPojo getComponentById(String componentId)
+    CodeCenterComponentPojo getComponentById(String componentId)
 	    throws CommonFrameworkException;
 
     /**
@@ -28,7 +28,7 @@ public interface IComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    ComponentPojo getComponentByNameVersion(String componentName,
+    CodeCenterComponentPojo getComponentByNameVersion(String componentName,
 	    String componentVersion) throws CommonFrameworkException;
 
     /**
@@ -38,7 +38,7 @@ public interface IComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<ComponentPojo> getComponentsForRequests(List<RequestPojo> requests)
+    List<CodeCenterComponentPojo> getComponentsForRequests(List<RequestPojo> requests)
 	    throws CommonFrameworkException;
 
     /**
@@ -53,7 +53,7 @@ public interface IComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<ComponentPojo> getComponentsForRequests(List<RequestPojo> requests,
+    List<CodeCenterComponentPojo> getComponentsForRequests(List<RequestPojo> requests,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException;
 

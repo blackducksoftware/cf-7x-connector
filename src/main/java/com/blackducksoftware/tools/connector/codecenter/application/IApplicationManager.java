@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
-import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
 /**
@@ -67,7 +67,7 @@ public interface IApplicationManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<ComponentPojo> getComponentsByAppId(String appId,
+    List<CodeCenterComponentPojo> getComponentsByAppId(String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException;
 }

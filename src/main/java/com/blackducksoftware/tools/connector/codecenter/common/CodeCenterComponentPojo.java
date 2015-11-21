@@ -13,7 +13,7 @@ import com.blackducksoftware.tools.connector.common.LicensePojo;
  * @author sbillings
  *
  */
-public class ComponentPojo {
+public class CodeCenterComponentPojo {
     private final String id;
     private final String name;
     private final String version;
@@ -27,7 +27,7 @@ public class ComponentPojo {
     private final String applicationId;
     private final boolean deprecated;
     private final Map<String, AttributeValuePojo> attributeValuesByName;
-    private final List<ComponentPojo> subComponents;
+    private final List<CodeCenterComponentPojo> subComponents;
 
     /**
      * This constructor acceps a list of attribute values.
@@ -47,12 +47,12 @@ public class ComponentPojo {
      * @param licenses
      * @param subComponents
      */
-    public ComponentPojo(String id, String name, String version,
+    public CodeCenterComponentPojo(String id, String name, String version,
 	    ApprovalStatus approvalStatus, String homepage,
 	    String intendedAudiences, String kbComponentId, String kbReleaseId,
 	    boolean applicationComponent, String applicationId,
 	    boolean deprecated, List<AttributeValuePojo> attributeValues,
-	    List<LicensePojo> licenses, List<ComponentPojo> subComponents) {
+	    List<LicensePojo> licenses, List<CodeCenterComponentPojo> subComponents) {
 	this.id = id;
 	this.name = name;
 	this.version = version;
@@ -78,7 +78,7 @@ public class ComponentPojo {
 
     /**
      * This constructor accepts a map of attribute values, which is useful for
-     * creating one ComponentPojo from another.
+     * creating one CodeCenterComponentPojo from another.
      *
      * @param id
      * @param name
@@ -95,13 +95,13 @@ public class ComponentPojo {
      * @param licenses
      * @param subComponents
      */
-    public ComponentPojo(String id, String name, String version,
+    public CodeCenterComponentPojo(String id, String name, String version,
 	    ApprovalStatus approvalStatus, String homepage,
 	    String intendedAudiences, String kbComponentId, String kbReleaseId,
 	    boolean applicationComponent, String applicationId,
 	    boolean deprecated,
 	    Map<String, AttributeValuePojo> attributeValues,
-	    List<LicensePojo> licenses, List<ComponentPojo> subComponents) {
+	    List<LicensePojo> licenses, List<CodeCenterComponentPojo> subComponents) {
 	this.id = id;
 	this.name = name;
 	this.version = version;
@@ -187,16 +187,16 @@ public class ComponentPojo {
 	return new HashMap<String, AttributeValuePojo>(attributeValuesByName);
     }
 
-    public List<ComponentPojo> getSubComponents() {
+    public List<CodeCenterComponentPojo> getSubComponents() {
 	if (subComponents == null) {
 	    return null;
 	}
-	return new ArrayList<ComponentPojo>(subComponents);
+	return new ArrayList<CodeCenterComponentPojo>(subComponents);
     }
 
     @Override
     public String toString() {
-	return "ComponentPojo [name=" + name + ", version=" + version + "]";
+	return "CodeCenterComponentPojo [name=" + name + ", version=" + version + "]";
     }
 
     @Override
@@ -219,7 +219,7 @@ public class ComponentPojo {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	ComponentPojo other = (ComponentPojo) obj;
+	CodeCenterComponentPojo other = (CodeCenterComponentPojo) obj;
 	if (name == null) {
 	    if (other.name != null) {
 		return false;

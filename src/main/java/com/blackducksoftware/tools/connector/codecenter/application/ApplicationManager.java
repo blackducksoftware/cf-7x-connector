@@ -20,7 +20,7 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefi
 import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
-import com.blackducksoftware.tools.connector.codecenter.common.ComponentPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 import com.blackducksoftware.tools.connector.codecenter.component.IComponentManager;
@@ -176,37 +176,37 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     @Override
-    public List<ComponentPojo> getComponentsByAppId(String appId,
+    public List<CodeCenterComponentPojo> getComponentsByAppId(String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 
-	List<ComponentPojo> allLevelComponents = collectComponents(appId,
+	List<CodeCenterComponentPojo> allLevelComponents = collectComponents(appId,
 		limitToApprovalStatusValues, recursive);
 	return allLevelComponents;
     }
 
     // Private methods
 
-    private List<ComponentPojo> collectComponents(String appId,
+    private List<CodeCenterComponentPojo> collectComponents(String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 	List<RequestPojo> requests = getRequestsByAppId(appId);
-	List<ComponentPojo> thisLevelComponents;
+	List<CodeCenterComponentPojo> thisLevelComponents;
 
 	thisLevelComponents = compMgr.getComponentsForRequests(requests,
 		limitToApprovalStatusValues);
 
-	List<ComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
-	for (ComponentPojo comp : thisLevelComponents) {
+	List<CodeCenterComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
+	for (CodeCenterComponentPojo comp : thisLevelComponents) {
 	    log.debug("Component: " + comp.getName() + " / "
 		    + comp.getVersion());
 	    if (recursive && (comp.getApplicationId() != null)
 		    && (comp.getApplicationId().length() > 0)) {
-		List<ComponentPojo> appCompsMinusApps = collectComponents(
+		List<CodeCenterComponentPojo> appCompsMinusApps = collectComponents(
 			comp.getApplicationId(), limitToApprovalStatusValues,
 			recursive);
 		// thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
-		ComponentPojo appComp = new ComponentPojo(comp.getId(),
+		CodeCenterComponentPojo appComp = new CodeCenterComponentPojo(comp.getId(),
 			comp.getName(), comp.getVersion(),
 			comp.getApprovalStatus(), comp.getHomepage(),
 			comp.getIntendedAudiences(), comp.getKbComponentId(),
