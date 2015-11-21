@@ -19,8 +19,6 @@ package com.blackducksoftware.tools.connector.protex;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.license.LicenseCategory;
-import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.ProjectApi;
 import com.blackducksoftware.sdk.protex.project.ProjectInfo;
 import com.blackducksoftware.sdk.protex.project.ProjectRequest;
@@ -41,6 +38,8 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.LicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
+import com.blackducksoftware.tools.connector.protex.project.IProjectManager;
+import com.blackducksoftware.tools.connector.protex.project.ProjectManager;
 import com.blackducksoftware.tools.connector.protex.report.IReportManager;
 import com.blackducksoftware.tools.connector.protex.report.ReportManager;
 
@@ -58,9 +57,11 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 
-    private ILicenseManager licenseManager;
+    private ILicenseManager<ProtexLicensePojo> licenseManager;
 
     private IReportManager reportManager;
+
+    private IProjectManager projectManager;
 
     /** The api wrapper. */
     private ProtexAPIWrapper apiWrapper;
@@ -86,6 +87,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	codeTreeHelper = new CodeTreeHelper(apiWrapper);
 	licenseManager = new LicenseManager(apiWrapper);
 	reportManager = new ReportManager(apiWrapper);
+	projectManager = new ProjectManager(apiWrapper);
     }
 
     @Override
@@ -96,51 +98,13 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     @Override
     public ProjectPojo getProjectByName(String projectName)
 	    throws CommonFrameworkException {
-	ProtexProjectPojo pojo = null;
-	try {
-	    ProjectApi projectAPI = getInternalApiWrapper().getProjectApi();
-	    Project proj = projectAPI.getProjectByName(projectName.trim());
-
-	    if (proj == null) {
-		throw new Exception(
-			"Project name specified, resulted in empty project object:"
-				+ projectName);
-	    }
-
-	    pojo = populateProjectBean(proj);
-
-	} catch (Exception e) {
-	    String details = e.getMessage();
-	    throw new CommonFrameworkException(configManager,
-		    "Unable to find project by the name of: " + projectName
-			    + ". Reason: " + details);
-	}
-
-	return pojo;
+	return projectManager.getProjectByName(projectName);
     }
 
     @Override
     public ProjectPojo getProjectByID(String projectID)
 	    throws CommonFrameworkException {
-	ProjectPojo pojo = null;
-	try {
-	    ProjectApi projectAPI = apiWrapper.getProjectApi();
-	    Project proj = projectAPI.getProjectById(projectID);
-
-	    if (proj == null) {
-		throw new Exception(
-			"Project ID specified, resulted in empty project object:"
-				+ projectID);
-	    }
-
-	    pojo = populateProjectBean(proj);
-
-	} catch (Exception e) {
-	    throw new CommonFrameworkException(configManager,
-		    "Unable to find project by the ID of: " + projectID);
-	}
-
-	return pojo;
+	return projectManager.getProjectByID(projectID);
     }
 
     @Override
@@ -153,21 +117,6 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	log.debug("Built URL for project: " + bomUrl);
 
 	return bomUrl;
-    }
-
-    private ProtexProjectPojo populateProjectBean(Project proj) {
-	ProtexProjectPojo pojo = new ProtexProjectPojo(proj.getProjectId(),
-		proj.getName());
-
-	try {
-	    DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-	    String prettyAnalyzedDate = df.format(proj.getLastAnalyzedDate());
-	    pojo.setAnalyzedDate(prettyAnalyzedDate);
-	    log.debug("Set project last analyzed date: " + prettyAnalyzedDate);
-	} catch (Exception e) {
-	}
-
-	return pojo;
     }
 
     @Override
