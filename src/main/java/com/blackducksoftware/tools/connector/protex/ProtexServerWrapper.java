@@ -256,4 +256,9 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     public IProjectManager getProjectManager() {
 	return projectManager;
     }
+
+    @Override
+    public IProtexComponentManager getComponentManager() {
+	return componentManager;
+    }
 }
