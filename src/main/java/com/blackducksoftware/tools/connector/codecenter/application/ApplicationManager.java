@@ -23,7 +23,7 @@ import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
-import com.blackducksoftware.tools.connector.codecenter.component.IComponentManager;
+import com.blackducksoftware.tools.connector.codecenter.component.ICodeCenterComponentManager;
 
 /**
  * Provides a higher level of abstraction for accessing Code Center
@@ -46,13 +46,13 @@ public class ApplicationManager implements IApplicationManager {
 	    .getName());
     private final CodeCenterAPIWrapper ccApiWrapper;
     private final IAttributeDefinitionManager attrDefMgr;
-    private final IComponentManager compMgr;
+    private final ICodeCenterComponentManager compMgr;
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
     private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
-	    IAttributeDefinitionManager attrDefMgr, IComponentManager compMgr) {
+	    IAttributeDefinitionManager attrDefMgr, ICodeCenterComponentManager compMgr) {
 	this.ccApiWrapper = ccApiWrapper;
 	this.attrDefMgr = attrDefMgr;
 	this.compMgr = compMgr;

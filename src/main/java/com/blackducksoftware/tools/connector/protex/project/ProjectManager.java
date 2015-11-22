@@ -2,6 +2,7 @@ package com.blackducksoftware.tools.connector.protex.project;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,32 +10,133 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.ProjectApi;
+import com.blackducksoftware.sdk.protex.project.bom.BomComponent;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
-import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
+import com.blackducksoftware.tools.connector.protex.common.ComponentNameVersionIds;
+import com.blackducksoftware.tools.connector.protex.common.ProtexComponentPojo;
+import com.blackducksoftware.tools.connector.protex.component.IProtexComponentManager;
 
 public class ProjectManager implements IProjectManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
     private final ProtexAPIWrapper apiWrapper;
+    private final IProtexComponentManager compMgr;
     private final Map<String, Project> projectsByNameCache = new HashMap<>();
     private final Map<String, Project> projectsByIdCache = new HashMap<>();
 
-    public ProjectManager(ProtexAPIWrapper apiWrapper) {
+    public ProjectManager(ProtexAPIWrapper apiWrapper,
+	    IProtexComponentManager compMgr) {
 	this.apiWrapper = apiWrapper;
+	this.compMgr = compMgr;
     }
 
     @Override
     public ProjectPojo getProjectByName(String projectName)
 	    throws CommonFrameworkException {
 
+	Project proj = getProtexProjectByName(projectName);
+	ProtexProjectPojo pojo = toPojo(proj);
+
+	return pojo;
+    }
+
+    @Override
+    public ProjectPojo getProjectById(String projectId)
+	    throws CommonFrameworkException {
+
+	Project proj = getProtexProjectById(projectId);
+	ProjectPojo pojo = toPojo(proj);
+	return pojo;
+    }
+
+    @Override
+    public List<ProtexComponentPojo> getComponentsByProjectId(String projectId)
+	    throws CommonFrameworkException {
+	Project protexProject = getProtexProjectById(projectId);
+	log.info("Getting components for project " + protexProject.getName());
+	List<BomComponent> bomComponents;
+	try {
+	    bomComponents = apiWrapper.getBomApi().getBomComponents(
+		    protexProject.getProjectId());
+	} catch (SdkFault e) {
+	    throw new CommonFrameworkException(
+		    "Error getting BOM Components for Protex Project ID "
+			    + projectId + ": " + e.getMessage());
+	}
+
+	// TODO This should take advantage of the other compMgr method with the
+	// ability to get a list at a
+	// time
+
+	List<ProtexComponentPojo> componentPojos = new ArrayList<>(
+		bomComponents.size());
+	for (BomComponent bomComponent : bomComponents) {
+	    log.info("Processing component " + bomComponent.getComponentName());
+	    switch (bomComponent.getType()) {
+	    case LOCAL:
+		log.warn("Skipping local component: "
+			+ bomComponent.getComponentName() + " / "
+			+ bomComponent.getVersionName());
+		continue;
+	    case PROJECT:
+		log.info("Skipping project component: "
+			+ bomComponent.getComponentName() + " / "
+			+ bomComponent.getVersionName());
+		continue;
+	    default:
+		// Proceed with processing it
+	    }
+	    ComponentNameVersionIds nameVersionIds = new ComponentNameVersionIds(
+		    bomComponent.getComponentKey().getComponentId(),
+		    bomComponent.getComponentKey().getVersionId());
+	    ProtexComponentPojo compPojo = compMgr
+		    .getComponentByNameVersionIds(nameVersionIds);
+
+	    componentPojos.add(compPojo);
+
+	}
+	return componentPojos;
+    }
+
+    // Private methods
+
+    private Project getProtexProjectById(String projectId)
+	    throws CommonFrameworkException {
+	// Check cache first
+	if (projectsByIdCache.containsKey(projectId)) {
+	    return projectsByIdCache.get(projectId);
+	}
+	Project proj;
+	try {
+	    ProjectApi projectAPI = apiWrapper.getProjectApi();
+	    proj = projectAPI.getProjectById(projectId);
+
+	    if (proj == null) {
+		throw new Exception(
+			"Project ID specified, resulted in empty project object:"
+				+ projectId);
+	    }
+
+	} catch (Exception e) {
+	    throw new CommonFrameworkException(
+		    "Unable to find project by the ID of: " + projectId);
+	}
+
+	addToCache(proj);
+	return proj;
+    }
+
+    private Project getProtexProjectByName(String projectName)
+	    throws CommonFrameworkException {
 	// Check cache first
 	if (projectsByNameCache.containsKey(projectName)) {
-	    return populateProjectBean(projectsByNameCache.get(projectName));
+	    return projectsByNameCache.get(projectName);
 	}
 	Project proj;
 	try {
@@ -53,57 +155,16 @@ public class ProjectManager implements IProjectManager {
 		    "Unable to find project by the name of: " + projectName
 			    + ". Reason: " + details);
 	}
-
 	addToCache(proj);
-	ProtexProjectPojo pojo = populateProjectBean(proj);
-
-	return pojo;
+	return proj;
     }
-
-    @Override
-    public ProjectPojo getProjectByID(String projectID)
-	    throws CommonFrameworkException {
-
-	// Check cache first
-	if (projectsByIdCache.containsKey(projectID)) {
-	    return populateProjectBean(projectsByNameCache.get(projectID));
-	}
-	Project proj;
-	try {
-	    ProjectApi projectAPI = apiWrapper.getProjectApi();
-	    proj = projectAPI.getProjectById(projectID);
-
-	    if (proj == null) {
-		throw new Exception(
-			"Project ID specified, resulted in empty project object:"
-				+ projectID);
-	    }
-
-	} catch (Exception e) {
-	    throw new CommonFrameworkException(
-		    "Unable to find project by the ID of: " + projectID);
-	}
-
-	addToCache(proj);
-	ProjectPojo pojo = populateProjectBean(proj);
-	return pojo;
-    }
-
-    @Override
-    public List<CodeCenterComponentPojo> getComponentsByProjectId(
-	    String projectId) throws CommonFrameworkException {
-	// TODO Auto-generated function stub
-	return null;
-    }
-
-    // Private methods
 
     private void addToCache(Project project) {
 	projectsByNameCache.put(project.getName(), project);
 	projectsByIdCache.put(project.getProjectId(), project);
     }
 
-    private ProtexProjectPojo populateProjectBean(Project proj) {
+    private ProtexProjectPojo toPojo(Project proj) {
 	ProtexProjectPojo pojo = new ProtexProjectPojo(proj.getProjectId(),
 		proj.getName());
 

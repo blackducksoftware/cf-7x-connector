@@ -36,6 +36,8 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
+import com.blackducksoftware.tools.connector.protex.component.IProtexComponentManager;
+import com.blackducksoftware.tools.connector.protex.component.ProtexComponentManager;
 import com.blackducksoftware.tools.connector.protex.license.LicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
 import com.blackducksoftware.tools.connector.protex.project.IProjectManager;
@@ -63,6 +65,8 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 
     private IProjectManager projectManager;
 
+    private IProtexComponentManager componentManager;
+
     /** The api wrapper. */
     private ProtexAPIWrapper apiWrapper;
 
@@ -87,7 +91,9 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	codeTreeHelper = new CodeTreeHelper(apiWrapper);
 	licenseManager = new LicenseManager(apiWrapper);
 	reportManager = new ReportManager(apiWrapper);
-	projectManager = new ProjectManager(apiWrapper);
+	componentManager = new ProtexComponentManager(apiWrapper,
+		licenseManager);
+	projectManager = new ProjectManager(apiWrapper, componentManager);
     }
 
     @Override
@@ -104,7 +110,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     @Override
     public ProjectPojo getProjectByID(String projectID)
 	    throws CommonFrameworkException {
-	return projectManager.getProjectByID(projectID);
+	return projectManager.getProjectById(projectID);
     }
 
     @Override
@@ -244,5 +250,10 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     @Override
     public IReportManager getReportManager() {
 	return reportManager;
+    }
+
+    @Override
+    public IProjectManager getProjectManager() {
+	return projectManager;
     }
 }

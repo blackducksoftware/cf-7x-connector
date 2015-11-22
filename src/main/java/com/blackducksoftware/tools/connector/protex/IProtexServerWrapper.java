@@ -8,6 +8,7 @@ import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
+import com.blackducksoftware.tools.connector.protex.project.IProjectManager;
 import com.blackducksoftware.tools.connector.protex.report.IReportManager;
 
 public interface IProtexServerWrapper<T extends ProtexProjectPojo> extends
@@ -77,8 +78,25 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> extends
     @Override
     ConfigurationManager getConfigManager();
 
+    /**
+     * Get the license manager.
+     *
+     * @return
+     */
     ILicenseManager<ProtexLicensePojo> getLicenseManager();
 
+    /**
+     * Get the report manager.
+     *
+     * @return
+     */
     IReportManager getReportManager();
+
+    /**
+     * Get the Project manager.
+     *
+     * @return
+     */
+    IProjectManager getProjectManager();
 
 }

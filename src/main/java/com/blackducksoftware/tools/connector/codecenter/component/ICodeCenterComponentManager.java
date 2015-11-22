@@ -8,7 +8,7 @@ import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 
-public interface IComponentManager {
+public interface ICodeCenterComponentManager {
 
     /**
      * Get a component by its component ID (not kbComponentId).

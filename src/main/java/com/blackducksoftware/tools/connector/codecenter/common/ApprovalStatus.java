@@ -1,6 +1,7 @@
 package com.blackducksoftware.tools.connector.codecenter.common;
 
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
+import com.blackducksoftware.sdk.protex.common.ApprovalState;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 
 /**
@@ -27,8 +28,8 @@ public enum ApprovalStatus {
     }
 
     /**
-     * Convert an SDK approval status to the POJO equivalent. Intended for use
-     * by cf-7x-connector classes.
+     * Convert a Code Center SDK approval status to the POJO equivalent.
+     * Intended for use by cf-7x-connector classes.
      *
      * @param ccApprovalStatus
      * @return
@@ -58,6 +59,33 @@ public enum ApprovalStatus {
 	default:
 	    throw new CommonFrameworkException("Unsupported ApprovalStatus: "
 		    + ccApprovalStatus);
+	}
+    }
+
+    /**
+     * Convert a Protex SDK approval status to the POJO equivalent. Intended for
+     * use by cf-7x-connector classes.
+     *
+     * @param protexApprovalState
+     * @return
+     * @throws CommonFrameworkException
+     */
+    public static ApprovalStatus valueOf(ApprovalState protexApprovalState)
+	    throws CommonFrameworkException {
+	switch (protexApprovalState) {
+
+	case APPROVED:
+	    return ApprovalStatus.APPROVED;
+
+	case DIS_APPROVED:
+	    return ApprovalStatus.REJECTED;
+
+	case NOT_REVIEWED:
+	    return ApprovalStatus.PENDING;
+
+	default:
+	    throw new CommonFrameworkException(
+		    "Unsupported Protex ApprovalState: " + protexApprovalState);
 	}
     }
 

@@ -48,7 +48,7 @@ import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 import com.blackducksoftware.tools.connector.common.Licenses;
 
-public class ComponentManager implements IComponentManager {
+public class ComponentManager implements ICodeCenterComponentManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
 	    .getName());
 

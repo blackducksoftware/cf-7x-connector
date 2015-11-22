@@ -4,15 +4,15 @@ import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
-import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
+import com.blackducksoftware.tools.connector.protex.common.ProtexComponentPojo;
 
 public interface IProjectManager {
     ProjectPojo getProjectByName(String projectName)
 	    throws CommonFrameworkException;
 
-    ProjectPojo getProjectByID(String projectID)
+    ProjectPojo getProjectById(String projectID)
 	    throws CommonFrameworkException;
 
-    List<CodeCenterComponentPojo> getComponentsByProjectId(String projectId)
+    List<ProtexComponentPojo> getComponentsByProjectId(String projectId)
 	    throws CommonFrameworkException;
 }
