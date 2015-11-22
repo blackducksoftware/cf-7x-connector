@@ -43,7 +43,6 @@ import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
-import com.blackducksoftware.tools.connector.common.FilePaths;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 import com.blackducksoftware.tools.connector.common.Licenses;
@@ -417,8 +416,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 				+ e.getMessage());
 	    }
 
-	    File outputFile = new File(FilePaths.assemblePath(targetDirPath,
-		    filename));
+	    File outputFile = new File(targetDirPath + "/" + filename);
 
 	    try {
 		fileOutputStream = new FileOutputStream(outputFile);
@@ -453,5 +451,4 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	    }
 	}
     }
-
 }

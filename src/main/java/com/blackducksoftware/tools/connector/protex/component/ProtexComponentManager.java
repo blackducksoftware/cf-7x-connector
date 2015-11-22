@@ -38,6 +38,8 @@ public class ProtexComponentManager implements IProtexComponentManager {
     public ProtexComponentPojo getComponentByNameVersionIds(
 	    ComponentNameVersionIds nameVersionIds)
 	    throws CommonFrameworkException {
+	log.info("Getting component " + nameVersionIds.getNameId() + " / "
+		+ nameVersionIds.getVersionId());
 	Component comp = getProtexComponentByNameVersionIds(nameVersionIds);
 	return toPojo(nameVersionIds, comp);
     }
@@ -46,7 +48,7 @@ public class ProtexComponentManager implements IProtexComponentManager {
     public List<ProtexComponentPojo> getComponentsByNameVersionIds(
 	    List<ComponentNameVersionIds> nameVersionIdsList)
 	    throws CommonFrameworkException {
-
+	log.info("Getting a list of components");
 	// Derive a list of those components not already in the cache
 	List<ComponentKey> missingFromCache = getComponentsMissingFromCache(nameVersionIdsList);
 
