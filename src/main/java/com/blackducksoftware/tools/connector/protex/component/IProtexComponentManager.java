@@ -12,6 +12,6 @@ public interface IProtexComponentManager {
 	    throws CommonFrameworkException;
 
     List<ProtexComponentPojo> getComponentsByNameVersionIds(
-	    List<ComponentNameVersionIds> nameVersionIds)
+	    List<ComponentNameVersionIds> nameVersionIdsList)
 	    throws CommonFrameworkException;
 }

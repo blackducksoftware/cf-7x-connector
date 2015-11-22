@@ -38,25 +38,65 @@ public class ProtexComponentManager implements IProtexComponentManager {
     public ProtexComponentPojo getComponentByNameVersionIds(
 	    ComponentNameVersionIds nameVersionIds)
 	    throws CommonFrameworkException {
-
 	Component comp = getProtexComponentByNameVersionIds(nameVersionIds);
-
 	return toPojo(nameVersionIds, comp);
     }
 
     @Override
     public List<ProtexComponentPojo> getComponentsByNameVersionIds(
-	    List<ComponentNameVersionIds> nameVersionIds)
+	    List<ComponentNameVersionIds> nameVersionIdsList)
 	    throws CommonFrameworkException {
-	// TODO
-	// Loop through components building a list of those that are not in
-	// cache
-	// SDK: Fetch those, and populate cache
-	// serve the original request from the cache
-	return null;
+
+	// Derive a list of those components not already in the cache
+	List<ComponentKey> missingFromCache = getComponentsMissingFromCache(nameVersionIdsList);
+
+	// use SDK to fetch those missing from cache, adding them to the cache
+	if (missingFromCache.size() > 0) {
+	    List<Component> protexComponents;
+	    try {
+		protexComponents = apiWrapper.getComponentApi()
+			.getComponentsByKey(missingFromCache);
+	    } catch (SdkFault e) {
+		throw new CommonFrameworkException(
+			"Error getting a list of components: " + e.getMessage());
+	    }
+	    addToCache(protexComponents);
+	}
+
+	// serve the original request from the now-fully-populated cache
+	List<ProtexComponentPojo> results = getComponentsFromCache(nameVersionIdsList);
+	return results;
     }
 
     // Private methods
+
+    private List<ProtexComponentPojo> getComponentsFromCache(
+	    List<ComponentNameVersionIds> nameVersionIdsList)
+	    throws CommonFrameworkException {
+	List<ProtexComponentPojo> results = new ArrayList<>(
+		nameVersionIdsList.size());
+	for (ComponentNameVersionIds nameVersionIds : nameVersionIdsList) {
+	    Component protexComp = componentsByNameVersionIds
+		    .get(nameVersionIds);
+	    ProtexComponentPojo comp = toPojo(nameVersionIds, protexComp);
+	    results.add(comp);
+	}
+	return results;
+    }
+
+    private List<ComponentKey> getComponentsMissingFromCache(
+	    List<ComponentNameVersionIds> nameVersionIdsList) {
+	List<ComponentKey> missingFromCache = new ArrayList<>(
+		nameVersionIdsList.size());
+	for (ComponentNameVersionIds nameVersionIds : nameVersionIdsList) {
+	    if (!componentsByNameVersionIds.containsKey(nameVersionIds)) {
+		ComponentKey protexCompKey = ComponentNameVersionIds
+			.toProtexComponentKey(nameVersionIds);
+		missingFromCache.add(protexCompKey);
+	    }
+	}
+	return missingFromCache;
+    }
 
     private Component getProtexComponentByNameVersionIds(
 	    ComponentNameVersionIds nameVersionIds)
@@ -67,9 +107,8 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	}
 
 	// Get from protex
-	ComponentKey key = new ComponentKey();
-	key.setComponentId(nameVersionIds.getNameId());
-	key.setVersionId(nameVersionIds.getVersionId());
+	ComponentKey key = ComponentNameVersionIds
+		.toProtexComponentKey(nameVersionIds);
 	Component comp;
 	try {
 	    comp = apiWrapper.getComponentApi().getComponentByKey(key);
@@ -115,4 +154,11 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	componentsByNameVersionIds.put(nameVersionIds, comp);
     }
 
+    private void addToCache(List<Component> protexComponents) {
+	for (Component protexComponent : protexComponents) {
+	    ComponentNameVersionIds nameVersionIds = ComponentNameVersionIds
+		    .valueOf(protexComponent);
+	    componentsByNameVersionIds.put(nameVersionIds, protexComponent);
+	}
+    }
 }

@@ -70,37 +70,10 @@ public class ProjectManager implements IProjectManager {
 			    + projectId + ": " + e.getMessage());
 	}
 
-	// TODO This should take advantage of the other compMgr method with the
-	// ability to get a list at a
-	// time
+	List<ComponentNameVersionIds> nameVersionIdsList = toNameVersionIdsList(bomComponents);
 
-	List<ProtexComponentPojo> componentPojos = new ArrayList<>(
-		bomComponents.size());
-	for (BomComponent bomComponent : bomComponents) {
-	    log.info("Processing component " + bomComponent.getComponentName());
-	    switch (bomComponent.getType()) {
-	    case LOCAL:
-		log.warn("Skipping local component: "
-			+ bomComponent.getComponentName() + " / "
-			+ bomComponent.getVersionName());
-		continue;
-	    case PROJECT:
-		log.info("Skipping project component: "
-			+ bomComponent.getComponentName() + " / "
-			+ bomComponent.getVersionName());
-		continue;
-	    default:
-		// Proceed with processing it
-	    }
-	    ComponentNameVersionIds nameVersionIds = new ComponentNameVersionIds(
-		    bomComponent.getComponentKey().getComponentId(),
-		    bomComponent.getComponentKey().getVersionId());
-	    ProtexComponentPojo compPojo = compMgr
-		    .getComponentByNameVersionIds(nameVersionIds);
-
-	    componentPojos.add(compPojo);
-
-	}
+	List<ProtexComponentPojo> componentPojos = compMgr
+		.getComponentsByNameVersionIds(nameVersionIdsList);
 	return componentPojos;
     }
 
@@ -177,5 +150,34 @@ public class ProjectManager implements IProjectManager {
 	}
 
 	return pojo;
+    }
+
+    private List<ComponentNameVersionIds> toNameVersionIdsList(
+	    List<BomComponent> bomComponents) {
+	List<ComponentNameVersionIds> nameVersionIdsList = new ArrayList<>(
+		bomComponents.size());
+	for (BomComponent bomComponent : bomComponents) {
+	    log.info("Processing component " + bomComponent.getComponentName());
+
+	    // TODO: Is this the right place for this check?
+	    switch (bomComponent.getType()) {
+	    case LOCAL:
+		log.warn("Skipping local component: "
+			+ bomComponent.getComponentName() + " / "
+			+ bomComponent.getVersionName());
+		continue;
+	    case PROJECT:
+		log.info("Skipping parent project component: "
+			+ bomComponent.getComponentName() + " / "
+			+ bomComponent.getVersionName());
+		continue;
+	    default:
+		// Proceed with processing it
+	    }
+	    ComponentNameVersionIds nameVersionIds = ComponentNameVersionIds
+		    .valueOf(bomComponent);
+	    nameVersionIdsList.add(nameVersionIds);
+	}
+	return nameVersionIdsList;
     }
 }
