@@ -194,7 +194,8 @@ public class ApplicationManager implements IApplicationManager {
 	List<RequestPojo> requests = getRequestsByAppId(appId);
 	List<CodeCenterComponentPojo> thisLevelComponents;
 
-	thisLevelComponents = compMgr.getComponentsForRequests(requests,
+	thisLevelComponents = compMgr.getComponentsForRequests(
+		CodeCenterComponentPojo.class, requests,
 		limitToApprovalStatusValues);
 
 	List<CodeCenterComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();

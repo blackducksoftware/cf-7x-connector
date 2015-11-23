@@ -41,8 +41,9 @@ public interface ICodeCenterComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<CodeCenterComponentPojo> getComponentsForRequests(
-	    List<RequestPojo> requests) throws CommonFrameworkException;
+    <T extends CodeCenterComponentPojo> List<T> getComponentsForRequests(
+	    Class<T> pojoClass, List<RequestPojo> requests)
+	    throws CommonFrameworkException;
 
     /**
      * Get the list of components named in a list of requests, limited to those
@@ -56,8 +57,8 @@ public interface ICodeCenterComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<CodeCenterComponentPojo> getComponentsForRequests(
-	    List<RequestPojo> requests,
+    <T extends CodeCenterComponentPojo> List<T> getComponentsForRequests(
+	    Class<T> pojoClass, List<RequestPojo> requests,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException;
 

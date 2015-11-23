@@ -119,14 +119,13 @@ public class ComponentManager implements ICodeCenterComponentManager {
      *
      */
     @Override
-    public List<CodeCenterComponentPojo> getComponentsForRequests(
-	    List<RequestPojo> requests) throws CommonFrameworkException {
+    public <T extends CodeCenterComponentPojo> List<T> getComponentsForRequests(
+	    Class<T> pojoClass, List<RequestPojo> requests)
+	    throws CommonFrameworkException {
 
-	List<CodeCenterComponentPojo> components = new ArrayList<>(
-		requests.size());
+	List<T> components = new ArrayList<>(requests.size());
 	for (RequestPojo request : requests) {
-	    CodeCenterComponentPojo comp = getComponentById(
-		    CodeCenterComponentPojo.class, request.getComponentId());
+	    T comp = getComponentById(pojoClass, request.getComponentId());
 	    components.add(comp);
 	}
 
@@ -134,16 +133,14 @@ public class ComponentManager implements ICodeCenterComponentManager {
     }
 
     @Override
-    public List<CodeCenterComponentPojo> getComponentsForRequests(
-	    List<RequestPojo> requests,
+    public <T extends CodeCenterComponentPojo> List<T> getComponentsForRequests(
+	    Class<T> pojoClass, List<RequestPojo> requests,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException {
 
-	List<CodeCenterComponentPojo> components = new ArrayList<>(
-		requests.size());
+	List<T> components = new ArrayList<>(requests.size());
 	for (RequestPojo request : requests) {
-	    CodeCenterComponentPojo comp = getComponentById(
-		    CodeCenterComponentPojo.class, request.getComponentId());
+	    T comp = getComponentById(pojoClass, request.getComponentId());
 	    if ((limitToApprovalStatusValues == null)
 		    || (limitToApprovalStatusValues.size() == 0)
 		    || (limitToApprovalStatusValues.contains(comp
