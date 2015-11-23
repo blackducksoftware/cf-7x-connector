@@ -1,5 +1,7 @@
 package com.blackducksoftware.tools.connector.protex.component;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,18 +37,18 @@ public class ProtexComponentManager implements IProtexComponentManager {
     }
 
     @Override
-    public ProtexComponentPojo getComponentByNameVersionIds(
-	    ComponentNameVersionIds nameVersionIds)
+    public <T extends ProtexComponentPojo> T getComponentByNameVersionIds(
+	    Class<T> pojoClass, ComponentNameVersionIds nameVersionIds)
 	    throws CommonFrameworkException {
 	log.info("Getting component " + nameVersionIds.getNameId() + " / "
 		+ nameVersionIds.getVersionId());
 	Component comp = getProtexComponentByNameVersionIds(nameVersionIds);
-	return toPojo(nameVersionIds, comp);
+	return toPojo(pojoClass, nameVersionIds, comp);
     }
 
     @Override
-    public List<ProtexComponentPojo> getComponentsByNameVersionIds(
-	    List<ComponentNameVersionIds> nameVersionIdsList)
+    public <T extends ProtexComponentPojo> List<T> getComponentsByNameVersionIds(
+	    Class<T> pojoClass, List<ComponentNameVersionIds> nameVersionIdsList)
 	    throws CommonFrameworkException {
 	log.info("Getting a list of components");
 	// Derive a list of those components not already in the cache
@@ -66,21 +68,20 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	}
 
 	// serve the original request from the now-fully-populated cache
-	List<ProtexComponentPojo> results = getComponentsFromCache(nameVersionIdsList);
+	List<T> results = getComponentsFromCache(pojoClass, nameVersionIdsList);
 	return results;
     }
 
     // Private methods
 
-    private List<ProtexComponentPojo> getComponentsFromCache(
-	    List<ComponentNameVersionIds> nameVersionIdsList)
+    private <T extends ProtexComponentPojo> List<T> getComponentsFromCache(
+	    Class<T> pojoClass, List<ComponentNameVersionIds> nameVersionIdsList)
 	    throws CommonFrameworkException {
-	List<ProtexComponentPojo> results = new ArrayList<>(
-		nameVersionIdsList.size());
+	List<T> results = new ArrayList<>(nameVersionIdsList.size());
 	for (ComponentNameVersionIds nameVersionIds : nameVersionIdsList) {
 	    Component protexComp = componentsByNameVersionIds
 		    .get(nameVersionIds);
-	    ProtexComponentPojo comp = toPojo(nameVersionIds, protexComp);
+	    T comp = toPojo(pojoClass, nameVersionIds, protexComp);
 	    results.add(comp);
 	}
 	return results;
@@ -125,8 +126,9 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	return comp;
     }
 
-    private ProtexComponentPojo toPojo(ComponentNameVersionIds nameVersionIds,
-	    Component protexComp) throws CommonFrameworkException {
+    private <T extends ProtexComponentPojo> T toPojo(Class<T> pojoClass,
+	    ComponentNameVersionIds nameVersionIds, Component protexComp)
+	    throws CommonFrameworkException {
 
 	String primaryLicenseName = null;
 	if (protexComp.getPrimaryLicenseId() != null) {
@@ -147,7 +149,7 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	    }
 	}
 
-	ProtexComponentPojo comp = new ProtexComponentPojo();
+	T comp = instantiatePojo(pojoClass);
 	comp.setName(protexComp.getComponentName());
 	comp.setVersion(protexComp.getVersionName());
 	comp.setApprovalStatus(ApprovalStatus.valueOf(protexComp
@@ -174,5 +176,34 @@ public class ProtexComponentManager implements IProtexComponentManager {
 		    .valueOf(protexComponent);
 	    componentsByNameVersionIds.put(nameVersionIds, protexComponent);
 	}
+    }
+
+    @Override
+    public <T extends ProtexComponentPojo> T instantiatePojo(Class<T> pojoClass)
+	    throws CommonFrameworkException {
+	T componentPojo = null;
+	Constructor<?> constructor = null;
+	;
+	try {
+	    constructor = pojoClass.getConstructor();
+	} catch (SecurityException e) {
+	    throw new CommonFrameworkException(e.getMessage());
+	} catch (NoSuchMethodException e) {
+	    throw new CommonFrameworkException(e.getMessage());
+	}
+
+	try {
+	    componentPojo = (T) constructor.newInstance();
+	} catch (IllegalArgumentException e) {
+	    throw new CommonFrameworkException(e.getMessage());
+	} catch (InstantiationException e) {
+	    throw new CommonFrameworkException(e.getMessage());
+	} catch (IllegalAccessException e) {
+	    throw new CommonFrameworkException(e.getMessage());
+	} catch (InvocationTargetException e) {
+	    throw new CommonFrameworkException(e.getMessage());
+	}
+
+	return componentPojo;
     }
 }

@@ -7,11 +7,14 @@ import com.blackducksoftware.tools.connector.protex.common.ComponentNameVersionI
 import com.blackducksoftware.tools.connector.protex.common.ProtexComponentPojo;
 
 public interface IProtexComponentManager {
-    ProtexComponentPojo getComponentByNameVersionIds(
-	    ComponentNameVersionIds nameVersionIds)
+    <T extends ProtexComponentPojo> T getComponentByNameVersionIds(
+	    Class<T> pojoClass, ComponentNameVersionIds nameVersionIds)
 	    throws CommonFrameworkException;
 
-    List<ProtexComponentPojo> getComponentsByNameVersionIds(
-	    List<ComponentNameVersionIds> nameVersionIdsList)
+    <T extends ProtexComponentPojo> List<T> getComponentsByNameVersionIds(
+	    Class<T> pojoClass, List<ComponentNameVersionIds> nameVersionIdsList)
+	    throws CommonFrameworkException;
+
+    <T extends ProtexComponentPojo> T instantiatePojo(Class<T> pojoClass)
 	    throws CommonFrameworkException;
 }

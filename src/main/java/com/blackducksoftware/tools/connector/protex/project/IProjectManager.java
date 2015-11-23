@@ -13,6 +13,7 @@ public interface IProjectManager {
     ProjectPojo getProjectById(String projectID)
 	    throws CommonFrameworkException;
 
-    List<ProtexComponentPojo> getComponentsByProjectId(String projectId)
+    <T extends ProtexComponentPojo> List<T> getComponentsByProjectId(
+	    Class<T> pojoClass, String projectId)
 	    throws CommonFrameworkException;
 }

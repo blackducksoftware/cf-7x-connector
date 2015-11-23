@@ -56,7 +56,8 @@ public class ProjectManager implements IProjectManager {
     }
 
     @Override
-    public List<ProtexComponentPojo> getComponentsByProjectId(String projectId)
+    public <T extends ProtexComponentPojo> List<T> getComponentsByProjectId(
+	    Class<T> pojoClass, String projectId)
 	    throws CommonFrameworkException {
 	Project protexProject = getProtexProjectById(projectId);
 	log.info("Getting components for project " + protexProject.getName());
@@ -72,8 +73,8 @@ public class ProjectManager implements IProjectManager {
 
 	List<ComponentNameVersionIds> nameVersionIdsList = toNameVersionIdsList(bomComponents);
 
-	List<ProtexComponentPojo> componentPojos = compMgr
-		.getComponentsByNameVersionIds(nameVersionIdsList);
+	List<T> componentPojos = compMgr.getComponentsByNameVersionIds(
+		pojoClass, nameVersionIdsList);
 	return componentPojos;
     }
 
@@ -159,7 +160,6 @@ public class ProjectManager implements IProjectManager {
 	for (BomComponent bomComponent : bomComponents) {
 	    log.info("Processing component " + bomComponent.getComponentName());
 
-	    // TODO: Is this the right place for this check?
 	    switch (bomComponent.getType()) {
 	    case LOCAL:
 		log.warn("Skipping local component: "
