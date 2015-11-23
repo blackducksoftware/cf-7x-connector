@@ -13,18 +13,21 @@ public class ProtexComponentPojo extends ComponentPojo {
     private final ProtexComponentType type;
     private final String description;
     private final String primaryLicenseId;
+    private final String primaryLicenseName;
 
     public ProtexComponentPojo(String name, String version,
 	    ApprovalStatus approvalStatus, String homepage, boolean deprecated,
 	    ComponentNameVersionIds nameVersionIds,
 	    List<ProtexLicensePojo> licenses, ProtexComponentType type,
-	    String description, String primaryLicenseId) {
+	    String description, String primaryLicenseId,
+	    String primaryLicenseName) {
 	super(name, version, approvalStatus, homepage, deprecated);
 	this.nameVersionIds = nameVersionIds;
 	this.licenses = licenses;
 	this.type = type;
 	this.description = description;
 	this.primaryLicenseId = primaryLicenseId;
+	this.primaryLicenseName = primaryLicenseName;
     }
 
     public ComponentNameVersionIds getNameVersionIds() {
@@ -45,6 +48,10 @@ public class ProtexComponentPojo extends ComponentPojo {
 
     public String getPrimaryLicenseId() {
 	return primaryLicenseId;
+    }
+
+    public String getPrimaryLicenseName() {
+	return primaryLicenseName;
     }
 
     @Override

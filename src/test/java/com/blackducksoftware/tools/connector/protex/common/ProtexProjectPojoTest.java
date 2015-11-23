@@ -19,6 +19,7 @@ public class ProtexProjectPojoTest {
     private static final String VERSION_ID = "versionId";
     private static final String NAME_ID = "nameId";
     private static final String TEST_PRIMARY_LICENSE_ID = "testPrimaryLicenseId";
+    private static final String TEST_PRIMARY_LICENSE_NAME = "Test Primary License Name";
     private static final String TEST_COMPONENT_DESCRIPTION = "test component description";
     private static final String TEST_HOMEPAGE = "testHomepage";
     private static final String TEST_COMPONENT_VERSION = "testComponentVersion";
@@ -41,11 +42,11 @@ public class ProtexProjectPojoTest {
 		TEST_LICENSE_NAME, "test comment", "", "",
 		ApprovalState.APPROVED, "test license text");
 	licenses.add(license);
-	ProtexComponentPojo comp = new ProtexComponentPojo(
-		TEST_COMPONENT_NAME, TEST_COMPONENT_VERSION,
-		ApprovalStatus.APPROVED, TEST_HOMEPAGE, true, nameVersionIds,
-		licenses, ProtexComponentType.STANDARD,
-		TEST_COMPONENT_DESCRIPTION, TEST_PRIMARY_LICENSE_ID);
+	ProtexComponentPojo comp = new ProtexComponentPojo(TEST_COMPONENT_NAME,
+		TEST_COMPONENT_VERSION, ApprovalStatus.APPROVED, TEST_HOMEPAGE,
+		true, nameVersionIds, licenses, ProtexComponentType.STANDARD,
+		TEST_COMPONENT_DESCRIPTION, TEST_PRIMARY_LICENSE_ID,
+		TEST_PRIMARY_LICENSE_NAME);
 
 	assertEquals(TEST_COMPONENT_NAME, comp.getName());
 	assertEquals(TEST_COMPONENT_VERSION, comp.getVersion());
@@ -58,5 +59,6 @@ public class ProtexProjectPojoTest {
 	assertEquals(ProtexComponentType.STANDARD, comp.getType());
 	assertEquals(TEST_COMPONENT_DESCRIPTION, comp.getDescription());
 	assertEquals(TEST_PRIMARY_LICENSE_ID, comp.getPrimaryLicenseId());
+	assertEquals(TEST_PRIMARY_LICENSE_NAME, comp.getPrimaryLicenseName());
     }
 }

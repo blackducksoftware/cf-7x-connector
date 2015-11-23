@@ -127,6 +127,12 @@ public class ProtexComponentManager implements IProtexComponentManager {
 
     private ProtexComponentPojo toPojo(ComponentNameVersionIds nameVersionIds,
 	    Component protexComp) throws CommonFrameworkException {
+
+	String primaryLicenseName = null;
+	if (protexComp.getPrimaryLicenseId() != null) {
+	    primaryLicenseName = licMgr.getLicenseById(
+		    protexComp.getPrimaryLicenseId()).getName();
+	}
 	List<LicenseInfo> protexCompLicenses = protexComp.getLicenses();
 	List<ProtexLicensePojo> licenses;
 	if (protexCompLicenses == null) {
@@ -147,7 +153,8 @@ public class ProtexComponentManager implements IProtexComponentManager {
 		protexComp.getHomePage(), protexComp.isDeprecated(),
 		nameVersionIds, licenses,
 		ProtexComponentType.valueOf(protexComp.getComponentType()),
-		protexComp.getDescription(), protexComp.getPrimaryLicenseId());
+		protexComp.getDescription(), protexComp.getPrimaryLicenseId(),
+		primaryLicenseName);
 	return comp;
     }
 
