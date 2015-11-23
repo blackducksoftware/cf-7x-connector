@@ -30,8 +30,9 @@ public interface ICodeCenterComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    CodeCenterComponentPojo getComponentByNameVersion(String componentName,
-	    String componentVersion) throws CommonFrameworkException;
+    <T extends CodeCenterComponentPojo> T getComponentByNameVersion(
+	    Class<T> pojoClass, String componentName, String componentVersion)
+	    throws CommonFrameworkException;
 
     /**
      * Get the list of components named in a list of requests.

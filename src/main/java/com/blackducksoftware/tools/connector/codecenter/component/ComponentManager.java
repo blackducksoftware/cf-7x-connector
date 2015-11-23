@@ -83,15 +83,16 @@ public class ComponentManager implements ICodeCenterComponentManager {
      * Components fetched are cached.
      */
     @Override
-    public CodeCenterComponentPojo getComponentByNameVersion(
-	    String componentName, String componentVersion)
+    public <T extends CodeCenterComponentPojo> T getComponentByNameVersion(
+	    Class<T> pojoClass, String componentName, String componentVersion)
 	    throws CommonFrameworkException {
 	NameVersion nameVersion = new NameVersion(componentName,
 		componentVersion);
 
 	// Check cache first
 	if (componentsByNameVersionCache.containsKey(nameVersion)) {
-	    return createPojo(componentsByNameVersionCache.get(nameVersion));
+	    return createPojo(pojoClass,
+		    componentsByNameVersionCache.get(nameVersion));
 	}
 
 	ComponentNameVersionToken componentNameVersionToken = new ComponentNameVersionToken();
@@ -110,7 +111,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	// Add to caches
 	addToCache(nameVersion, sdkComp);
 
-	return createPojo(sdkComp);
+	return createPojo(pojoClass, sdkComp);
     }
 
     /**
@@ -316,45 +317,6 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	addToCache(nameVersion, sdkComp);
 
 	return sdkComp;
-    }
-
-    private CodeCenterComponentPojo createPojo(Component sdkComp)
-	    throws CommonFrameworkException {
-	List<AttributeValue> sdkAttrValues = sdkComp.getAttributeValues();
-	List<AttributeValuePojo> attrValues = AttributeValues.valueOf(
-		attrDefMgr, sdkAttrValues);
-
-	String appId = getAppId(sdkComp);
-	String kbComponentId = getKbComponentId(sdkComp);
-	String kbComponentReleaseId = getKbComponentReleaseId(sdkComp);
-
-	List<LicensePojo> licenses = Licenses.valueOf(licenseManager,
-		sdkComp.getDeclaredLicenses());
-	log.info("Component: " + sdkComp.getName() + " / "
-		+ sdkComp.getVersion() + "; Approval: "
-		+ sdkComp.getApprovalStatus());
-
-	// sdkComp.isApplicationComponent() always returns false,
-	// so set flag in pojo based on whether or not
-	// applicationId has a value
-	boolean applicationComponent = sdkComp.getApplicationId() != null;
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo();
-	comp.setId(sdkComp.getId().getId());
-	comp.setName(sdkComp.getName());
-	comp.setVersion(sdkComp.getVersion());
-	comp.setApprovalStatus(ApprovalStatus.valueOf(sdkComp
-		.getApprovalStatus()));
-	comp.setHomepage(sdkComp.getHomepage());
-	comp.setIntendedAudiences(sdkComp.getIntendedAudiences());
-	comp.setKbComponentId(kbComponentId);
-	comp.setKbReleaseId(kbComponentReleaseId);
-	comp.setApplicationComponent(applicationComponent);
-	comp.setApplicationId(appId);
-	comp.setDeprecated(sdkComp.isDeprecated());
-	comp.setAttributeValues(attrValues);
-	comp.setLicenses(licenses);
-	comp.setSubComponents(null);
-	return comp;
     }
 
     private <T extends CodeCenterComponentPojo> T createPojo(
