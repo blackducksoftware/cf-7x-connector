@@ -53,10 +53,21 @@ public class ComponentPojoTest {
 		TEST_LICENSE_TEXT2);
 	licenses.add(license);
 
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(COMP_ID1, COMP_NAME1,
-		COMP_VERSION, ApprovalStatus.PENDING, COMP_HOMEPAGE,
-		TEST_AUDIENCES, TEST_KB_COMP_ID, TEST_KB_RELEASE_ID, false,
-		null, false, attrValues, licenses, null);
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo();
+	comp.setId(COMP_ID1);
+	comp.setName(COMP_NAME1);
+	comp.setVersion(COMP_VERSION);
+	comp.setApprovalStatus(ApprovalStatus.PENDING);
+	comp.setHomepage(COMP_HOMEPAGE);
+	comp.setIntendedAudiences(TEST_AUDIENCES);
+	comp.setKbComponentId(TEST_KB_COMP_ID);
+	comp.setKbReleaseId(TEST_KB_RELEASE_ID);
+	comp.setApplicationComponent(false);
+	comp.setApplicationId(null);
+	comp.setDeprecated(false);
+	comp.setAttributeValues(attrValues);
+	comp.setLicenses(licenses);
+	comp.setSubComponents(null);
 
 	assertEquals(COMP_ID1, comp.getId());
 	assertEquals(COMP_NAME1, comp.getName());
@@ -98,17 +109,40 @@ public class ComponentPojoTest {
 		TEST_LICENSE_TEXT2);
 	licenses.add(license);
 
-	CodeCenterComponentPojo subComp = new CodeCenterComponentPojo(COMP_ID1, COMP_NAME1,
-		COMP_VERSION, ApprovalStatus.PENDING, COMP_HOMEPAGE,
-		TEST_AUDIENCES, TEST_KB_COMP_ID, TEST_KB_RELEASE_ID, false,
-		null, false, attrValues, licenses, null);
+	CodeCenterComponentPojo subComp = new CodeCenterComponentPojo();
+	subComp.setId(COMP_ID1);
+	subComp.setName(COMP_NAME1);
+	subComp.setVersion(COMP_VERSION);
+	subComp.setApprovalStatus(ApprovalStatus.PENDING);
+	subComp.setHomepage(COMP_HOMEPAGE);
+	subComp.setIntendedAudiences(TEST_AUDIENCES);
+	subComp.setKbComponentId(TEST_KB_COMP_ID);
+	subComp.setKbReleaseId(TEST_KB_RELEASE_ID);
+	subComp.setApplicationComponent(false);
+	subComp.setApplicationId(null);
+	subComp.setDeprecated(false);
+	subComp.setAttributeValues(attrValues);
+	subComp.setLicenses(licenses);
+	subComp.setSubComponents(null);
+
 	List<CodeCenterComponentPojo> subComponents = new ArrayList<>();
 	subComponents.add(subComp);
 
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(COMP_ID2, COMP_NAME2,
-		COMP_VERSION, ApprovalStatus.PENDING, COMP_HOMEPAGE,
-		TEST_AUDIENCES, TEST_KB_COMP_ID, TEST_KB_RELEASE_ID, false,
-		null, false, attrValues, licenses, subComponents);
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo();
+	comp.setId(COMP_ID2);
+	comp.setName(COMP_NAME2);
+	comp.setVersion(COMP_VERSION);
+	comp.setApprovalStatus(ApprovalStatus.PENDING);
+	comp.setHomepage(COMP_HOMEPAGE);
+	comp.setIntendedAudiences(TEST_AUDIENCES);
+	comp.setKbComponentId(TEST_KB_COMP_ID);
+	comp.setKbReleaseId(TEST_KB_RELEASE_ID);
+	comp.setApplicationComponent(false);
+	comp.setApplicationId(null);
+	comp.setDeprecated(false);
+	comp.setAttributeValues(attrValues);
+	comp.setLicenses(licenses);
+	comp.setSubComponents(subComponents);
 
 	assertEquals(1, comp.getSubComponents().size());
 	assertEquals(COMP_NAME2, comp.getName());

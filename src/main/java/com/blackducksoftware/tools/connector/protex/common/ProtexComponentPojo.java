@@ -2,33 +2,17 @@ package com.blackducksoftware.tools.connector.protex.common;
 
 import java.util.List;
 
-import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
 
 public class ProtexComponentPojo extends ComponentPojo {
 
-    private final ComponentNameVersionIds nameVersionIds;
-    private final List<ProtexLicensePojo> licenses;
-    private final ProtexComponentType type;
-    private final String description;
-    private final String primaryLicenseId;
-    private final String primaryLicenseName;
-
-    public ProtexComponentPojo(String name, String version,
-	    ApprovalStatus approvalStatus, String homepage, boolean deprecated,
-	    ComponentNameVersionIds nameVersionIds,
-	    List<ProtexLicensePojo> licenses, ProtexComponentType type,
-	    String description, String primaryLicenseId,
-	    String primaryLicenseName) {
-	super(name, version, approvalStatus, homepage, deprecated);
-	this.nameVersionIds = nameVersionIds;
-	this.licenses = licenses;
-	this.type = type;
-	this.description = description;
-	this.primaryLicenseId = primaryLicenseId;
-	this.primaryLicenseName = primaryLicenseName;
-    }
+    private ComponentNameVersionIds nameVersionIds;
+    private List<ProtexLicensePojo> licenses;
+    private ProtexComponentType type;
+    private String description;
+    private String primaryLicenseId;
+    private String primaryLicenseName;
 
     public ComponentNameVersionIds getNameVersionIds() {
 	return nameVersionIds;
@@ -52,6 +36,30 @@ public class ProtexComponentPojo extends ComponentPojo {
 
     public String getPrimaryLicenseName() {
 	return primaryLicenseName;
+    }
+
+    public void setNameVersionIds(ComponentNameVersionIds nameVersionIds) {
+	this.nameVersionIds = nameVersionIds;
+    }
+
+    public void setLicenses(List<ProtexLicensePojo> licenses) {
+	this.licenses = licenses;
+    }
+
+    public void setType(ProtexComponentType type) {
+	this.type = type;
+    }
+
+    public void setDescription(String description) {
+	this.description = description;
+    }
+
+    public void setPrimaryLicenseId(String primaryLicenseId) {
+	this.primaryLicenseId = primaryLicenseId;
+    }
+
+    public void setPrimaryLicenseName(String primaryLicenseName) {
+	this.primaryLicenseName = primaryLicenseName;
     }
 
     @Override

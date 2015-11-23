@@ -5,107 +5,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 /**
  * A component.
  *
+ * The subComponents field is only populated when the object is part of a
+ * recursively-generated full-depth list, where a subcomponent at the top level
+ * may point to a list of subcomponents at the next level, etc. TODO:
+ * subComponents really does not belong in this class.
+ *
  * @author sbillings
  *
  */
 public class CodeCenterComponentPojo extends ComponentPojo {
-    private final String id;
-    private final String intendedAudiences;
-    private final List<LicensePojo> licenses;
-    private final String kbComponentId;
-    private final String kbReleaseId;
-    private final boolean applicationComponent;
-    private final String applicationId;
-    private final Map<String, AttributeValuePojo> attributeValuesByName;
-    private final List<CodeCenterComponentPojo> subComponents;
+    private String id;
+    private String intendedAudiences;
+    private List<LicensePojo> licenses;
+    private String kbComponentId;
+    private String kbReleaseId;
+    private boolean applicationComponent;
+    private String applicationId;
+    private Map<String, AttributeValuePojo> attributeValuesByName = new HashMap<>();
+    private List<CodeCenterComponentPojo> subComponents;
 
-    /**
-     * This constructor accepts a list of attribute values.
-     *
-     * @param id
-     * @param name
-     * @param version
-     * @param approvalStatus
-     * @param homepage
-     * @param intendedAudiences
-     * @param kbComponentId
-     * @param kbReleaseId
-     * @param applicationComponent
-     * @param applicationId
-     * @param deprecated
-     * @param attributeValues
-     * @param licenses
-     * @param subComponents
-     */
-    public CodeCenterComponentPojo(String id, String name, String version,
-	    ApprovalStatus approvalStatus, String homepage,
-	    String intendedAudiences, String kbComponentId, String kbReleaseId,
-	    boolean applicationComponent, String applicationId,
-	    boolean deprecated, List<AttributeValuePojo> attributeValues,
-	    List<LicensePojo> licenses,
-	    List<CodeCenterComponentPojo> subComponents) {
-	super(name, version, approvalStatus, homepage, deprecated);
-	this.id = id;
-	this.intendedAudiences = intendedAudiences;
-	this.kbComponentId = kbComponentId;
-	this.kbReleaseId = kbReleaseId;
-	this.applicationComponent = applicationComponent;
-	this.applicationId = applicationId;
-	attributeValuesByName = new HashMap<>(attributeValues.size());
+    public void setAttributeValues(List<AttributeValuePojo> attributeValues) {
 	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
 		attributeValues);
-	this.licenses = licenses;
-	if ((subComponents != null) && (subComponents.size() > 0)) {
-	    this.subComponents = new ArrayList<>(subComponents.size());
-	    this.subComponents.addAll(subComponents);
-	} else {
-	    this.subComponents = null;
-	}
     }
 
-    /**
-     * This constructor accepts a map of attribute values, which is useful for
-     * creating one CodeCenterComponentPojo from another.
-     *
-     * @param id
-     * @param name
-     * @param version
-     * @param approvalStatus
-     * @param homepage
-     * @param intendedAudiences
-     * @param kbComponentId
-     * @param kbReleaseId
-     * @param applicationComponent
-     * @param applicationId
-     * @param deprecated
-     * @param attributeValues
-     * @param licenses
-     * @param subComponents
-     */
-    public CodeCenterComponentPojo(String id, String name, String version,
-	    ApprovalStatus approvalStatus, String homepage,
-	    String intendedAudiences, String kbComponentId, String kbReleaseId,
-	    boolean applicationComponent, String applicationId,
-	    boolean deprecated,
-	    Map<String, AttributeValuePojo> attributeValues,
-	    List<LicensePojo> licenses,
-	    List<CodeCenterComponentPojo> subComponents) {
-	super(name, version, approvalStatus, homepage, deprecated);
-	this.id = id;
-	this.intendedAudiences = intendedAudiences;
-	this.kbComponentId = kbComponentId;
-	this.kbReleaseId = kbReleaseId;
-	this.applicationComponent = applicationComponent;
-	this.applicationId = applicationId;
+    public void setAttributeValues(
+	    Map<String, AttributeValuePojo> attributeValues) {
 	attributeValuesByName = new HashMap<>(attributeValues);
-	this.licenses = licenses;
+    }
+
+    public void setSubComponents(List<CodeCenterComponentPojo> subComponents) {
 	if ((subComponents != null) && (subComponents.size() > 0)) {
 	    this.subComponents = new ArrayList<>(subComponents.size());
 	    this.subComponents.addAll(subComponents);
@@ -163,6 +98,34 @@ public class CodeCenterComponentPojo extends ComponentPojo {
 	    return null;
 	}
 	return new ArrayList<CodeCenterComponentPojo>(subComponents);
+    }
+
+    public void setId(String id) {
+	this.id = id;
+    }
+
+    public void setIntendedAudiences(String intendedAudiences) {
+	this.intendedAudiences = intendedAudiences;
+    }
+
+    public void setLicenses(List<LicensePojo> licenses) {
+	this.licenses = licenses;
+    }
+
+    public void setKbComponentId(String kbComponentId) {
+	this.kbComponentId = kbComponentId;
+    }
+
+    public void setKbReleaseId(String kbReleaseId) {
+	this.kbReleaseId = kbReleaseId;
+    }
+
+    public void setApplicationComponent(boolean applicationComponent) {
+	this.applicationComponent = applicationComponent;
+    }
+
+    public void setApplicationId(String applicationId) {
+	this.applicationId = applicationId;
     }
 
     @Override

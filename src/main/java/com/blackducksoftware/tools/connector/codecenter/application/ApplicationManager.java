@@ -52,7 +52,8 @@ public class ApplicationManager implements IApplicationManager {
     private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
-	    IAttributeDefinitionManager attrDefMgr, ICodeCenterComponentManager compMgr) {
+	    IAttributeDefinitionManager attrDefMgr,
+	    ICodeCenterComponentManager compMgr) {
 	this.ccApiWrapper = ccApiWrapper;
 	this.attrDefMgr = attrDefMgr;
 	this.compMgr = compMgr;
@@ -180,8 +181,8 @@ public class ApplicationManager implements IApplicationManager {
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 
-	List<CodeCenterComponentPojo> allLevelComponents = collectComponents(appId,
-		limitToApprovalStatusValues, recursive);
+	List<CodeCenterComponentPojo> allLevelComponents = collectComponents(
+		appId, limitToApprovalStatusValues, recursive);
 	return allLevelComponents;
     }
 
@@ -206,14 +207,22 @@ public class ApplicationManager implements IApplicationManager {
 			comp.getApplicationId(), limitToApprovalStatusValues,
 			recursive);
 		// thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
-		CodeCenterComponentPojo appComp = new CodeCenterComponentPojo(comp.getId(),
-			comp.getName(), comp.getVersion(),
-			comp.getApprovalStatus(), comp.getHomepage(),
-			comp.getIntendedAudiences(), comp.getKbComponentId(),
-			comp.getKbReleaseId(), comp.isApplicationComponent(),
-			comp.getApplicationId(), comp.isDeprecated(),
-			comp.getAttributeValuesByName(), comp.getLicenses(),
-			appCompsMinusApps);
+		CodeCenterComponentPojo appComp = new CodeCenterComponentPojo();
+		appComp.setId(comp.getId());
+		appComp.setName(comp.getName());
+		appComp.setVersion(comp.getVersion());
+		appComp.setApprovalStatus(comp.getApprovalStatus());
+		appComp.setHomepage(comp.getHomepage());
+		appComp.setIntendedAudiences(comp.getIntendedAudiences());
+		appComp.setKbComponentId(comp.getKbComponentId());
+		appComp.setKbReleaseId(comp.getKbReleaseId());
+		appComp.setApplicationComponent(comp.isApplicationComponent());
+		appComp.setApplicationId(comp.getApplicationId());
+		appComp.setDeprecated(comp.isDeprecated());
+		appComp.setAttributeValues(comp.getAttributeValuesByName());
+		appComp.setLicenses(comp.getLicenses());
+		appComp.setSubComponents(appCompsMinusApps);
+
 		thisLevelAndBelowComponentsMinusApps.add(appComp);
 	    } else {
 		thisLevelAndBelowComponentsMinusApps.add(comp);

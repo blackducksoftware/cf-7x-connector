@@ -147,14 +147,19 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	    }
 	}
 
-	ProtexComponentPojo comp = new ProtexComponentPojo(
-		protexComp.getComponentName(), protexComp.getVersionName(),
-		ApprovalStatus.valueOf(protexComp.getApprovalState()),
-		protexComp.getHomePage(), protexComp.isDeprecated(),
-		nameVersionIds, licenses,
-		ProtexComponentType.valueOf(protexComp.getComponentType()),
-		protexComp.getDescription(), protexComp.getPrimaryLicenseId(),
-		primaryLicenseName);
+	ProtexComponentPojo comp = new ProtexComponentPojo();
+	comp.setName(protexComp.getComponentName());
+	comp.setVersion(protexComp.getVersionName());
+	comp.setApprovalStatus(ApprovalStatus.valueOf(protexComp
+		.getApprovalState()));
+	comp.setHomepage(protexComp.getHomePage());
+	comp.setDeprecated(protexComp.isDeprecated());
+	comp.setNameVersionIds(nameVersionIds);
+	comp.setLicenses(licenses);
+	comp.setType(ProtexComponentType.valueOf(protexComp.getComponentType()));
+	comp.setDescription(protexComp.getDescription());
+	comp.setPrimaryLicenseId(protexComp.getPrimaryLicenseId());
+	comp.setPrimaryLicenseName(primaryLicenseName);
 	return comp;
     }
 

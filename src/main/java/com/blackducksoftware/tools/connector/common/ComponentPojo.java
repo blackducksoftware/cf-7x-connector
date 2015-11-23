@@ -1,23 +1,12 @@
 package com.blackducksoftware.tools.connector.common;
 
-
 public abstract class ComponentPojo {
-    private final String name;
-    private final String version;
-    private final ApprovalStatus approvalStatus;
+    private String name;
+    private String version;
+    private ApprovalStatus approvalStatus;
 
-    private final String homepage;
-    private final boolean deprecated;
-
-    public ComponentPojo(String name, String version,
-	    ApprovalStatus approvalStatus, String homepage, boolean deprecated) {
-
-	this.name = name;
-	this.version = version;
-	this.approvalStatus = approvalStatus;
-	this.homepage = homepage;
-	this.deprecated = deprecated;
-    }
+    private String homepage;
+    private boolean deprecated;
 
     public String getName() {
 	return name;
@@ -37,6 +26,26 @@ public abstract class ComponentPojo {
 
     public boolean isDeprecated() {
 	return deprecated;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    public void setVersion(String version) {
+	this.version = version;
+    }
+
+    public void setApprovalStatus(ApprovalStatus approvalStatus) {
+	this.approvalStatus = approvalStatus;
+    }
+
+    public void setHomepage(String homepage) {
+	this.homepage = homepage;
+    }
+
+    public void setDeprecated(boolean deprecated) {
+	this.deprecated = deprecated;
     }
 
 }

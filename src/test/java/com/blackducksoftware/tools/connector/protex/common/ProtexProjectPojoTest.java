@@ -42,11 +42,20 @@ public class ProtexProjectPojoTest {
 		TEST_LICENSE_NAME, "test comment", "", "",
 		ApprovalState.APPROVED, "test license text");
 	licenses.add(license);
-	ProtexComponentPojo comp = new ProtexComponentPojo(TEST_COMPONENT_NAME,
-		TEST_COMPONENT_VERSION, ApprovalStatus.APPROVED, TEST_HOMEPAGE,
-		true, nameVersionIds, licenses, ProtexComponentType.STANDARD,
-		TEST_COMPONENT_DESCRIPTION, TEST_PRIMARY_LICENSE_ID,
-		TEST_PRIMARY_LICENSE_NAME);
+
+	ProtexComponentPojo comp = new ProtexComponentPojo();
+
+	comp.setName(TEST_COMPONENT_NAME);
+	comp.setVersion(TEST_COMPONENT_VERSION);
+	comp.setApprovalStatus(ApprovalStatus.APPROVED);
+	comp.setHomepage(TEST_HOMEPAGE);
+	comp.setDeprecated(true);
+	comp.setNameVersionIds(nameVersionIds);
+	comp.setLicenses(licenses);
+	comp.setType(ProtexComponentType.STANDARD);
+	comp.setDescription(TEST_COMPONENT_DESCRIPTION);
+	comp.setPrimaryLicenseId(TEST_PRIMARY_LICENSE_ID);
+	comp.setPrimaryLicenseName(TEST_PRIMARY_LICENSE_NAME);
 
 	assertEquals(TEST_COMPONENT_NAME, comp.getName());
 	assertEquals(TEST_COMPONENT_VERSION, comp.getVersion());

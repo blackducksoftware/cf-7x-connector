@@ -340,12 +340,22 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	// so set flag in pojo based on whether or not
 	// applicationId has a value
 	boolean applicationComponent = sdkComp.getApplicationId() != null;
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo(sdkComp
-		.getId().getId(), sdkComp.getName(), sdkComp.getVersion(),
-		ApprovalStatus.valueOf(sdkComp.getApprovalStatus()),
-		sdkComp.getHomepage(), sdkComp.getIntendedAudiences(),
-		kbComponentId, kbComponentReleaseId, applicationComponent,
-		appId, sdkComp.isDeprecated(), attrValues, licenses, null);
+	CodeCenterComponentPojo comp = new CodeCenterComponentPojo();
+	comp.setId(sdkComp.getId().getId());
+	comp.setName(sdkComp.getName());
+	comp.setVersion(sdkComp.getVersion());
+	comp.setApprovalStatus(ApprovalStatus.valueOf(sdkComp
+		.getApprovalStatus()));
+	comp.setHomepage(sdkComp.getHomepage());
+	comp.setIntendedAudiences(sdkComp.getIntendedAudiences());
+	comp.setKbComponentId(kbComponentId);
+	comp.setKbReleaseId(kbComponentReleaseId);
+	comp.setApplicationComponent(applicationComponent);
+	comp.setApplicationId(appId);
+	comp.setDeprecated(sdkComp.isDeprecated());
+	comp.setAttributeValues(attrValues);
+	comp.setLicenses(licenses);
+	comp.setSubComponents(null);
 	return comp;
     }
 
