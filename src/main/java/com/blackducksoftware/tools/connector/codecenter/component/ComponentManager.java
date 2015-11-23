@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,18 +67,14 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	this.licenseManager = licenseManager;
     }
 
-    /**
-     * Get a component by its ID.
-     *
-     * Components fetched are cached.
-     */
     @Override
-    public CodeCenterComponentPojo getComponentById(String componentId)
+    public <T extends CodeCenterComponentPojo> T getComponentById(
+	    Class<T> pojoClass, String componentId)
 	    throws CommonFrameworkException {
 
 	Component sdkComp = getSdkComponentById(componentId);
 
-	return createPojo(sdkComp);
+	return createPojo(pojoClass, sdkComp);
     }
 
     /**
@@ -126,8 +124,8 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	List<CodeCenterComponentPojo> components = new ArrayList<>(
 		requests.size());
 	for (RequestPojo request : requests) {
-	    CodeCenterComponentPojo comp = getComponentById(request
-		    .getComponentId());
+	    CodeCenterComponentPojo comp = getComponentById(
+		    CodeCenterComponentPojo.class, request.getComponentId());
 	    components.add(comp);
 	}
 
@@ -143,8 +141,8 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	List<CodeCenterComponentPojo> components = new ArrayList<>(
 		requests.size());
 	for (RequestPojo request : requests) {
-	    CodeCenterComponentPojo comp = getComponentById(request
-		    .getComponentId());
+	    CodeCenterComponentPojo comp = getComponentById(
+		    CodeCenterComponentPojo.class, request.getComponentId());
 	    if ((limitToApprovalStatusValues == null)
 		    || (limitToApprovalStatusValues.size() == 0)
 		    || (limitToApprovalStatusValues.contains(comp
@@ -359,6 +357,52 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	return comp;
     }
 
+    private <T extends CodeCenterComponentPojo> T createPojo(
+	    Class<T> pojoClass, Component sdkComp)
+	    throws CommonFrameworkException {
+	List<AttributeValue> sdkAttrValues = sdkComp.getAttributeValues();
+	List<AttributeValuePojo> attrValues = AttributeValues.valueOf(
+		attrDefMgr, sdkAttrValues);
+
+	String appId = getAppId(sdkComp);
+	String kbComponentId = getKbComponentId(sdkComp);
+	String kbComponentReleaseId = getKbComponentReleaseId(sdkComp);
+
+	List<LicensePojo> licenses = Licenses.valueOf(licenseManager,
+		sdkComp.getDeclaredLicenses());
+	log.info("Component: " + sdkComp.getName() + " / "
+		+ sdkComp.getVersion() + "; Approval: "
+		+ sdkComp.getApprovalStatus());
+
+	// sdkComp.isApplicationComponent() always returns false,
+	// so set flag in pojo based on whether or not
+	// applicationId has a value
+	boolean applicationComponent = sdkComp.getApplicationId() != null;
+	T comp;
+	try {
+	    comp = instantiatePojo(pojoClass);
+	} catch (Exception e) {
+	    throw new CommonFrameworkException(
+		    "Error instantiating component POJO: " + e.getMessage());
+	}
+	comp.setId(sdkComp.getId().getId());
+	comp.setName(sdkComp.getName());
+	comp.setVersion(sdkComp.getVersion());
+	comp.setApprovalStatus(ApprovalStatus.valueOf(sdkComp
+		.getApprovalStatus()));
+	comp.setHomepage(sdkComp.getHomepage());
+	comp.setIntendedAudiences(sdkComp.getIntendedAudiences());
+	comp.setKbComponentId(kbComponentId);
+	comp.setKbReleaseId(kbComponentReleaseId);
+	comp.setApplicationComponent(applicationComponent);
+	comp.setApplicationId(appId);
+	comp.setDeprecated(sdkComp.isDeprecated());
+	comp.setAttributeValues(attrValues);
+	comp.setLicenses(licenses);
+	comp.setSubComponents(null);
+	return comp;
+    }
+
     private String getKbComponentReleaseId(Component sdkComp) {
 	KbComponentReleaseIdToken kbCompIdToken = sdkComp.getKbReleaseId();
 	String kbComponentReleaseId;
@@ -460,5 +504,33 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		}
 	    }
 	}
+    }
+
+    private <T extends CodeCenterComponentPojo> T instantiatePojo(
+	    Class<T> pojoClass) throws Exception {
+	T componentPojo = null;
+	Constructor<?> constructor = null;
+	;
+	try {
+	    constructor = pojoClass.getConstructor();
+	} catch (SecurityException e) {
+	    throw new Exception(e.getMessage());
+	} catch (NoSuchMethodException e) {
+	    throw new Exception(e.getMessage());
+	}
+
+	try {
+	    componentPojo = (T) constructor.newInstance();
+	} catch (IllegalArgumentException e) {
+	    throw new Exception(e.getMessage());
+	} catch (InstantiationException e) {
+	    throw new Exception(e.getMessage());
+	} catch (IllegalAccessException e) {
+	    throw new Exception(e.getMessage());
+	} catch (InvocationTargetException e) {
+	    throw new Exception(e.getMessage());
+	}
+
+	return componentPojo;
     }
 }

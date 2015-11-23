@@ -11,14 +11,16 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 public interface ICodeCenterComponentManager {
 
     /**
-     * Get a component by its component ID (not kbComponentId).
+     * Get a component by its component ID (not kbComponentId), creating a POJO
+     * of the given class.
      *
+     * @param pojoClass
      * @param componentId
      * @return
      * @throws CommonFrameworkException
      */
-    CodeCenterComponentPojo getComponentById(String componentId)
-	    throws CommonFrameworkException;
+    <T extends CodeCenterComponentPojo> T getComponentById(Class<T> pojoClass,
+	    String componentId) throws CommonFrameworkException;
 
     /**
      * Get a component by its name/version.
@@ -38,8 +40,8 @@ public interface ICodeCenterComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<CodeCenterComponentPojo> getComponentsForRequests(List<RequestPojo> requests)
-	    throws CommonFrameworkException;
+    List<CodeCenterComponentPojo> getComponentsForRequests(
+	    List<RequestPojo> requests) throws CommonFrameworkException;
 
     /**
      * Get the list of components named in a list of requests, limited to those
@@ -53,7 +55,8 @@ public interface ICodeCenterComponentManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<CodeCenterComponentPojo> getComponentsForRequests(List<RequestPojo> requests,
+    List<CodeCenterComponentPojo> getComponentsForRequests(
+	    List<RequestPojo> requests,
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException;
 
