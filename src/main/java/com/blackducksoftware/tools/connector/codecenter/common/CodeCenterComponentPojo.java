@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 

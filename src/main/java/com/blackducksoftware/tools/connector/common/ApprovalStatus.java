@@ -1,4 +1,4 @@
-package com.blackducksoftware.tools.connector.codecenter.common;
+package com.blackducksoftware.tools.connector.common;
 
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
 import com.blackducksoftware.sdk.protex.common.ApprovalState;
@@ -23,7 +23,7 @@ public enum ApprovalStatus {
 	this.ccValue = ccValue;
     }
 
-    boolean isEquivalent(ApprovalStatusEnum otherCcValue) {
+    public boolean isEquivalent(ApprovalStatusEnum otherCcValue) {
 	return ccValue.equals(otherCcValue);
     }
 

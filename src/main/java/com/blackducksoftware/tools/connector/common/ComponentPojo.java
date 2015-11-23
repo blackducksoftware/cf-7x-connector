@@ -1,6 +1,5 @@
 package com.blackducksoftware.tools.connector.common;
 
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 
 public abstract class ComponentPojo {
     private final String name;

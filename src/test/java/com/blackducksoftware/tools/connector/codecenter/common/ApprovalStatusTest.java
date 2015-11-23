@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.blackducksoftware.sdk.codecenter.common.data.ApprovalStatusEnum;
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 public class ApprovalStatusTest {
 

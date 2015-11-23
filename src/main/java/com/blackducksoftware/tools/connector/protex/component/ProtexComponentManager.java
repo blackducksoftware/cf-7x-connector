@@ -13,7 +13,7 @@ import com.blackducksoftware.sdk.protex.common.ComponentKey;
 import com.blackducksoftware.sdk.protex.component.Component;
 import com.blackducksoftware.sdk.protex.license.LicenseInfo;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
 import com.blackducksoftware.tools.connector.protex.common.ComponentNameVersionIds;

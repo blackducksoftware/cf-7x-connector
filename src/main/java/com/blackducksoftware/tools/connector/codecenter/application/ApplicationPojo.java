@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 /**
  * A non-SDK-specific class representing an application.

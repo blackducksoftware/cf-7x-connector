@@ -2,7 +2,7 @@ package com.blackducksoftware.tools.connector.protex.common;
 
 import java.util.List;
 
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.common.ComponentPojo;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
 

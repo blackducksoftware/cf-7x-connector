@@ -9,8 +9,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 public class ApplicationPojoTest {
 

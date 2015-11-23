@@ -3,9 +3,9 @@ package com.blackducksoftware.tools.connector.codecenter.application;
 import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
-import com.blackducksoftware.tools.connector.codecenter.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
+import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 /**
  * Provides a higher level of abstraction for accessing Code Center
