@@ -30,6 +30,10 @@ public class CodeCenterComponentPojo extends ComponentPojo {
     private Map<String, AttributeValuePojo> attributeValuesByName = new HashMap<>();
     private List<CodeCenterComponentPojo> subComponents;
 
+    public CodeCenterComponentPojo() {
+
+    }
+
     public void setAttributeValues(List<AttributeValuePojo> attributeValues) {
 	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
 		attributeValues);
@@ -89,7 +93,7 @@ public class CodeCenterComponentPojo extends ComponentPojo {
 	return value;
     }
 
-    public Map<String, AttributeValuePojo> getAttributeValuesByName() {
+    public Map<String, AttributeValuePojo> getAttributeValues() {
 	return new HashMap<String, AttributeValuePojo>(attributeValuesByName);
     }
 

@@ -219,7 +219,7 @@ public class ApplicationManager implements IApplicationManager {
 		appComp.setApplicationComponent(comp.isApplicationComponent());
 		appComp.setApplicationId(comp.getApplicationId());
 		appComp.setDeprecated(comp.isDeprecated());
-		appComp.setAttributeValues(comp.getAttributeValuesByName());
+		appComp.setAttributeValues(comp.getAttributeValues());
 		appComp.setLicenses(comp.getLicenses());
 		appComp.setSubComponents(appCompsMinusApps);
 
