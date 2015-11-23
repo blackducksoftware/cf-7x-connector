@@ -465,29 +465,30 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	}
     }
 
-    private <T extends CodeCenterComponentPojo> T instantiatePojo(
-	    Class<T> pojoClass) throws Exception {
+    @Override
+    public <T extends CodeCenterComponentPojo> T instantiatePojo(
+	    Class<T> pojoClass) throws CommonFrameworkException {
 	T componentPojo = null;
 	Constructor<?> constructor = null;
 	;
 	try {
 	    constructor = pojoClass.getConstructor();
 	} catch (SecurityException e) {
-	    throw new Exception(e.getMessage());
+	    throw new CommonFrameworkException(e.getMessage());
 	} catch (NoSuchMethodException e) {
-	    throw new Exception(e.getMessage());
+	    throw new CommonFrameworkException(e.getMessage());
 	}
 
 	try {
 	    componentPojo = (T) constructor.newInstance();
 	} catch (IllegalArgumentException e) {
-	    throw new Exception(e.getMessage());
+	    throw new CommonFrameworkException(e.getMessage());
 	} catch (InstantiationException e) {
-	    throw new Exception(e.getMessage());
+	    throw new CommonFrameworkException(e.getMessage());
 	} catch (IllegalAccessException e) {
-	    throw new Exception(e.getMessage());
+	    throw new CommonFrameworkException(e.getMessage());
 	} catch (InvocationTargetException e) {
-	    throw new Exception(e.getMessage());
+	    throw new CommonFrameworkException(e.getMessage());
 	}
 
 	return componentPojo;

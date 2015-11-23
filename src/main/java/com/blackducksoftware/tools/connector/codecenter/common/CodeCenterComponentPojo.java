@@ -44,7 +44,8 @@ public class CodeCenterComponentPojo extends ComponentPojo {
 	attributeValuesByName = new HashMap<>(attributeValues);
     }
 
-    public void setSubComponents(List<CodeCenterComponentPojo> subComponents) {
+    public <T extends CodeCenterComponentPojo> void setSubComponents(
+	    List<T> subComponents) {
 	if ((subComponents != null) && (subComponents.size() > 0)) {
 	    this.subComponents = new ArrayList<>(subComponents.size());
 	    this.subComponents.addAll(subComponents);

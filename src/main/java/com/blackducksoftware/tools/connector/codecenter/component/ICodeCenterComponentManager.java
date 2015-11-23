@@ -62,6 +62,9 @@ public interface ICodeCenterComponentManager {
 	    List<ApprovalStatus> limitToApprovalStatusValues)
 	    throws CommonFrameworkException;
 
+    <T extends CodeCenterComponentPojo> T instantiatePojo(Class<T> pojoClass)
+	    throws CommonFrameworkException;
+
     /**
      * Get attachment details for a given set of attachments from the given
      * Component.

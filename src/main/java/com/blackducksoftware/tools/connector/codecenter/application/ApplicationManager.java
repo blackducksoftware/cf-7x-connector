@@ -177,38 +177,39 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     @Override
-    public List<CodeCenterComponentPojo> getComponentsByAppId(String appId,
+    public <T extends CodeCenterComponentPojo> List<T> getComponentsByAppId(
+	    Class<T> pojoClass, String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 
-	List<CodeCenterComponentPojo> allLevelComponents = collectComponents(
-		appId, limitToApprovalStatusValues, recursive);
+	List<T> allLevelComponents = collectComponents(pojoClass, appId,
+		limitToApprovalStatusValues, recursive);
 	return allLevelComponents;
     }
 
     // Private methods
 
-    private List<CodeCenterComponentPojo> collectComponents(String appId,
+    private <T extends CodeCenterComponentPojo> List<T> collectComponents(
+	    Class<T> pojoClass, String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException {
 	List<RequestPojo> requests = getRequestsByAppId(appId);
-	List<CodeCenterComponentPojo> thisLevelComponents;
+	List<T> thisLevelComponents;
 
-	thisLevelComponents = compMgr.getComponentsForRequests(
-		CodeCenterComponentPojo.class, requests,
-		limitToApprovalStatusValues);
+	thisLevelComponents = compMgr.getComponentsForRequests(pojoClass,
+		requests, limitToApprovalStatusValues);
 
-	List<CodeCenterComponentPojo> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
-	for (CodeCenterComponentPojo comp : thisLevelComponents) {
+	List<T> thisLevelAndBelowComponentsMinusApps = new ArrayList<>();
+	for (T comp : thisLevelComponents) {
 	    log.debug("Component: " + comp.getName() + " / "
 		    + comp.getVersion());
 	    if (recursive && (comp.getApplicationId() != null)
 		    && (comp.getApplicationId().length() > 0)) {
-		List<CodeCenterComponentPojo> appCompsMinusApps = collectComponents(
+		List<T> appCompsMinusApps = collectComponents(pojoClass,
 			comp.getApplicationId(), limitToApprovalStatusValues,
 			recursive);
 		// thisLevelAndBelowComponentsMinusApps.addAll(appCompsMinusApps);
-		CodeCenterComponentPojo appComp = new CodeCenterComponentPojo();
+		T appComp = compMgr.instantiatePojo(pojoClass);
 		appComp.setId(comp.getId());
 		appComp.setName(comp.getName());
 		appComp.setVersion(comp.getVersion());

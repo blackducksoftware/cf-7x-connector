@@ -67,7 +67,8 @@ public interface IApplicationManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<CodeCenterComponentPojo> getComponentsByAppId(String appId,
+    <T extends CodeCenterComponentPojo> List<T> getComponentsByAppId(
+	    Class<T> pojoClass, String appId,
 	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
 	    throws CommonFrameworkException;
 }
