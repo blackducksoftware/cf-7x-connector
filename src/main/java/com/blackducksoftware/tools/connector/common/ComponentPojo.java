@@ -3,6 +3,7 @@ package com.blackducksoftware.tools.connector.common;
 public abstract class ComponentPojo {
     private String name;
     private String version;
+    private String description;
     private ApprovalStatus approvalStatus;
 
     private String homepage;
@@ -46,6 +47,14 @@ public abstract class ComponentPojo {
 
     public void setDeprecated(boolean deprecated) {
 	this.deprecated = deprecated;
+    }
+
+    public String getDescription() {
+	return description;
+    }
+
+    public void setDescription(String description) {
+	this.description = description;
     }
 
 }

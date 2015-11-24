@@ -28,6 +28,7 @@ public class ComponentPojoTest {
     private static final String COMP_ID1 = "testCompId1";
     private static final String COMP_NAME2 = "Test Component2";
     private static final String COMP_ID2 = "testCompId2";
+    private static final String TEST_COMPONENT_DESCRIPTION = "Test Description";
     private static final String ATTR_VALUE = "testAttrValue";
     private static final String ATTR_NAME = "testAttrName";
     private static final String ATTR_ID = "testAttrId";
@@ -57,6 +58,7 @@ public class ComponentPojoTest {
 	comp.setId(COMP_ID1);
 	comp.setName(COMP_NAME1);
 	comp.setVersion(COMP_VERSION);
+	comp.setDescription(TEST_COMPONENT_DESCRIPTION);
 	comp.setApprovalStatus(ApprovalStatus.PENDING);
 	comp.setHomepage(COMP_HOMEPAGE);
 	comp.setIntendedAudiences(TEST_AUDIENCES);
@@ -72,7 +74,7 @@ public class ComponentPojoTest {
 	assertEquals(COMP_ID1, comp.getId());
 	assertEquals(COMP_NAME1, comp.getName());
 	assertEquals(COMP_VERSION, comp.getVersion());
-
+	assertEquals(TEST_COMPONENT_DESCRIPTION, comp.getDescription());
 	assertEquals(COMP_HOMEPAGE, comp.getHomepage());
 	assertEquals(TEST_AUDIENCES, comp.getIntendedAudiences());
 	assertEquals(TEST_KB_COMP_ID, comp.getKbComponentId());

@@ -10,7 +10,6 @@ public class ProtexComponentPojo extends ComponentPojo {
     private ComponentNameVersionIds nameVersionIds;
     private List<ProtexLicensePojo> licenses;
     private ProtexComponentType type;
-    private String description;
     private String primaryLicenseId;
     private String primaryLicenseName;
 
@@ -24,10 +23,6 @@ public class ProtexComponentPojo extends ComponentPojo {
 
     public ProtexComponentType getType() {
 	return type;
-    }
-
-    public String getDescription() {
-	return description;
     }
 
     public String getPrimaryLicenseId() {
@@ -48,10 +43,6 @@ public class ProtexComponentPojo extends ComponentPojo {
 
     public void setType(ProtexComponentType type) {
 	this.type = type;
-    }
-
-    public void setDescription(String description) {
-	this.description = description;
     }
 
     public void setPrimaryLicenseId(String primaryLicenseId) {

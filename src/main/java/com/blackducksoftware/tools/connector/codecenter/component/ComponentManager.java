@@ -385,6 +385,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	}
 	comp.setId(sdkComp.getId().getId());
 	comp.setName(sdkComp.getName());
+	comp.setDescription(sdkComp.getDescription());
 	comp.setVersion(sdkComp.getVersion());
 	comp.setApprovalStatus(ApprovalStatus.valueOf(sdkComp
 		.getApprovalStatus()));
