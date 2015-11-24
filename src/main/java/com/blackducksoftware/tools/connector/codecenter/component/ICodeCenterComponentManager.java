@@ -1,5 +1,6 @@
 package com.blackducksoftware.tools.connector.codecenter.component;
 
+import java.io.File;
 import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -96,9 +97,10 @@ public interface ICodeCenterComponentManager {
      *
      * @param attachmentId
      * @param targetDirPath
+     * @return 
      * @throws CommonFrameworkException
      */
-    void downloadAttachment(String componentId, String filename,
+    File downloadAttachment(String componentId, String filename,
 	    String targetDirPath) throws CommonFrameworkException;
 
     /**

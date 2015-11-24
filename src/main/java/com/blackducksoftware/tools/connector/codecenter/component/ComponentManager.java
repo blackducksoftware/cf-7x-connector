@@ -228,10 +228,11 @@ public class ComponentManager implements ICodeCenterComponentManager {
      *
      * @param attachmentId
      * @param targetDirPath
+     * @return 
      * @throws CommonFrameworkException
      */
     @Override
-    public void downloadAttachment(String componentId, String filename,
+    public File downloadAttachment(String componentId, String filename,
 	    String targetDirPath) throws CommonFrameworkException {
 	ComponentAttachmentToken attachmentToken = new ComponentAttachmentToken();
 	ComponentIdToken compToken = new ComponentIdToken();
@@ -249,7 +250,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 			    + e.getMessage());
 	}
 	DataHandler dataHandler = content.getAttachmentContent();
-	downloadAttachment(componentId, filename, targetDirPath, dataHandler);
+	return downloadAttachment(componentId, filename, targetDirPath, dataHandler);
     }
 
     /**
@@ -452,12 +453,12 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	componentsByNameVersionCache.put(nameVersion, sdkComp);
     }
 
-    private void downloadAttachment(String componentId, String filename,
+    private File downloadAttachment(String componentId, String filename,
 	    String targetDirPath, DataHandler dataHandler)
 	    throws CommonFrameworkException {
 	InputStream attachmentData = null;
 	OutputStream fileOutputStream = null;
-
+	File outputFile = null;
 	try {
 
 	    try {
@@ -469,7 +470,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 				+ e.getMessage());
 	    }
 
-	    File outputFile = new File(targetDirPath + "/" + filename);
+	    outputFile = new File(targetDirPath + File.separator + filename);
 
 	    try {
 		fileOutputStream = new FileOutputStream(outputFile);
@@ -503,6 +504,8 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		}
 	    }
 	}
+	
+	return outputFile;
     }
 
     @Override
