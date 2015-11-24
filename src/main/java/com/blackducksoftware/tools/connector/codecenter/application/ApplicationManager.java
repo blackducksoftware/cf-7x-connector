@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.blackducksoftware.sdk.codecenter.application.data.Application;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationNameVersionToken;
+import com.blackducksoftware.sdk.codecenter.application.data.ApplicationPageFilter;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
@@ -49,7 +50,6 @@ public class ApplicationManager implements IApplicationManager {
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
     private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
-    private boolean allApplicationsFetched = false;
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
 	    IAttributeDefinitionManager attrDefMgr,
@@ -60,33 +60,41 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     /**
-     * Get all applications that the user can access.
+     * Get a subset (or all) of the applications that the user can access.
      *
-     * If this method has been called before, it is serviced using cache only.
-     * Otherwise, all applications are fetched from Code Center.
+     * Cache is not used, and not populated.
      *
+     * @param firstRow
+     *            get rows starting at this index (first = 0)
+     * @param lastRow
+     *            get rows ending at this index (use Integer.MAX_VALUE for all)
+     * @return
+     * @throws CommonFrameworkException
      */
-    // @Override
-    public List<ApplicationPojo> getAllApplications()
+    @Override
+    public List<ApplicationPojo> getApplications(int firstRow, int lastRow)
 	    throws CommonFrameworkException {
-	if (allApplicationsFetched) {
-	    // TODO serve from cache
-	    // List<ApplicationPojo> = new
-	    // ArrayList<>(appsByIdCache.keySet().size());
-	    for (String appId : appsByIdCache.keySet()) {
 
-	    }
+	ApplicationPageFilter pageFilter = new ApplicationPageFilter();
+	pageFilter.setFirstRowIndex(firstRow);
+	pageFilter.setLastRowIndex(lastRow);
+	List<Application> ccApps;
 
-	    // TODO: Produce a sorted list
+	try {
+	    ccApps = ccApiWrapper.getApplicationApi().searchApplications("",
+		    pageFilter);
+	} catch (SdkFault e) {
+	    throw new CommonFrameworkException("Error getting applications "
+		    + firstRow + " to " + lastRow + ": " + e.getMessage());
 	}
 
-	// TODO: fetch all from CC
+	List<ApplicationPojo> apps = new ArrayList<>(ccApps.size());
+	for (Application ccApp : ccApps) {
+	    ApplicationPojo app = toPojo(ccApp);
+	    apps.add(app);
+	}
 
-	// TODO: cache all
-
-	allApplicationsFetched = true;
-	throw new UnsupportedOperationException(
-		"This method has not been implemented yet.");
+	return apps;
 
     }
 

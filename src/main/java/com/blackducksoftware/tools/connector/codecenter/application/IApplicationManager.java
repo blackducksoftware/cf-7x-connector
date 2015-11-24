@@ -19,13 +19,17 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 public interface IApplicationManager {
 
     /**
-     * Get all applications that the user can access.
+     * Get a subset (or all) of the applications that the user can access.
      *
+     * @param firstRow
+     *            get rows starting at this index (first = 0)
+     * @param lastRow
+     *            get rows ending at this index (use Integer.MAX_VALUE for all)
      * @return
      * @throws CommonFrameworkException
      */
-    // TODO: List<ApplicationPojo> getAllApplications() throws
-    // CommonFrameworkException;
+    List<ApplicationPojo> getApplications(int firstRow, int lastRow)
+	    throws CommonFrameworkException;
 
     /**
      * Get an application by name/version.
