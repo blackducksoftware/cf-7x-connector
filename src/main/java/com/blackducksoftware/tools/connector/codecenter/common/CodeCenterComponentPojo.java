@@ -19,7 +19,7 @@ import com.blackducksoftware.tools.connector.common.LicensePojo;
  * @author sbillings
  *
  */
-public class CodeCenterComponentPojo extends ComponentPojo {
+public class CodeCenterComponentPojo<T> extends ComponentPojo {
     private String id;
     private String intendedAudiences;
     private List<LicensePojo> licenses;
@@ -28,7 +28,7 @@ public class CodeCenterComponentPojo extends ComponentPojo {
     private boolean applicationComponent;
     private String applicationId;
     private Map<String, AttributeValuePojo> attributeValuesByName = new HashMap<>();
-    private List<CodeCenterComponentPojo> subComponents;
+    private List<T> subComponents;
 
     public CodeCenterComponentPojo() {
 
@@ -44,8 +44,7 @@ public class CodeCenterComponentPojo extends ComponentPojo {
 	attributeValuesByName = new HashMap<>(attributeValues);
     }
 
-    public <T extends CodeCenterComponentPojo> void setSubComponents(
-	    List<T> subComponents) {
+    public void setSubComponents(List<T> subComponents) {
 	if ((subComponents != null) && (subComponents.size() > 0)) {
 	    this.subComponents = new ArrayList<>(subComponents.size());
 	    this.subComponents.addAll(subComponents);
@@ -98,11 +97,11 @@ public class CodeCenterComponentPojo extends ComponentPojo {
 	return new HashMap<String, AttributeValuePojo>(attributeValuesByName);
     }
 
-    public List<CodeCenterComponentPojo> getSubComponents() {
+    public List<T> getSubComponents() {
 	if (subComponents == null) {
 	    return null;
 	}
-	return new ArrayList<CodeCenterComponentPojo>(subComponents);
+	return new ArrayList<T>(subComponents);
     }
 
     public void setId(String id) {

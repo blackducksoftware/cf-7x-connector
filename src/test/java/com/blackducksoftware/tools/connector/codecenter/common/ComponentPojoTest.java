@@ -53,7 +53,7 @@ public class ComponentPojoTest {
 		TEST_LICENSE_TEXT2);
 	licenses.add(license);
 
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo();
+	CodeCenterComponentPojo<CodeCenterComponentPojo> comp = new CodeCenterComponentPojo<CodeCenterComponentPojo>();
 	comp.setId(COMP_ID1);
 	comp.setName(COMP_NAME1);
 	comp.setVersion(COMP_VERSION);
@@ -109,7 +109,7 @@ public class ComponentPojoTest {
 		TEST_LICENSE_TEXT2);
 	licenses.add(license);
 
-	CodeCenterComponentPojo subComp = new CodeCenterComponentPojo();
+	CodeCenterComponentPojo<CodeCenterComponentPojo> subComp = new CodeCenterComponentPojo<CodeCenterComponentPojo>();
 	subComp.setId(COMP_ID1);
 	subComp.setName(COMP_NAME1);
 	subComp.setVersion(COMP_VERSION);
@@ -128,7 +128,7 @@ public class ComponentPojoTest {
 	List<CodeCenterComponentPojo> subComponents = new ArrayList<>();
 	subComponents.add(subComp);
 
-	CodeCenterComponentPojo comp = new CodeCenterComponentPojo();
+	CodeCenterComponentPojo<CodeCenterComponentPojo> comp = new CodeCenterComponentPojo<>();
 	comp.setId(COMP_ID2);
 	comp.setName(COMP_NAME2);
 	comp.setVersion(COMP_VERSION);
@@ -146,7 +146,9 @@ public class ComponentPojoTest {
 
 	assertEquals(1, comp.getSubComponents().size());
 	assertEquals(COMP_NAME2, comp.getName());
-	assertEquals(COMP_NAME1, comp.getSubComponents().get(0).getName());
+	CodeCenterComponentPojo<CodeCenterComponentPojo> firstSubComp = comp
+		.getSubComponents().get(0);
+	assertEquals(COMP_NAME1, firstSubComp.getName());
     }
 
 }
