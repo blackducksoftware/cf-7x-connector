@@ -17,7 +17,6 @@ import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
-import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
@@ -50,6 +49,7 @@ public class ApplicationManager implements IApplicationManager {
     private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
     private final Map<String, Application> appsByIdCache = new HashMap<>();
     private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
+    private boolean allApplicationsFetched = false;
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
 	    IAttributeDefinitionManager attrDefMgr,
@@ -57,6 +57,37 @@ public class ApplicationManager implements IApplicationManager {
 	this.ccApiWrapper = ccApiWrapper;
 	this.attrDefMgr = attrDefMgr;
 	this.compMgr = compMgr;
+    }
+
+    /**
+     * Get all applications that the user can access.
+     *
+     * If this method has been called before, it is serviced using cache only.
+     * Otherwise, all applications are fetched from Code Center.
+     *
+     */
+    // @Override
+    public List<ApplicationPojo> getAllApplications()
+	    throws CommonFrameworkException {
+	if (allApplicationsFetched) {
+	    // TODO serve from cache
+	    // List<ApplicationPojo> = new
+	    // ArrayList<>(appsByIdCache.keySet().size());
+	    for (String appId : appsByIdCache.keySet()) {
+
+	    }
+
+	    // TODO: Produce a sorted list
+	}
+
+	// TODO: fetch all from CC
+
+	// TODO: cache all
+
+	allApplicationsFetched = true;
+	throw new UnsupportedOperationException(
+		"This method has not been implemented yet.");
+
     }
 
     /**
@@ -70,10 +101,8 @@ public class ApplicationManager implements IApplicationManager {
 	NameVersion nameVersion = new NameVersion(name, version);
 	if (appsByNameVersionCache.containsKey(nameVersion)) {
 	    Application app = appsByNameVersionCache.get(nameVersion);
-	    return new ApplicationPojo(app.getId().getId(), name, version,
-		    AttributeValues.valueOf(attrDefMgr,
-			    app.getAttributeValues()),
-		    ApprovalStatus.valueOf(app.getApprovalStatus()));
+	    ApplicationPojo appPojo = toPojo(app);
+	    return appPojo;
 	}
 	ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
 	appToken.setName(name);
@@ -87,9 +116,16 @@ public class ApplicationManager implements IApplicationManager {
 	}
 	addAppToCache(nameVersion, app);
 
-	return new ApplicationPojo(app.getId().getId(), name, version,
-		AttributeValues.valueOf(attrDefMgr, app.getAttributeValues()),
+	return toPojo(app);
+    }
+
+    private ApplicationPojo toPojo(Application app)
+	    throws CommonFrameworkException {
+	ApplicationPojo appPojo = new ApplicationPojo(app.getId().getId(),
+		app.getName(), app.getVersion(), AttributeValues.valueOf(
+			attrDefMgr, app.getAttributeValues()),
 		ApprovalStatus.valueOf(app.getApprovalStatus()));
+	return appPojo;
     }
 
     private void addAppToCache(NameVersion nameVersion, Application app) {
@@ -108,10 +144,8 @@ public class ApplicationManager implements IApplicationManager {
 
 	if (appsByIdCache.containsKey(id)) {
 	    Application app = appsByIdCache.get(id);
-	    return new ApplicationPojo(id, app.getName(), app.getVersion(),
-		    AttributeValues.valueOf(attrDefMgr,
-			    app.getAttributeValues()),
-		    ApprovalStatus.valueOf(app.getApprovalStatus()));
+	    ApplicationPojo appPojo = toPojo(app);
+	    return appPojo;
 	}
 	ApplicationIdToken appToken = new ApplicationIdToken();
 	appToken.setId(id);
@@ -127,12 +161,7 @@ public class ApplicationManager implements IApplicationManager {
 		app.getVersion());
 	addAppToCache(nameVersion, app);
 
-	List<AttributeValuePojo> attrValuePojos = AttributeValues.valueOf(
-		attrDefMgr, app.getAttributeValues());
-
-	return new ApplicationPojo(app.getId().getId(), app.getName(),
-		app.getVersion(), attrValuePojos, ApprovalStatus.valueOf(app
-			.getApprovalStatus()));
+	return toPojo(app);
     }
 
     /**

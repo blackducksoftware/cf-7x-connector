@@ -17,6 +17,16 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
  *
  */
 public interface IApplicationManager {
+
+    /**
+     * Get all applications that the user can access.
+     *
+     * @return
+     * @throws CommonFrameworkException
+     */
+    // TODO: List<ApplicationPojo> getAllApplications() throws
+    // CommonFrameworkException;
+
     /**
      * Get an application by name/version.
      *
