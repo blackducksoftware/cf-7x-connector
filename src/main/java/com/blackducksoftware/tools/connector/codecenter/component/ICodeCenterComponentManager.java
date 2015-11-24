@@ -35,6 +35,20 @@ public interface ICodeCenterComponentManager {
 	    throws CommonFrameworkException;
 
     /**
+     * Get a subset of the component catalog.
+     *
+     * @param firstRowIndex
+     *            first row in catalog = 0
+     * @param lastRowIndex
+     *            to get all rows, pass Integer.MAX_VALUE
+     * @return
+     * @throws CommonFrameworkException
+     */
+    <T extends CodeCenterComponentPojo> List<T> getComponents(
+	    Class<T> pojoClass, int firstRowIndex, int lastRowIndex)
+	    throws CommonFrameworkException;
+
+    /**
      * Get the list of components named in a list of requests.
      *
      * @param requests

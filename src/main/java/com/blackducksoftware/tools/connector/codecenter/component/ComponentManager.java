@@ -29,6 +29,7 @@ import com.blackducksoftware.sdk.codecenter.cola.data.ComponentAttachmentCreate;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentAttachmentToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentNameVersionToken;
+import com.blackducksoftware.sdk.codecenter.cola.data.ComponentPageFilter;
 import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentReleaseIdToken;
 import com.blackducksoftware.sdk.codecenter.common.data.AttachmentContent;
@@ -72,7 +73,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	    Class<T> pojoClass, String componentId)
 	    throws CommonFrameworkException {
 
-	Component sdkComp = getSdkComponentById(componentId);
+	Component sdkComp = getSdkComponentByIdCached(componentId);
 
 	return createPojo(pojoClass, sdkComp);
     }
@@ -112,6 +113,38 @@ public class ComponentManager implements ICodeCenterComponentManager {
 	addToCache(nameVersion, sdkComp);
 
 	return createPojo(pojoClass, sdkComp);
+    }
+
+    /**
+     * Get a subset of the entire catalog.
+     *
+     * The cache is not used, nor updated (due to concerns about how large it
+     * could get).
+     *
+     */
+    @Override
+    public <T extends CodeCenterComponentPojo> List<T> getComponents(
+	    Class<T> pojoClass, int firstRowIndex, int lastRowIndex)
+	    throws CommonFrameworkException {
+
+	ComponentPageFilter filter = new ComponentPageFilter();
+	filter.setFirstRowIndex(firstRowIndex);
+	filter.setLastRowIndex(lastRowIndex);
+	List<Component> ccComps;
+	try {
+	    ccComps = codeCenterApiWrapper.getColaApi()
+		    .searchCatalogComponents("", filter);
+	} catch (SdkFault e) {
+	    throw new CommonFrameworkException("Error getting components "
+		    + firstRowIndex + " to " + lastRowIndex + ": "
+		    + e.getMessage());
+	}
+	List<T> comps = new ArrayList<>(ccComps.size());
+	for (Component ccComp : ccComps) {
+	    T comp = createPojo(pojoClass, ccComp);
+	    comps.add(comp);
+	}
+	return comps;
     }
 
     /**
@@ -165,7 +198,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
     public List<AttachmentDetails> searchAttachments(String componentId,
 	    String searchString) throws CommonFrameworkException {
 
-	Component comp = getSdkComponentById(componentId);
+	Component comp = getSdkComponentByIdCached(componentId);
 
 	AttachmentPageFilter pageFilter = new AttachmentPageFilter();
 	pageFilter.setFirstRowIndex(0);
@@ -233,7 +266,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
 	File file = new File(sourceFilePath);
 
-	Component comp = getSdkComponentById(componentId);
+	Component comp = getSdkComponentByIdCached(componentId);
 	ComponentAttachmentCreate attachmentCreateBean = new ComponentAttachmentCreate();
 	attachmentCreateBean.setComponentId(comp.getId());
 	attachmentCreateBean.setFileName(file.getName());
@@ -289,13 +322,25 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     // Private methods
 
-    private Component getSdkComponentById(String componentId)
+    private Component getSdkComponentByIdCached(String componentId)
 	    throws CommonFrameworkException {
 	// Check cache first
 	if (componentsByIdCache.containsKey(componentId)) {
 	    return componentsByIdCache.get(componentId);
 	}
 
+	Component sdkComp = getSdkComponentById(componentId);
+
+	// Add to caches
+	NameVersion nameVersion = new NameVersion(sdkComp.getName(),
+		sdkComp.getVersion());
+	addToCache(nameVersion, sdkComp);
+
+	return sdkComp;
+    }
+
+    private Component getSdkComponentById(String componentId)
+	    throws CommonFrameworkException {
 	ComponentIdToken componentIdToken = new ComponentIdToken();
 	componentIdToken.setId(componentId);
 	ColaApi colaApi = codeCenterApiWrapper.getColaApi();
@@ -307,12 +352,6 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		    "Error getting component for ID " + componentId + ": "
 			    + e.getMessage());
 	}
-
-	// Add to caches
-	NameVersion nameVersion = new NameVersion(sdkComp.getName(),
-		sdkComp.getVersion());
-	addToCache(nameVersion, sdkComp);
-
 	return sdkComp;
     }
 
@@ -493,4 +532,5 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
 	return componentPojo;
     }
+
 }
