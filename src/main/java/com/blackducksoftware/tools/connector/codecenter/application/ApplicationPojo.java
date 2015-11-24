@@ -22,47 +22,55 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
  */
 public class ApplicationPojo {
     private final String id;
+
     private final String name;
+
     private final String version;
+
     private final Map<String, AttributeValuePojo> attributeValuesByName = new HashMap<>();
+
     private final ApprovalStatus approvalStatus;
 
     public ApplicationPojo(String id, String name, String version,
-	    List<AttributeValuePojo> attributeValues,
-	    ApprovalStatus approvalStatus) {
-	this.id = id;
-	this.name = name;
-	this.version = version;
+            List<AttributeValuePojo> attributeValues,
+            ApprovalStatus approvalStatus) {
+        this.id = id;
+        this.name = name;
+        this.version = version;
 
-	AttributeValues.addAttributeValuesToMap(attributeValuesByName,
-		attributeValues);
+        AttributeValues.addAttributeValuesToMap(attributeValuesByName,
+                attributeValues);
 
-	this.approvalStatus = approvalStatus;
+        this.approvalStatus = approvalStatus;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public String getVersion() {
-	return version;
+        return version;
     }
 
     public String getId() {
-	return id;
+        return id;
     }
 
     public String getAttributeByName(String name) {
-	return attributeValuesByName.get(name).getValue();
+        AttributeValuePojo attribute = attributeValuesByName.get(name);
+        if (attribute != null) {
+            return attribute.getValue();
+        }
+        return null;
     }
 
     public ApprovalStatus getApprovalStatus() {
-	return approvalStatus;
+        return approvalStatus;
     }
 
     @Override
     public String toString() {
-	return "ApplicationPojo [name=" + name + ", version=" + version + "]";
+        return "ApplicationPojo [name=" + name + ", version=" + version + "]";
     }
 
 }
