@@ -63,6 +63,4 @@ public class ApplicationPojoTest {
             Assert.fail(e.getMessage());
         }
     }
-
-    // TODO fieldName check
 }
