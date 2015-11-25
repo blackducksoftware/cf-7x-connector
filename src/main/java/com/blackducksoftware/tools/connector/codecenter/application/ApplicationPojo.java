@@ -56,6 +56,10 @@ public class ApplicationPojo {
         return id;
     }
 
+    public Map<String, AttributeValuePojo> getAttributeValuesByName() {
+        return attributeValuesByName;
+    }
+
     public String getAttributeByName(String name) {
         AttributeValuePojo attribute = attributeValuesByName.get(name);
         if (attribute != null) {
