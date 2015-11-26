@@ -29,7 +29,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<ApplicationPojo> getApplications(int firstRow, int lastRow)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application by name/version.
@@ -40,7 +40,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     ApplicationPojo getApplicationByNameVersion(String name, String version)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application by ID.
@@ -50,7 +50,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     ApplicationPojo getApplicationById(String id)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application's requests, by application ID.
@@ -60,7 +60,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<RequestPojo> getRequestsByAppId(String appId)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application's components, optionally recursively, by application
@@ -82,7 +82,18 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     <T extends CodeCenterComponentPojo> List<T> getComponentsByAppId(
-	    Class<T> pojoClass, String appId,
-	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
-	    throws CommonFrameworkException;
+            Class<T> pojoClass, String appId,
+            List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
+            throws CommonFrameworkException;
+
+    /**
+     * Gets all User's that are assigned to the specified Application.
+     *
+     * @param appId
+     *            String
+     * @return List<(ApplicationUserPojo)>
+     * @throws CommonFrameworkException
+     */
+    List<ApplicationUserPojo> getAllUsersAssignedToApplication(String appId)
+            throws CommonFrameworkException;
 }
