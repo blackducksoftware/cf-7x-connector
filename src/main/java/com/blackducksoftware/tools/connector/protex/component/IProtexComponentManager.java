@@ -11,6 +11,10 @@ public interface IProtexComponentManager {
 	    Class<T> pojoClass, ComponentNameVersionIds nameVersionIds)
 	    throws CommonFrameworkException;
 
+    <T extends ProtexComponentPojo> T getComponentByNameVersion(
+	    Class<T> pojoClass, String componentName, String componentVersion)
+	    throws CommonFrameworkException;
+
     <T extends ProtexComponentPojo> List<T> getComponentsByNameVersionIds(
 	    Class<T> pojoClass, List<ComponentNameVersionIds> nameVersionIdsList)
 	    throws CommonFrameworkException;

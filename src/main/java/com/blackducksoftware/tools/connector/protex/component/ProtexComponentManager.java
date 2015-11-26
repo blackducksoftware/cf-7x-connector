@@ -15,6 +15,7 @@ import com.blackducksoftware.sdk.protex.common.ComponentKey;
 import com.blackducksoftware.sdk.protex.component.Component;
 import com.blackducksoftware.sdk.protex.license.LicenseInfo;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
+import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
@@ -28,7 +29,8 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	    .getName());
     private final ProtexAPIWrapper apiWrapper;
     private final ILicenseManager<ProtexLicensePojo> licMgr;
-    Map<ComponentNameVersionIds, Component> componentsByNameVersionIds = new HashMap<>();
+    private Map<ComponentNameVersionIds, Component> componentsByNameVersionIdsCache = new HashMap<>();
+    private Map<NameVersion, Component> componentsByNameVersionCache = new HashMap<>();
 
     public ProtexComponentManager(ProtexAPIWrapper apiWrapper,
 	    ILicenseManager<ProtexLicensePojo> licMgr) {
@@ -43,6 +45,19 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	log.info("Getting component " + nameVersionIds.getNameId() + " / "
 		+ nameVersionIds.getVersionId());
 	Component comp = getProtexComponentByNameVersionIds(nameVersionIds);
+	return toPojo(pojoClass, nameVersionIds, comp);
+    }
+
+    @Override
+    public <T extends ProtexComponentPojo> T getComponentByNameVersion(
+	    Class<T> pojoClass, String componentName, String componentVersion)
+	    throws CommonFrameworkException {
+	log.info("Getting component " + componentName + " / "
+		+ componentVersion);
+	Component comp = getProtexComponentByNameVersion(componentName,
+		componentVersion);
+	ComponentNameVersionIds nameVersionIds = ComponentNameVersionIds
+		.valueOf(comp);
 	return toPojo(pojoClass, nameVersionIds, comp);
     }
 
@@ -79,7 +94,7 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	    throws CommonFrameworkException {
 	List<T> results = new ArrayList<>(nameVersionIdsList.size());
 	for (ComponentNameVersionIds nameVersionIds : nameVersionIdsList) {
-	    Component protexComp = componentsByNameVersionIds
+	    Component protexComp = componentsByNameVersionIdsCache
 		    .get(nameVersionIds);
 	    T comp = toPojo(pojoClass, nameVersionIds, protexComp);
 	    results.add(comp);
@@ -92,7 +107,7 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	List<ComponentKey> missingFromCache = new ArrayList<>(
 		nameVersionIdsList.size());
 	for (ComponentNameVersionIds nameVersionIds : nameVersionIdsList) {
-	    if (!componentsByNameVersionIds.containsKey(nameVersionIds)) {
+	    if (!componentsByNameVersionIdsCache.containsKey(nameVersionIds)) {
 		ComponentKey protexCompKey = ComponentNameVersionIds
 			.toProtexComponentKey(nameVersionIds);
 		missingFromCache.add(protexCompKey);
@@ -105,8 +120,8 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	    ComponentNameVersionIds nameVersionIds)
 	    throws CommonFrameworkException {
 
-	if (componentsByNameVersionIds.containsKey(nameVersionIds)) {
-	    return componentsByNameVersionIds.get(nameVersionIds);
+	if (componentsByNameVersionIdsCache.containsKey(nameVersionIds)) {
+	    return componentsByNameVersionIdsCache.get(nameVersionIds);
 	}
 
 	// Get from protex
@@ -121,9 +136,54 @@ public class ProtexComponentManager implements IProtexComponentManager {
 		    + nameVersionIds.getVersionId());
 	}
 
-	addToCache(nameVersionIds, comp);
+	addToCache(comp);
 
 	return comp;
+    }
+
+    private Component getProtexComponentByNameVersion(String componentName,
+	    String componentVersion) throws CommonFrameworkException {
+
+	NameVersion nameVersion = new NameVersion(componentName,
+		componentVersion);
+	if (componentsByNameVersionCache.containsKey(nameVersion)) {
+	    return componentsByNameVersionCache.get(nameVersion);
+	}
+
+	// Get from protex
+	List<Component> comps;
+	try {
+	    comps = apiWrapper.getComponentApi().getComponentsByName(
+		    componentName, componentVersion);
+	} catch (SdkFault e) {
+	    throw new CommonFrameworkException("Error getting Component ID "
+		    + componentName + ", version " + componentVersion);
+	}
+
+	Component comp = findComponentInList(comps, componentName,
+		componentVersion);
+
+	addToCache(comp);
+
+	return comp;
+    }
+
+    private Component findComponentInList(List<Component> comps,
+	    String componentName, String componentVersion)
+	    throws CommonFrameworkException {
+	for (Component comp : comps) {
+	    if (componentName.equals(comp.getComponentName())) {
+		if ((componentVersion == null)
+			&& (comp.getVersionName() == null)) {
+		    return comp;
+		}
+		if (componentVersion.equals(comp.getVersionName())) {
+		    return comp;
+		}
+	    }
+	}
+	throw new CommonFrameworkException("Unable to find component "
+		+ componentName + " / " + componentVersion + " in Protex");
     }
 
     private <T extends ProtexComponentPojo> T toPojo(Class<T> pojoClass,
@@ -165,16 +225,22 @@ public class ProtexComponentManager implements IProtexComponentManager {
 	return comp;
     }
 
-    private void addToCache(ComponentNameVersionIds nameVersionIds,
-	    Component comp) {
-	componentsByNameVersionIds.put(nameVersionIds, comp);
+    private void addToCache(Component comp) {
+	ComponentNameVersionIds nameVersionIds = ComponentNameVersionIds
+		.valueOf(comp);
+	componentsByNameVersionIdsCache.put(nameVersionIds, comp);
+
+	NameVersion nameVersion = new NameVersion(comp.getComponentName(),
+		comp.getVersionName());
+	componentsByNameVersionCache.put(nameVersion, comp);
     }
 
     private void addToCache(List<Component> protexComponents) {
 	for (Component protexComponent : protexComponents) {
 	    ComponentNameVersionIds nameVersionIds = ComponentNameVersionIds
 		    .valueOf(protexComponent);
-	    componentsByNameVersionIds.put(nameVersionIds, protexComponent);
+	    componentsByNameVersionIdsCache
+		    .put(nameVersionIds, protexComponent);
 	}
     }
 
@@ -206,4 +272,5 @@ public class ProtexComponentManager implements IProtexComponentManager {
 
 	return componentPojo;
     }
+
 }
