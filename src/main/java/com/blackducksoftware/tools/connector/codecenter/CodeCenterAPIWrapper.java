@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter;
 
@@ -21,6 +21,7 @@ import com.blackducksoftware.sdk.codecenter.application.ApplicationApi;
 import com.blackducksoftware.sdk.codecenter.attribute.AttributeApi;
 import com.blackducksoftware.sdk.codecenter.client.util.CodeCenterServerProxyV7_0;
 import com.blackducksoftware.sdk.codecenter.cola.ColaApi;
+import com.blackducksoftware.sdk.codecenter.externalid.ExternalIdApi;
 import com.blackducksoftware.sdk.codecenter.request.RequestApi;
 import com.blackducksoftware.sdk.codecenter.settings.SettingsApi;
 import com.blackducksoftware.sdk.codecenter.user.UserApi;
@@ -43,6 +44,9 @@ public class CodeCenterAPIWrapper extends APIWrapper {
     /** The application api. */
     private ApplicationApi applicationApi;
 
+    /** The externalId api. */
+    private ExternalIdApi externalIdApi;
+
     /** The user api. */
     private UserApi userApi;
 
@@ -57,71 +61,77 @@ public class CodeCenterAPIWrapper extends APIWrapper {
     private SettingsApi settingsApi;
 
     public CodeCenterAPIWrapper(ServerBean bean, ConfigurationManager manager)
-	    throws Exception {
-	super(manager, bean);
-	getAllApis(bean.getServerName(), bean.getUserName(), bean.getPassword());
+            throws Exception {
+        super(manager, bean);
+        getAllApis(bean.getServerName(), bean.getUserName(), bean.getPassword());
     }
 
     private void getAllApis(String server, String user, String password)
-	    throws Exception {
-	String errorMessage = "";
-	try {
-	    ccProxy = new CodeCenterServerProxyV7_0(server, user, password);
+            throws Exception {
+        String errorMessage = "";
+        try {
+            ccProxy = new CodeCenterServerProxyV7_0(server, user, password);
 
-	    vulnerabilityApi = super.disableCertificateCheck(
-		    ccProxy.getVulnerabilityApi(), VulnerabilityApi.class);
-	    applicationApi = super.disableCertificateCheck(
-		    ccProxy.getApplicationApi(), ApplicationApi.class);
-	    userApi = super.disableCertificateCheck(ccProxy.getUserApi(),
-		    UserApi.class);
-	    colaApi = super.disableCertificateCheck(ccProxy.getColaApi(),
-		    ColaApi.class);
-	    attributeApi = super.disableCertificateCheck(
-		    ccProxy.getAttributeApi(), AttributeApi.class);
-	    requestApi = super.disableCertificateCheck(ccProxy.getRequestApi(),
-		    RequestApi.class);
-	    settingsApi = super.disableCertificateCheck(
-		    ccProxy.getSettingsApi(), SettingsApi.class);
+            vulnerabilityApi = super.disableCertificateCheck(
+                    ccProxy.getVulnerabilityApi(), VulnerabilityApi.class);
+            applicationApi = super.disableCertificateCheck(
+                    ccProxy.getApplicationApi(), ApplicationApi.class);
+            externalIdApi = super.disableCertificateCheck(
+                    ccProxy.getExternalIdApi(), ExternalIdApi.class);
+            userApi = super.disableCertificateCheck(ccProxy.getUserApi(),
+                    UserApi.class);
+            colaApi = super.disableCertificateCheck(ccProxy.getColaApi(),
+                    ColaApi.class);
+            attributeApi = super.disableCertificateCheck(
+                    ccProxy.getAttributeApi(), AttributeApi.class);
+            requestApi = super.disableCertificateCheck(ccProxy.getRequestApi(),
+                    RequestApi.class);
+            settingsApi = super.disableCertificateCheck(
+                    ccProxy.getSettingsApi(), SettingsApi.class);
 
-	} catch (Exception e) {
-	    errorMessage = e.getMessage();
-	    if (e.getCause() != null) {
-		errorMessage += ": " + e.getCause().getMessage();
-	    }
-	    throw new Exception(errorMessage);
-	}
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+            if (e.getCause() != null) {
+                errorMessage += ": " + e.getCause().getMessage();
+            }
+            throw new Exception(errorMessage);
+        }
     }
 
     public CodeCenterServerProxyV7_0 getProxy() {
-	return ccProxy;
+        return ccProxy;
     }
 
     public VulnerabilityApi getVulnerabilityApi() {
-	return vulnerabilityApi;
+        return vulnerabilityApi;
     }
 
     public ApplicationApi getApplicationApi() {
-	return applicationApi;
+        return applicationApi;
+    }
+
+    public ExternalIdApi getExternalIdApi() {
+        return externalIdApi;
     }
 
     public UserApi getUserApi() {
-	return userApi;
+        return userApi;
     }
 
     public ColaApi getColaApi() {
-	return colaApi;
+        return colaApi;
     }
 
     public AttributeApi getAttributeApi() {
-	return attributeApi;
+        return attributeApi;
     }
 
     public RequestApi getRequestApi() {
-	return requestApi;
+        return requestApi;
     }
 
     public SettingsApi getSettingsApi() {
-	return settingsApi;
+        return settingsApi;
     }
 
 }

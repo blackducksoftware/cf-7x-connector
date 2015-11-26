@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter;
 
@@ -28,6 +28,8 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefin
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 import com.blackducksoftware.tools.connector.codecenter.component.ComponentManager;
 import com.blackducksoftware.tools.connector.codecenter.component.ICodeCenterComponentManager;
+import com.blackducksoftware.tools.connector.codecenter.externalId.ExternalIdManager;
+import com.blackducksoftware.tools.connector.codecenter.externalId.IExternalIdManager;
 import com.blackducksoftware.tools.connector.codecenter.license.LicenseManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.ProtexServerManager;
@@ -41,81 +43,95 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 
     /** The api wrapper. */
     private final CodeCenterAPIWrapper apiWrapper;
+
     private final IAttributeDefinitionManager attributeDefinitionManager;
+
     private final IApplicationManager applicationManager;
+
+    private final IExternalIdManager externalIdManager;
+
     private final ILicenseManager<LicensePojo> licenseManager;
+
     private final IProtexServerManager protexServerManager;
+
     private final ICodeCenterComponentManager componentManager;
 
     /** The config manager. */
     private final ConfigurationManager configManager;
 
     public CodeCenterServerWrapper(ServerBean bean, ConfigurationManager manager)
-	    throws Exception {
-	configManager = manager;
-	apiWrapper = new CodeCenterAPIWrapper(bean, manager);
+            throws Exception {
+        configManager = manager;
+        apiWrapper = new CodeCenterAPIWrapper(bean, manager);
 
-	// Low-level managers, no dependencies on other managers
-	licenseManager = new LicenseManager(apiWrapper);
-	attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
+        // Low-level managers, no dependencies on other managers
+        licenseManager = new LicenseManager(apiWrapper);
+        attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
 
-	// Higher-level managers with dependencies on other managers
-	componentManager = new ComponentManager(apiWrapper,
-		attributeDefinitionManager, licenseManager);
-	applicationManager = new ApplicationManager(apiWrapper,
-		attributeDefinitionManager, componentManager);
+        // Higher-level managers with dependencies on other managers
+        componentManager = new ComponentManager(apiWrapper,
+                attributeDefinitionManager, licenseManager);
+        applicationManager = new ApplicationManager(apiWrapper,
+                attributeDefinitionManager, componentManager);
 
-	protexServerManager = new ProtexServerManager(apiWrapper, manager);
+        externalIdManager = new ExternalIdManager(apiWrapper);
+
+        protexServerManager = new ProtexServerManager(apiWrapper, manager);
 
     }
 
     @Override
     public ProjectPojo getProjectByName(String projectName) throws Exception {
-	throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ProjectPojo getProjectByID(String projectID) throws Exception {
-	throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public <T> List<T> getProjects(Class<T> classType) throws Exception {
-	throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public CodeCenterAPIWrapper getInternalApiWrapper() {
-	return apiWrapper;
+        return apiWrapper;
     }
 
     @Override
     public ConfigurationManager getConfigManager() {
-	return configManager;
+        return configManager;
     }
 
     @Override
     public IApplicationManager getApplicationManager() {
-	return applicationManager;
+        return applicationManager;
+    }
+
+    @Override
+    public IExternalIdManager getExternalIdManager() {
+        return externalIdManager;
     }
 
     @Override
     public IAttributeDefinitionManager getAttributeDefinitionManager() {
-	return attributeDefinitionManager;
+        return attributeDefinitionManager;
     }
 
     @Override
     public ILicenseManager<LicensePojo> getLicenseManager() {
-	return licenseManager;
+        return licenseManager;
     }
 
     @Override
     public IProtexServerManager getProtexServerManager() {
-	return protexServerManager;
+        return protexServerManager;
     }
 
     @Override
     public ICodeCenterComponentManager getComponentManager() {
-	return componentManager;
+        return componentManager;
     }
 }
