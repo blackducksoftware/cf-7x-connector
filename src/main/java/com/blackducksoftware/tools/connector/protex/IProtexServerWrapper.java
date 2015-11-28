@@ -9,6 +9,7 @@ import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProject
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.component.IProtexComponentManager;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
+import com.blackducksoftware.tools.connector.protex.obligation.IObligationManager;
 import com.blackducksoftware.tools.connector.protex.project.IProjectManager;
 import com.blackducksoftware.tools.connector.protex.report.IReportManager;
 
@@ -106,5 +107,12 @@ public interface IProtexServerWrapper<T extends ProtexProjectPojo> extends
      * @return
      */
     IProtexComponentManager getComponentManager();
+
+    /**
+     * Get the obligation manager.
+     *
+     * @return
+     */
+    IObligationManager getObligationManager();
 
 }

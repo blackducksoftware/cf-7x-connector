@@ -109,7 +109,12 @@ public class ProjectManager implements IProjectManager {
 	    T componentPojo, boolean hasComponentLicenseConflict,
 	    boolean hasDeclaredLicenseConflict) {
 	if (hasComponentLicenseConflict && hasDeclaredLicenseConflict) {
-	    componentPojo.setLicenseConflictStatus(LicenseConflictStatus.BOTH);
+	    componentPojo
+		    .setLicenseConflictStatus(LicenseConflictStatus.DECLARED); // if
+									       // both,
+									       // call
+									       // it
+									       // declared
 	} else if (hasComponentLicenseConflict) {
 	    componentPojo
 		    .setLicenseConflictStatus(LicenseConflictStatus.LICENSE);

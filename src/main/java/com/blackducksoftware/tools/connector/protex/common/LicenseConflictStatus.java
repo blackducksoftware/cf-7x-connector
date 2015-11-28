@@ -11,10 +11,8 @@ package com.blackducksoftware.tools.connector.protex.common;
  *
  */
 public enum LicenseConflictStatus {
-    UNKNOWN("Unknown"), NONE("No License Conflicts"), LICENSE(
-	    "Conflicts with another component"), DECLARED(
-	    "Conflicts with the project's declared license"), BOTH(
-	    "Conflicts with another component and the project's declared license");
+    UNKNOWN("Unknown"), NONE("No Conflict"), LICENSE("License Conflict"), DECLARED(
+	    "Declared Conflict");
 
     private final String description;
 

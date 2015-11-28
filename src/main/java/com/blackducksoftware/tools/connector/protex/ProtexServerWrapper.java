@@ -40,6 +40,8 @@ import com.blackducksoftware.tools.connector.protex.component.IProtexComponentMa
 import com.blackducksoftware.tools.connector.protex.component.ProtexComponentManager;
 import com.blackducksoftware.tools.connector.protex.license.LicenseManager;
 import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
+import com.blackducksoftware.tools.connector.protex.obligation.IObligationManager;
+import com.blackducksoftware.tools.connector.protex.obligation.ObligationManager;
 import com.blackducksoftware.tools.connector.protex.project.IProjectManager;
 import com.blackducksoftware.tools.connector.protex.project.ProjectManager;
 import com.blackducksoftware.tools.connector.protex.report.IReportManager;
@@ -67,6 +69,8 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 
     private IProtexComponentManager componentManager;
 
+    private IObligationManager obligationManager;
+
     /** The api wrapper. */
     private ProtexAPIWrapper apiWrapper;
 
@@ -90,10 +94,12 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
 	apiWrapper = new ProtexAPIWrapper(bean, manager, validate);
 	codeTreeHelper = new CodeTreeHelper(apiWrapper);
 	licenseManager = new LicenseManager(apiWrapper);
+	obligationManager = new ObligationManager(apiWrapper);
 	reportManager = new ReportManager(apiWrapper);
 	componentManager = new ProtexComponentManager(apiWrapper,
 		licenseManager);
 	projectManager = new ProjectManager(apiWrapper, componentManager);
+
     }
 
     @Override
@@ -260,5 +266,10 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     @Override
     public IProtexComponentManager getComponentManager() {
 	return componentManager;
+    }
+
+    @Override
+    public IObligationManager getObligationManager() {
+	return obligationManager;
     }
 }
