@@ -2,14 +2,16 @@ package com.blackducksoftware.tools.connector.protex.license;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo;
-
 public class LicensePojoTest {
-
+    private static final String OBLIGATION2 = "obligation2";
+    private static final String OBLIGATION1 = "obligation1";
     private static final String TEST_TEXT = "Test License Text";
     private static final String TEST_SUFFIX = "Test Suffix";
     private static final String TEST_EXPLANATION = "Test Explanation";
@@ -27,9 +29,14 @@ public class LicensePojoTest {
 
     @Test
     public void test() {
-	ProtexLicensePojo lic = new ProtexLicensePojo(TEST_ID, TEST_NAME, TEST_COMMENT,
-		TEST_EXPLANATION, TEST_SUFFIX,
-		ProtexLicensePojo.ApprovalState.DISAPPROVED, TEST_TEXT);
+	List<String> obligationIds = new ArrayList<>(2);
+	obligationIds.add(OBLIGATION1);
+	obligationIds.add(OBLIGATION2);
+
+	ProtexLicensePojo lic = new ProtexLicensePojo(TEST_ID, TEST_NAME,
+		TEST_COMMENT, TEST_EXPLANATION, TEST_SUFFIX,
+		ProtexLicensePojo.ApprovalState.DISAPPROVED, TEST_TEXT,
+		obligationIds);
 
 	assertEquals(TEST_ID, lic.getId());
 	assertEquals(TEST_NAME, lic.getName());
@@ -39,5 +46,8 @@ public class LicensePojoTest {
 	assertEquals(ProtexLicensePojo.ApprovalState.DISAPPROVED,
 		lic.getApprovalState());
 	assertEquals(TEST_TEXT, lic.getLicenseText());
+
+	assertEquals(OBLIGATION1, lic.getObligationIds().get(0));
+	assertEquals(OBLIGATION2, lic.getObligationIds().get(1));
     }
 }

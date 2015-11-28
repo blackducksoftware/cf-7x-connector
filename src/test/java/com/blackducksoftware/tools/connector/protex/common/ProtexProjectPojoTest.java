@@ -15,6 +15,8 @@ import com.blackducksoftware.tools.connector.protex.license.ProtexLicensePojo.Ap
 
 public class ProtexProjectPojoTest {
 
+    private static final String OBLIGATION2 = "obligation2";
+    private static final String OBLIGATION1 = "obligation1";
     private static final String TEST_LICENSE_NAME = "test license name";
     private static final String VERSION_ID = "versionId";
     private static final String NAME_ID = "nameId";
@@ -37,10 +39,13 @@ public class ProtexProjectPojoTest {
     public void test() {
 	ComponentNameVersionIds nameVersionIds = new ComponentNameVersionIds(
 		NAME_ID, VERSION_ID);
+	List<String> obligationIds = new ArrayList<>(2);
+	obligationIds.add(OBLIGATION1);
+	obligationIds.add(OBLIGATION2);
 	List<ProtexLicensePojo> licenses = new ArrayList<>();
 	ProtexLicensePojo license = new ProtexLicensePojo("testLicenseId",
 		TEST_LICENSE_NAME, "test comment", "", "",
-		ApprovalState.APPROVED, "test license text");
+		ApprovalState.APPROVED, "test license text", obligationIds);
 	licenses.add(license);
 
 	ProtexComponentPojo comp = new ProtexComponentPojo();
@@ -69,5 +74,10 @@ public class ProtexProjectPojoTest {
 	assertEquals(TEST_COMPONENT_DESCRIPTION, comp.getDescription());
 	assertEquals(TEST_PRIMARY_LICENSE_ID, comp.getPrimaryLicenseId());
 	assertEquals(TEST_PRIMARY_LICENSE_NAME, comp.getPrimaryLicenseName());
+
+	assertEquals(OBLIGATION1, comp.getLicenses().get(0).getObligationIds()
+		.get(0));
+	assertEquals(OBLIGATION2, comp.getLicenses().get(0).getObligationIds()
+		.get(1));
     }
 }

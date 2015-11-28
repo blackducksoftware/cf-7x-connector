@@ -1,5 +1,8 @@
 package com.blackducksoftware.tools.connector.protex.license;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.blackducksoftware.sdk.protex.license.LicenseApprovalState;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
@@ -16,16 +19,22 @@ public class ProtexLicensePojo extends LicensePojo {
     private final String explanation;
     private final String suffix;
     private final ApprovalState approvalState;
+    private final List<String> obligationIds;
 
     public ProtexLicensePojo(String id, String name, String comment,
 	    String explanation, String suffix, ApprovalState approvalState,
-	    String licenseText) {
+	    String licenseText, List<String> obligationIds) {
 	super(id, name, licenseText);
 
 	this.comment = comment;
 	this.explanation = explanation;
 	this.suffix = suffix;
 	this.approvalState = approvalState;
+	if (obligationIds == null) {
+	    this.obligationIds = new ArrayList<>(0);
+	} else {
+	    this.obligationIds = new ArrayList<>(obligationIds);
+	}
     }
 
     public String getComment() {
@@ -42,6 +51,11 @@ public class ProtexLicensePojo extends LicensePojo {
 
     public ApprovalState getApprovalState() {
 	return approvalState;
+    }
+
+    public List<String> getObligationIds() {
+	List<String> returnedObligationIds = new ArrayList<>(obligationIds);
+	return returnedObligationIds;
     }
 
     @Override

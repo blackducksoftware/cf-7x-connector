@@ -1,11 +1,14 @@
 package com.blackducksoftware.tools.connector.protex.license;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.license.GlobalLicense;
+import com.blackducksoftware.sdk.protex.obligation.AssignedObligation;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
@@ -110,10 +113,24 @@ public class LicenseManager implements ILicenseManager<ProtexLicensePojo> {
 			    + e.getMessage());
 	}
 
+	List<AssignedObligation> obligations;
+	try {
+	    obligations = apiWrapper.getLicenseApi().getLicenseObligations(
+		    lic.getLicenseId());
+	} catch (SdkFault e) {
+	    throw new CommonFrameworkException(
+		    "Error getting obligations for license " + lic.getName()
+			    + ": " + e.getMessage());
+	}
+	List<String> obligationIds = new ArrayList<>(obligations.size());
+	for (AssignedObligation obligation : obligations) {
+	    obligationIds.add(obligation.getObligationId());
+	}
+
 	ProtexLicensePojo licPojo = new ProtexLicensePojo(lic.getLicenseId(),
 		lic.getName(), lic.getComment(), lic.getExplanation(),
 		lic.getSuffix(), ProtexLicensePojo.toApprovalState(lic
-			.getApprovalState()), licenseText);
+			.getApprovalState()), licenseText, obligationIds);
 	return licPojo;
     }
 
