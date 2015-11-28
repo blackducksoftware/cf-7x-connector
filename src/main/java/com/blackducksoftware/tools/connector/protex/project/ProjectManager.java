@@ -19,6 +19,7 @@ import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.protex.ProtexAPIWrapper;
 import com.blackducksoftware.tools.connector.protex.common.ComponentNameVersionIds;
+import com.blackducksoftware.tools.connector.protex.common.LicenseConflictStatus;
 import com.blackducksoftware.tools.connector.protex.common.ProtexComponentPojo;
 import com.blackducksoftware.tools.connector.protex.component.IProtexComponentManager;
 
@@ -71,14 +72,54 @@ public class ProjectManager implements IProjectManager {
 			    + projectId + ": " + e.getMessage());
 	}
 
-	List<ComponentNameVersionIds> nameVersionIdsList = toNameVersionIdsList(bomComponents);
+	// Build a map: ComponentNameVersionIds --> BomComponent
+	// We'll use this to (a) get a list of ComponentNameVersionIds (to use
+	// to fetch components)
+	// and to help us set the license conflict status on each component pojo
+	// (after we fetch 'em).
+	Map<ComponentNameVersionIds, BomComponent> idsToBomComponentMap = buildIdsToBomComponentMap(bomComponents);
+
+	List<ComponentNameVersionIds> nameVersionIdsList = new ArrayList<ComponentNameVersionIds>(
+		idsToBomComponentMap.keySet());
 
 	List<T> componentPojos = compMgr.getComponentsByNameVersionIds(
 		pojoClass, nameVersionIdsList);
+	setLicenseConflict(componentPojos, idsToBomComponentMap);
 	return componentPojos;
     }
 
     // Private methods
+
+    private <T extends ProtexComponentPojo> void setLicenseConflict(
+	    List<T> componentPojos,
+	    Map<ComponentNameVersionIds, BomComponent> idsToBomComponentMap) {
+	for (T componentPojo : componentPojos) {
+	    ComponentNameVersionIds nameVersionId = componentPojo
+		    .getNameVersionIds();
+	    boolean hasComponentLicenseConflict = idsToBomComponentMap.get(
+		    nameVersionId).isHasComponentLicenseConflict();
+	    boolean hasDeclaredLicenseConflict = idsToBomComponentMap.get(
+		    nameVersionId).isHasDeclaredLicenseConflict();
+	    setLicenseConflict(componentPojo, hasComponentLicenseConflict,
+		    hasDeclaredLicenseConflict);
+	}
+    }
+
+    private <T extends ProtexComponentPojo> void setLicenseConflict(
+	    T componentPojo, boolean hasComponentLicenseConflict,
+	    boolean hasDeclaredLicenseConflict) {
+	if (hasComponentLicenseConflict && hasDeclaredLicenseConflict) {
+	    componentPojo.setLicenseConflictStatus(LicenseConflictStatus.BOTH);
+	} else if (hasComponentLicenseConflict) {
+	    componentPojo
+		    .setLicenseConflictStatus(LicenseConflictStatus.LICENSE);
+	} else if (hasDeclaredLicenseConflict) {
+	    componentPojo
+		    .setLicenseConflictStatus(LicenseConflictStatus.DECLARED);
+	} else {
+	    componentPojo.setLicenseConflictStatus(LicenseConflictStatus.NONE);
+	}
+    }
 
     private Project getProtexProjectById(String projectId)
 	    throws CommonFrameworkException {
@@ -153,9 +194,9 @@ public class ProjectManager implements IProjectManager {
 	return pojo;
     }
 
-    private List<ComponentNameVersionIds> toNameVersionIdsList(
+    private Map<ComponentNameVersionIds, BomComponent> buildIdsToBomComponentMap(
 	    List<BomComponent> bomComponents) {
-	List<ComponentNameVersionIds> nameVersionIdsList = new ArrayList<>(
+	Map<ComponentNameVersionIds, BomComponent> idsToBomComponentMap = new HashMap<>(
 		bomComponents.size());
 	for (BomComponent bomComponent : bomComponents) {
 	    log.info("Processing component " + bomComponent.getComponentName());
@@ -176,8 +217,8 @@ public class ProjectManager implements IProjectManager {
 	    }
 	    ComponentNameVersionIds nameVersionIds = ComponentNameVersionIds
 		    .valueOf(bomComponent);
-	    nameVersionIdsList.add(nameVersionIds);
+	    idsToBomComponentMap.put(nameVersionIds, bomComponent);
 	}
-	return nameVersionIdsList;
+	return idsToBomComponentMap;
     }
 }

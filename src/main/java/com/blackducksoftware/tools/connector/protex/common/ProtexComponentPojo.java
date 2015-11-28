@@ -12,6 +12,7 @@ public class ProtexComponentPojo extends ComponentPojo {
     private ProtexComponentType type;
     private String primaryLicenseId;
     private String primaryLicenseName;
+    private LicenseConflictStatus licenseConflictStatus = LicenseConflictStatus.UNKNOWN;
 
     public ComponentNameVersionIds getNameVersionIds() {
 	return nameVersionIds;
@@ -51,6 +52,15 @@ public class ProtexComponentPojo extends ComponentPojo {
 
     public void setPrimaryLicenseName(String primaryLicenseName) {
 	this.primaryLicenseName = primaryLicenseName;
+    }
+
+    public LicenseConflictStatus getLicenseConflictStatus() {
+	return licenseConflictStatus;
+    }
+
+    public void setLicenseConflictStatus(
+	    LicenseConflictStatus licenseConflictStatus) {
+	this.licenseConflictStatus = licenseConflictStatus;
     }
 
     @Override
