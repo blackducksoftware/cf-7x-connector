@@ -32,49 +32,51 @@ public class ApplicationPojo {
     private final ApprovalStatus approvalStatus;
 
     public ApplicationPojo(String id, String name, String version,
-            List<AttributeValuePojo> attributeValues,
-            ApprovalStatus approvalStatus) {
-        this.id = id;
-        this.name = name;
-        this.version = version;
+	    List<AttributeValuePojo> attributeValues,
+	    ApprovalStatus approvalStatus) {
+	this.id = id;
+	this.name = name;
+	this.version = version;
 
-        AttributeValues.addAttributeValuesToMap(attributeValuesByName,
-                attributeValues);
+	if (attributeValues != null) {
+	    AttributeValues.addAttributeValuesToMap(attributeValuesByName,
+		    attributeValues);
+	}
 
-        this.approvalStatus = approvalStatus;
+	this.approvalStatus = approvalStatus;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public String getVersion() {
-        return version;
+	return version;
     }
 
     public String getId() {
-        return id;
+	return id;
     }
 
     public Map<String, AttributeValuePojo> getAttributeValuesByName() {
-        return attributeValuesByName;
+	return attributeValuesByName;
     }
 
     public String getAttributeByName(String name) {
-        AttributeValuePojo attribute = attributeValuesByName.get(name);
-        if (attribute != null) {
-            return attribute.getValue();
-        }
-        return null;
+	AttributeValuePojo attribute = attributeValuesByName.get(name);
+	if (attribute != null) {
+	    return attribute.getValue();
+	}
+	return null;
     }
 
     public ApprovalStatus getApprovalStatus() {
-        return approvalStatus;
+	return approvalStatus;
     }
 
     @Override
     public String toString() {
-        return "ApplicationPojo [name=" + name + ", version=" + version + "]";
+	return "ApplicationPojo [name=" + name + ", version=" + version + "]";
     }
 
 }
