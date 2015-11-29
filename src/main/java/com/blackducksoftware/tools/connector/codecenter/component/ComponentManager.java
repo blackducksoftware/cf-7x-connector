@@ -1,11 +1,6 @@
 package com.blackducksoftware.tools.connector.codecenter.component;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -17,7 +12,6 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.apache.cxf.helpers.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +34,7 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
+import com.blackducksoftware.tools.connector.codecenter.common.AttachmentUtils;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
@@ -209,7 +204,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		    .searchComponentAttachments("", pageFilter, comp.getId());
 	} catch (SdkFault e) {
 	    throw new CommonFrameworkException(
-		    "Error searching applications for component ID "
+		    "Error searching attachments for component ID "
 			    + componentId + ": " + e.getMessage());
 	}
 
@@ -228,7 +223,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
      *
      * @param attachmentId
      * @param targetDirPath
-     * @return 
+     * @return
      * @throws CommonFrameworkException
      */
     @Override
@@ -250,7 +245,8 @@ public class ComponentManager implements ICodeCenterComponentManager {
 			    + e.getMessage());
 	}
 	DataHandler dataHandler = content.getAttachmentContent();
-	return downloadAttachment(componentId, filename, targetDirPath, dataHandler);
+	return AttachmentUtils.downloadAttachment("component", componentId,
+		filename, targetDirPath, dataHandler);
     }
 
     /**
@@ -451,61 +447,6 @@ public class ComponentManager implements ICodeCenterComponentManager {
     private void addToCache(NameVersion nameVersion, Component sdkComp) {
 	componentsByIdCache.put(sdkComp.getId().getId(), sdkComp);
 	componentsByNameVersionCache.put(nameVersion, sdkComp);
-    }
-
-    private File downloadAttachment(String componentId, String filename,
-	    String targetDirPath, DataHandler dataHandler)
-	    throws CommonFrameworkException {
-	InputStream attachmentData = null;
-	OutputStream fileOutputStream = null;
-	File outputFile = null;
-	try {
-
-	    try {
-		attachmentData = dataHandler.getInputStream();
-	    } catch (IOException e) {
-		throw new CommonFrameworkException(
-			"Error getting input stream for attachment " + filename
-				+ " on component ID " + componentId + ": "
-				+ e.getMessage());
-	    }
-
-	    outputFile = new File(targetDirPath + File.separator + filename);
-
-	    try {
-		fileOutputStream = new FileOutputStream(outputFile);
-	    } catch (FileNotFoundException e) {
-		throw new CommonFrameworkException(
-			"Error getting output stream for attachment "
-				+ filename + " on component ID " + componentId
-				+ ": " + e.getMessage());
-	    }
-
-	    try {
-		IOUtils.copy(attachmentData, fileOutputStream);
-	    } catch (IOException e) {
-		throw new CommonFrameworkException(
-			"Error downloading data for attachment " + filename
-				+ " on component ID " + componentId + ": "
-				+ e.getMessage());
-	    }
-
-	} finally {
-	    if (attachmentData != null) {
-		try {
-		    attachmentData.close();
-		} catch (IOException e) {
-		}
-	    }
-	    if (fileOutputStream != null) {
-		try {
-		    fileOutputStream.close();
-		} catch (IOException e) {
-		}
-	    }
-	}
-	
-	return outputFile;
     }
 
     @Override
