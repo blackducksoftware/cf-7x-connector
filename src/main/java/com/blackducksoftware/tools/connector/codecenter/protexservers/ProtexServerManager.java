@@ -22,19 +22,19 @@ import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 /**
  * Manages a set of Protex servers.
- *
+ * 
  * These are a subset of the Protex servers configured into the Code Center
  * server's settings.
- *
+ * 
  * Each server that has been connected to (either during validation, or during a
  * getProtexServerWrapper() call) is cached, so those connections can be re-used
  * if they are requested again.
- *
+ * 
  * If you want to call the validate method, the ConfigurationManager object you
  * provide to the constructor must implement CcConfigMgrWithPtxServers.
- *
+ * 
  * @author sbillings
- *
+ * 
  */
 public class ProtexServerManager implements IProtexServerManager {
 
@@ -53,10 +53,10 @@ public class ProtexServerManager implements IProtexServerManager {
 
     /**
      * Validate the Protex servers named in the configuration, caching each one.
-     *
+     * 
      * To use this method, the ConfigurationManager provided to the constructor
      * must implement CcConfigMgrWithPtxServers.
-     *
+     * 
      * @throws CommonFrameworkException
      */
     @Override
@@ -89,10 +89,10 @@ public class ProtexServerManager implements IProtexServerManager {
 
     /**
      * Get the ProtexServerWrapper for the given Protex Server.
-     *
+     * 
      * If it's in the cache, use that. If not, connect to this new Protex server
      * and cache it.
-     *
+     * 
      * @param serverName
      * @return
      * @throws CommonFrameworkException
@@ -110,11 +110,29 @@ public class ProtexServerManager implements IProtexServerManager {
 	return namedServer.getProtexServerWrapper();
     }
 
+    /**
+     * Gets the names of cached Protex Servers
+     */
+    @Override
+    public List<String> getAllProtexNames() throws CommonFrameworkException {
+	List<String> protexNames = new ArrayList<String>();
+	if (protexServerCache.size() == 0)
+	    throw new CommonFrameworkException(
+		    "No Protex servers cached, did you initialize?");
+
+	for (NamedProtexServer namedProtex : protexServerCache.values()) {
+	    protexNames.add(namedProtex.getName());
+
+	}
+
+	return protexNames;
+    }
+
     // Private methods
 
     /**
      * Connect to a given Protex server.
-     *
+     * 
      * @param protexServerName
      * @return
      * @throws CommonFrameworkException
@@ -155,7 +173,7 @@ public class ProtexServerManager implements IProtexServerManager {
     /**
      * We have a Code Center config, but we need a Protex config to connect to
      * protex.
-     *
+     * 
      * @param ccConfig
      * @param protexUrl
      * @return
@@ -173,4 +191,5 @@ public class ProtexServerManager implements IProtexServerManager {
 		props);
 	return protexConfig;
     }
+
 }
