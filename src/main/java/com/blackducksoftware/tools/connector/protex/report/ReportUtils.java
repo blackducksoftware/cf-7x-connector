@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2015 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex.report;
 
@@ -50,19 +50,20 @@ import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
  * on a template, in the form of a Workbook, call getReport(). This is easer
  * than calling TemplateReader.generateWorkbookFromFile() and
  * ProtexServerWrapper.getReport().
- *
+ * 
  * @author sbillings
- *
+ * 
  */
 public class ReportUtils {
     private static final int MAX_CELL_STRING_LEN = 32767;
+
     private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+            .getName());
 
     /**
      * Get a Protex report in the form of a workbook, fetching sections one at a
      * time.
-     *
+     * 
      * @param protexServerWrapper
      * @param protexProjectName
      * @param templateFile
@@ -71,117 +72,118 @@ public class ReportUtils {
      * @throws Exception
      */
     public Workbook getReportSectionBySection(
-	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    String protexProjectName, File templateFile,
-	    ConfigurationManager config, Format reportFormat) throws Exception {
+            IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+            String protexProjectName, File templateFile,
+            ConfigurationManager config, Format reportFormat) throws Exception {
 
-	// Generate a workbook from a template file, and populate the template
-	// map.
-	TemplateReader templateReader = new TemplateReader(config);
-	Workbook wb = TemplateReader.generateWorkBookFromFile(templateFile);
-	templateReader.populateTemplateMap();
+        // Generate a workbook from a template file, and populate the template
+        // map.
+        TemplateReader templateReader = new TemplateReader(config);
+        Workbook wb = TemplateReader.generateWorkBookFromFile(templateFile);
+        templateReader.setTemplateBook(wb);
+        templateReader.populateTemplateMap();
 
-	ProjectPojo project = protexServerWrapper
-		.getProjectByName(protexProjectName);
+        ProjectPojo project = protexServerWrapper
+                .getProjectByName(protexProjectName);
 
-	Map<String, TemplateSheet> sheetMap = templateReader.getSheetMap();
-	for (String sheetKey : sheetMap.keySet()) {
-	    TemplateSheet sheet = sheetMap.get(sheetKey);
-	    String reportSection = sheet.getSheetName();
-	    // System.out.println("Section: " + reportSection);
+        Map<String, TemplateSheet> sheetMap = templateReader.getSheetMap();
+        for (String sheetKey : sheetMap.keySet()) {
+            TemplateSheet sheet = sheetMap.get(sheetKey);
+            String reportSection = sheet.getSheetName();
+            // System.out.println("Section: " + reportSection);
 
-	    List<AdHocElement> rowsToParse = getReportSection(
-		    protexServerWrapper, project, reportSection, reportFormat,
-		    AdHocElement.class);
-	    if (rowsToParse != null) {
-		populateSectionData(templateReader, sheet, wb, rowsToParse);
-	    }
-	}
+            List<AdHocElement> rowsToParse = getReportSection(
+                    protexServerWrapper, project, reportSection, reportFormat,
+                    AdHocElement.class);
+            if (rowsToParse != null) {
+                populateSectionData(templateReader, sheet, wb, rowsToParse);
+            }
+        }
 
-	return wb;
+        return wb;
     }
 
     private void populateSectionData(TemplateReader templateReader,
-	    TemplateSheet templateSheet, Workbook wb,
-	    List<AdHocElement> reportRows) throws Exception {
-	Sheet sheet = wb.getSheet(templateSheet.getSheetName());
-	Map<String, TemplateColumn> columnMap = templateSheet.getColumnMap();
+            TemplateSheet templateSheet, Workbook wb,
+            List<AdHocElement> reportRows) throws Exception {
+        Sheet sheet = wb.getSheet(templateSheet.getSheetName());
+        Map<String, TemplateColumn> columnMap = templateSheet.getColumnMap();
 
-	/**
-	 * Grab the keys once, since we are writing out rows, the keys must
-	 * logically be identical. Verify the keys against the template, by
-	 * removing all keys that do not exist in the template.
-	 */
-	if ((reportRows == null) || (reportRows.size() == 0)) {
-	    log.info("There is no data in this section");
-	    return;
-	}
-	Set<String> elementValueKeys = reportRows.get(0).getPairKeys();
-	elementValueKeys = verifyKeysAgainstTemplate(elementValueKeys,
-		columnMap);
+        /**
+         * Grab the keys once, since we are writing out rows, the keys must
+         * logically be identical. Verify the keys against the template, by
+         * removing all keys that do not exist in the template.
+         */
+        if ((reportRows == null) || (reportRows.size() == 0)) {
+            log.info("There is no data in this section");
+            return;
+        }
+        Set<String> elementValueKeys = reportRows.get(0).getPairKeys();
+        elementValueKeys = verifyKeysAgainstTemplate(elementValueKeys,
+                columnMap);
 
-	/**
-	 * We are starting at one, because the sheet already has a header.
-	 */
-	int rownum = 1;
-	for (AdHocElement element : reportRows) {
-	    Row row = sheet.createRow(rownum);
+        /**
+         * We are starting at one, because the sheet already has a header.
+         */
+        int rownum = 1;
+        for (AdHocElement element : reportRows) {
+            Row row = sheet.createRow(rownum);
 
-	    for (String elementValueKey : elementValueKeys) {
-		// Grab the column from the map based on name
-		TemplateColumn templateColumn = columnMap.get(elementValueKey);
+            for (String elementValueKey : elementValueKeys) {
+                // Grab the column from the map based on name
+                TemplateColumn templateColumn = columnMap.get(elementValueKey);
 
-		int columnPos = templateColumn.getColumnPos();
+                int columnPos = templateColumn.getColumnPos();
 
-		// Place the cell in the same position as the template and fill
-		// the style
-		Cell cell = row.createCell(columnPos);
-		cell.setCellStyle(templateColumn.getCellStyle());
+                // Place the cell in the same position as the template and fill
+                // the style
+                Cell cell = row.createCell(columnPos);
+                cell.setCellStyle(templateColumn.getCellStyle());
 
-		String elementValue = element.getValue(elementValueKey);
-		elementValue = limitToMaxCellLen(elementValue);
-		cell.setCellValue(elementValue);
-	    }
-	    rownum++;
-	}
+                String elementValue = element.getValue(elementValueKey);
+                elementValue = limitToMaxCellLen(elementValue);
+                cell.setCellValue(elementValue);
+            }
+            rownum++;
+        }
     }
 
     private static String limitToMaxCellLen(String orig) {
-	if (orig.length() > MAX_CELL_STRING_LEN) {
-	    return orig.substring(0, (MAX_CELL_STRING_LEN - 1));
-	}
-	return orig;
+        if (orig.length() > MAX_CELL_STRING_LEN) {
+            return orig.substring(0, (MAX_CELL_STRING_LEN - 1));
+        }
+        return orig;
     }
 
     /**
      * Removes the keys that do not exist in the template
-     *
+     * 
      * @param elementValueKeys
      * @param columnMap
      * @return
      */
     private Set<String> verifyKeysAgainstTemplate(Set<String> elementValueKeys,
-	    Map<String, TemplateColumn> columnMap) {
+            Map<String, TemplateColumn> columnMap) {
 
-	Set<String> verifiedKeys = new HashSet<String>();
+        Set<String> verifiedKeys = new HashSet<String>();
 
-	for (String key : elementValueKeys) {
-	    TemplateColumn column = columnMap.get(key);
-	    if (column == null) {
-		log.warn("The following column does not exist in our template: "
-			+ key);
-	    } else {
-		verifiedKeys.add(key);
-	    }
-	}
+        for (String key : elementValueKeys) {
+            TemplateColumn column = columnMap.get(key);
+            if (column == null) {
+                log.warn("The following column does not exist in our template: "
+                        + key);
+            } else {
+                verifiedKeys.add(key);
+            }
+        }
 
-	return verifiedKeys;
+        return verifiedKeys;
     }
 
     /**
      * Fetches back a specific report section. This will be a list of objects
      * that extend HocElement.
-     *
+     * 
      * @param <T>
      *            the generic type
      * @param project
@@ -198,103 +200,103 @@ public class ReportUtils {
      *             the exception
      */
     public <T extends HocElement> List<T> getReportSection(
-	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    ProjectPojo project, String reportSection, Format reportFormat,
-	    Class<T> adHocClass) throws Exception {
+            IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+            ProjectPojo project, String reportSection, Format reportFormat,
+            Class<T> adHocClass) throws Exception {
 
-	List<T> returnRows = null;
+        List<T> returnRows = null;
 
-	// TODO: Figure out translation mechanism from sheet to enum
-	ReportSectionSelection sectionType = null;
+        // TODO: Figure out translation mechanism from sheet to enum
+        ReportSectionSelection sectionType = null;
 
-	try {
-	    sectionType = ReportSectionSelection.valueOf(reportSection
-		    .toUpperCase());
-	} catch (Exception e) {
-	    String reportSectionNameUpper = reportSection.toUpperCase();
-	    if (reportSectionNameUpper.startsWith("FILE_DISCOVERY_PATTERN_MAT")) {
-		sectionType = ReportSectionSelection.FILE_DISCOVERY_PATTERN_MATCHES_PENDING_IDENTIFICATION;
-	    } else if (reportSectionNameUpper
-		    .startsWith("DEPENDENCIES_JAVA_IMPORT")) {
-		sectionType = ReportSectionSelection.DEPENDENCIES_JAVA_IMPORT_STATEMENTS;
-	    } else if (reportSectionNameUpper
-		    .startsWith("DEPENDENCIES_JAVA_PACKAGE")) {
-		sectionType = ReportSectionSelection.DEPENDENCIES_JAVA_PACKAGE_STATEMENTS;
-	    } else if (reportSectionNameUpper
-		    .startsWith("CODE_MATCHES_PENDING")) {
-		sectionType = ReportSectionSelection.CODE_MATCHES_PENDING_IDENTIFICATION_PRECISION;
-	    } else {
-		throw new Exception(
-			"Unable to determine section type for section key: "
-				+ reportSection + "; " + e.getMessage());
-	    }
-	}
+        try {
+            sectionType = ReportSectionSelection.valueOf(reportSection
+                    .toUpperCase());
+        } catch (Exception e) {
+            String reportSectionNameUpper = reportSection.toUpperCase();
+            if (reportSectionNameUpper.startsWith("FILE_DISCOVERY_PATTERN_MAT")) {
+                sectionType = ReportSectionSelection.FILE_DISCOVERY_PATTERN_MATCHES_PENDING_IDENTIFICATION;
+            } else if (reportSectionNameUpper
+                    .startsWith("DEPENDENCIES_JAVA_IMPORT")) {
+                sectionType = ReportSectionSelection.DEPENDENCIES_JAVA_IMPORT_STATEMENTS;
+            } else if (reportSectionNameUpper
+                    .startsWith("DEPENDENCIES_JAVA_PACKAGE")) {
+                sectionType = ReportSectionSelection.DEPENDENCIES_JAVA_PACKAGE_STATEMENTS;
+            } else if (reportSectionNameUpper
+                    .startsWith("CODE_MATCHES_PENDING")) {
+                sectionType = ReportSectionSelection.CODE_MATCHES_PENDING_IDENTIFICATION_PRECISION;
+            } else {
+                throw new Exception(
+                        "Unable to determine section type for section key: "
+                                + reportSection + "; " + e.getMessage());
+            }
+        }
 
-	switch (sectionType) {
-	case CODE_LABEL:
-	    log.warn("Code Label report section is not supported.");
-	    return null;
-	}
+        switch (sectionType) {
+        case CODE_LABEL:
+            log.warn("Code Label report section is not supported.");
+            return null;
+        }
 
-	if (reportFormat == Format.HTML) {
-	    LineNumberReader lnr = getLineNumberReader(protexServerWrapper,
-		    project, sectionType, reportSection);
-	    returnRows = ProtexReportHTMLProcessor.getRowsFromBuffer(
-		    protexServerWrapper, false, lnr, adHocClass);
-	} else if (reportFormat == Format.CSV) {
-	    ProtexReportCSVProcessor<T> csvProcessor = new ProtexReportCSVProcessor<T>(
-		    sectionType.name());
+        if (reportFormat == Format.HTML) {
+            LineNumberReader lnr = getLineNumberReader(protexServerWrapper,
+                    project, sectionType, reportSection);
+            returnRows = ProtexReportHTMLProcessor.getRowsFromBuffer(
+                    protexServerWrapper, false, lnr, adHocClass);
+        } else if (reportFormat == Format.CSV) {
+            ProtexReportCSVProcessor<T> csvProcessor = new ProtexReportCSVProcessor<T>(
+                    sectionType.name());
 
-	    try {
+            try {
 
-		ReportPojo report = protexServerWrapper.getReportManager()
-			.generateAdHocProjectReportSingleSection(
-				project.getProjectKey(), sectionType,
-				sectionType.name(), reportSection,
-				reportFormat, false);
+                ReportPojo report = protexServerWrapper.getReportManager()
+                        .generateAdHocProjectReportSingleSection(
+                                project.getProjectKey(), sectionType,
+                                sectionType.name(), reportSection,
+                                reportFormat, false);
 
-		returnRows = csvProcessor.getRows(report, adHocClass);
+                returnRows = csvProcessor.getRows(report, adHocClass);
 
-	    } catch (Exception e) {
-		throw new Exception(e.getMessage());
-	    }
-	}
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
+            }
+        }
 
-	return returnRows;
+        return returnRows;
     }
 
     private static LineNumberReader getLineNumberReader(
-	    IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    ProjectPojo project, ReportSectionSelection section,
-	    String sectionTitle) throws Exception {
+            IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+            ProjectPojo project, ReportSectionSelection section,
+            String sectionTitle) throws Exception {
 
-	InputStream is = null;
-	BufferedReader br = null;
-	LineNumberReader lnr = null;
-	Boolean includeTableOfContents = false;
+        InputStream is = null;
+        BufferedReader br = null;
+        LineNumberReader lnr = null;
+        Boolean includeTableOfContents = false;
 
-	try {
-	    if (lnr == null) {
-		IReportManager reportManager = protexServerWrapper
-			.getReportManager();
-		String projectId = project.getProjectKey();
-		String sectionName = section.name();
-		ReportPojo report = reportManager
-			.generateAdHocProjectReportSingleSection(projectId,
-				section, sectionName, sectionTitle,
-				Format.HTML, includeTableOfContents);
+        try {
+            if (lnr == null) {
+                IReportManager reportManager = protexServerWrapper
+                        .getReportManager();
+                String projectId = project.getProjectKey();
+                String sectionName = section.name();
+                ReportPojo report = reportManager
+                        .generateAdHocProjectReportSingleSection(projectId,
+                                section, sectionName, sectionTitle,
+                                Format.HTML, includeTableOfContents);
 
-		is = report.getFileContent().getInputStream();
+                is = report.getFileContent().getInputStream();
 
-		br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
-		lnr = new LineNumberReader(br);
-		lnr.readLine();
-	    }
-	} catch (Exception e) {
-	    throw new Exception("Error reading Protex report: "
-		    + e.getMessage());
-	}
-	return lnr;
+                lnr = new LineNumberReader(br);
+                lnr.readLine();
+            }
+        } catch (Exception e) {
+            throw new Exception("Error reading Protex report: "
+                    + e.getMessage());
+        }
+        return lnr;
     }
 }
