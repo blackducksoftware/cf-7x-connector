@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2015 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex;
 
@@ -37,25 +37,28 @@ import com.blackducksoftware.sdk.protex.report.ReportApi;
 import com.blackducksoftware.sdk.protex.role.RoleApi;
 import com.blackducksoftware.sdk.protex.user.UserApi;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
+import com.blackducksoftware.tools.commonframework.core.config.SSOBean;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
 
 /**
  * Primary authenticator and validator for the Protex SDKs.
- *
+ * 
  * @author Ari Kamen
  */
 public class ProtexAPIWrapper extends APIWrapper {
 
     /** The log. */
     private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+            .getName());
 
     /** The bom api. */
     private BomApi bomApi;
 
     /** The code tree api. */
     private CodeTreeApi codeTreeApi;
+
     private ComponentApi componentApi;
+
     /** The identification api. */
     private IdentificationApi identificationApi;
 
@@ -77,7 +80,9 @@ public class ProtexAPIWrapper extends APIWrapper {
     /** The standard component api. */
     /** The role api. */
     private RoleApi roleApi;
+
     private LocalComponentApi localComponentApi;
+
     private PolicyApi policyApi;
 
     /** The protex server. */
@@ -89,24 +94,24 @@ public class ProtexAPIWrapper extends APIWrapper {
     /**
      * Creates a proxy object with the proper credentials Credentials keyed off
      * the server bean.
-     *
+     * 
      * @param bean
      * @param configManager
      * @param validate
      * @throws Exception
      */
     public ProtexAPIWrapper(ServerBean bean,
-	    ConfigurationManager configManager, boolean validate)
-	    throws Exception {
-	super(configManager, bean);
-	getAllApisAndValidate(bean.getServerName(), bean.getUserName(),
-		bean.getPassword(), validate, configManager);
+            ConfigurationManager configManager, boolean validate)
+            throws Exception {
+        super(configManager, bean);
+        getAllApisAndValidate(bean.getServerName(), bean.getUserName(),
+                bean.getPassword(), validate, configManager);
 
     }
 
     /**
      * Handles initializing all APIs and performing user credential validation
-     *
+     * 
      * @param server
      *            the connection server
      * @param user
@@ -121,47 +126,52 @@ public class ProtexAPIWrapper extends APIWrapper {
      *             if error occurs during authentication or API calls
      */
     private void getAllApisAndValidate(String server, String user,
-	    String password, boolean validate,
-	    ConfigurationManager configManager) throws Exception {
-	try {
-	    protexServer = new ProtexServerProxy(server, user, password);
-	    log.info("User Info: " + user);
-	    if (validate) {
-		validateCredentials();
-	    }
+            String password, boolean validate,
+            ConfigurationManager configManager) throws Exception {
+        try {
+            // Instantiate
+            protexServer = new ProtexServerProxy(server, user, password);
+            // *** Set specific auth methods for SSO
+            SSOBean ssoBean = configManager.getSsoBean();
+            protexServer.setRequestCookies(getAuthCookies(ssoBean));
 
-	    // Potential CXF limit override option
-	    protexServer.setMaximumChildElements(configManager
-		    .getChildElementCount());
+            log.info("User Info: " + user);
+            if (validate) {
+                validateCredentials();
+            }
 
-	    bomApi = protexServer.getBomApi();
-	    codeTreeApi = protexServer.getCodeTreeApi();
-	    componentApi = protexServer.getComponentApi();
-	    identificationApi = protexServer.getIdentificationApi();
-	    projectApi = protexServer.getProjectApi();
-	    discoveryApi = protexServer.getDiscoveryApi();
-	    reportApi = protexServer.getReportApi();
-	    userApi = protexServer.getUserApi();
-	    licenseApi = protexServer.getLicenseApi();
-	    policyApi = protexServer.getPolicyApi();
-	    localComponentApi = protexServer.getLocalComponentApi();
+            // Potential CXF limit override option
+            protexServer.setMaximumChildElements(configManager
+                    .getChildElementCount());
 
-	} catch (ServerAuthenticationException sae) {
-	    errorMessage = "Unable to log in: " + sae.getMessage();
-	    throw new Exception(errorMessage);
-	} catch (Exception e) {
-	    errorMessage = e.getMessage();
-	    if (e.getCause() != null) {
-		errorMessage += ": " + e.getCause().getMessage();
-	    }
-	    throw new Exception(errorMessage);
-	}
+            bomApi = protexServer.getBomApi();
+            codeTreeApi = protexServer.getCodeTreeApi();
+            componentApi = protexServer.getComponentApi();
+            identificationApi = protexServer.getIdentificationApi();
+            projectApi = protexServer.getProjectApi();
+            discoveryApi = protexServer.getDiscoveryApi();
+            reportApi = protexServer.getReportApi();
+            userApi = protexServer.getUserApi();
+            licenseApi = protexServer.getLicenseApi();
+            policyApi = protexServer.getPolicyApi();
+            localComponentApi = protexServer.getLocalComponentApi();
+
+        } catch (ServerAuthenticationException sae) {
+            errorMessage = "Unable to log in: " + sae.getMessage();
+            throw new Exception(errorMessage);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+            if (e.getCause() != null) {
+                errorMessage += ": " + e.getCause().getMessage();
+            }
+            throw new Exception(errorMessage);
+        }
 
     }
 
     /**
      * Grabs one project to check if authentication worked.
-     *
+     * 
      * @param protex
      *            the protex
      * @param manager
@@ -170,88 +180,88 @@ public class ProtexAPIWrapper extends APIWrapper {
      *             the exception
      */
     private void validateCredentials() throws Exception {
-	try {
-	    protexServer.validateCredentials();
-	} catch (Exception e) {
-	    String msg = e.getMessage();
-	    if (e.getCause() != null) {
-		msg += "; Caused by: " + e.getCause().getMessage();
-	    }
-	    // This is a hack; In 7.0 the SDK should throw a more helpful
-	    // message when the SDK license is absent,
-	    // but for now, this seems to be about the best we can do in terms
-	    // of getting a helpful msg to the user. -- Steve Billings
-	    if (e instanceof SOAPFaultException) {
-		msg += " Please check that the Protex server has the SDK license enabled.";
-	    }
-	    throw new Exception(msg);
-	}
+        try {
+            protexServer.validateCredentials();
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            if (e.getCause() != null) {
+                msg += "; Caused by: " + e.getCause().getMessage();
+            }
+            // This is a hack; In 7.0 the SDK should throw a more helpful
+            // message when the SDK license is absent,
+            // but for now, this seems to be about the best we can do in terms
+            // of getting a helpful msg to the user. -- Steve Billings
+            if (e instanceof SOAPFaultException) {
+                msg += " Please check that the Protex server has the SDK license enabled.";
+            }
+            throw new Exception(msg);
+        }
     }
 
     /**
      * Gets the error message.
-     *
+     * 
      * @return the error message
      */
     public String getErrorMessage() {
-	return errorMessage;
+        return errorMessage;
     }
 
     /**
      * Retrieves the interal proxy object
-     *
+     * 
      * @return
      */
     public ProtexServerProxy getProxy() {
-	return protexServer;
+        return protexServer;
     }
 
     public BomApi getBomApi() {
-	return bomApi;
+        return bomApi;
     }
 
     public CodeTreeApi getCodeTreeApi() {
-	return codeTreeApi;
+        return codeTreeApi;
     }
 
     public IdentificationApi getIdentificationApi() {
-	return identificationApi;
+        return identificationApi;
     }
 
     public ProjectApi getProjectApi() {
-	return projectApi;
+        return projectApi;
     }
 
     public DiscoveryApi getDiscoveryApi() {
-	return discoveryApi;
+        return discoveryApi;
     }
 
     public ReportApi getReportApi() {
-	return reportApi;
+        return reportApi;
     }
 
     public UserApi getUserApi() {
-	return userApi;
+        return userApi;
     }
 
     public LicenseApi getLicenseApi() {
-	return licenseApi;
+        return licenseApi;
     }
 
     public RoleApi getRoleApi() {
-	return roleApi;
+        return roleApi;
     }
 
     public LocalComponentApi getLocalComponentApi() {
-	return localComponentApi;
+        return localComponentApi;
     }
 
     public PolicyApi getPolicyApi() {
-	return policyApi;
+        return policyApi;
     }
 
     public ComponentApi getComponentApi() {
-	return componentApi;
+        return componentApi;
     }
 
 }

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.blackducksoftware.tools</groupId>
 	<artifactId>cf-7x-connector</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
+	<version>1.4.0-SNAPSHOT-SSO-V2</version>
 
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>
@@ -30,8 +30,8 @@
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 
 		<!-- Protex, Code Center SDK versions -->
-		<protex.sdk.version>7.0.2</protex.sdk.version>
-		<codecenter.sdk.version>7.0.2</codecenter.sdk.version>
+		<protex.sdk.version>7.2.0-SNAPSHOT</protex.sdk.version>
+		<codecenter.sdk.version>7.1.x</codecenter.sdk.version>
 		<!-- Common Framework Version -->
 		<common.framework.version>1.6.0-SNAPSHOT</common.framework.version>
 	</properties>
@@ -74,10 +74,10 @@
 			<artifactId>protex-sdk-client</artifactId>
 			<version>${protex.sdk.version}</version>
 		</dependency>
-		<dependency>
+		<dependency>		
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
-			<artifactId>codecenter-sdk-utilities</artifactId>
-			<version>${codecenter.sdk.version}</version>
+			<artifactId>codecenter-sdk-utilities</artifactId>		
+			<version>7.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
@@ -214,6 +214,16 @@
 	</build>
 	
 	<repositories>
+		<repository>
+			<id>bds-test-forsdk</id>
+			<name>BDS Test</name>
+			<url>http://artifactory.blackducksoftware.com/artifactory/bds-protex-test/</url>
+		</repository>
+			<repository>
+			<id>product-protex</id>
+			<name>Product Protex</name>
+			<url>http://artifactory.blackducksoftware.com/artifactory/product-protex</url>
+		</repository>
 		<repository>
 			<id>bintray-bds-tools</id>
 			<name>BDS Bintray for Common Framework</name>

@@ -1,21 +1,24 @@
 /*******************************************************************************
  * Copyright (C) 2015 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter;
+
+import java.util.List;
+import java.util.Map;
 
 import com.blackducksoftware.sdk.codecenter.application.ApplicationApi;
 import com.blackducksoftware.sdk.codecenter.attribute.AttributeApi;
@@ -27,6 +30,7 @@ import com.blackducksoftware.sdk.codecenter.settings.SettingsApi;
 import com.blackducksoftware.sdk.codecenter.user.UserApi;
 import com.blackducksoftware.sdk.codecenter.vulnerability.VulnerabilityApi;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
+import com.blackducksoftware.tools.commonframework.core.config.SSOBean;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
 import com.blackducksoftware.tools.connector.protex.APIWrapper;
 
@@ -63,31 +67,29 @@ public class CodeCenterAPIWrapper extends APIWrapper {
     public CodeCenterAPIWrapper(ServerBean bean, ConfigurationManager manager)
             throws Exception {
         super(manager, bean);
-        getAllApis(bean.getServerName(), bean.getUserName(), bean.getPassword());
+        getAllApis(bean, manager);
     }
 
-    private void getAllApis(String server, String user, String password)
+    private void getAllApis(ServerBean bean, ConfigurationManager manager)
             throws Exception {
         String errorMessage = "";
         try {
-            ccProxy = new CodeCenterServerProxyV7_0(server, user, password);
+            ccProxy = new CodeCenterServerProxyV7_0(bean.getServerName(), bean.getUserName(), bean.getPassword());
 
-            vulnerabilityApi = super.disableCertificateCheck(
-                    ccProxy.getVulnerabilityApi(), VulnerabilityApi.class);
-            applicationApi = super.disableCertificateCheck(
-                    ccProxy.getApplicationApi(), ApplicationApi.class);
-            externalIdApi = super.disableCertificateCheck(
-                    ccProxy.getExternalIdApi(), ExternalIdApi.class);
-            userApi = super.disableCertificateCheck(ccProxy.getUserApi(),
-                    UserApi.class);
-            colaApi = super.disableCertificateCheck(ccProxy.getColaApi(),
-                    ColaApi.class);
-            attributeApi = super.disableCertificateCheck(
-                    ccProxy.getAttributeApi(), AttributeApi.class);
-            requestApi = super.disableCertificateCheck(ccProxy.getRequestApi(),
-                    RequestApi.class);
-            settingsApi = super.disableCertificateCheck(
-                    ccProxy.getSettingsApi(), SettingsApi.class);
+            // Optional SSO -- sets the auth methods
+            SSOBean ssoBean = manager.getSsoBean();
+            Map<String, List<String>> cookies = getAuthCookies(ssoBean);
+            ccProxy.setRequestHeaders(cookies);
+
+            // Get all the APIs
+            vulnerabilityApi = ccProxy.getVulnerabilityApi();
+            applicationApi = ccProxy.getApplicationApi();
+            externalIdApi = ccProxy.getExternalIdApi();
+            userApi = ccProxy.getUserApi();
+            colaApi = ccProxy.getColaApi();
+            attributeApi = ccProxy.getAttributeApi();
+            requestApi = ccProxy.getRequestApi();
+            settingsApi = ccProxy.getSettingsApi();
 
         } catch (Exception e) {
             errorMessage = e.getMessage();
