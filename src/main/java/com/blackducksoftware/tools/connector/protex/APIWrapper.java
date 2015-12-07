@@ -165,7 +165,7 @@ public abstract class APIWrapper implements IAPIWrapper {
             if (ssoBean.getTrustStorePassword() != null) {
                 System.setProperty(SSOBean.SSO_TRUST_STORE_PASSWORD, ssoBean.getTrustStorePassword());
             }
-            if (ssoBean.getKeyStoreType() != null) {
+            if (ssoBean.getTrustStoreType() != null) {
                 System.setProperty(SSOBean.SSO_TRUST_STORE_TYPE, ssoBean.getTrustStoreType());
             }
 
