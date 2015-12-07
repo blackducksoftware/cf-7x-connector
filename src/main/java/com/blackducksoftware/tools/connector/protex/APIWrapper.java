@@ -150,16 +150,29 @@ public abstract class APIWrapper implements IAPIWrapper {
     public void setSSOInformation(SSOBean ssoBean) {
         if (ssoBean.isInitialized())
         {
-            System.setProperty(SSOBean.SSO_KEY_STORE_PATH, ssoBean.getKeyStorePath());
-            System.setProperty(SSOBean.SSO_KEY_STORE_PASSWORD, ssoBean.getKeyStorePassword());
-            System.setProperty(SSOBean.SSO_KEY_STORE_TYPE, ssoBean.getKeyStoreType());
-            System.setProperty(SSOBean.SSO_TRUST_STORE_PATH, ssoBean.getTrustStorePath());
-            System.setProperty(SSOBean.SSO_TRUST_STORE_PASSWORD, ssoBean.getTrustStorePassword());
-            System.setProperty(SSOBean.SSO_TRUST_STORE_TYPE, ssoBean.getTrustStoreType());
+            if (ssoBean.getKeyStorePath() != null) {
+                System.setProperty(SSOBean.SSO_KEY_STORE_PATH, ssoBean.getKeyStorePath());
+            }
+            if (ssoBean.getKeyStorePassword() != null) {
+                System.setProperty(SSOBean.SSO_KEY_STORE_PASSWORD, ssoBean.getKeyStorePassword());
+            }
+            if (ssoBean.getKeyStoreType() != null) {
+                System.setProperty(SSOBean.SSO_KEY_STORE_TYPE, ssoBean.getKeyStoreType());
+            }
+            if (ssoBean.getTrustStorePath() != null) {
+                System.setProperty(SSOBean.SSO_TRUST_STORE_PATH, ssoBean.getTrustStorePath());
+            }
+            if (ssoBean.getTrustStorePassword() != null) {
+                System.setProperty(SSOBean.SSO_TRUST_STORE_PASSWORD, ssoBean.getTrustStorePassword());
+            }
+            if (ssoBean.getKeyStoreType() != null) {
+                System.setProperty(SSOBean.SSO_TRUST_STORE_TYPE, ssoBean.getTrustStoreType());
+            }
+
             log.info("System properties now have the following SSL Properties");
+
             log.info(System.getProperty(SSOBean.SSO_KEY_STORE_PATH));
             log.info(System.getProperty(SSOBean.SSO_KEY_STORE_TYPE));
-
             log.info(System.getProperty(SSOBean.SSO_TRUST_STORE_PATH));
             log.info(System.getProperty(SSOBean.SSO_TRUST_STORE_TYPE));
         }
