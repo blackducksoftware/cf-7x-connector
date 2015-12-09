@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.blackducksoftware.tools</groupId>
 	<artifactId>cf-7x-connector</artifactId>
-	<version>1.4.0-SNAPSHOT-SSO-V3</version>
+	<version>1.4.0</version>
 
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>
@@ -30,10 +30,10 @@
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 
 		<!-- Protex, Code Center SDK versions -->
-		<protex.sdk.version>7.2.0-SNAPSHOT</protex.sdk.version>
-		<codecenter.sdk.version>7.1.x</codecenter.sdk.version>
+		<protex.sdk.version>7.2.0</protex.sdk.version>
+		<codecenter.sdk.version>7.1.0</codecenter.sdk.version>
 		<!-- Common Framework Version -->
-		<common.framework.version>1.6.0-SNAPSHOT</common.framework.version>
+		<common.framework.version>1.6.0</common.framework.version>
 	</properties>
 
 	<dependencies>
@@ -77,7 +77,7 @@
 		<dependency>		
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
 			<artifactId>codecenter-sdk-utilities</artifactId>		
-			<version>7.1.2</version>
+			<version>7.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
