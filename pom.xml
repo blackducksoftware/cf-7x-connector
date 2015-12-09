@@ -35,20 +35,6 @@
 		<!-- Common Framework Version -->
 		<common.framework.version>1.6.0</common.framework.version>
 	</properties>
-	<dependencyManagement>
-	<dependencies>
-		<dependency>
-			<groupId>com.blackducksoftware.protex.sdkclient</groupId>
-			<artifactId>protex-sdk-client</artifactId>
-			<version>7.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.blackducksoftware.protex.sdkclient</groupId>
-			<artifactId>protex-sdk-utilities</artifactId>
-			<version>7.2.0</version>
-		</dependency>
-	</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -88,10 +74,10 @@
 			<artifactId>protex-sdk-client</artifactId>
 			<version>${protex.sdk.version}</version>
 		</dependency>
-		<dependency>		
+		<dependency>
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
-			<artifactId>codecenter-sdk-utilities</artifactId>		
-			<version>7.1.0</version>
+			<artifactId>codecenter-sdk-utilities</artifactId>
+			<version>${codecenter.sdk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
@@ -226,18 +212,8 @@
 		</plugins>
 
 	</build>
-	
+
 	<repositories>
-		<repository>
-			<id>bds-test-forsdk</id>
-			<name>BDS Test</name>
-			<url>http://artifactory.blackducksoftware.com/artifactory/bds-protex-test/</url>
-		</repository>
-			<repository>
-			<id>product-protex</id>
-			<name>Product Protex</name>
-			<url>http://artifactory.blackducksoftware.com/artifactory/product-protex</url>
-		</repository>
 		<repository>
 			<id>bintray-bds-tools</id>
 			<name>BDS Bintray for Common Framework</name>
@@ -249,7 +225,9 @@
 			<url>http://dl.bintray.com/bds/sdk</url>
 		</repository>
 	</repositories>
-	
+
+<!--  Install archives into local Black Duck repo -->
+
 	<distributionManagement>
 
 		<repository>
