@@ -5,32 +5,39 @@ import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 /**
  * A Protex server name, url, and ProtexServerWrapper.
- *
+ * 
  * @author sbillings
- *
+ * 
  */
 public class NamedProtexServer {
     private final String name;
-    private final String url;
+
+    private String url;
+
     private final ProtexServerWrapper<ProtexProjectPojo> psw;
 
     public NamedProtexServer(String name, String url,
-	    ProtexServerWrapper<ProtexProjectPojo> psw) {
-	this.name = name;
-	this.url = url;
-	this.psw = psw;
+            ProtexServerWrapper<ProtexProjectPojo> psw) {
+        this.name = name;
+        this.url = url;
+        this.psw = psw;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public String getUrl() {
-	return url;
+        return url;
+    }
+
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 
     public ProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper() {
-	return psw;
+        return psw;
     }
 
 }

@@ -39,16 +39,18 @@ import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 public class ProtexServerManager implements IProtexServerManager {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+            .getName());
 
     private final CodeCenterAPIWrapper ccApiWrapper;
+
     private final ConfigurationManager config;
+
     private final Map<String, NamedProtexServer> protexServerCache = new HashMap<>();
 
     public ProtexServerManager(CodeCenterAPIWrapper ccApiWrapper,
-	    ConfigurationManager config) {
-	this.ccApiWrapper = ccApiWrapper;
-	this.config = config;
+            ConfigurationManager config) {
+        this.ccApiWrapper = ccApiWrapper;
+        this.config = config;
     }
 
     /**
@@ -61,30 +63,30 @@ public class ProtexServerManager implements IProtexServerManager {
      */
     @Override
     public void validateServers() throws CommonFrameworkException {
-	if (!(config instanceof CcConfigMgrWithPtxServers)) {
-	    throw new CommonFrameworkException(
-		    "To use the ProtexServerManager, you must pass a configuration manager object that implements CcConfigMgrWithPtxServers");
-	}
-	CcConfigMgrWithPtxServers configWithPtxServers = (CcConfigMgrWithPtxServers) config;
-	List<String> pxServerValidationList = getPxServerValidationList(configWithPtxServers);
-	for (String protexServerName : pxServerValidationList) {
-	    connectToServerAndCacheIt(protexServerName);
-	    log.info("Connected to Protex server: " + protexServerName);
-	}
+        if (!(config instanceof CcConfigMgrWithPtxServers)) {
+            throw new CommonFrameworkException(
+                    "To use the ProtexServerManager, you must pass a configuration manager object that implements CcConfigMgrWithPtxServers");
+        }
+        CcConfigMgrWithPtxServers configWithPtxServers = (CcConfigMgrWithPtxServers) config;
+        List<String> pxServerValidationList = getPxServerValidationList(configWithPtxServers);
+        for (String protexServerName : pxServerValidationList) {
+            connectToServerAndCacheIt(protexServerName);
+            log.info("Connected to Protex server: " + protexServerName);
+        }
     }
 
     private List<String> getPxServerValidationList(
-	    CcConfigMgrWithPtxServers config) {
-	List<String> ccProtexServerNames;
+            CcConfigMgrWithPtxServers config) {
+        List<String> ccProtexServerNames;
 
-	String nameListString = config.getPxServerValidationList();
-	if ((nameListString == null) || (nameListString.length() == 0)) {
-	    ccProtexServerNames = new ArrayList<String>(0);
-	} else {
-	    String[] nameArray = nameListString.split(",");
-	    ccProtexServerNames = Arrays.asList(nameArray);
-	}
-	return ccProtexServerNames;
+        String nameListString = config.getPxServerValidationList();
+        if ((nameListString == null) || (nameListString.length() == 0)) {
+            ccProtexServerNames = new ArrayList<String>(0);
+        } else {
+            String[] nameArray = nameListString.split(",");
+            ccProtexServerNames = Arrays.asList(nameArray);
+        }
+        return ccProtexServerNames;
     }
 
     /**
@@ -99,15 +101,15 @@ public class ProtexServerManager implements IProtexServerManager {
      */
     @Override
     public ProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper(
-	    String serverName) throws CommonFrameworkException {
-	NamedProtexServer namedServer;
-	if (protexServerCache.containsKey(serverName)) {
-	    namedServer = protexServerCache.get(serverName);
-	} else {
-	    namedServer = connectToServerAndCacheIt(serverName);
-	}
+            String serverName) throws CommonFrameworkException {
+        NamedProtexServer namedServer;
+        if (protexServerCache.containsKey(serverName)) {
+            namedServer = protexServerCache.get(serverName);
+        } else {
+            namedServer = connectToServerAndCacheIt(serverName);
+        }
 
-	return namedServer.getProtexServerWrapper();
+        return namedServer.getProtexServerWrapper();
     }
 
     /**
@@ -115,17 +117,18 @@ public class ProtexServerManager implements IProtexServerManager {
      */
     @Override
     public List<String> getAllProtexNames() throws CommonFrameworkException {
-	List<String> protexNames = new ArrayList<String>();
-	if (protexServerCache.size() == 0)
-	    throw new CommonFrameworkException(
-		    "No Protex servers cached, did you initialize?");
+        List<String> protexNames = new ArrayList<String>();
+        if (protexServerCache.size() == 0) {
+            throw new CommonFrameworkException(
+                    "No Protex servers cached, did you initialize?");
+        }
 
-	for (NamedProtexServer namedProtex : protexServerCache.values()) {
-	    protexNames.add(namedProtex.getName());
+        for (NamedProtexServer namedProtex : protexServerCache.values()) {
+            protexNames.add(namedProtex.getName());
 
-	}
+        }
 
-	return protexNames;
+        return protexNames;
     }
 
     // Private methods
@@ -138,36 +141,36 @@ public class ProtexServerManager implements IProtexServerManager {
      * @throws CommonFrameworkException
      */
     private NamedProtexServer connectToServerAndCacheIt(String protexServerName)
-	    throws CommonFrameworkException {
-	ServerNameToken serverNameToken = new ServerNameToken();
-	serverNameToken.setName(protexServerName);
-	ProtexServer protexServer;
-	try {
-	    protexServer = ccApiWrapper.getSettingsApi().getServerDetails(
-		    serverNameToken);
-	} catch (SdkFault e) {
-	    throw new CommonFrameworkException(
-		    "Error looking up in Code Center settings the Protex server named "
-			    + protexServerName + ": " + e.getMessage());
-	}
-	String protexUrl = protexServer.getHostAddress();
-	ProtexServerWrapper<ProtexProjectPojo> psw;
+            throws CommonFrameworkException {
+        ServerNameToken serverNameToken = new ServerNameToken();
+        serverNameToken.setName(protexServerName);
+        ProtexServer protexServer;
+        try {
+            protexServer = ccApiWrapper.getSettingsApi().getServerDetails(
+                    serverNameToken);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException(
+                    "Error looking up in Code Center settings the Protex server named "
+                            + protexServerName + ": " + e.getMessage());
+        }
+        String protexUrl = protexServer.getHostAddress();
+        ProtexServerWrapper<ProtexProjectPojo> psw;
 
-	ConfigurationManager protexConfig = createProtexConfig(config,
-		protexUrl);
-	try {
-	    psw = new ProtexServerWrapper<ProtexProjectPojo>(
-		    protexConfig.getServerBean(), protexConfig, true);
-	} catch (Exception e) {
-	    throw new CommonFrameworkException(
-		    "Error connecting to the Protex server named (in Code Center settings) "
-			    + protexServerName + " with URL " + protexUrl
-			    + ": " + e.getMessage());
-	}
-	NamedProtexServer namedServer = new NamedProtexServer(protexServerName,
-		protexUrl, psw);
-	protexServerCache.put(protexServerName, namedServer);
-	return namedServer;
+        ConfigurationManager protexConfig = createProtexConfig(config,
+                protexUrl);
+        try {
+            psw = new ProtexServerWrapper<ProtexProjectPojo>(
+                    protexConfig.getServerBean(), protexConfig, true);
+        } catch (Exception e) {
+            throw new CommonFrameworkException(
+                    "Error connecting to the Protex server named (in Code Center settings) "
+                            + protexServerName + " with URL " + protexUrl
+                            + ": " + e.getMessage());
+        }
+        NamedProtexServer namedServer = new NamedProtexServer(protexServerName,
+                protexUrl, psw);
+        protexServerCache.put(protexServerName, namedServer);
+        return namedServer;
     }
 
     /**
@@ -179,17 +182,52 @@ public class ProtexServerManager implements IProtexServerManager {
      * @return
      */
     private ConfigurationManager createProtexConfig(
-	    IConfigurationManager ccConfig, String protexUrl) {
-	Properties props = new Properties();
-	props.setProperty("protex.server.name", protexUrl);
-	props.setProperty("protex.user.name", ccConfig.getServerBean()
-		.getUserName());
-	props.setProperty("protex.password", ccConfig.getServerBean()
-		.getPassword());
+            IConfigurationManager ccConfig, String protexUrl) {
+        Properties props = new Properties();
+        props.setProperty("protex.server.name", protexUrl);
+        props.setProperty("protex.user.name", ccConfig.getServerBean()
+                .getUserName());
+        props.setProperty("protex.password", ccConfig.getServerBean()
+                .getPassword());
 
-	ConfigurationManager protexConfig = new ProtexConfigurationManager(
-		props);
-	return protexConfig;
+        ConfigurationManager protexConfig = new ProtexConfigurationManager(
+                props);
+        return protexConfig;
+    }
+
+    /*
+     * (non-JSDoc)
+     * 
+     * @see
+     * com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager#getNamedProtexServer(java
+     * .lang.String)
+     */
+    @Override
+    public NamedProtexServer getNamedProtexServer(String key) throws CommonFrameworkException {
+        NamedProtexServer namedProtex = protexServerCache.get(key);
+        if (namedProtex == null) {
+            throw new CommonFrameworkException("No Protex instance found with name: " + key);
+        }
+
+        return namedProtex;
+    }
+
+    /*
+     * (non-JSDoc)
+     * 
+     * @see
+     * com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager#setNamedProtexServer(com.
+     * blackducksoftware.tools.connector.codecenter.protexservers.NamedProtexServer)
+     */
+    @Override
+    public void setNamedProtexServer(NamedProtexServer server, String key) throws CommonFrameworkException {
+        NamedProtexServer protexServer = protexServerCache.remove(key);
+        if (protexServer == null) {
+            throw new CommonFrameworkException("Attempted to update non existing Protex instance with key: " + key);
+        }
+        protexServerCache.put(key, server);
+        connectToServerAndCacheIt(key);
+
     }
 
 }

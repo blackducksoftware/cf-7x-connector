@@ -32,7 +32,7 @@ public interface IProtexServerManager {
      * @throws CommonFrameworkException
      */
     IProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper(
-	    String serverName) throws CommonFrameworkException;
+            String serverName) throws CommonFrameworkException;
 
     /**
      * Returns the list of cached Protex server names
@@ -41,4 +41,23 @@ public interface IProtexServerManager {
      * @throws CommonFrameworkException
      */
     List<String> getAllProtexNames() throws CommonFrameworkException;
+
+    /**
+     * Gets a specific NamedProtexServer based on a 'key'
+     * 
+     * @param key
+     * @return
+     * @throws CommonFrameworkException
+     */
+    NamedProtexServer getNamedProtexServer(String key) throws CommonFrameworkException;
+
+    /**
+     * Sets a Named Protex Server back into the cache
+     * 
+     * @param server
+     * @parem key - Named of Protex configured instance
+     * @throws CommonFrameworkException
+     */
+    void setNamedProtexServer(NamedProtexServer server, String key) throws CommonFrameworkException;
+
 }
