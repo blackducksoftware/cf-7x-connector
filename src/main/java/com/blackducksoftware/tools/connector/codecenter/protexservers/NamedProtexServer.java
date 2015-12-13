@@ -1,7 +1,7 @@
 package com.blackducksoftware.tools.connector.codecenter.protexservers;
 
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
-import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
 
 /**
  * A Protex server name, url, and ProtexServerWrapper.
@@ -14,10 +14,10 @@ public class NamedProtexServer {
 
     private String url;
 
-    private final ProtexServerWrapper<ProtexProjectPojo> psw;
+    private final IProtexServerWrapper<ProtexProjectPojo> psw;
 
     public NamedProtexServer(String name, String url,
-            ProtexServerWrapper<ProtexProjectPojo> psw) {
+            IProtexServerWrapper<ProtexProjectPojo> psw) {
         this.name = name;
         this.url = url;
         this.psw = psw;
@@ -36,7 +36,7 @@ public class NamedProtexServer {
         this.url = url;
     }
 
-    public ProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper() {
+    public IProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper() {
         return psw;
     }
 

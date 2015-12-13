@@ -18,6 +18,7 @@ import com.blackducksoftware.tools.commonframework.core.config.IConfigurationMan
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
+import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
 import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 /**
@@ -100,7 +101,7 @@ public class ProtexServerManager implements IProtexServerManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public ProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper(
+    public IProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper(
             String serverName) throws CommonFrameworkException {
         NamedProtexServer namedServer;
         if (protexServerCache.containsKey(serverName)) {
@@ -212,12 +213,9 @@ public class ProtexServerManager implements IProtexServerManager {
         return namedProtex;
     }
 
-    /*
-     * (non-JSDoc)
-     * 
-     * @see
-     * com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager#setNamedProtexServer(com.
-     * blackducksoftware.tools.connector.codecenter.protexservers.NamedProtexServer)
+    /**
+     * Sets the NamedProtexServer (overriding existing values)
+     * Connects and caches it.
      */
     @Override
     public void setNamedProtexServer(NamedProtexServer server, String key) throws CommonFrameworkException {
