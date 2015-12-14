@@ -17,12 +17,18 @@ import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
  */
 public interface IProtexServerManager {
 
+    public static boolean CACHE_FAILED = true;
+
+    public static boolean CACHE_SUCCESS = false;
+
     /**
      * Validate the Protex servers named in the configuration.
      * 
+     * @param cacheFailedConnections
+     *            - Caches those connections that failed (useful in case of reinjection)
      * @throws CommonFrameworkException
      */
-    void validateServers() throws CommonFrameworkException;
+    void validateServers(boolean cacheFailedConnections) throws CommonFrameworkException;
 
     /**
      * Get the ProtexServerWrapper for the given Protex Server.

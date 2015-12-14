@@ -63,7 +63,7 @@ public class ProtexServerManager implements IProtexServerManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public void validateServers() throws CommonFrameworkException {
+    public void validateServers(boolean cacheFailedConnections) throws CommonFrameworkException {
         if (!(config instanceof CcConfigMgrWithPtxServers)) {
             throw new CommonFrameworkException(
                     "To use the ProtexServerManager, you must pass a configuration manager object that implements CcConfigMgrWithPtxServers");
@@ -71,7 +71,7 @@ public class ProtexServerManager implements IProtexServerManager {
         CcConfigMgrWithPtxServers configWithPtxServers = (CcConfigMgrWithPtxServers) config;
         List<String> pxServerValidationList = getPxServerValidationList(configWithPtxServers);
         for (String protexServerName : pxServerValidationList) {
-            connectToServerAndCacheIt(protexServerName);
+            connectToServerAndCacheIt(protexServerName, cacheFailedConnections);
             log.info("Connected to Protex server: " + protexServerName);
         }
     }
@@ -107,7 +107,7 @@ public class ProtexServerManager implements IProtexServerManager {
         if (protexServerCache.containsKey(serverName)) {
             namedServer = protexServerCache.get(serverName);
         } else {
-            namedServer = connectToServerAndCacheIt(serverName);
+            namedServer = connectToServerAndCacheIt(serverName, IProtexServerManager.CACHE_SUCCESS);
         }
 
         return namedServer.getProtexServerWrapper();
@@ -138,24 +138,39 @@ public class ProtexServerManager implements IProtexServerManager {
      * Connect to a given Protex server.
      * 
      * @param protexServerName
+     * @param cacheFailedConnections
      * @return
      * @throws CommonFrameworkException
      */
-    private NamedProtexServer connectToServerAndCacheIt(String protexServerName)
+    private NamedProtexServer connectToServerAndCacheIt(String protexServerName, boolean cacheFailedConnections)
             throws CommonFrameworkException {
-        ServerNameToken serverNameToken = new ServerNameToken();
-        serverNameToken.setName(protexServerName);
-        ProtexServer protexServer;
-        try {
-            protexServer = ccApiWrapper.getSettingsApi().getServerDetails(
-                    serverNameToken);
-        } catch (SdkFault e) {
-            throw new CommonFrameworkException(
-                    "Error looking up in Code Center settings the Protex server named "
-                            + protexServerName + ": " + e.getMessage());
+        // First we attempt to look up the cache, just in case previous failed connections reside here.
+        NamedProtexServer namedProtexServer = protexServerCache.get(protexServerName);
+        String protexUrl = null;
+        if (namedProtexServer == null)
+        {
+            ServerNameToken serverNameToken = new ServerNameToken();
+            serverNameToken.setName(protexServerName);
+            ProtexServer protexServer;
+            try {
+                protexServer = ccApiWrapper.getSettingsApi().getServerDetails(
+                        serverNameToken);
+            } catch (SdkFault e) {
+                throw new CommonFrameworkException(
+                        "Error looking up in Code Center settings the Protex server named "
+                                + protexServerName + ": " + e.getMessage());
+            }
+            protexUrl = protexServer.getHostAddress();
+            log.info("Derived URL from Code Center for Protex instance: " + protexUrl);
         }
-        String protexUrl = protexServer.getHostAddress();
-        ProtexServerWrapper<ProtexProjectPojo> psw;
+        // If exists, then use the existing one.
+        else
+        {
+            protexUrl = namedProtexServer.getUrl();
+            log.info("Using cached URL for Protex instance: " + protexUrl);
+        }
+
+        ProtexServerWrapper<ProtexProjectPojo> psw = null;
 
         ConfigurationManager protexConfig = createProtexConfig(config,
                 protexUrl);
@@ -163,10 +178,17 @@ public class ProtexServerManager implements IProtexServerManager {
             psw = new ProtexServerWrapper<ProtexProjectPojo>(
                     protexConfig.getServerBean(), protexConfig, true);
         } catch (Exception e) {
-            throw new CommonFrameworkException(
-                    "Error connecting to the Protex server named (in Code Center settings) "
-                            + protexServerName + " with URL " + protexUrl
-                            + ": " + e.getMessage());
+            if (!cacheFailedConnections)
+            {
+                throw new CommonFrameworkException(
+                        "Error connecting to the Protex server named (in Code Center settings) "
+                                + protexServerName + " with URL " + protexUrl
+                                + ": " + e.getMessage());
+            }
+            else
+            {
+                log.warn("Connection failed, but proceeding with caching this Protex instance");
+            }
         }
         NamedProtexServer namedServer = new NamedProtexServer(protexServerName,
                 protexUrl, psw);
@@ -224,7 +246,7 @@ public class ProtexServerManager implements IProtexServerManager {
             throw new CommonFrameworkException("Attempted to update non existing Protex instance with key: " + key);
         }
         protexServerCache.put(key, server);
-        connectToServerAndCacheIt(key);
+        connectToServerAndCacheIt(key, IProtexServerManager.CACHE_SUCCESS);
 
     }
 
