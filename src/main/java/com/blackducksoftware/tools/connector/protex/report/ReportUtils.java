@@ -60,6 +60,16 @@ public class ReportUtils {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
             .getName());
 
+    private Integer chunkingSize = 0;
+
+    public Integer getChunkingSize() {
+        return chunkingSize;
+    }
+
+    public void setChunkingSize(Integer chunkingSize) {
+        this.chunkingSize = chunkingSize;
+    }
+
     /**
      * Get a Protex report in the form of a workbook, fetching sections one at a
      * time.
@@ -248,20 +258,18 @@ public class ReportUtils {
                     sectionType.name());
 
             try {
-
                 ReportPojo report = protexServerWrapper.getReportManager()
                         .generateAdHocProjectReportSingleSection(
                                 project.getProjectKey(), sectionType,
                                 sectionType.name(), reportSection,
                                 reportFormat, false);
 
-                returnRows = csvProcessor.getRows(report, adHocClass);
+                returnRows = csvProcessor.getRows(report, adHocClass, getChunkingSize());
 
             } catch (Exception e) {
                 throw new Exception(e.getMessage());
             }
         }
-
         return returnRows;
     }
 
