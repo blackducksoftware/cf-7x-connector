@@ -229,7 +229,7 @@
 	
 	<repositories>
 			<repository>
-			<id>product-protex</id>
+			<id>soleng</id>
 			<name>Product Protex</name>
 			<url>http://artifactory.blackducksoftware.com/artifactory/soleng</url>
 		</repository>
