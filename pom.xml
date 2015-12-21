@@ -228,7 +228,7 @@
 	</build>
 	
 	<repositories>
-			<repository>
+		<repository>
 			<id>soleng</id>
 			<name>Product Protex</name>
 			<url>http://artifactory.blackducksoftware.com/artifactory/soleng</url>
