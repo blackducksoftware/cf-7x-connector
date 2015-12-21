@@ -228,15 +228,10 @@
 	</build>
 	
 	<repositories>
-		<repository>
-			<id>bds-test-forsdk</id>
-			<name>BDS Test</name>
-			<url>http://artifactory.blackducksoftware.com/artifactory/bds-protex-test/</url>
-		</repository>
 			<repository>
 			<id>product-protex</id>
 			<name>Product Protex</name>
-			<url>http://artifactory.blackducksoftware.com/artifactory/product-protex</url>
+			<url>http://artifactory.blackducksoftware.com/artifactory/soleng</url>
 		</repository>
 		<repository>
 			<id>bintray-bds-tools</id>
