@@ -81,7 +81,7 @@ public class ProtexReportCSVProcessor<T extends HocElement> {
             log.info("CSV parsed, found following number of rows: "
                     + parsedRows.size());
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw e;
         }
 
         return parsedRows;
@@ -151,7 +151,7 @@ public class ProtexReportCSVProcessor<T extends HocElement> {
             log.info("CSV partially parsed, found following number of rows: "
                     + parsedRows.size());
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw e;
         }
 
         return parsedRows;
