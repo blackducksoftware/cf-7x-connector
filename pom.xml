@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.blackducksoftware.tools</groupId>
 	<artifactId>cf-7x-connector</artifactId>
-	<version>1.4.2-SNAPSHOT</version>
+	<version>1.4.3-SNAPSHOT</version>
 
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>
@@ -33,7 +33,7 @@
 		<protex.sdk.version>7.2.0</protex.sdk.version>
 		<codecenter.sdk.version>7.1.0</codecenter.sdk.version>
 		<!-- Common Framework Version -->
-		<common.framework.version>1.6.2-SNAPSHOT</common.framework.version>
+		<common.framework.version>1.6.2</common.framework.version>
 	</properties>
 	<dependencyManagement>
 	<dependencies>
