@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2015 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -39,9 +39,9 @@ import com.univocity.parsers.csv.CsvParserSettings;
 /**
  * Current version does not collect headers because our CSV files do not contain
  * any. Awaiting 7.1 Protex.
- * 
+ *
  * @author akamen
- * 
+ *
  * @param <T>
  */
 public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
@@ -90,7 +90,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     /**
      * Cleans up the section name by removing all spaces and underscores and
      * flatterning the capitalization
-     * 
+     *
      * @param sectionName2
      * @return
      */
@@ -107,7 +107,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     /**
      * Returns ALL the rows for a report filtered for that report section. The
      * section is specified within the Report object.
-     * 
+     *
      * @param report
      * @param tempHeader
      * @return
@@ -132,7 +132,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     /**
      * Generates the header coordinates Requires at least Protex 7.1 to work
      * (https://jira/browse/PROTEX-18812)
-     * 
+     *
      * @param chunking
      *            - not supported
      * @return
@@ -185,7 +185,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
      * Find the header in the CSV The expectation is that a row exists with the
      * first column value set to: <sectionName+header> Will iterate through all
      * rows until it finds something.
-     * 
+     *
      * @param reader
      * @return
      * @throws Exception
@@ -236,7 +236,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
                     headerRow.setPair(key, value);
                     headerRow.setCoordinate(position++, key);
                 }
-                log.info("Parsed all header rows, count: " + headerRow.getSize());
+                log.debug("Parsed all header rows, count: " + headerRow.getSize());
                 headerRow.setIsVertical(true);
                 return headerRow;
             }
@@ -247,7 +247,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
 
     /**
      * Removes null cells which
-     * 
+     *
      * @param potentialRow
      * @return
      */
@@ -271,7 +271,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
      * those that rows that have the first column match the name of the section
      * 2) Start the data on Column 1. 3) The name of the header is just the
      * position
-     * 
+     *
      * @param header
      * @return
      * @throws Exception
@@ -303,7 +303,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
                 String[] record;
                 while ((record = reader.parseNext()) != null) {
                     allRows.add(record);
-                    log.info("Parsed all rows, count: " + allRows.size());
+                    log.debug("Parsed all rows, count: " + allRows.size());
                 }
             } catch (Exception e) {
                 log.error("Error parsing next record: " + e.getMessage());
@@ -327,7 +327,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
         }
 
         try {
-            boolean isHeaderVertical = header.isVertical(); 
+            boolean isHeaderVertical = header.isVertical();
             T adHocRow = generateNewInstance(hocElementClass);
             // At this point, due to previous header processing we should be
             // jumping directly into the content.
@@ -395,7 +395,7 @@ public class AdHocCSVParser<T extends HocElement> extends AdHocParser<T> {
     /**
      * Determines what kind of header we have. Vertical header is unconventional
      * and would only happen if no coordinates are assigned.
-     * 
+     *
      * @param header
      * @return
      */
