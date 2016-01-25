@@ -33,6 +33,8 @@ import com.blackducksoftware.tools.connector.codecenter.externalId.IExternalIdMa
 import com.blackducksoftware.tools.connector.codecenter.license.LicenseManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.ProtexServerManager;
+import com.blackducksoftware.tools.connector.codecenter.user.CodeCenterUserManager;
+import com.blackducksoftware.tools.connector.codecenter.user.ICodeCenterUserManager;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 
@@ -56,6 +58,8 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 
     private final ICodeCenterComponentManager componentManager;
 
+    private final ICodeCenterUserManager userManager;
+
     /** The config manager. */
     private final ConfigurationManager configManager;
 
@@ -67,6 +71,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
         // Low-level managers, no dependencies on other managers
         licenseManager = new LicenseManager(apiWrapper);
         attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
+        userManager = new CodeCenterUserManager(apiWrapper);
 
         // Higher-level managers with dependencies on other managers
         componentManager = new ComponentManager(apiWrapper,
@@ -133,5 +138,10 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
     @Override
     public ICodeCenterComponentManager getComponentManager() {
         return componentManager;
+    }
+
+    @Override
+    public ICodeCenterUserManager getUserManager() {
+        return userManager;
     }
 }

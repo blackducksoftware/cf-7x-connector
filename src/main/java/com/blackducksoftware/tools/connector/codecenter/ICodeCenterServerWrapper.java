@@ -5,6 +5,7 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefi
 import com.blackducksoftware.tools.connector.codecenter.component.ICodeCenterComponentManager;
 import com.blackducksoftware.tools.connector.codecenter.externalId.IExternalIdManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager;
+import com.blackducksoftware.tools.connector.codecenter.user.ICodeCenterUserManager;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 import com.blackducksoftware.tools.connector.protex.IServerWrapper;
@@ -69,4 +70,11 @@ public interface ICodeCenterServerWrapper extends IServerWrapper {
      * @return
      */
     ICodeCenterComponentManager getComponentManager();
+
+    /**
+     * Get the CodeCenterUserManager for this Code Center connection.
+     * 
+     * @return
+     */
+    ICodeCenterUserManager getUserManager();
 }
