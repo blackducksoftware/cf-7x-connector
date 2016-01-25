@@ -13,6 +13,7 @@ import javax.activation.DataHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.blackducksoftware.sdk.codecenter.application.ApplicationApi;
 import com.blackducksoftware.sdk.codecenter.application.data.Application;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationAttachment;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationAttachmentCreate;
@@ -27,6 +28,11 @@ import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestSummary;
 import com.blackducksoftware.sdk.codecenter.role.data.ApplicationRoleAssignment;
+import com.blackducksoftware.sdk.codecenter.role.data.RoleIdToken;
+import com.blackducksoftware.sdk.codecenter.role.data.RoleNameOrIdToken;
+import com.blackducksoftware.sdk.codecenter.role.data.RoleNameToken;
+import com.blackducksoftware.sdk.codecenter.user.data.UserIdToken;
+import com.blackducksoftware.sdk.codecenter.user.data.UserNameOrIdToken;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
@@ -396,6 +402,127 @@ public class ApplicationManager implements IApplicationManager {
         return appUsers;
     }
 
+    /**
+     * Add the given list of users to the given application, each with the given roles.
+     *
+     * @param appId
+     *            Application ID
+     * @param userIds
+     *            User IDs
+     * @param roleNames
+     *            Role names
+     * @param circumventLock
+     *            if true: if application is locked, unlock it, add users, re-lock it
+     * @throws CommonFrameworkException
+     */
+    @Override
+    public void addUsersToApplicationTeam(String appId, List<String> userIds, List<String> roleNames,
+            boolean circumventLock)
+            throws CommonFrameworkException {
+
+        Application app = getSdkApplicationByIdCached(appId);
+        boolean origLockValue = app.isLocked();
+
+        if (origLockValue) {
+            if (!circumventLock) {
+                throw new CommonFrameworkException("Error adding user(s) to application " + app.getName() +
+                        " / " + app.getVersion() + ": Application is locked");
+            } else {
+                try {
+                    lock(app, false); // unlock
+                } catch (SdkFault e) {
+                    throw new CommonFrameworkException("Error unlocking (for adding users) application " +
+                            app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+                }
+            }
+        }
+
+        List<UserNameOrIdToken> userIdTokens = new ArrayList<>(userIds.size());
+        for (String userId : userIds) {
+            UserIdToken userIdToken = new UserIdToken();
+            userIdToken.setId(userId);
+            userIdTokens.add(userIdToken);
+        }
+        List<RoleNameOrIdToken> roleNameTokens = new ArrayList<>(roleNames.size());
+        for (String roleName : roleNames) {
+            RoleNameToken roleNameToken = new RoleNameToken();
+            roleNameToken.setName(roleName);
+            roleNameTokens.add(roleNameToken);
+        }
+
+        try {
+            ccApiWrapper
+                    .getApplicationApi()
+                    .addUserToApplicationTeam(app.getNameVersion(), userIdTokens,
+                            roleNameTokens);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException("Error adding users to application " +
+                    app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+        }
+
+        if (origLockValue) {
+            // If app was locked and we got this far, circumventLock must be true
+            try {
+                lock(app, true); // lock
+            } catch (SdkFault e) {
+                throw new CommonFrameworkException("Error re-locking (after adding users) application " +
+                        app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Remove the given user+role from the given application's team.
+     *
+     * @param appId
+     *            Application ID
+     * @param userId
+     *            User ID
+     * @param roleId
+     *            Role ID
+     * @param circumventLock
+     *            if true: if application is locked, unlock it, remove users, re-lock it
+     * @throws CommonFrameworkException
+     */
+    @Override
+    public void removeUserFromApplicationTeam(String appId, String userId, String roleId,
+            boolean circumventLock)
+            throws CommonFrameworkException {
+
+        Application app = getSdkApplicationByIdCached(appId);
+        boolean origLockValue = app.isLocked();
+
+        if (origLockValue) {
+            if (!circumventLock) {
+                throw new CommonFrameworkException("Error removing user(s) from application " + app.getName() +
+                        " / " + app.getVersion() + ": Application is locked");
+            } else {
+                try {
+                    lock(app, false); // unlock
+                } catch (SdkFault e) {
+                    throw new CommonFrameworkException("Error unlocking (for removing users) application " +
+                            app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+                }
+            }
+        }
+
+        UserIdToken userIdToken = new UserIdToken();
+        userIdToken.setId(userId);
+
+        RoleIdToken roleIdToken = new RoleIdToken();
+        roleIdToken.setId(roleId);
+
+        try {
+            ccApiWrapper
+                    .getApplicationApi()
+                    .removeUserInApplicationTeam(app.getNameVersion(), userIdToken,
+                            roleIdToken);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException("Error removing user ID " + userId + " from application " +
+                    app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+        }
+    }
+
     @Override
     public List<AttachmentDetails> searchAttachments(String applicationId,
             String searchString) throws CommonFrameworkException {
@@ -513,4 +640,11 @@ public class ApplicationManager implements IApplicationManager {
 
     }
 
+    private void lock(Application app, boolean lockValue) throws SdkFault {
+        ApplicationApi applicationApi = ccApiWrapper.getApplicationApi();
+        ApplicationIdToken appToken = new ApplicationIdToken();
+        appToken.setId(app.getId().getId());
+
+        applicationApi.lockApplication(appToken, lockValue);
+    }
 }

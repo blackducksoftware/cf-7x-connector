@@ -111,6 +111,40 @@ public interface IApplicationManager {
             throws CommonFrameworkException;
 
     /**
+     * Add the given list of users to the given application, each with the given roles.
+     *
+     * @param appId
+     *            Application ID
+     * @param userIds
+     *            User IDs
+     * @param roleNames
+     *            Role names
+     * @param circumventLock
+     *            if true: if application is locked, unlock it, add users, re-lock it
+     * @throws CommonFrameworkException
+     */
+    void addUsersToApplicationTeam(String appId, List<String> userIds, List<String> roleNames,
+            boolean circumventLock)
+            throws CommonFrameworkException;
+
+    /**
+     * Remove the given user+role from the given application's team.
+     *
+     * @param appId
+     *            Application ID
+     * @param userId
+     *            User ID
+     * @param roleId
+     *            Role ID
+     * @param circumventLock
+     *            if true: if application is locked, unlock it, remove users, re-lock it
+     * @throws CommonFrameworkException
+     */
+    void removeUserFromApplicationTeam(String appId, String userId, String roleId,
+            boolean circumventLock)
+            throws CommonFrameworkException;
+
+    /**
      * Get attachment details for a given set of attachments from the given
      * Application.
      *
