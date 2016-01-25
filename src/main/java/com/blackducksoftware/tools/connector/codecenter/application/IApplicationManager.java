@@ -21,6 +21,17 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 public interface IApplicationManager {
 
     /**
+     * Get all applications the current user can see that (if search string provided) match
+     * the given search string.
+     *
+     * @param searchString
+     *            set to null for all applications
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<ApplicationPojo> getApplications(int firstRow, int lastRow, String searchString) throws CommonFrameworkException;
+
+    /**
      * Get a subset (or all) of the applications that the user can access.
      *
      * @param firstRow
@@ -31,7 +42,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<ApplicationPojo> getApplications(int firstRow, int lastRow)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application by name/version.
@@ -42,7 +53,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     ApplicationPojo getApplicationByNameVersion(String name, String version)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application by ID.
@@ -52,7 +63,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     ApplicationPojo getApplicationById(String id)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application's requests, by application ID.
@@ -62,7 +73,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<RequestPojo> getRequestsByAppId(String appId)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get an application's components, optionally recursively, by application
@@ -84,9 +95,9 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     <T extends CodeCenterComponentPojo> List<T> getComponentsByAppId(
-	    Class<T> pojoClass, String appId,
-	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
-	    throws CommonFrameworkException;
+            Class<T> pojoClass, String appId,
+            List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
+            throws CommonFrameworkException;
 
     /**
      * Gets all User's that are assigned to the specified Application.
@@ -97,7 +108,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<ApplicationUserPojo> getAllUsersAssignedToApplication(String appId)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 
     /**
      * Get attachment details for a given set of attachments from the given
@@ -109,7 +120,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<AttachmentDetails> searchAttachments(String applicationId,
-	    String searchString) throws CommonFrameworkException;
+            String searchString) throws CommonFrameworkException;
 
     /**
      * Download an Application attachment to the given directory.
@@ -120,7 +131,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     File downloadAttachment(String applicationId, String filename,
-	    String targetDirPath) throws CommonFrameworkException;
+            String targetDirPath) throws CommonFrameworkException;
 
     /**
      * Attach the named file to the given Application.
@@ -131,7 +142,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     void attachFile(String applicationId, String sourceFilePath,
-	    String description) throws CommonFrameworkException;
+            String description) throws CommonFrameworkException;
 
     /**
      * Delete the given attachment from the given application.
@@ -139,5 +150,5 @@ public interface IApplicationManager {
      * @param attachmentId
      */
     void deleteAttachment(String applicationId, String filename)
-	    throws CommonFrameworkException;
+            throws CommonFrameworkException;
 }
