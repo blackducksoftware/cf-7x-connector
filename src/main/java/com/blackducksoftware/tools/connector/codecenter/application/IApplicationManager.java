@@ -2,6 +2,7 @@ package com.blackducksoftware.tools.connector.codecenter.application;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
@@ -111,7 +112,7 @@ public interface IApplicationManager {
             throws CommonFrameworkException;
 
     /**
-     * Add the given list of users to the given application, each with the given roles.
+     * Add the given set of users (user IDs) to the given application, each with the given roles.
      *
      * @param appId
      *            Application ID
@@ -123,7 +124,24 @@ public interface IApplicationManager {
      *            if true: if application is locked, unlock it, add users, re-lock it
      * @throws CommonFrameworkException
      */
-    void addUsersToApplicationTeam(String appId, List<String> userIds, List<String> roleNames,
+    void addUsersByIdToApplicationTeam(String appId, Set<String> userIds, Set<String> roleNames,
+            boolean circumventLock)
+            throws CommonFrameworkException;
+
+    /**
+     * Add the given set of users (usernames) to the given application, each with the given roles.
+     *
+     * @param appId
+     *            Application ID
+     * @param userNames
+     *            User names
+     * @param roleNames
+     *            Role names
+     * @param circumventLock
+     *            if true: if application is locked, unlock it, add users, re-lock it
+     * @throws CommonFrameworkException
+     */
+    void addUsersByNameToApplicationTeam(String appId, Set<String> userNames, Set<String> roleNames,
             boolean circumventLock)
             throws CommonFrameworkException;
 

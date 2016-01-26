@@ -11,4 +11,6 @@ public interface ICodeCenterUserManager {
     CodeCenterUserPojo getUserByName(String userName) throws CommonFrameworkException;
 
     void deleteUserById(String userId) throws CommonFrameworkException;
+
+    void setUserActiveStatus(String userId, boolean active) throws CommonFrameworkException;
 }

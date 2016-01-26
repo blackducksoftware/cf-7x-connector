@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 
@@ -33,6 +34,7 @@ import com.blackducksoftware.sdk.codecenter.role.data.RoleNameOrIdToken;
 import com.blackducksoftware.sdk.codecenter.role.data.RoleNameToken;
 import com.blackducksoftware.sdk.codecenter.user.data.UserIdToken;
 import com.blackducksoftware.sdk.codecenter.user.data.UserNameOrIdToken;
+import com.blackducksoftware.sdk.codecenter.user.data.UserNameToken;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
@@ -403,7 +405,7 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     /**
-     * Add the given list of users to the given application, each with the given roles.
+     * Add the given list of users (by ID) to the given application, each with the given roles.
      *
      * @param appId
      *            Application ID
@@ -416,13 +418,104 @@ public class ApplicationManager implements IApplicationManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public void addUsersToApplicationTeam(String appId, List<String> userIds, List<String> roleNames,
+    public void addUsersByIdToApplicationTeam(String appId, Set<String> userIds, Set<String> roleNames,
             boolean circumventLock)
             throws CommonFrameworkException {
 
         Application app = getSdkApplicationByIdCached(appId);
-        boolean origLockValue = app.isLocked();
+        boolean origLockValue = ensureUnlocked(circumventLock, app);
+        List<UserNameOrIdToken> userIdTokens = generateUserTokensFromUserIds(userIds);
+        List<RoleNameOrIdToken> roleNameTokens = generateRoleTokens(roleNames);
 
+        addUsersToApp(app, userIdTokens, roleNameTokens);
+
+        restoreLock(app, origLockValue);
+    }
+
+    /**
+     * Add the given list of users (by username) to the given application, each with the given roles.
+     *
+     * @param appId
+     *            Application ID
+     * @param userNames
+     *            User Names
+     * @param roleNames
+     *            Role names
+     * @param circumventLock
+     *            if true: if application is locked, unlock it, add users, re-lock it
+     * @throws CommonFrameworkException
+     */
+    @Override
+    public void addUsersByNameToApplicationTeam(String appId, Set<String> userNames, Set<String> roleNames,
+            boolean circumventLock)
+            throws CommonFrameworkException {
+
+        Application app = getSdkApplicationByIdCached(appId);
+        boolean origLockValue = ensureUnlocked(circumventLock, app);
+        List<UserNameOrIdToken> userIdTokens = generateUserTokensFromUserNames(userNames);
+        List<RoleNameOrIdToken> roleNameTokens = generateRoleTokens(roleNames);
+
+        addUsersToApp(app, userIdTokens, roleNameTokens);
+
+        restoreLock(app, origLockValue);
+    }
+
+    private void addUsersToApp(Application app, List<UserNameOrIdToken> userIdTokens, List<RoleNameOrIdToken> roleNameTokens) throws CommonFrameworkException {
+        try {
+            ccApiWrapper
+                    .getApplicationApi()
+                    .addUserToApplicationTeam(app.getNameVersion(), userIdTokens,
+                            roleNameTokens);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException("Error adding users to application " +
+                    app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+        }
+    }
+
+    private List<RoleNameOrIdToken> generateRoleTokens(Set<String> roleNames) {
+        List<RoleNameOrIdToken> roleNameTokens = new ArrayList<>(roleNames.size());
+        for (String roleName : roleNames) {
+            RoleNameToken roleNameToken = new RoleNameToken();
+            roleNameToken.setName(roleName);
+            roleNameTokens.add(roleNameToken);
+        }
+        return roleNameTokens;
+    }
+
+    private List<UserNameOrIdToken> generateUserTokensFromUserIds(Set<String> userIds) {
+        List<UserNameOrIdToken> userIdTokens = new ArrayList<>(userIds.size());
+        for (String userId : userIds) {
+            UserIdToken userIdToken = new UserIdToken();
+            userIdToken.setId(userId);
+            userIdTokens.add(userIdToken);
+        }
+        return userIdTokens;
+    }
+
+    private List<UserNameOrIdToken> generateUserTokensFromUserNames(Set<String> userNames) {
+        List<UserNameOrIdToken> userIdTokens = new ArrayList<>(userNames.size());
+        for (String userName : userNames) {
+            UserNameToken userNameToken = new UserNameToken();
+            userNameToken.setName(userName);
+            userIdTokens.add(userNameToken);
+        }
+        return userIdTokens;
+    }
+
+    private void restoreLock(Application app, boolean origLockValue) throws CommonFrameworkException {
+        if (origLockValue) {
+            // If app was locked and we got this far, circumventLock must be true
+            try {
+                lock(app, true); // lock
+            } catch (SdkFault e) {
+                throw new CommonFrameworkException("Error re-locking (after adding users) application " +
+                        app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+            }
+        }
+    }
+
+    private boolean ensureUnlocked(boolean circumventLock, Application app) throws CommonFrameworkException {
+        boolean origLockValue = app.isLocked();
         if (origLockValue) {
             if (!circumventLock) {
                 throw new CommonFrameworkException("Error adding user(s) to application " + app.getName() +
@@ -436,39 +529,7 @@ public class ApplicationManager implements IApplicationManager {
                 }
             }
         }
-
-        List<UserNameOrIdToken> userIdTokens = new ArrayList<>(userIds.size());
-        for (String userId : userIds) {
-            UserIdToken userIdToken = new UserIdToken();
-            userIdToken.setId(userId);
-            userIdTokens.add(userIdToken);
-        }
-        List<RoleNameOrIdToken> roleNameTokens = new ArrayList<>(roleNames.size());
-        for (String roleName : roleNames) {
-            RoleNameToken roleNameToken = new RoleNameToken();
-            roleNameToken.setName(roleName);
-            roleNameTokens.add(roleNameToken);
-        }
-
-        try {
-            ccApiWrapper
-                    .getApplicationApi()
-                    .addUserToApplicationTeam(app.getNameVersion(), userIdTokens,
-                            roleNameTokens);
-        } catch (SdkFault e) {
-            throw new CommonFrameworkException("Error adding users to application " +
-                    app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
-        }
-
-        if (origLockValue) {
-            // If app was locked and we got this far, circumventLock must be true
-            try {
-                lock(app, true); // lock
-            } catch (SdkFault e) {
-                throw new CommonFrameworkException("Error re-locking (after adding users) application " +
-                        app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
-            }
-        }
+        return origLockValue;
     }
 
     /**

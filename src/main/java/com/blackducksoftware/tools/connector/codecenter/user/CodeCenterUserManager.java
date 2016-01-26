@@ -11,6 +11,7 @@ import com.blackducksoftware.sdk.codecenter.user.data.User;
 import com.blackducksoftware.sdk.codecenter.user.data.UserCreate;
 import com.blackducksoftware.sdk.codecenter.user.data.UserIdToken;
 import com.blackducksoftware.sdk.codecenter.user.data.UserNameToken;
+import com.blackducksoftware.sdk.codecenter.user.data.UserUpdate;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 
@@ -62,11 +63,7 @@ public class CodeCenterUserManager implements ICodeCenterUserManager {
 
     @Override
     public void deleteUserById(String userId) throws CommonFrameworkException {
-        if (usersByIdCache.containsKey(userId)) {
-            User sdkUser = usersByIdCache.get(userId);
-            usersByIdCache.remove(userId);
-            usersByNameCache.remove(sdkUser.getName().getName());
-        }
+        removeUserByIdFromCache(userId);
         UserIdToken userIdToken = new UserIdToken();
         userIdToken.setId(userId);
         try {
@@ -74,6 +71,31 @@ public class CodeCenterUserManager implements ICodeCenterUserManager {
         } catch (SdkFault e) {
             throw new CommonFrameworkException("Error deleting user with ID " + userId + ": " + e.getMessage());
         }
+    }
+
+    private void removeUserByIdFromCache(String userId) {
+        if (usersByIdCache.containsKey(userId)) {
+            User sdkUser = usersByIdCache.get(userId);
+            usersByIdCache.remove(userId);
+            usersByNameCache.remove(sdkUser.getName().getName());
+        }
+    }
+
+    @Override
+    public void setUserActiveStatus(String userId, boolean active) throws CommonFrameworkException {
+        User sdkUser = getSdkUserByIdCached(userId);
+        log.info("Setting user " + sdkUser.getId().getId() + " active flag to: " + active);
+        removeUserByIdFromCache(userId);
+        UserUpdate userUpdate = new UserUpdate();
+        userUpdate.setId(sdkUser.getId());
+        userUpdate.setActive(active);
+        try {
+            ccApiWrapper.getUserApi()
+                    .updateUser(userUpdate);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException("Error setting active status on user ID: " + userId + ": " + e.getMessage());
+        }
+
     }
 
     private CodeCenterUserPojo toPojo(User sdkUser) {
