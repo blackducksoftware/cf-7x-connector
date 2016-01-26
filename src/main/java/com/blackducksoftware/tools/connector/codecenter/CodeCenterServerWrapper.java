@@ -77,7 +77,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
         componentManager = new ComponentManager(apiWrapper,
                 attributeDefinitionManager, licenseManager);
         applicationManager = new ApplicationManager(apiWrapper,
-                attributeDefinitionManager, componentManager);
+                attributeDefinitionManager, componentManager, userManager);
 
         externalIdManager = new ExternalIdManager(apiWrapper);
 

@@ -45,6 +45,9 @@ import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterCompone
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 import com.blackducksoftware.tools.connector.codecenter.component.ICodeCenterComponentManager;
+import com.blackducksoftware.tools.connector.codecenter.user.CodeCenterUserPojo;
+import com.blackducksoftware.tools.connector.codecenter.user.ICodeCenterUserManager;
+import com.blackducksoftware.tools.connector.codecenter.user.UserStatus;
 import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 /**
@@ -79,12 +82,16 @@ public class ApplicationManager implements IApplicationManager {
 
     private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
 
+    private final ICodeCenterUserManager userMgr;
+
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
             IAttributeDefinitionManager attrDefMgr,
-            ICodeCenterComponentManager compMgr) {
+            ICodeCenterComponentManager compMgr,
+            ICodeCenterUserManager userMgr) {
         this.ccApiWrapper = ccApiWrapper;
         this.attrDefMgr = attrDefMgr;
         this.compMgr = compMgr;
+        this.userMgr = userMgr;
     }
 
     /**
@@ -508,7 +515,7 @@ public class ApplicationManager implements IApplicationManager {
             try {
                 lock(app, true); // lock
             } catch (SdkFault e) {
-                throw new CommonFrameworkException("Error re-locking (after adding users) application " +
+                throw new CommonFrameworkException("Error re-locking (after adjusting users) application " +
                         app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
             }
         }
@@ -518,13 +525,13 @@ public class ApplicationManager implements IApplicationManager {
         boolean origLockValue = app.isLocked();
         if (origLockValue) {
             if (!circumventLock) {
-                throw new CommonFrameworkException("Error adding user(s) to application " + app.getName() +
+                throw new CommonFrameworkException("Error adjusting users on application " + app.getName() +
                         " / " + app.getVersion() + ": Application is locked");
             } else {
                 try {
                     lock(app, false); // unlock
                 } catch (SdkFault e) {
-                    throw new CommonFrameworkException("Error unlocking (for adding users) application " +
+                    throw new CommonFrameworkException("Error unlocking (for adjusting users) application " +
                             app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
                 }
             }
@@ -546,26 +553,12 @@ public class ApplicationManager implements IApplicationManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public void removeUserFromApplicationTeam(String appId, String userId, String roleId,
+    public void removeUserByIdFromApplicationTeam(String appId, String userId, String roleId,
             boolean circumventLock)
             throws CommonFrameworkException {
 
         Application app = getSdkApplicationByIdCached(appId);
-        boolean origLockValue = app.isLocked();
-
-        if (origLockValue) {
-            if (!circumventLock) {
-                throw new CommonFrameworkException("Error removing user(s) from application " + app.getName() +
-                        " / " + app.getVersion() + ": Application is locked");
-            } else {
-                try {
-                    lock(app, false); // unlock
-                } catch (SdkFault e) {
-                    throw new CommonFrameworkException("Error unlocking (for removing users) application " +
-                            app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
-                }
-            }
-        }
+        boolean origLockValue = ensureUnlocked(circumventLock, app);
 
         UserIdToken userIdToken = new UserIdToken();
         userIdToken.setId(userId);
@@ -582,6 +575,108 @@ public class ApplicationManager implements IApplicationManager {
             throw new CommonFrameworkException("Error removing user ID " + userId + " from application " +
                     app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
         }
+        restoreLock(app, origLockValue);
+    }
+
+    /**
+     * Remove a given set of users (by username), all roles, from the given application.
+     *
+     * @param appId
+     * @param usernames
+     * @param circumventLock
+     * @throws CommonFrameworkException
+     */
+    @Override
+    public List<UserStatus> removeUsersByNameFromApplicationAllRoles(String appId, Set<String> usernames, boolean circumventLock)
+            throws CommonFrameworkException {
+        Application app = getSdkApplicationByIdCached(appId);
+        boolean origLockValue = ensureUnlocked(circumventLock, app);
+
+        log.debug("removeUsersByNameFromApplicationAllRoles()");
+        // dumpUserNameIdMap();
+        List<UserStatus> userDeletionStatus = new ArrayList<UserStatus>(
+                usernames.size());
+        if (usernames.size() == 0) {
+            return userDeletionStatus;
+        }
+
+        List<ApplicationUserPojo> originalTeam = getAllUsersAssignedToApplication(app.getId().getId());
+        for (String username : usernames) {
+            log.info("Removing user: " + username + " from app "
+                    + app.getName());
+            // updateUserNameIdMap(username);
+            CodeCenterUserPojo targetUser = userMgr.getUserByName(username);
+            String targetUserId = targetUser.getId();
+
+            ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
+            appToken.setName(app.getName());
+            appToken.setVersion(app.getVersion());
+
+            UserNameToken userToken = new UserNameToken();
+            userToken.setName(username);
+
+            // Get username's roles on this application
+            // UserRolePageFilter filter = new UserRolePageFilter();
+            // filter.setFirstRowIndex(0);
+            // filter.setLastRowIndex(Integer.MAX_VALUE);
+            // log.debug("Getting role assignments for user " + username
+            // + " in application " + app.getName());
+            // List<ApplicationRoleAssignment> roleAssignments;
+            // try {
+            // roleAssignments = ccApiWrapper.getApplicationApi()
+            // .searchUserInApplicationTeam(app.getId(), username, filter);
+            // } catch (SdkFault e1) {
+            // throw new CommonFrameworkException("Error searching for user " +
+            // username + " in team for application: " + app.getName() + " / " + app.getVersion());
+            // }
+
+            // log.debug("Found " + assignedUsers.size()
+            // + " role assignments for user " + username);
+
+            for (ApplicationUserPojo roleToCheckAndMaybeRemove : originalTeam) {
+                try {
+                    log.debug("Checking user " + roleToCheckAndMaybeRemove.getUserName() + " ("
+                            + roleToCheckAndMaybeRemove.getUserId() + ") "
+                            + " role " + roleToCheckAndMaybeRemove.getRoleName()
+                            + " from app " + app.getName());
+
+                    // searchUserInApplicationTeam() returns a superset of
+                    // users, such as
+                    // user1, user10, and user100 when we search for user1.
+
+                    if (!roleToCheckAndMaybeRemove.getUserId()
+                            .equals(targetUserId)) {
+                        log.debug("This user (" + roleToCheckAndMaybeRemove.getUserName() + ") is not the user we're looking for... skipping it");
+                        continue;
+                    }
+
+                    RoleIdToken roleToken = new RoleIdToken();
+                    roleToken.setId(roleToCheckAndMaybeRemove.getRoleId());
+                    ccApiWrapper
+                            .getApplicationApi()
+                            .removeUserInApplicationTeam(appToken, userToken,
+                                    roleToken);
+                    log.debug("Removal of user " + username
+                            + " was successful");
+                    userDeletionStatus
+                            .add(new UserStatus(username, true, null));
+                } catch (SdkFault e) {
+                    String msg = "Error removing user " + username
+                            + " with role "
+                            + roleToCheckAndMaybeRemove.getRoleName()
+                            + " from application " + app.getName()
+                            + " version " + app.getVersion() + ": "
+                            + e.getMessage();
+                    log.error(msg);
+                    userDeletionStatus.add(new UserStatus(username, false, e
+                            .getMessage()));
+
+                }
+            }
+        }
+
+        restoreLock(app, origLockValue);
+        return userDeletionStatus;
     }
 
     @Override
@@ -708,4 +803,5 @@ public class ApplicationManager implements IApplicationManager {
 
         applicationApi.lockApplication(appToken, lockValue);
     }
+
 }

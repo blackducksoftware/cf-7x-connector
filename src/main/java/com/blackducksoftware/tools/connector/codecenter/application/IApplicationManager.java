@@ -8,6 +8,7 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
+import com.blackducksoftware.tools.connector.codecenter.user.UserStatus;
 import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 /**
@@ -158,9 +159,19 @@ public interface IApplicationManager {
      *            if true: if application is locked, unlock it, remove users, re-lock it
      * @throws CommonFrameworkException
      */
-    void removeUserFromApplicationTeam(String appId, String userId, String roleId,
+    void removeUserByIdFromApplicationTeam(String appId, String userId, String roleId,
             boolean circumventLock)
             throws CommonFrameworkException;
+
+    /**
+     * Remove a given set of users (by username), all roles, from the given application.
+     *
+     * @param appId
+     * @param usernames
+     * @param circumventLock
+     * @throws CommonFrameworkException
+     */
+    List<UserStatus> removeUsersByNameFromApplicationAllRoles(String appId, Set<String> usernames, boolean circumventLock) throws CommonFrameworkException;
 
     /**
      * Get attachment details for a given set of attachments from the given
