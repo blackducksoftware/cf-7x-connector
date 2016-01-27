@@ -512,8 +512,7 @@ public class ApplicationManager implements IApplicationManager {
     private List<UserNameOrIdToken> generateUserTokensFromUserNames(Set<String> userNames) {
         List<UserNameOrIdToken> userIdTokens = new ArrayList<>(userNames.size());
         for (String userName : userNames) {
-            UserNameToken userNameToken = new UserNameToken();
-            userNameToken.setName(userName);
+            UserNameToken userNameToken = getUserToken(userName);
             userIdTokens.add(userNameToken);
         }
         return userIdTokens;
@@ -600,6 +599,7 @@ public class ApplicationManager implements IApplicationManager {
     public List<UserStatus> removeUsersByNameFromApplicationAllRoles(String appId, Set<String> usernames, boolean circumventLock)
             throws CommonFrameworkException {
         Application app = getSdkApplicationByIdCached(appId);
+        ApplicationNameVersionToken appToken = getAppToken(app);
         boolean origLockValue = ensureUnlocked(circumventLock, app);
 
         log.debug("removeUsersByNameFromApplicationAllRoles()");
@@ -614,54 +614,20 @@ public class ApplicationManager implements IApplicationManager {
         for (String username : usernames) {
             log.info("Removing user: " + username + " from app "
                     + app.getName());
-            // updateUserNameIdMap(username);
-            CodeCenterUserPojo targetUser = userMgr.getUserByName(username);
-            String targetUserId = targetUser.getId();
 
-            ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
-            appToken.setName(app.getName());
-            appToken.setVersion(app.getVersion());
+            String targetUserId = getUserId(username);
+            UserNameToken userToken = getUserToken(username);
 
-            UserNameToken userToken = new UserNameToken();
-            userToken.setName(username);
+            for (ApplicationUserPojo originalTeamMemberRole : originalTeam) {
 
-            // Get username's roles on this application
-            // UserRolePageFilter filter = new UserRolePageFilter();
-            // filter.setFirstRowIndex(0);
-            // filter.setLastRowIndex(Integer.MAX_VALUE);
-            // log.debug("Getting role assignments for user " + username
-            // + " in application " + app.getName());
-            // List<ApplicationRoleAssignment> roleAssignments;
-            // try {
-            // roleAssignments = ccApiWrapper.getApplicationApi()
-            // .searchUserInApplicationTeam(app.getId(), username, filter);
-            // } catch (SdkFault e1) {
-            // throw new CommonFrameworkException("Error searching for user " +
-            // username + " in team for application: " + app.getName() + " / " + app.getVersion());
-            // }
+                boolean targetedUser = checkForTargetedUser(app, targetUserId, originalTeamMemberRole);
+                if (!targetedUser) {
+                    log.debug("This user (" + originalTeamMemberRole.getUserName() + ") is not the user we're looking for... skipping it");
+                    continue;
+                }
 
-            // log.debug("Found " + assignedUsers.size()
-            // + " role assignments for user " + username);
-
-            for (ApplicationUserPojo roleToCheckAndMaybeRemove : originalTeam) {
+                RoleIdToken roleToken = getRoleToken(originalTeamMemberRole);
                 try {
-                    log.debug("Checking user " + roleToCheckAndMaybeRemove.getUserName() + " ("
-                            + roleToCheckAndMaybeRemove.getUserId() + ") "
-                            + " role " + roleToCheckAndMaybeRemove.getRoleName()
-                            + " from app " + app.getName());
-
-                    // searchUserInApplicationTeam() returns a superset of
-                    // users, such as
-                    // user1, user10, and user100 when we search for user1.
-
-                    if (!roleToCheckAndMaybeRemove.getUserId()
-                            .equals(targetUserId)) {
-                        log.debug("This user (" + roleToCheckAndMaybeRemove.getUserName() + ") is not the user we're looking for... skipping it");
-                        continue;
-                    }
-
-                    RoleIdToken roleToken = new RoleIdToken();
-                    roleToken.setId(roleToCheckAndMaybeRemove.getRoleId());
                     ccApiWrapper
                             .getApplicationApi()
                             .removeUserInApplicationTeam(appToken, userToken,
@@ -673,7 +639,7 @@ public class ApplicationManager implements IApplicationManager {
                 } catch (SdkFault e) {
                     String msg = "Error removing user " + username
                             + " with role "
-                            + roleToCheckAndMaybeRemove.getRoleName()
+                            + originalTeamMemberRole.getRoleName()
                             + " from application " + app.getName()
                             + " version " + app.getVersion() + ": "
                             + e.getMessage();
@@ -687,6 +653,45 @@ public class ApplicationManager implements IApplicationManager {
 
         restoreLock(app, origLockValue);
         return userDeletionStatus;
+    }
+
+    private RoleIdToken getRoleToken(ApplicationUserPojo originalTeamMemberRole) {
+        RoleIdToken roleToken = new RoleIdToken();
+        roleToken.setId(originalTeamMemberRole.getRoleId());
+        return roleToken;
+    }
+
+    private UserNameToken getUserToken(String username) {
+        UserNameToken userToken = new UserNameToken();
+        userToken.setName(username);
+        return userToken;
+    }
+
+    private ApplicationNameVersionToken getAppToken(Application app) {
+        ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
+        appToken.setName(app.getName());
+        appToken.setVersion(app.getVersion());
+        return appToken;
+    }
+
+    private String getUserId(String username) throws CommonFrameworkException {
+        CodeCenterUserPojo targetUser = userMgr.getUserByName(username);
+        String targetUserId = targetUser.getId();
+        return targetUserId;
+    }
+
+    private boolean checkForTargetedUser(Application app, String targetUserId, ApplicationUserPojo originalTeamMember) {
+        boolean targetedUser = false;
+        log.debug("Checking user " + originalTeamMember.getUserName() + " ("
+                + originalTeamMember.getUserId() + ") "
+                + " role " + originalTeamMember.getRoleName()
+                + " from app " + app.getName());
+
+        if (!originalTeamMember.getUserId()
+                .equals(targetUserId)) {
+            targetedUser = true;
+        }
+        return targetedUser;
     }
 
     @Override
