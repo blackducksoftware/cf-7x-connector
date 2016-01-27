@@ -42,7 +42,7 @@ public class ApplicationPojoTest {
         attrValues.add(new AttributeValuePojo(ATTR_ID, ATTR_NAME, ATTR_VALUE));
 
         ApplicationPojo app = new ApplicationPojo(APP_ID, APP_NAME,
-                APP_VERSION, attrValues, ApprovalStatus.PENDING);
+                APP_VERSION, attrValues, ApprovalStatus.PENDING, false);
 
         assertEquals(APP_ID, app.getId());
         assertEquals(APP_NAME, app.getName());

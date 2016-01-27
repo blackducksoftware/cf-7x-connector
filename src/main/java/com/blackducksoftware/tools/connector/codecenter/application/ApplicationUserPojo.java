@@ -94,4 +94,10 @@ public class ApplicationUserPojo {
         this.roleId = roleId;
     }
 
+    @Override
+    public String toString() {
+        return "ApplicationUserPojo [applicationName=" + applicationName + ", applicationVersion=" + applicationVersion + ", userName=" + userName
+                + ", roleName=" + roleName + "]";
+    }
+
 }

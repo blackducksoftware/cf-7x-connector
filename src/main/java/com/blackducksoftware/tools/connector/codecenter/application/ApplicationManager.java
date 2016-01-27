@@ -190,7 +190,7 @@ public class ApplicationManager implements IApplicationManager {
         ApplicationPojo appPojo = new ApplicationPojo(app.getId().getId(),
                 app.getName(), app.getVersion(), AttributeValues.valueOf(
                         attrDefMgr, app.getAttributeValues()),
-                ApprovalStatus.valueOf(app.getApprovalStatus()));
+                ApprovalStatus.valueOf(app.getApprovalStatus()), app.isLocked());
         return appPojo;
     }
 
@@ -602,8 +602,7 @@ public class ApplicationManager implements IApplicationManager {
         ApplicationNameVersionToken appToken = getAppToken(app);
         boolean origLockValue = ensureUnlocked(circumventLock, app);
 
-        log.debug("removeUsersByNameFromApplicationAllRoles()");
-        // dumpUserNameIdMap();
+        log.debug("removeUsersByNameFromApplicationAllRoles(): App: " + app.getName() + " / " + app.getVersion() + ": Users: " + usernames);
         List<UserStatus> userDeletionStatus = new ArrayList<UserStatus>(
                 usernames.size());
         if (usernames.size() == 0) {
@@ -687,7 +686,7 @@ public class ApplicationManager implements IApplicationManager {
                 + " role " + originalTeamMember.getRoleName()
                 + " from app " + app.getName());
 
-        if (!originalTeamMember.getUserId()
+        if (originalTeamMember.getUserId()
                 .equals(targetUserId)) {
             targetedUser = true;
         }
