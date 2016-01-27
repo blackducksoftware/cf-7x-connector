@@ -468,14 +468,24 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     private void addUsersToApp(Application app, List<UserNameOrIdToken> userIdTokens, List<RoleNameOrIdToken> roleNameTokens) throws CommonFrameworkException {
+        if (userIdTokens.size() == 0) {
+            log.warn("Application " + app.getName() + " / " + app.getVersion() + ": addUsersToApp(): No users specified");
+            return;
+        }
+        if (roleNameTokens.size() == 0) {
+            log.warn("Application " + app.getName() + " / " + app.getVersion() + ": addUsersToApp(): No roles specified");
+            return;
+        }
         try {
             ccApiWrapper
                     .getApplicationApi()
                     .addUserToApplicationTeam(app.getNameVersion(), userIdTokens,
                             roleNameTokens);
         } catch (SdkFault e) {
-            throw new CommonFrameworkException("Error adding users to application " +
-                    app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
+            String msg = "Error adding users to application " +
+                    app.getName() + " / " + app.getVersion() + ": " + e.getMessage();
+            log.error(msg, e);
+            throw new CommonFrameworkException(msg);
         }
     }
 
