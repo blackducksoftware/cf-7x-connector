@@ -36,18 +36,18 @@
 		<common.framework.version>1.6.2</common.framework.version>
 	</properties>
 	<dependencyManagement>
-	<dependencies>
-		<dependency>
-			<groupId>com.blackducksoftware.protex.sdkclient</groupId>
-			<artifactId>protex-sdk-client</artifactId>
-			<version>7.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.blackducksoftware.protex.sdkclient</groupId>
-			<artifactId>protex-sdk-utilities</artifactId>
-			<version>7.2.0</version>
-		</dependency>
-	</dependencies>
+		<dependencies>
+			<dependency>
+				<groupId>com.blackducksoftware.protex.sdkclient</groupId>
+				<artifactId>protex-sdk-client</artifactId>
+				<version>7.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.blackducksoftware.protex.sdkclient</groupId>
+				<artifactId>protex-sdk-utilities</artifactId>
+				<version>7.2.0</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
@@ -88,7 +88,7 @@
 			<artifactId>protex-sdk-client</artifactId>
 			<version>${protex.sdk.version}</version>
 		</dependency>
-		<dependency>		
+		<dependency>
 			<groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
 			<artifactId>codecenter-sdk-utilities</artifactId>
 			<version>${codecenter.sdk.version}</version>
@@ -204,6 +204,13 @@
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.shared</groupId>
+						<artifactId>maven-filtering</artifactId>
+						<version>1.3</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
@@ -226,11 +233,11 @@
 		</plugins>
 
 	</build>
-	
+
 	<repositories>
 		<repository>
 			<id>soleng</id>
-			<name>Product Protex</name>
+			<name>SolEng Repo</name>
 			<url>http://artifactory.blackducksoftware.com/artifactory/soleng</url>
 		</repository>
 		<repository>
@@ -245,7 +252,7 @@
 		</repository>
 	</repositories>
 
-<!--  Install archives into local Black Duck repo -->
+	<!-- Install archives into local Black Duck repo -->
 
 	<distributionManagement>
 
