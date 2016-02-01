@@ -16,6 +16,8 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 
 public class ApplicationPojoTest {
 
+    private static final String TEST_OWNER_ID = "testOwnerId";
+
     private static final String APP_VERSION = "TestAppVersion";
 
     private static final String APP_NAME = "Test Application";
@@ -42,13 +44,14 @@ public class ApplicationPojoTest {
         attrValues.add(new AttributeValuePojo(ATTR_ID, ATTR_NAME, ATTR_VALUE));
 
         ApplicationPojo app = new ApplicationPojo(APP_ID, APP_NAME,
-                APP_VERSION, attrValues, ApprovalStatus.PENDING, false);
+                APP_VERSION, attrValues, ApprovalStatus.PENDING, false, TEST_OWNER_ID);
 
         assertEquals(APP_ID, app.getId());
         assertEquals(APP_NAME, app.getName());
         assertEquals(APP_VERSION, app.getVersion());
         assertEquals(ApprovalStatus.PENDING, app.getApprovalStatus());
         assertEquals(ATTR_VALUE, app.getAttributeByName(ATTR_NAME));
+        assertEquals(TEST_OWNER_ID, app.getOwnerId());
     }
 
     @Test

@@ -33,13 +33,16 @@ public class ApplicationPojo {
 
     private final boolean locked;
 
+    private final String ownerId;
+
     public ApplicationPojo(String id, String name, String version,
             List<AttributeValuePojo> attributeValues,
-            ApprovalStatus approvalStatus, boolean locked) {
+            ApprovalStatus approvalStatus, boolean locked, String ownerId) {
         this.id = id;
         this.name = name;
         this.version = version;
         this.locked = locked;
+        this.ownerId = ownerId;
 
         if (attributeValues != null) {
             AttributeValues.addAttributeValuesToMap(attributeValuesByName,
@@ -79,6 +82,10 @@ public class ApplicationPojo {
 
     public boolean isLocked() {
         return locked;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
     }
 
     @Override

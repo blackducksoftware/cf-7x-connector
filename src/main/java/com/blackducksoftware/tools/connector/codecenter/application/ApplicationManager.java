@@ -190,7 +190,7 @@ public class ApplicationManager implements IApplicationManager {
         ApplicationPojo appPojo = new ApplicationPojo(app.getId().getId(),
                 app.getName(), app.getVersion(), AttributeValues.valueOf(
                         attrDefMgr, app.getAttributeValues()),
-                ApprovalStatus.valueOf(app.getApprovalStatus()), app.isLocked());
+                ApprovalStatus.valueOf(app.getApprovalStatus()), app.isLocked(), app.getOwnerId().getId());
         return appPojo;
     }
 

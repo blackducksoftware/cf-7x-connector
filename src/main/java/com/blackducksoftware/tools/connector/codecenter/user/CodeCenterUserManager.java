@@ -1,12 +1,17 @@
 package com.blackducksoftware.tools.connector.codecenter.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
+import com.blackducksoftware.sdk.codecenter.role.data.ApplicationRoleAssignment;
+import com.blackducksoftware.sdk.codecenter.role.data.RoleAssignment;
+import com.blackducksoftware.sdk.codecenter.role.data.UserRoleAssignment;
 import com.blackducksoftware.sdk.codecenter.user.data.User;
 import com.blackducksoftware.sdk.codecenter.user.data.UserCreate;
 import com.blackducksoftware.sdk.codecenter.user.data.UserIdToken;
@@ -14,6 +19,7 @@ import com.blackducksoftware.sdk.codecenter.user.data.UserNameToken;
 import com.blackducksoftware.sdk.codecenter.user.data.UserUpdate;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
+import com.blackducksoftware.tools.connector.codecenter.common.ApplicationRolePojo;
 
 public class CodeCenterUserManager implements ICodeCenterUserManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
@@ -139,6 +145,38 @@ public class CodeCenterUserManager implements ICodeCenterUserManager {
         usersByIdCache.put(sdkUser.getId().getId(), sdkUser);
         usersByNameCache.put(sdkUser.getName().getName(), sdkUser);
         return sdkUser;
+    }
+
+    @Override
+    public List<ApplicationRolePojo> getApplicationRolesByUserName(String userName) throws CommonFrameworkException {
+        List<ApplicationRolePojo> appRolePojos = new ArrayList<ApplicationRolePojo>();
+
+        UserNameToken userToken = new UserNameToken();
+        userToken.setName(userName);
+        List<UserRoleAssignment> roles = null;
+
+        try {
+            roles = ccApiWrapper.getProxy().getRoleApi().getUserRoles(userToken);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException("Error getting roles for user: " + userName + ": " + e.getMessage());
+        }
+
+        for (RoleAssignment role : roles) {
+
+            if (role instanceof ApplicationRoleAssignment) {
+                ApplicationRoleAssignment appRole = (ApplicationRoleAssignment) role;
+                String appName = appRole.getApplicationNameVersionToken().getName();
+                String appVersion = appRole.getApplicationNameVersionToken().getVersion();
+                String roleName = appRole.getRoleNameToken().getName();
+                log.debug("User " + userName + " has role " + roleName + " on Application " + appName + " / " + appVersion);
+                ApplicationRolePojo appRolePojo = new ApplicationRolePojo(appRole.getApplicationIdToken().getId(), appName, appVersion,
+                        appRole.getUserIdToken().getId(), appRole.getUserNameToken().getName(), appRole.getRoleIdToken().getId(),
+                        roleName);
+                appRolePojos.add(appRolePojo);
+            }
+
+        }
+        return appRolePojos;
     }
 
 }
