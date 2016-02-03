@@ -8,20 +8,26 @@ import com.blackducksoftware.tools.commonframework.core.exception.CommonFramewor
 
 /**
  * Utility methods for licenses.
- *
+ * 
  * @author sbillings
- *
+ * 
  */
 public class Licenses {
     public static List<LicensePojo> valueOf(
-	    ILicenseManager<LicensePojo> licMgr,
-	    List<LicenseSummary> sdkLicenses) throws CommonFrameworkException {
-	List<LicensePojo> licenses = new ArrayList<>(sdkLicenses.size());
-	for (LicenseSummary sdkLicense : sdkLicenses) {
-	    LicensePojo license = licMgr.getLicenseById(sdkLicense.getId()
-		    .getId());
-	    licenses.add(license);
-	}
-	return licenses;
+            ILicenseManager<LicensePojo> licMgr,
+            List<LicenseSummary> sdkLicenses) throws CommonFrameworkException {
+        List<LicensePojo> licenses = new ArrayList<>(sdkLicenses.size());
+        for (LicenseSummary sdkLicense : sdkLicenses) {
+            LicensePojo license = licMgr.getLicenseById(sdkLicense.getId()
+                    .getId());
+            licenses.add(license);
+        }
+        return licenses;
+    }
+
+    public static LicensePojo valueOf(ILicenseManager<LicensePojo> licMgr, String licenseId) throws CommonFrameworkException
+    {
+        LicensePojo license = licMgr.getLicenseById(licenseId);
+        return license;
     }
 }
