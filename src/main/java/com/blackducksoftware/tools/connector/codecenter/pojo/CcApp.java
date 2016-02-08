@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 
 package com.blackducksoftware.tools.connector.codecenter.pojo;
@@ -45,304 +45,289 @@ import com.blackducksoftware.tools.connector.codecenter.CodeCenterServerWrapper;
 
 public class CcApp implements ProjectOrApp {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+            .getName());
 
     private final CodeCenterDaoConfigManager config;
+
     private Application app;
+
     private final String version;
+
     private final String workflowName;
+
     private final CodeCenterServerWrapper ccServerWrapper;
 
     public CcApp(CodeCenterDaoConfigManager config, String name,
-	    String version, String workflowName)
-	    throws CommonFrameworkException {
-	this.config = config;
-	this.version = version;
-	this.workflowName = workflowName;
+            String version, String workflowName)
+            throws CommonFrameworkException {
+        this.config = config;
+        this.version = version;
+        this.workflowName = workflowName;
 
-	try {
-	    ccServerWrapper = new CodeCenterServerWrapper(
-		    config.getServerBean(), (ConfigurationManager) config);
-	} catch (Exception e) {
-	    throw new CommonFrameworkException(
-		    (ConfigurationManager) this.config,
-		    "Error constructing CodeCenterServerWrapper: "
-			    + e.getMessage());
-	}
-	app = loadApp(name, version);
+        try {
+            ccServerWrapper = new CodeCenterServerWrapper(
+                    config.getServerBean(), (ConfigurationManager) config);
+        } catch (Exception e) {
+            throw new CommonFrameworkException(
+                    (ConfigurationManager) this.config,
+                    "Error constructing CodeCenterServerWrapper: "
+                            + e.getMessage());
+        }
+        app = loadApp(name, version);
     }
 
     public CcApp(CodeCenterServerWrapper ccServerWrapper,
-	    CodeCenterDaoConfigManager config, String name, String version,
-	    String workflowName) throws CommonFrameworkException {
-	this.config = config;
-	this.version = version;
-	this.workflowName = workflowName;
+            CodeCenterDaoConfigManager config, String name, String version,
+            String workflowName) throws CommonFrameworkException {
+        this.config = config;
+        this.version = version;
+        this.workflowName = workflowName;
 
-	this.ccServerWrapper = ccServerWrapper;
-	app = loadApp(name, version);
+        this.ccServerWrapper = ccServerWrapper;
+        app = loadApp(name, version);
     }
 
     private Application loadApp(String name, String version)
-	    throws CommonFrameworkException {
-	ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
-	appToken.setName(name);
-	appToken.setVersion(version);
+            throws CommonFrameworkException {
+        ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
+        appToken.setName(name);
+        appToken.setVersion(version);
 
-	Application app;
-	try {
-	    app = ccServerWrapper.getInternalApiWrapper().getApplicationApi()
-		    .getApplication(appToken);
-	} catch (Exception e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error getting project " + name + ": " + e.getMessage());
-	}
-	return app;
+        Application app;
+        try {
+            app = ccServerWrapper.getInternalApiWrapper().getApplicationApi()
+                    .getApplication(appToken);
+        } catch (Exception e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error getting project " + name + ": " + e.getMessage());
+        }
+        return app;
     }
 
     @Override
     public ProjectOrApp clone(String newName) throws CommonFrameworkException {
-	return cloneImpl(newName, null, null);
+        return cloneImpl(newName, null, null);
     }
 
     @Override
     public ProjectOrApp clone(String newName,
-	    Map<String, String> appAttrUpdates, String associatedProjectId)
-	    throws CommonFrameworkException {
-	return cloneImpl(newName, appAttrUpdates, associatedProjectId);
+            Map<String, String> appAttrUpdates, String associatedProjectId)
+            throws CommonFrameworkException {
+        return cloneImpl(newName, appAttrUpdates, associatedProjectId);
     }
 
     private ProjectOrApp cloneImpl(String newName,
-	    Map<String, String> appAttrUpdates, String associatedProjectId)
-	    throws CommonFrameworkException {
-	log.info("Cloning Code Center application " + getName() + " to "
-		+ newName);
+            Map<String, String> appAttrUpdates, String associatedProjectId)
+            throws CommonFrameworkException {
+        log.info("Cloning Code Center application " + getName() + " to "
+                + newName);
 
-	CcAppCompVulnCopier vulnMetadataProcessor = null;
-	try {
-	    vulnMetadataProcessor = new CcAppCompVulnCopier(config, getName(),
-		    app.getVersion());
-	    vulnMetadataProcessor.loadVulnerabilityMetadataIntoCache();
-	} catch (Exception e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error processing orig app component/vulnerabilities: "
-			    + e.getMessage());
-	}
+        Project associatedProtexProject = null;
+        if (associatedProjectId != null) {
+            try {
+                associatedProtexProject = getAssociatedProject(); // Get the
+                // orig app
+                // associated
+                // server/project
+                ProjectIdToken projectToken = associatedProtexProject.getId();
+                projectToken.setId(associatedProjectId); // Change the project,
+                // leave the server the
+                // same
+                associatedProtexProject.setId(projectToken);
+            } catch (SdkFault e) {
+                String msg = "Error getting Protex project associated with app "
+                        + getName() + ": " + e.getMessage();
+                log.warn(msg); // this could be normal, so log and keep going
+            }
+        }
 
-	Project associatedProtexProject = null;
-	if (associatedProjectId != null) {
-	    try {
-		associatedProtexProject = getAssociatedProject(); // Get the
-								  // orig app
-								  // associated
-								  // server/project
-		ProjectIdToken projectToken = associatedProtexProject.getId();
-		projectToken.setId(associatedProjectId); // Change the project,
-							 // leave the server the
-							 // same
-		associatedProtexProject.setId(projectToken);
-	    } catch (SdkFault e) {
-		String msg = "Error getting Protex project associated with app "
-			+ getName() + ": " + e.getMessage();
-		log.warn(msg); // this could be normal, so log and keep going
-	    }
-	}
+        // Code Center clone operation
+        ApplicationIdToken newAppIdToken = doCcClone(newName);
 
-	// Code Center clone operation
-	ApplicationIdToken newAppIdToken = doCcClone(newName);
+        // Copy those SDK-accessible fields that we need that clone does not
+        // copy
+        copyOtherAppMetadata(newAppIdToken, newName, appAttrUpdates);
 
-	// Copy those SDK-accessible fields that we need that clone does not
-	// copy
-	copyOtherAppMetadata(newAppIdToken, newName, appAttrUpdates);
+        if (associatedProtexProject != null) {
+            associateProject(newAppIdToken, associatedProtexProject);
+        }
 
-	try {
-	    vulnMetadataProcessor.applyCachedVulnerabilityMetadataToGivenApp(
-		    config, newName, app.getVersion());
-	} catch (Exception e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error processing orig app component/vulnerabilities: "
-			    + e.getMessage());
-	}
-
-	if (associatedProtexProject != null) {
-	    associateProject(newAppIdToken, associatedProtexProject);
-	}
-
-	ProjectOrApp clone = new CcApp(config, newName, version, workflowName);
-	return clone;
+        ProjectOrApp clone = new CcApp(config, newName, version, workflowName);
+        return clone;
     }
 
     private void associateProject(ApplicationIdToken newAppIdToken,
-	    Project associatedProtexProject) throws CommonFrameworkException {
+            Project associatedProtexProject) throws CommonFrameworkException {
 
-	try {
-	    ccServerWrapper
-		    .getInternalApiWrapper()
-		    .getApplicationApi()
-		    .associateProtexProject(newAppIdToken,
-			    associatedProtexProject.getId());
-	} catch (SdkFault e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error making Protex project association on clone of app "
-			    + getName() + ": " + e.getMessage());
-	}
+        try {
+            ccServerWrapper
+                    .getInternalApiWrapper()
+                    .getApplicationApi()
+                    .associateProtexProject(newAppIdToken,
+                            associatedProtexProject.getId());
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error making Protex project association on clone of app "
+                            + getName() + ": " + e.getMessage());
+        }
     }
 
     private Project getAssociatedProject() throws SdkFault {
-	Project associatedProtexProject = null;
-	associatedProtexProject = ccServerWrapper.getInternalApiWrapper()
-		.getApplicationApi().getAssociatedProtexProject(app.getId());
-	return associatedProtexProject;
+        Project associatedProtexProject = null;
+        associatedProtexProject = ccServerWrapper.getInternalApiWrapper()
+                .getApplicationApi().getAssociatedProtexProject(app.getId());
+        return associatedProtexProject;
     }
 
     private void copyOtherAppMetadata(ApplicationIdToken newAppIdToken,
-	    String newName, Map<String, String> appAttrUpdates)
-	    throws CommonFrameworkException {
-	ApplicationUpdate appUpdate = new ApplicationUpdate();
-	appUpdate.setId(newAppIdToken);
-	appUpdate.setUseProtexstatus(app.isUseProtexstatus());
-	appUpdate.setObligationFulFillment(app.isObligationFulFillment()); // This
-									   // doesn't
-									   // actually
-									   // work
+            String newName, Map<String, String> appAttrUpdates)
+            throws CommonFrameworkException {
+        ApplicationUpdate appUpdate = new ApplicationUpdate();
+        appUpdate.setId(newAppIdToken);
+        appUpdate.setUseProtexstatus(app.isUseProtexstatus());
+        appUpdate.setObligationFulFillment(app.isObligationFulFillment()); // This
+        // doesn't
+        // actually
+        // work
 
-	// If we've been asked to set any app custom attrs on new app, do it
-	// here:
-	if (appAttrUpdates != null) {
-	    for (String attrName : appAttrUpdates.keySet()) {
-		AbstractAttribute abstractAttr = getAttributeIdToken(attrName,
-			newName);
+        // If we've been asked to set any app custom attrs on new app, do it
+        // here:
+        if (appAttrUpdates != null) {
+            for (String attrName : appAttrUpdates.keySet()) {
+                AbstractAttribute abstractAttr = getAttributeIdToken(attrName,
+                        newName);
 
-		AttributeValue attrValueObject = new AttributeValue();
-		attrValueObject.setAttributeId(abstractAttr.getId());
-		attrValueObject.getValues().add(appAttrUpdates.get(attrName));
-		appUpdate.getAttributeValues().add(attrValueObject);
-	    }
-	}
+                AttributeValue attrValueObject = new AttributeValue();
+                attrValueObject.setAttributeId(abstractAttr.getId());
+                attrValueObject.getValues().add(appAttrUpdates.get(attrName));
+                appUpdate.getAttributeValues().add(attrValueObject);
+            }
+        }
 
-	try {
-	    ccServerWrapper.getInternalApiWrapper().getApplicationApi()
-		    .updateApplication(appUpdate);
-	} catch (SdkFault e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error updating cloned app " + newName + ": "
-			    + e.getMessage());
-	}
+        try {
+            ccServerWrapper.getInternalApiWrapper().getApplicationApi()
+                    .updateApplication(appUpdate);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error updating cloned app " + newName + ": "
+                            + e.getMessage());
+        }
     }
 
     private AbstractAttribute getAttributeIdToken(String attrName,
-	    String appName) throws CommonFrameworkException {
-	AttributeNameToken attrToken = new AttributeNameToken();
-	attrToken.setName(attrName);
-	try {
-	    return ccServerWrapper.getInternalApiWrapper().getAttributeApi()
-		    .getAttribute(attrToken);
-	} catch (Exception e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error looking up attr " + attrName + " for app " + appName
-			    + ": " + e.getMessage());
-	}
+            String appName) throws CommonFrameworkException {
+        AttributeNameToken attrToken = new AttributeNameToken();
+        attrToken.setName(attrName);
+        try {
+            return ccServerWrapper.getInternalApiWrapper().getAttributeApi()
+                    .getAttribute(attrToken);
+        } catch (Exception e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error looking up attr " + attrName + " for app " + appName
+                            + ": " + e.getMessage());
+        }
     }
 
     private ApplicationIdToken doCcClone(String newName)
-	    throws CommonFrameworkException {
+            throws CommonFrameworkException {
 
-	ApplicationClone cloneRequest = new ApplicationClone();
-	ApplicationIdToken appToken = new ApplicationIdToken();
-	appToken.setId(getId());
+        ApplicationClone cloneRequest = new ApplicationClone();
+        ApplicationIdToken appToken = new ApplicationIdToken();
+        appToken.setId(getId());
 
-	cloneRequest.setApplicationId(appToken);
-	cloneRequest.setName(newName);
-	cloneRequest.setDescription(app.getDescription());
-	cloneRequest.setVersion(version);
-	cloneRequest
-		.setInheritApprovalsType(InheritApprovalsTypeEnum.INHERIT_EXISTING_REQUEST_WORKFLOW_VERSION);
-	cloneRequest.setUseProtexstatus(app.isUseProtexstatus()); // This
-								  // doesn't
-								  // actually
-								  // work
-	cloneRequest.setObligationFulFillment(app.isObligationFulFillment()); // This
-									      // doesn't
-									      // actually
-									      // work
-	cloneRequest.setInheritAttachments(true);
-	WorkflowNameToken workflowToken = new WorkflowNameToken();
-	workflowToken.setName(workflowName);
-	cloneRequest.setWorkflowId(workflowToken);
+        cloneRequest.setApplicationId(appToken);
+        cloneRequest.setName(newName);
+        cloneRequest.setDescription(app.getDescription());
+        cloneRequest.setVersion(version);
+        cloneRequest
+                .setInheritApprovalsType(InheritApprovalsTypeEnum.INHERIT_EXISTING_REQUEST_WORKFLOW_VERSION);
+        cloneRequest.setUseProtexstatus(app.isUseProtexstatus()); // This
+        // doesn't
+        // actually
+        // work
+        cloneRequest.setObligationFulFillment(app.isObligationFulFillment()); // This
+        // doesn't
+        // actually
+        // work
+        cloneRequest.setInheritAttachments(true);
+        cloneRequest.setInheritVulnInfo(true);
+        WorkflowNameToken workflowToken = new WorkflowNameToken();
+        workflowToken.setName(workflowName);
+        cloneRequest.setWorkflowId(workflowToken);
 
-	ApplicationIdToken newAppIdToken;
-	try {
-	    newAppIdToken = ccServerWrapper.getInternalApiWrapper()
-		    .getApplicationApi().clone(cloneRequest);
-	} catch (SdkFault e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error cloning app " + getName() + ": " + e.getMessage());
-	}
+        ApplicationIdToken newAppIdToken;
+        try {
+            newAppIdToken = ccServerWrapper.getInternalApiWrapper()
+                    .getApplicationApi().clone(cloneRequest);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error cloning app " + getName() + ": " + e.getMessage());
+        }
 
-	return newAppIdToken;
+        return newAppIdToken;
     }
 
     @Override
     public void rename(String newName) throws CommonFrameworkException {
 
-	ApplicationApi applicationApi = ccServerWrapper.getInternalApiWrapper()
-		.getApplicationApi();
-	ApplicationUpdate applicationUpdate = new ApplicationUpdate();
-	ApplicationIdToken idToken = new ApplicationIdToken();
-	idToken.setId(getId());
-	applicationUpdate.setId(idToken);
-	applicationUpdate.setName(newName);
-	try {
-	    applicationApi.updateApplication(applicationUpdate);
-	} catch (SdkFault e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error renaming app " + getName() + ": " + e.getMessage());
-	}
-	// Update the app object
-	app = loadApp(newName, app.getVersion());
+        ApplicationApi applicationApi = ccServerWrapper.getInternalApiWrapper()
+                .getApplicationApi();
+        ApplicationUpdate applicationUpdate = new ApplicationUpdate();
+        ApplicationIdToken idToken = new ApplicationIdToken();
+        idToken.setId(getId());
+        applicationUpdate.setId(idToken);
+        applicationUpdate.setName(newName);
+        try {
+            applicationApi.updateApplication(applicationUpdate);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error renaming app " + getName() + ": " + e.getMessage());
+        }
+        // Update the app object
+        app = loadApp(newName, app.getVersion());
     }
 
     @Override
     public void lock() throws CommonFrameworkException {
-	ApplicationApi applicationApi = ccServerWrapper.getInternalApiWrapper()
-		.getApplicationApi();
-	ApplicationIdToken appToken = new ApplicationIdToken();
-	appToken.setId(getId());
-	try {
-	    applicationApi.lockApplication(appToken, true);
-	} catch (SdkFault e) {
-	    throw new CommonFrameworkException((ConfigurationManager) config,
-		    "Error locking app " + getName() + ": " + e.getMessage());
-	}
+        ApplicationApi applicationApi = ccServerWrapper.getInternalApiWrapper()
+                .getApplicationApi();
+        ApplicationIdToken appToken = new ApplicationIdToken();
+        appToken.setId(getId());
+        try {
+            applicationApi.lockApplication(appToken, true);
+        } catch (SdkFault e) {
+            throw new CommonFrameworkException((ConfigurationManager) config,
+                    "Error locking app " + getName() + ": " + e.getMessage());
+        }
     }
 
     @Override
     public String getName() {
-	return app.getName();
+        return app.getName();
     }
 
     @Override
     public String getId() {
-	return app.getId().getId();
+        return app.getId().getId();
     }
 
     @Override
     public String getId(String targetAppName) {
-	log.info("Fetching the ID of application: " + targetAppName
-		+ "; version: " + version);
-	ApplicationApi applicationApi = ccServerWrapper.getInternalApiWrapper()
-		.getApplicationApi();
-	ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
-	appToken.setName(targetAppName);
-	appToken.setVersion(version);
-	String targetAppId = null;
-	try {
-	    Application targetApp = applicationApi.getApplication(appToken);
-	    targetAppId = targetApp.getId().getId();
-	} catch (SdkFault e) {
-	    log.info("Application not found: " + targetAppName + "; version: "
-		    + version + ": " + e.getMessage());
-	}
-	return targetAppId;
+        log.info("Fetching the ID of application: " + targetAppName
+                + "; version: " + version);
+        ApplicationApi applicationApi = ccServerWrapper.getInternalApiWrapper()
+                .getApplicationApi();
+        ApplicationNameVersionToken appToken = new ApplicationNameVersionToken();
+        appToken.setName(targetAppName);
+        appToken.setVersion(version);
+        String targetAppId = null;
+        try {
+            Application targetApp = applicationApi.getApplication(appToken);
+            targetAppId = targetApp.getId().getId();
+        } catch (SdkFault e) {
+            log.info("Application not found: " + targetAppName + "; version: "
+                    + version + ": " + e.getMessage());
+        }
+        return targetAppId;
     }
 }
