@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 
 package com.blackducksoftware.tools.connector.protex.identification;
@@ -32,22 +32,24 @@ import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.StringSearchIdentificationRequest;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
-import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
 
 public class StringSearchIdIdentifier implements Identifier {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+            .getName());
 
     private String programName;
-    private ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+
+    private IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+
     private Project project;
 
     public StringSearchIdIdentifier(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    Project project, String programName) {
-	this.protexServerWrapper = protexServerWrapper;
-	this.project = project;
-	this.programName = programName;
+            IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+            Project project, String programName) {
+        this.protexServerWrapper = protexServerWrapper;
+        this.project = project;
+        this.programName = programName;
     }
 
     /**
@@ -61,50 +63,50 @@ public class StringSearchIdIdentifier implements Identifier {
      */
     @Override
     public void makeStringSearchIdentificationOnFile(String path,
-	    StringSearchDiscovery stringSearchDiscoveryTarget,
-	    String componentId, String componentVersionId) throws SdkFault {
+            StringSearchDiscovery stringSearchDiscoveryTarget,
+            String componentId, String componentVersionId) throws SdkFault {
 
-	StringSearchIdentificationRequest idRequest = new StringSearchIdentificationRequest();
-	idRequest.setFolderLevelIdentification(false);
-	idRequest.setComment("Code Match Id-ed by " + programName + " at "
-		+ new Date());
-	ComponentKey componentKey = new ComponentKey();
-	componentKey.setComponentId(componentId);
-	componentKey.setVersionId(componentVersionId);
-	idRequest.setIdentifiedComponentKey(componentKey);
+        StringSearchIdentificationRequest idRequest = new StringSearchIdentificationRequest();
+        idRequest.setFolderLevelIdentification(false);
+        idRequest.setComment("Code Match Id-ed by " + programName + " at "
+                + new Date());
+        ComponentKey componentKey = new ComponentKey();
+        componentKey.setComponentId(componentId);
+        componentKey.setVersionId(componentVersionId);
+        idRequest.setIdentifiedComponentKey(componentKey);
 
-	idRequest.setIdentifiedUsageLevel(UsageLevel.COMPONENT);
-	idRequest.setStringSearchId(stringSearchDiscoveryTarget
-		.getStringSearchId());
-	idRequest.getMatchLocations().addAll(
-		stringSearchDiscoveryTarget.getMatchLocations());
-	log.info("Adding String Search Identification for " + path + ": "
-		+ componentId + " version " + componentVersionId
-		+ " match type "
-		+ stringSearchDiscoveryTarget.getDiscoveryType());
-	protexServerWrapper
-		.getInternalApiWrapper()
-		.getIdentificationApi()
-		.addStringSearchIdentification(project.getProjectId(), path,
-			idRequest, BomRefreshMode.SYNCHRONOUS);
+        idRequest.setIdentifiedUsageLevel(UsageLevel.COMPONENT);
+        idRequest.setStringSearchId(stringSearchDiscoveryTarget
+                .getStringSearchId());
+        idRequest.getMatchLocations().addAll(
+                stringSearchDiscoveryTarget.getMatchLocations());
+        log.info("Adding String Search Identification for " + path + ": "
+                + componentId + " version " + componentVersionId
+                + " match type "
+                + stringSearchDiscoveryTarget.getDiscoveryType());
+        protexServerWrapper
+                .getInternalApiWrapper()
+                .getIdentificationApi()
+                .addStringSearchIdentification(project.getProjectId(), path,
+                        idRequest, BomRefreshMode.SYNCHRONOUS);
     }
 
     @Override
     public boolean isFinalBomRefreshRequired() {
-	// Using this strategy, no need to refresh BOM at the end
-	return false;
+        // Using this strategy, no need to refresh BOM at the end
+        return false;
     }
 
     @Override
     public boolean isMultiPassIdStrategy() {
-	return false;
+        return false;
     }
 
     @Override
     public void makeIdentificationOnFile(String path, Discovery target)
-	    throws SdkFault {
-	throw new UnsupportedOperationException(
-		"makeIdentificationOnFile method not supported");
+            throws SdkFault {
+        throw new UnsupportedOperationException(
+                "makeIdentificationOnFile method not supported");
 
     }
 }

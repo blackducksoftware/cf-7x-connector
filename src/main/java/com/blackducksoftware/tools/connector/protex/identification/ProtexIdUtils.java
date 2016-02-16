@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 
 package com.blackducksoftware.tools.connector.protex.identification;
@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
-
-//import org.apache.log4j.Logger;
+// import org.apache.log4j.Logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,17 +44,19 @@ import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchD
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.commonframework.standard.protex.identification.IdentificationMade;
 import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
-import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
 
 public class ProtexIdUtils {
     private static final Logger log = LoggerFactory
-	    .getLogger(ProtexIdUtils.class.getName());
+            .getLogger(ProtexIdUtils.class.getName());
 
     private final Identifier identifier;
-    private ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+
+    private IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+
     private final Project project;
 
     private final Collection<IdentificationMade> identificationsMade = new ArrayList<IdentificationMade>();
+
     private final boolean doRefresh;
 
     /**
@@ -66,15 +66,15 @@ public class ProtexIdUtils {
      *             upon error connecting to or using Protex
      */
     public ProtexIdUtils(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    Identifier identifier, Project project, boolean doRefresh)
-	    throws Exception {
-	this.doRefresh = doRefresh;
+            IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+            Identifier identifier, Project project, boolean doRefresh)
+            throws Exception {
+        this.doRefresh = doRefresh;
 
-	this.protexServerWrapper = protexServerWrapper;
-	this.project = project;
+        this.protexServerWrapper = protexServerWrapper;
+        this.project = project;
 
-	this.identifier = identifier;
+        this.identifier = identifier;
     }
 
     /**
@@ -83,11 +83,11 @@ public class ProtexIdUtils {
      * @return the list of identifications made so far
      */
     public Collection<IdentificationMade> getIdentificationsMade() {
-	return identificationsMade;
+        return identificationsMade;
     }
 
     public String getProjectId() {
-	return project.getProjectId();
+        return project.getProjectId();
     }
 
     /**
@@ -101,23 +101,23 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public void makeId(String path, Discovery discoveryTarget) throws SdkFault {
-	CodeMatchDiscovery target = (CodeMatchDiscovery) discoveryTarget;
-	log.debug("Making match for: " + target.getFilePath() + ": "
-		+ target.getDiscoveredComponentKey().getComponentId()
-		+ ", type: " + target.getDiscoveryType());
+        CodeMatchDiscovery target = (CodeMatchDiscovery) discoveryTarget;
+        log.debug("Making match for: " + target.getFilePath() + ": "
+                + target.getDiscoveredComponentKey().getComponentId()
+                + ", type: " + target.getDiscoveryType());
 
-	identifier.makeIdentificationOnFile(path, target);
+        identifier.makeIdentificationOnFile(path, target);
 
-	IdentificationMade idMade = new IdentificationMade(path, target
-		.getMatchingSourceInfo().getFirstLine(), target
-		.getMatchingSourceInfo().getLineCount(), target
-		.getDiscoveredComponentKey().getComponentId(), target
-		.getDiscoveredComponentKey().getVersionId(),
-		getComponentVersionString(target),
-		target.getMatchRatioAsPercent());
+        IdentificationMade idMade = new IdentificationMade(path, target
+                .getMatchingSourceInfo().getFirstLine(), target
+                .getMatchingSourceInfo().getLineCount(), target
+                .getDiscoveredComponentKey().getComponentId(), target
+                .getDiscoveredComponentKey().getVersionId(),
+                getComponentVersionString(target),
+                target.getMatchRatioAsPercent());
 
-	identificationsMade.add(idMade);
-	log.debug("Added Identification for " + idMade);
+        identificationsMade.add(idMade);
+        log.debug("Added Identification for " + idMade);
     }
 
     /**
@@ -131,27 +131,27 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public void makeStringSearchId(String path, Discovery discoveryTarget,
-	    String componentName, String componentVersion) throws SdkFault {
-	StringSearchDiscovery target = (StringSearchDiscovery) discoveryTarget;
+            String componentName, String componentVersion) throws SdkFault {
+        StringSearchDiscovery target = (StringSearchDiscovery) discoveryTarget;
 
-	Component component = getComponentByName(componentName,
-		componentVersion);
-	String componentNameId = component.getComponentKey().getComponentId();
-	String componentVersionId = component.getComponentKey().getVersionId();
+        Component component = getComponentByName(componentName,
+                componentVersion);
+        String componentNameId = component.getComponentKey().getComponentId();
+        String componentVersionId = component.getComponentKey().getVersionId();
 
-	identifier.makeStringSearchIdentificationOnFile(path, target,
-		componentNameId, componentVersionId);
+        identifier.makeStringSearchIdentificationOnFile(path, target,
+                componentNameId, componentVersionId);
 
-	IdentificationMade idMade = new IdentificationMade(path, target
-		.getMatchLocations().get(0).getFirstLine(), 0, componentName,
-		componentVersion, "<unknown>", 0); // TODO ugly
+        IdentificationMade idMade = new IdentificationMade(path, target
+                .getMatchLocations().get(0).getFirstLine(), 0, componentName,
+                componentVersion, "<unknown>", 0); // TODO ugly
 
-	identificationsMade.add(idMade);
-	log.debug("Added Identification for " + idMade);
+        identificationsMade.add(idMade);
+        log.debug("Added Identification for " + idMade);
     }
 
     public IProtexServerWrapper<ProtexProjectPojo> getProtexServerWrapper() {
-	return protexServerWrapper;
+        return protexServerWrapper;
     }
 
     /**
@@ -163,34 +163,34 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public CodeMatchDiscovery bestMatch(List<Discovery> codeMatchDiscoveries)
-	    throws SdkFault {
-	int maxScore = 0;
-	CodeMatchDiscovery bestCodeMatchDiscovery = null;
-	for (Discovery match : codeMatchDiscoveries) {
-	    CodeMatchDiscovery codeMatch = (CodeMatchDiscovery) match;
-	    int thisScore = codeMatch.getMatchRatioAsPercent();
-	    String versionString = getComponentVersionString(codeMatch);
+            throws SdkFault {
+        int maxScore = 0;
+        CodeMatchDiscovery bestCodeMatchDiscovery = null;
+        for (Discovery match : codeMatchDiscoveries) {
+            CodeMatchDiscovery codeMatch = (CodeMatchDiscovery) match;
+            int thisScore = codeMatch.getMatchRatioAsPercent();
+            String versionString = getComponentVersionString(codeMatch);
 
-	    ComponentKey key = codeMatch.getDiscoveredComponentKey();
+            ComponentKey key = codeMatch.getDiscoveredComponentKey();
 
-	    log.debug("Code Match Discovery: " + key.getComponentId() + "/"
-		    + versionString + "; score: " + thisScore + "; ID status: "
-		    + codeMatch.getIdentificationStatus().toString());
+            log.debug("Code Match Discovery: " + key.getComponentId() + "/"
+                    + versionString + "; score: " + thisScore + "; ID status: "
+                    + codeMatch.getIdentificationStatus().toString());
 
-	    if (codeMatch.getIdentificationStatus() == IdentificationStatus.PENDING_IDENTIFICATION) {
+            if (codeMatch.getIdentificationStatus() == IdentificationStatus.PENDING_IDENTIFICATION) {
 
-		if (thisScore > maxScore) {
-		    log.debug("\tThis one is the best so far");
-		    bestCodeMatchDiscovery = codeMatch;
-		    maxScore = thisScore;
-		} else {
-		    log.debug("\tThis one is NOT the best so far; ignoring it");
-		}
-	    } else {
-		log.debug("\tThis match identification status was not pending; ignoring it");
-	    }
-	}
-	return bestCodeMatchDiscovery;
+                if (thisScore > maxScore) {
+                    log.debug("\tThis one is the best so far");
+                    bestCodeMatchDiscovery = codeMatch;
+                    maxScore = thisScore;
+                } else {
+                    log.debug("\tThis one is NOT the best so far; ignoring it");
+                }
+            } else {
+                log.debug("\tThis match identification status was not pending; ignoring it");
+            }
+        }
+        return bestCodeMatchDiscovery;
     }
 
     /**
@@ -200,37 +200,37 @@ public class ProtexIdUtils {
      * @return
      */
     public String getComponentVersionString(CodeMatchDiscovery match) {
-	String versionString = "unknown";
-	if (protexServerWrapper != null) {
-	    try {
+        String versionString = "unknown";
+        if (protexServerWrapper != null) {
+            try {
 
-		versionString = protexServerWrapper.getInternalApiWrapper()
-			.getComponentApi()
-			.getComponentByKey(match.getDiscoveredComponentKey())
-			.getVersionName();
+                versionString = protexServerWrapper.getInternalApiWrapper()
+                        .getComponentApi()
+                        .getComponentByKey(match.getDiscoveredComponentKey())
+                        .getVersionName();
 
-	    } catch (Exception e) {
-	    }
-	}
-	return versionString;
+            } catch (Exception e) {
+            }
+        }
+        return versionString;
     }
 
     public Component getComponentByName(String componentName,
-	    String componentVersion) throws SdkFault {
-	log.info("Looking up: " + componentName + " / " + componentVersion);
-	List<Component> components = protexServerWrapper
-		.getInternalApiWrapper().getComponentApi()
-		.getComponentsByName(componentName, componentVersion);
-	switch (components.size()) {
-	case 0:
-	    return null;
-	case 1:
-	    return components.get(0);
-	default:
-	    log.warn("There are more than one component with name "
-		    + componentName + " / version " + componentVersion);
-	    return components.get(0);
-	}
+            String componentVersion) throws SdkFault {
+        log.info("Looking up: " + componentName + " / " + componentVersion);
+        List<Component> components = protexServerWrapper
+                .getInternalApiWrapper().getComponentApi()
+                .getComponentsByName(componentName, componentVersion);
+        switch (components.size()) {
+        case 0:
+            return null;
+        case 1:
+            return components.get(0);
+        default:
+            log.warn("There are more than one component with name "
+                    + componentName + " / version " + componentVersion);
+            return components.get(0);
+        }
     }
 
     /**
@@ -241,17 +241,17 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public List<CodeMatchDiscovery> getCodeMatchDiscoveries(
-	    List<CodeTreeNode> nodes) throws SdkFault {
-	List<CodeMatchType> codeMatchTypes = new ArrayList<CodeMatchType>();
-	codeMatchTypes.add(CodeMatchType.PRECISION);
-	// codeMatchTypes.add(CodeMatchType.GENERIC); // Precision matches are
-	// better;
-	List<CodeMatchDiscovery> codeMatchDiscoveries = protexServerWrapper
-		.getInternalApiWrapper()
-		.getDiscoveryApi()
-		.getCodeMatchDiscoveries(project.getProjectId(), nodes,
-			codeMatchTypes);
-	return codeMatchDiscoveries;
+            List<CodeTreeNode> nodes) throws SdkFault {
+        List<CodeMatchType> codeMatchTypes = new ArrayList<CodeMatchType>();
+        codeMatchTypes.add(CodeMatchType.PRECISION);
+        // codeMatchTypes.add(CodeMatchType.GENERIC); // Precision matches are
+        // better;
+        List<CodeMatchDiscovery> codeMatchDiscoveries = protexServerWrapper
+                .getInternalApiWrapper()
+                .getDiscoveryApi()
+                .getCodeMatchDiscoveries(project.getProjectId(), nodes,
+                        codeMatchTypes);
+        return codeMatchDiscoveries;
     }
 
     /**
@@ -262,19 +262,19 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public List<StringSearchDiscovery> getStringSearchDiscoveries(
-	    List<CodeTreeNode> nodes) throws SdkFault {
+            List<CodeTreeNode> nodes) throws SdkFault {
 
-	List<StringSearchPatternOriginType> patternTypes = new ArrayList<>();
-	patternTypes.add(StringSearchPatternOriginType.CUSTOM);
-	patternTypes.add(StringSearchPatternOriginType.PROJECT_LOCAL);
-	patternTypes.add(StringSearchPatternOriginType.STANDARD);
+        List<StringSearchPatternOriginType> patternTypes = new ArrayList<>();
+        patternTypes.add(StringSearchPatternOriginType.CUSTOM);
+        patternTypes.add(StringSearchPatternOriginType.PROJECT_LOCAL);
+        patternTypes.add(StringSearchPatternOriginType.STANDARD);
 
-	List<StringSearchDiscovery> codeMatchDiscoveries = protexServerWrapper
-		.getInternalApiWrapper()
-		.getDiscoveryApi()
-		.getStringSearchDiscoveries(project.getProjectId(), nodes,
-			patternTypes);
-	return codeMatchDiscoveries;
+        List<StringSearchDiscovery> codeMatchDiscoveries = protexServerWrapper
+                .getInternalApiWrapper()
+                .getDiscoveryApi()
+                .getStringSearchDiscoveries(project.getProjectId(), nodes,
+                        patternTypes);
+        return codeMatchDiscoveries;
     }
 
     /**
@@ -285,61 +285,61 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public List<CodeMatchDiscovery> getCodeMatchDiscoveries(String path,
-	    List<CodeTreeNode> files) throws SdkFault {
-	return getCodeMatchDiscoveries(files);
+            List<CodeTreeNode> files) throws SdkFault {
+        return getCodeMatchDiscoveries(files);
     }
 
     /**
      * Get all code tree nodes in project.
      */
     public List<CodeTreeNode> getAllCodeTreeNodes() throws SdkFault {
-	CodeTreeNodeRequest codeTreeNodeRequest = new CodeTreeNodeRequest();
-	codeTreeNodeRequest.setDepth(-1);
-	codeTreeNodeRequest.setIncludeParentNode(true);
-	codeTreeNodeRequest.getIncludedNodeTypes().add(
-		CodeTreeNodeType.EXPANDED_ARCHIVE);
-	codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FILE);
-	codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FOLDER);
-	List<CodeTreeNode> nodes = protexServerWrapper
-		.getInternalApiWrapper()
-		.getCodeTreeApi()
-		.getCodeTreeNodes(project.getProjectId(), "/",
-			codeTreeNodeRequest);
-	return nodes;
+        CodeTreeNodeRequest codeTreeNodeRequest = new CodeTreeNodeRequest();
+        codeTreeNodeRequest.setDepth(-1);
+        codeTreeNodeRequest.setIncludeParentNode(true);
+        codeTreeNodeRequest.getIncludedNodeTypes().add(
+                CodeTreeNodeType.EXPANDED_ARCHIVE);
+        codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FILE);
+        codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FOLDER);
+        List<CodeTreeNode> nodes = protexServerWrapper
+                .getInternalApiWrapper()
+                .getCodeTreeApi()
+                .getCodeTreeNodes(project.getProjectId(), "/",
+                        codeTreeNodeRequest);
+        return nodes;
     }
 
     /**
      * Are there pending IDs in the tree?
      */
     public boolean hasPendingIds() throws SdkFault {
-	CodeTreeNodeRequest codeTreeNodeRequest = new CodeTreeNodeRequest();
-	codeTreeNodeRequest.setDepth(-1);
-	codeTreeNodeRequest.setIncludeParentNode(true);
-	codeTreeNodeRequest.getIncludedNodeTypes().add(
-		CodeTreeNodeType.EXPANDED_ARCHIVE);
-	codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FILE);
-	codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FOLDER);
+        CodeTreeNodeRequest codeTreeNodeRequest = new CodeTreeNodeRequest();
+        codeTreeNodeRequest.setDepth(-1);
+        codeTreeNodeRequest.setIncludeParentNode(true);
+        codeTreeNodeRequest.getIncludedNodeTypes().add(
+                CodeTreeNodeType.EXPANDED_ARCHIVE);
+        codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FILE);
+        codeTreeNodeRequest.getIncludedNodeTypes().add(CodeTreeNodeType.FOLDER);
 
-	codeTreeNodeRequest.getCounts()
-		.add(NodeCountType.PENDING_ID_CODE_MATCH);
-	List<CodeTreeNode> nodes = protexServerWrapper
-		.getInternalApiWrapper()
-		.getCodeTreeApi()
-		.getCodeTreeNodes(project.getProjectId(), "/",
-			codeTreeNodeRequest);
+        codeTreeNodeRequest.getCounts()
+                .add(NodeCountType.PENDING_ID_CODE_MATCH);
+        List<CodeTreeNode> nodes = protexServerWrapper
+                .getInternalApiWrapper()
+                .getCodeTreeApi()
+                .getCodeTreeNodes(project.getProjectId(), "/",
+                        codeTreeNodeRequest);
 
-	for (CodeTreeNode node : nodes) {
-	    List<NodeCount> nodeCounts = node.getNodeCounts();
-	    for (NodeCount nodeCount : nodeCounts) {
-		NodeCountType nodeCountType = nodeCount.getCountType();
-		if (nodeCountType == NodeCountType.PENDING_ID_CODE_MATCH) {
-		    if (nodeCount.getCount() > 0) {
-			return true;
-		    }
-		}
-	    }
-	}
-	return false;
+        for (CodeTreeNode node : nodes) {
+            List<NodeCount> nodeCounts = node.getNodeCounts();
+            for (NodeCount nodeCount : nodeCounts) {
+                NodeCountType nodeCountType = nodeCount.getCountType();
+                if (nodeCountType == NodeCountType.PENDING_ID_CODE_MATCH) {
+                    if (nodeCount.getCount() > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -348,15 +348,15 @@ public class ProtexIdUtils {
      * @throws SdkFault
      */
     public void refreshBom() throws SdkFault {
-	if (!doRefresh) {
-	    log.info("Skipping BOM refresh as requested");
-	    return;
-	}
-	if (identifier.isFinalBomRefreshRequired()) {
-	    log.info("Refreshing BOM.");
-	    protexServerWrapper.getInternalApiWrapper().getBomApi()
-		    .refreshBom(project.getProjectId(), true, false);
-	}
+        if (!doRefresh) {
+            log.info("Skipping BOM refresh as requested");
+            return;
+        }
+        if (identifier.isFinalBomRefreshRequired()) {
+            log.info("Refreshing BOM.");
+            protexServerWrapper.getInternalApiWrapper().getBomApi()
+                    .refreshBom(project.getProjectId(), true, false);
+        }
     }
 
     /**
@@ -366,7 +366,7 @@ public class ProtexIdUtils {
      * @return true if multiple passes are required to process all pending IDs
      */
     public boolean isMultiPassIdStrategy() {
-	return identifier.isMultiPassIdStrategy();
+        return identifier.isMultiPassIdStrategy();
     }
 
 }

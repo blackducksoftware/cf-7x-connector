@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 
 package com.blackducksoftware.tools.connector.protex.identification;
@@ -32,86 +32,88 @@ import com.blackducksoftware.sdk.protex.project.codetree.discovery.Discovery;
 import com.blackducksoftware.sdk.protex.project.codetree.discovery.StringSearchDiscovery;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentificationRequest;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
-import com.blackducksoftware.tools.connector.protex.ProtexServerWrapper;
+import com.blackducksoftware.tools.connector.protex.IProtexServerWrapper;
 
 public class DeclareIdentifier implements Identifier {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
-	    .getName());
+            .getName());
 
     private String programName;
-    private ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+
+    private IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper;
+
     private Project project;
 
     public DeclareIdentifier(
-	    ProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
-	    Project project, String programName) {
-	this.protexServerWrapper = protexServerWrapper;
-	this.project = project;
-	this.programName = programName;
+            IProtexServerWrapper<ProtexProjectPojo> protexServerWrapper,
+            Project project, String programName) {
+        this.protexServerWrapper = protexServerWrapper;
+        this.project = project;
+        this.programName = programName;
     }
 
     @Override
     public void makeIdentificationOnFile(String path, Discovery target)
-	    throws SdkFault {
-	CodeMatchDiscovery codeMatchDiscoveryTarget = (CodeMatchDiscovery) target;
+            throws SdkFault {
+        CodeMatchDiscovery codeMatchDiscoveryTarget = (CodeMatchDiscovery) target;
 
-	IdentificationRequest declRequest = new IdentificationRequest();
+        IdentificationRequest declRequest = new IdentificationRequest();
 
-	LicenseInfo lic = new LicenseInfo();
+        LicenseInfo lic = new LicenseInfo();
 
-	String licenseId = codeMatchDiscoveryTarget.getMatchingLicenseInfo()
-		.getLicenseId();
-	License thisLicense = protexServerWrapper.getInternalApiWrapper()
-		.getLicenseApi().getLicenseById(licenseId);
-	if (thisLicense != null) {
-	    log.debug(codeMatchDiscoveryTarget.getDiscoveredComponentKey()
-		    .getComponentId() + ": License: " + thisLicense.getName());
-	    lic.setLicenseId(thisLicense.getLicenseId());
-	    lic.setName(thisLicense.getName());
-	}
+        String licenseId = codeMatchDiscoveryTarget.getMatchingLicenseInfo()
+                .getLicenseId();
+        License thisLicense = protexServerWrapper.getInternalApiWrapper()
+                .getLicenseApi().getLicenseById(licenseId);
+        if (thisLicense != null) {
+            log.debug(codeMatchDiscoveryTarget.getDiscoveredComponentKey()
+                    .getComponentId() + ": License: " + thisLicense.getName());
+            lic.setLicenseId(thisLicense.getLicenseId());
+            lic.setName(thisLicense.getName());
+        }
 
-	declRequest.setIdentifiedComponentKey(codeMatchDiscoveryTarget
-		.getDiscoveredComponentKey());
+        declRequest.setIdentifiedComponentKey(codeMatchDiscoveryTarget
+                .getDiscoveredComponentKey());
 
-	if (thisLicense != null) {
-	    declRequest.setIdentifiedLicenseInfo(lic);
-	} else {
-	    declRequest.setIdentifiedLicenseInfo(null);
-	}
+        if (thisLicense != null) {
+            declRequest.setIdentifiedLicenseInfo(lic);
+        } else {
+            declRequest.setIdentifiedLicenseInfo(null);
+        }
 
-	declRequest.setIdentifiedUsageLevel(UsageLevel.COMPONENT);
+        declRequest.setIdentifiedUsageLevel(UsageLevel.COMPONENT);
 
-	declRequest.setComment("Declare Id-ed by " + programName
-		+ " at \" + new Date()");
+        declRequest.setComment("Declare Id-ed by " + programName
+                + " at \" + new Date()");
 
-	log.info("Adding Declaration for "
-		+ path
-		+ ": "
-		+ codeMatchDiscoveryTarget.getDiscoveredComponentKey()
-			.getComponentId());
-	protexServerWrapper
-		.getInternalApiWrapper()
-		.getIdentificationApi()
-		.addDeclaredIdentification(project.getProjectId(), path,
-			declRequest, BomRefreshMode.SKIP);
+        log.info("Adding Declaration for "
+                + path
+                + ": "
+                + codeMatchDiscoveryTarget.getDiscoveredComponentKey()
+                        .getComponentId());
+        protexServerWrapper
+                .getInternalApiWrapper()
+                .getIdentificationApi()
+                .addDeclaredIdentification(project.getProjectId(), path,
+                        declRequest, BomRefreshMode.SKIP);
     }
 
     @Override
     public boolean isFinalBomRefreshRequired() {
-	// Using this strategy, BOM must be refreshed at the end
-	return true;
+        // Using this strategy, BOM must be refreshed at the end
+        return true;
     }
 
     @Override
     public boolean isMultiPassIdStrategy() {
-	return false;
+        return false;
     }
 
     @Override
     public void makeStringSearchIdentificationOnFile(String path,
-	    StringSearchDiscovery target, String componentId,
-	    String componentVersionId) throws SdkFault {
-	throw new UnsupportedOperationException(
-		"makeStringSearchIdentificationOnFile method not supported");
+            StringSearchDiscovery target, String componentId,
+            String componentVersionId) throws SdkFault {
+        throw new UnsupportedOperationException(
+                "makeStringSearchIdentificationOnFile method not supported");
     }
 }
