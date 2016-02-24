@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex;
 
@@ -36,6 +36,7 @@ import com.blackducksoftware.sdk.protex.project.localcomponent.LocalComponentApi
 import com.blackducksoftware.sdk.protex.report.ReportApi;
 import com.blackducksoftware.sdk.protex.role.RoleApi;
 import com.blackducksoftware.sdk.protex.user.UserApi;
+import com.blackducksoftware.tools.commonframework.core.config.ConfigConstants.APPLICATION;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.config.SSOBean;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
@@ -100,10 +101,27 @@ public class ProtexAPIWrapper extends APIWrapper {
      * @param validate
      * @throws Exception
      */
+    @Deprecated
     public ProtexAPIWrapper(ServerBean bean,
             ConfigurationManager configManager, boolean validate)
             throws Exception {
         super(configManager, bean);
+        getAllApisAndValidate(bean.getServerName(), bean.getUserName(),
+                bean.getPassword(), validate, configManager);
+
+    }
+
+    /**
+     * 
+     * @param bean
+     * @param configManager
+     * @param validate
+     * @throws Exception
+     */
+    public ProtexAPIWrapper(ConfigurationManager configManager, boolean validate)
+            throws Exception {
+        super(configManager, configManager.getServerBean(APPLICATION.PROTEX));
+        ServerBean bean = configManager.getServerBean(APPLICATION.PROTEX);
         getAllApisAndValidate(bean.getServerName(), bean.getUserName(),
                 bean.getPassword(), validate, configManager);
 

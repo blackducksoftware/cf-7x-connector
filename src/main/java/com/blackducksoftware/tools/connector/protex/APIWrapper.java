@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex;
 
@@ -27,8 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
+import com.blackducksoftware.tools.commonframework.core.config.ProxyBean;
 import com.blackducksoftware.tools.commonframework.core.config.SSOBean;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
+import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 
 /**
  * Common APIWrapper class
@@ -54,8 +56,9 @@ public abstract class APIWrapper implements IAPIWrapper {
      * @param configManager
      *            the config manager
      * @param bean
+     * @throws CommonFrameworkException
      */
-    public APIWrapper(ConfigurationManager configManager, ServerBean bean) {
+    public APIWrapper(ConfigurationManager configManager, ServerBean bean) throws CommonFrameworkException {
         setProxyInformation(configManager);
         determineServerURL(bean);
         setSSOInformation(configManager.getSsoBean());
@@ -88,12 +91,17 @@ public abstract class APIWrapper implements IAPIWrapper {
      * 
      * @param bean
      *            the config manager
+     * @throws CommonFrameworkException
      */
-    protected void determineServerURL(ServerBean bean) {
+    protected void determineServerURL(ServerBean bean) throws CommonFrameworkException {
         // AK: This allows a bit more flexibility on the server URLs. If the
         // user manually specifies an HTTP(S) address, then we allow it.
         // Otherwise, everything else is prepended with an HTTPS
         String serverURL = null;
+
+        if (bean == null) {
+            throw new CommonFrameworkException("Server bean null");
+        }
 
         String serverName = bean.getServerName();
 
@@ -123,11 +131,12 @@ public abstract class APIWrapper implements IAPIWrapper {
 
     @Override
     public void setProxyInformation(ConfigurationManager configManager) {
-        String proxyServer = configManager.getProxyServer();
-        String proxyPort = configManager.getProxyPort();
+        ProxyBean pb = configManager.getProxyBean();
+        String proxyServer = pb.getProxyServer();
+        String proxyPort = pb.getProxyPort();
 
-        String httpsProxyServer = configManager.getProxyServerHttps();
-        String httpsProxyPort = configManager.getProxyPortHttps();
+        String httpsProxyServer = pb.getProxyServerHttps();
+        String httpsProxyPort = pb.getProxyPortHttps();
 
         // TODO: Intelligently determine whether http or https.
         // Only do something if user provided legitimate data

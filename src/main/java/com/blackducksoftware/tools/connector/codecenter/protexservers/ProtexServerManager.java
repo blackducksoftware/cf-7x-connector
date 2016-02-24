@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.protexservers;
 
@@ -30,8 +30,10 @@ import org.slf4j.LoggerFactory;
 import com.blackducksoftware.sdk.codecenter.administration.data.ProtexServer;
 import com.blackducksoftware.sdk.codecenter.administration.data.ServerNameToken;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
+import com.blackducksoftware.tools.commonframework.core.config.ConfigConstants.APPLICATION;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.config.IConfigurationManager;
+import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.protex.ProtexProjectPojo;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
@@ -192,8 +194,7 @@ public class ProtexServerManager implements IProtexServerManager {
         ConfigurationManager protexConfig = createProtexConfig(config,
                 protexUrl);
         try {
-            psw = new ProtexServerWrapper<ProtexProjectPojo>(
-                    protexConfig.getServerBean(), protexConfig, true);
+            psw = new ProtexServerWrapper<ProtexProjectPojo>(protexConfig, true);
         } catch (Exception e) {
             if (!cacheFailedConnections)
             {
@@ -222,13 +223,13 @@ public class ProtexServerManager implements IProtexServerManager {
      * @return
      */
     private ConfigurationManager createProtexConfig(
-            IConfigurationManager ccConfig, String protexUrl) {
+            IConfigurationManager ccConfig, String protexUrl)
+    {
+        ServerBean ccBean = ccConfig.getServerBean(APPLICATION.CODECENTER);
         Properties props = new Properties();
         props.setProperty("protex.server.name", protexUrl);
-        props.setProperty("protex.user.name", ccConfig.getServerBean()
-                .getUserName());
-        props.setProperty("protex.password", ccConfig.getServerBean()
-                .getPassword());
+        props.setProperty("protex.user.name", ccBean.getUserName());
+        props.setProperty("protex.password", ccBean.getPassword());
 
         ConfigurationManager protexConfig = new ProtexConfigurationManager(
                 props);

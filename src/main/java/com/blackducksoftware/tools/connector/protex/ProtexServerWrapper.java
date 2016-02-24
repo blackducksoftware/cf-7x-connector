@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex;
 
@@ -30,6 +30,7 @@ import com.blackducksoftware.sdk.protex.license.LicenseCategory;
 import com.blackducksoftware.sdk.protex.project.ProjectApi;
 import com.blackducksoftware.sdk.protex.project.ProjectInfo;
 import com.blackducksoftware.sdk.protex.project.ProjectRequest;
+import com.blackducksoftware.tools.commonframework.core.config.ConfigConstants.APPLICATION;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -88,11 +89,38 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
     public ProtexServerWrapper() {
     }
 
+    /**
+     * Deprecated as of 1.6.5, use the simpler constructor.
+     * 
+     * @param bean
+     * @param manager
+     * @param validate
+     * @throws Exception
+     */
+    @Deprecated
     public ProtexServerWrapper(ServerBean bean, ConfigurationManager manager,
-            boolean validate) throws Exception {
-        serverBean = bean;
+            boolean validate) throws Exception
+    {
+        initialize(bean, manager, validate);
+    }
+
+    public ProtexServerWrapper(ConfigurationManager manager,
+            boolean validate) throws Exception
+    {
+        ServerBean bean = manager.getServerBean(APPLICATION.PROTEX);
+        initialize(bean, manager, validate);
+
+    }
+
+    private void initialize(ServerBean bean, ConfigurationManager manager, boolean validate) throws Exception {
+        ServerBean protexBean = manager.getServerBean(APPLICATION.PROTEX);
+        if (protexBean == null) {
+            throw new Exception("No connection available for Protex");
+        }
+
+        serverBean = protexBean;
         configManager = manager;
-        apiWrapper = new ProtexAPIWrapper(bean, manager, validate);
+        apiWrapper = new ProtexAPIWrapper(manager, validate);
 
         // Sets all the APIs
         codeTreeHelper = new CodeTreeHelper(apiWrapper);
@@ -122,6 +150,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
         return projectManager.getProjectById(projectID);
     }
 
+    // TODO: Get rid of this!
     @Override
     public String getProjectURL(ProjectPojo pojo) {
         String bomUrl = serverBean.getServerName()
@@ -141,7 +170,7 @@ public class ProtexServerWrapper<T extends ProtexProjectPojo> implements
         try {
             ProjectApi projectAPI = apiWrapper.getProjectApi();
 
-            String userName = configManager.getServerBean().getUserName();
+            String userName = configManager.getServerBean(APPLICATION.PROTEX).getUserName();
             if (userName == null || userName.length() == 0) {
                 userName = serverBean.getUserName();
             }

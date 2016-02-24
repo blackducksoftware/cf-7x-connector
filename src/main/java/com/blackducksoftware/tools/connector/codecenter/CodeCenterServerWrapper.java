@@ -1,24 +1,25 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter;
 
 import java.util.List;
 
+import com.blackducksoftware.tools.commonframework.core.config.ConfigConstants.APPLICATION;
 import com.blackducksoftware.tools.commonframework.core.config.ConfigurationManager;
 import com.blackducksoftware.tools.commonframework.core.config.server.ServerBean;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
@@ -44,27 +45,54 @@ import com.blackducksoftware.tools.connector.common.LicensePojo;
 public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 
     /** The api wrapper. */
-    private final CodeCenterAPIWrapper apiWrapper;
+    private CodeCenterAPIWrapper apiWrapper;
 
-    private final IAttributeDefinitionManager attributeDefinitionManager;
+    private IAttributeDefinitionManager attributeDefinitionManager;
 
-    private final IApplicationManager applicationManager;
+    private IApplicationManager applicationManager;
 
-    private final IExternalIdManager externalIdManager;
+    private IExternalIdManager externalIdManager;
 
-    private final ILicenseManager<LicensePojo> licenseManager;
+    private ILicenseManager<LicensePojo> licenseManager;
 
-    private final IProtexServerManager protexServerManager;
+    private IProtexServerManager protexServerManager;
 
-    private final ICodeCenterComponentManager componentManager;
+    private ICodeCenterComponentManager componentManager;
 
-    private final ICodeCenterUserManager userManager;
+    private ICodeCenterUserManager userManager;
 
     /** The config manager. */
-    private final ConfigurationManager configManager;
+    private ConfigurationManager configManager;
 
-    public CodeCenterServerWrapper(ServerBean bean, ConfigurationManager manager)
+    /**
+     * Deprecated as of 1.6.5 use the CodeCenterServerWrapper(ConfigurationManager manager) instead
+     * 
+     * @param bean
+     * @param manager
+     * @throws Exception
+     */
+    @Deprecated
+    public CodeCenterServerWrapper(ServerBean bean, ConfigurationManager manager) throws Exception {
+        initialize(bean, manager);
+    }
+
+    public CodeCenterServerWrapper(ConfigurationManager manager)
             throws Exception {
+
+        ServerBean ccBean = manager.getServerBean(APPLICATION.CODECENTER);
+        if (ccBean == null) {
+            throw new Exception("No Code Center connection available");
+        }
+        initialize(ccBean, manager);
+    }
+
+    /**
+     * This replaces the old deprecated constructor
+     * 
+     * @param bean
+     * @param manager
+     */
+    private void initialize(ServerBean bean, ConfigurationManager manager) throws Exception {
         configManager = manager;
         apiWrapper = new CodeCenterAPIWrapper(bean, manager);
 
@@ -82,7 +110,6 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
         externalIdManager = new ExternalIdManager(apiWrapper);
 
         protexServerManager = new ProtexServerManager(apiWrapper, manager);
-
     }
 
     @Override
