@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.blackducksoftware.tools</groupId>
 	<artifactId>cf-7x-connector</artifactId>
-	<version>1.4.7</version>
+	<version>1.4.8-SNAPSHOT</version>
 
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>
@@ -33,7 +33,7 @@
 		<protex.sdk.version>7.2.0</protex.sdk.version>
 		<codecenter.sdk.version>7.1.0</codecenter.sdk.version>
 		<!-- Common Framework Version -->
-		<common.framework.version>1.6.5</common.framework.version>
+		<common.framework.version>1.6.6-SNAPSHOT</common.framework.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -235,10 +235,12 @@
 	</build>
 
 	<repositories>
+		<!-- SNAPSHOT repo (available to the public) -->
 		<repository>
-			<id>soleng</id>
-			<name>SolEng Repo</name>
-			<url>http://artifactory.blackducksoftware.com/artifactory/soleng</url>
+			<snapshots />
+			<id>snapshots</id>
+			<name>libs-snapshot</name>
+			<url>https://oss.jfrog.org/artifactory/libs-snapshot</url>
 		</repository>
 		<repository>
 			<id>bintray-bds-tools</id>
@@ -262,9 +264,8 @@
 			<url>http://artifactory.blackducksoftware.com:8081/artifactory/soleng</url>
 		</repository>
 		<snapshotRepository>
-			<id>artifactory.blackducksoftware.com</id>
-			<name>artifactory.blackducksoftware.com-snapshots</name>
-			<url>http://artifactory.blackducksoftware.com:8081/artifactory/soleng</url>
+			<id>jfrog-snapshots</id>
+			<url>http://oss.jfrog.org/artifactory/oss-snapshot-local</url>
 		</snapshotRepository>
 
 	</distributionManagement>
