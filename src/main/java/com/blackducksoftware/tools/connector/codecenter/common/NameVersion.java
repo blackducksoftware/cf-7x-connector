@@ -8,53 +8,58 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.common;
 
 public class NameVersion {
     private final String name;
+
     private final String version;
 
     public NameVersion(String name, String version) {
-	this.name = name;
-	this.version = version;
+        this.name = name;
+        if (version == null) {
+            this.version = "";
+        } else {
+            this.version = version;
+        }
     }
 
     protected String getName() {
-	return name;
+        return name;
     }
 
     protected String getVersion() {
-	return version;
+        return version;
     }
 
     @Override
     public String toString() {
-	return "NameVersion [name=" + name + ", version=" + version + "]";
+        return "NameVersion [name=" + name + ", version=" + version + "]";
     }
 
     @Override
     public boolean equals(Object otherObj) {
-	if (!(otherObj instanceof NameVersion)) {
-	    return false;
-	}
-	NameVersion otherNameVersion = (NameVersion) otherObj;
-	if (getName().equals(otherNameVersion.getName())
-		&& getVersion().equals(otherNameVersion.getVersion())) {
-	    return true;
-	}
-	return false;
+        if (!(otherObj instanceof NameVersion)) {
+            return false;
+        }
+        NameVersion otherNameVersion = (NameVersion) otherObj;
+        if (getName().equals(otherNameVersion.getName())
+                && getVersion().equals(otherNameVersion.getVersion())) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
-	return (getName().hashCode() << 1) + getVersion().hashCode();
+        return (getName().hashCode() << 1) + getVersion().hashCode();
     }
 
 }
