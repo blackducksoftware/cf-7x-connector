@@ -10,6 +10,8 @@ You can download the latest source from GitHub: https://github.com/blackducksoft
 
 You can download the latest artifact through your preferred dependency management system from BinTray: https://bintray.com/bds/tools/cf-7x-connector/view
 
+Lastly, release tab on GitHub will contain the latest artifacts.
+
 ## Documentation ##
 
 All documentation for common framework can be found on the base project:  https://github.com/blackducksoftware/common-framework/wiki
