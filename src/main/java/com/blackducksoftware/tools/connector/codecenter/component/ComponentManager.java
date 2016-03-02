@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.component;
 
@@ -85,6 +85,11 @@ public class ComponentManager implements ICodeCenterComponentManager {
     }
 
     @Override
+    public <T extends CodeCenterComponentPojo> T getComponentById(Class<T> pojoClass, String componentId) throws CommonFrameworkException {
+        return getComponentById(pojoClass, componentId, null);
+    }
+
+    @Override
     public <T extends CodeCenterComponentPojo> T getComponentById(
             Class<T> pojoClass, String componentId, String licenseRequestId)
             throws CommonFrameworkException {
@@ -96,7 +101,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     /**
      * Get a component by its name/version.
-     * 
+     *
      * Components fetched are cached.
      */
     @Override
@@ -133,10 +138,10 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     /**
      * Get a subset of the entire catalog.
-     * 
+     *
      * The cache is not used, nor updated (due to concerns about how large it
      * could get).
-     * 
+     *
      */
     @Override
     public <T extends CodeCenterComponentPojo> List<T> getComponents(
@@ -165,7 +170,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     /**
      * Get a list of components that correspond to the given list of requests.
-     * 
+     *
      */
     @Override
     public <T extends CodeCenterComponentPojo> List<T> getComponentsForRequests(
@@ -204,7 +209,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
     /**
      * Get attachment details for a given set of attachments from the given
      * Component.
-     * 
+     *
      * @param componentId
      * @param searchString
      * @return
@@ -241,7 +246,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     /**
      * Download a Component attachment to the given directory.
-     * 
+     *
      * @param attachmentId
      * @param targetDirPath
      * @return
@@ -272,7 +277,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     /**
      * Attach the named file to the given Component.
-     * 
+     *
      * @param componentId
      * @param sourceFilePath
      * @param description
@@ -315,7 +320,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
     /**
      * Delete the given attachment from the given component.
-     * 
+     *
      * @param attachmentId
      */
     @Override

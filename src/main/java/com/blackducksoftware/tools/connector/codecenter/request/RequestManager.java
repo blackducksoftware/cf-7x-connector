@@ -95,5 +95,4 @@ public class RequestManager implements IRequestManager {
                 sdkVuln.getTargetRemediateDate(), sdkVuln.getActualRemediateDate());
         return vuln;
     }
-
 }
