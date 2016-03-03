@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -34,6 +34,8 @@ import com.blackducksoftware.tools.connector.codecenter.externalId.IExternalIdMa
 import com.blackducksoftware.tools.connector.codecenter.license.LicenseManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.IProtexServerManager;
 import com.blackducksoftware.tools.connector.codecenter.protexservers.ProtexServerManager;
+import com.blackducksoftware.tools.connector.codecenter.request.IRequestManager;
+import com.blackducksoftware.tools.connector.codecenter.request.RequestManager;
 import com.blackducksoftware.tools.connector.codecenter.user.CodeCenterUserManager;
 import com.blackducksoftware.tools.connector.codecenter.user.ICodeCenterUserManager;
 import com.blackducksoftware.tools.connector.common.ILicenseManager;
@@ -61,12 +63,14 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 
     private ICodeCenterUserManager userManager;
 
+    private IRequestManager requestManager;
+
     /** The config manager. */
     private ConfigurationManager configManager;
 
     /**
      * Deprecated as of 1.6.5 use the CodeCenterServerWrapper(ConfigurationManager manager) instead
-     * 
+     *
      * @param bean
      * @param manager
      * @throws Exception
@@ -88,7 +92,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
 
     /**
      * This replaces the old deprecated constructor
-     * 
+     *
      * @param bean
      * @param manager
      */
@@ -100,6 +104,7 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
         licenseManager = new LicenseManager(apiWrapper);
         attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
         userManager = new CodeCenterUserManager(apiWrapper);
+        requestManager = new RequestManager(apiWrapper);
 
         // Higher-level managers with dependencies on other managers
         componentManager = new ComponentManager(apiWrapper,
@@ -170,5 +175,10 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
     @Override
     public ICodeCenterUserManager getUserManager() {
         return userManager;
+    }
+
+    @Override
+    public IRequestManager getRequestManager() {
+        return requestManager;
     }
 }

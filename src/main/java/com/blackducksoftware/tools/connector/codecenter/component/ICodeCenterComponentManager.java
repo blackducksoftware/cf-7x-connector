@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.component;
 
@@ -31,7 +31,19 @@ public interface ICodeCenterComponentManager {
     /**
      * Get a component by its component ID (not kbComponentId), creating a POJO
      * of the given class.
-     * 
+     *
+     * @param pojoClass
+     * @param componentId
+     * @return
+     * @throws CommonFrameworkException
+     */
+    <T extends CodeCenterComponentPojo> T getComponentById(Class<T> pojoClass,
+            String componentId) throws CommonFrameworkException;
+
+    /**
+     * Get a component by its component ID (not kbComponentId), creating a POJO
+     * of the given class with the given license.
+     *
      * @param pojoClass
      * @param componentId
      * @return
@@ -42,7 +54,7 @@ public interface ICodeCenterComponentManager {
 
     /**
      * Get a component by its name/version.
-     * 
+     *
      * @param componentName
      * @param componentVersion
      * @return
@@ -54,7 +66,7 @@ public interface ICodeCenterComponentManager {
 
     /**
      * Get a subset of the component catalog.
-     * 
+     *
      * @param firstRowIndex
      *            first row in catalog = 0
      * @param lastRowIndex
@@ -68,7 +80,7 @@ public interface ICodeCenterComponentManager {
 
     /**
      * Get the list of components named in a list of requests.
-     * 
+     *
      * @param requests
      * @return
      * @throws CommonFrameworkException
@@ -80,7 +92,7 @@ public interface ICodeCenterComponentManager {
     /**
      * Get the list of components named in a list of requests, limited to those
      * with one of the ApprovalStatus values in the provided list.
-     * 
+     *
      * @param requests
      * @param limitToApprovalStatusValues
      *            If not null and not empty, components included in the return
@@ -100,7 +112,7 @@ public interface ICodeCenterComponentManager {
     /**
      * Get attachment details for a given set of attachments from the given
      * Component.
-     * 
+     *
      * @param componentId
      * @param searchString
      * @return
@@ -111,7 +123,7 @@ public interface ICodeCenterComponentManager {
 
     /**
      * Download a Component attachment to the given directory.
-     * 
+     *
      * @param attachmentId
      * @param targetDirPath
      * @return
@@ -122,7 +134,7 @@ public interface ICodeCenterComponentManager {
 
     /**
      * Attach the named file to the given Component.
-     * 
+     *
      * @param componentId
      * @param sourceFilePath
      * @param description
@@ -133,7 +145,7 @@ public interface ICodeCenterComponentManager {
 
     /**
      * Delete the given attachment from the given component.
-     * 
+     *
      * @param attachmentId
      */
     void deleteAttachment(String componentId, String filename)
