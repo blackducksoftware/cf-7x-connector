@@ -58,6 +58,7 @@ public class RequestManager implements IRequestManager {
 
     @Override
     public void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability) throws CommonFrameworkException {
+        log.info("updatedRequestVulnerability(): " + updatedRequestVulnerability);
         RequestVulnerabilityUpdate requestVulnerabilityUpdate = new RequestVulnerabilityUpdate();
 
         RequestIdToken requestIdToken = new RequestIdToken();

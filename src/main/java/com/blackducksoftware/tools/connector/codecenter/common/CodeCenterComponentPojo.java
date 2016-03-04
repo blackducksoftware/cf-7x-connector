@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.common;
 
@@ -27,14 +27,14 @@ import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 /**
  * A component.
- * 
+ *
  * The subComponents field is only populated when the object is part of a
  * recursively-generated full-depth list, where a subcomponent at the top level
  * may point to a list of subcomponents at the next level, etc. TODO:
  * subComponents really does not belong in this class.
- * 
+ *
  * @author sbillings
- * 
+ *
  */
 public class CodeCenterComponentPojo<T> extends ComponentPojo {
     private String id;
@@ -163,7 +163,7 @@ public class CodeCenterComponentPojo<T> extends ComponentPojo {
     @Override
     public String toString() {
         return "CodeCenterComponentPojo [name=" + getName() + ", version="
-                + getVersion() + "]";
+                + getVersion() + ", kbComponentId=" + getKbComponentId() + ", kbReleaseId=" + getKbReleaseId() + "]";
     }
 
     @Override
