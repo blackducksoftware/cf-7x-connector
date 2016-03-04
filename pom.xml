@@ -33,7 +33,7 @@
 		<protex.sdk.version>7.2.0</protex.sdk.version>
 		<codecenter.sdk.version>7.1.0</codecenter.sdk.version>
 		<!-- Common Framework Version -->
-		<common.framework.version>1.6.6-SNAPSHOT</common.framework.version>
+		<common.framework.version>1.6.5</common.framework.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -235,13 +235,7 @@
 	</build>
 
 	<repositories>
-		<!-- SNAPSHOT repo (available to the public) -->
-		<repository>
-			<snapshots />
-			<id>snapshots</id>
-			<name>libs-snapshot</name>
-			<url>https://oss.jfrog.org/artifactory/libs-snapshot</url>
-		</repository>
+
 		<repository>
 			<id>bintray-bds-tools</id>
 			<name>BDS Bintray for Common Framework</name>
@@ -251,6 +245,11 @@
 			<id>bintray-bds-sdk</id>
 			<name>BDS Bintray for SDK</name>
 			<url>http://dl.bintray.com/bds/sdk</url>
+		</repository>
+				<repository>
+			<id>jcenter</id>
+			<name>JCenter</name>
+			<url>http://jcenter.bintray.com</url>
 		</repository>
 	</repositories>
 
@@ -264,8 +263,9 @@
 			<url>http://artifactory.blackducksoftware.com:8081/artifactory/soleng</url>
 		</repository>
 		<snapshotRepository>
-			<id>jfrog-snapshots</id>
-			<url>http://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+			<id>artifactory.blackducksoftware.com</id>
+			<name>artifactory.blackducksoftware.com-snapshots</name>
+			<url>http://artifactory.blackducksoftware.com:8081/artifactory/soleng</url>
 		</snapshotRepository>
 
 	</distributionManagement>
