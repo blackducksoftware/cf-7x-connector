@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2 only
  * as published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -63,6 +63,7 @@ import com.blackducksoftware.tools.commonframework.standard.codecenter.pojo.Comp
 import com.blackducksoftware.tools.commonframework.standard.codecenter.pojo.VulnerabilityPojo;
 import com.blackducksoftware.tools.commonframework.standard.codecenter.pojo.VulnerabilityPojoImpl;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterServerWrapper;
+import com.blackducksoftware.tools.connector.codecenter.ICodeCenterServerWrapper;
 
 /**
  * Read / write Code Center applications / components / vulnerabilities /
@@ -71,9 +72,9 @@ import com.blackducksoftware.tools.connector.codecenter.CodeCenterServerWrapper;
  * lazy-loads component_uses+components, and vulnerabilities for the app.
  * updateCompUseVulnData() writes vulnerability metadata (specific to this use)
  * to Code Center.
- * 
+ *
  * @author sbillings
- * 
+ *
  */
 public class CodeCenterApplicationDao implements ApplicationDao {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
@@ -129,7 +130,7 @@ public class CodeCenterApplicationDao implements ApplicationDao {
      * attribute names via the .getApplicationAttributeNames() method, and you
      * use this constructor, the ApplicationPojo's this class generates will
      * include the values of those custom attributes.
-     * 
+     *
      * @param ccServerWrapper
      * @throws Exception
      */
@@ -155,11 +156,11 @@ public class CodeCenterApplicationDao implements ApplicationDao {
      * Use this constructor when you already have a CodeCenterServerWrapper. If
      * you use this constructor, the ApplicationPojo's this class generates will
      * NOT include the values of those custom attributes.
-     * 
+     *
      * @param ccServerWrapper
      * @throws Exception
      */
-    public CodeCenterApplicationDao(CodeCenterServerWrapper ccServerWrapper,
+    public CodeCenterApplicationDao(ICodeCenterServerWrapper ccServerWrapper,
             boolean skipNonKbComponents, Application app) throws Exception {
         this.skipNonKbComponents = skipNonKbComponents;
         initCodeCenterApis(ccServerWrapper);
@@ -471,7 +472,7 @@ public class CodeCenterApplicationDao implements ApplicationDao {
         initCodeCenterApis(ccServerWrapper);
     }
 
-    private void initCodeCenterApis(CodeCenterServerWrapper ccServerWrapper) {
+    private void initCodeCenterApis(ICodeCenterServerWrapper ccServerWrapper) {
         applicationApi = ccServerWrapper.getInternalApiWrapper()
                 .getApplicationApi();
         colaApi = ccServerWrapper.getInternalApiWrapper().getColaApi();
