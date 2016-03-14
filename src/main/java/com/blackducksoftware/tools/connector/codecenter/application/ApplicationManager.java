@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.application;
 
@@ -21,9 +21,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.activation.DataHandler;
@@ -55,6 +53,7 @@ import com.blackducksoftware.sdk.codecenter.user.data.UserNameToken;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
+import com.blackducksoftware.tools.connector.codecenter.common.ApplicationCache;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentUtils;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
@@ -93,22 +92,20 @@ public class ApplicationManager implements IApplicationManager {
 
     private final ICodeCenterComponentManager compMgr;
 
-    private final Map<NameVersion, Application> appsByNameVersionCache = new HashMap<>();
-
-    private final Map<String, Application> appsByIdCache = new HashMap<>();
-
-    private final Map<String, List<RequestSummary>> requestListsByAppIdCache = new HashMap<>();
+    private final ApplicationCache applicationCache;
 
     private final ICodeCenterUserManager userMgr;
 
     public ApplicationManager(CodeCenterAPIWrapper ccApiWrapper,
             IAttributeDefinitionManager attrDefMgr,
             ICodeCenterComponentManager compMgr,
-            ICodeCenterUserManager userMgr) {
+            ICodeCenterUserManager userMgr,
+            ApplicationCache applicationCache) {
         this.ccApiWrapper = ccApiWrapper;
         this.attrDefMgr = attrDefMgr;
         this.compMgr = compMgr;
         this.userMgr = userMgr;
+        this.applicationCache = applicationCache;
     }
 
     /**
@@ -182,8 +179,8 @@ public class ApplicationManager implements IApplicationManager {
     public ApplicationPojo getApplicationByNameVersion(String name,
             String version) throws CommonFrameworkException {
         NameVersion nameVersion = new NameVersion(name, version);
-        if (appsByNameVersionCache.containsKey(nameVersion)) {
-            Application app = appsByNameVersionCache.get(nameVersion);
+        if (applicationCache.containsApplication(nameVersion)) {
+            Application app = applicationCache.getApplication(nameVersion);
             ApplicationPojo appPojo = toPojo(app);
             return appPojo;
         }
@@ -197,7 +194,7 @@ public class ApplicationManager implements IApplicationManager {
             throw new CommonFrameworkException("Error getting application "
                     + name + " / " + version + ": " + e.getMessage());
         }
-        addAppToCache(nameVersion, app);
+        applicationCache.putApplication(app);
 
         return toPojo(app);
     }
@@ -209,11 +206,6 @@ public class ApplicationManager implements IApplicationManager {
                         attrDefMgr, app.getAttributeValues()),
                 ApprovalStatus.valueOf(app.getApprovalStatus()), app.isLocked(), app.getOwnerId().getId());
         return appPojo;
-    }
-
-    private void addAppToCache(NameVersion nameVersion, Application app) {
-        appsByNameVersionCache.put(nameVersion, app);
-        appsByIdCache.put(app.getId().getId(), app);
     }
 
     /**
@@ -232,8 +224,8 @@ public class ApplicationManager implements IApplicationManager {
 
     private Application getSdkApplicationByIdCached(String applicationId)
             throws CommonFrameworkException {
-        if (appsByIdCache.containsKey(applicationId)) {
-            Application app = appsByIdCache.get(applicationId);
+        if (applicationCache.containsApplication(applicationId)) {
+            Application app = applicationCache.getApplication(applicationId);
             return app;
         }
         ApplicationIdToken appToken = new ApplicationIdToken();
@@ -248,7 +240,7 @@ public class ApplicationManager implements IApplicationManager {
         }
         NameVersion nameVersion = new NameVersion(app.getName(),
                 app.getVersion());
-        addAppToCache(nameVersion, app);
+        applicationCache.putApplication(app);
         return app;
     }
 
@@ -262,9 +254,9 @@ public class ApplicationManager implements IApplicationManager {
             throws CommonFrameworkException {
 
         // Check cache first
-        if (requestListsByAppIdCache.containsKey(appId)) {
+        if (applicationCache.containsRequestList(appId)) {
             return createRequestPojoList(appId,
-                    requestListsByAppIdCache.get(appId));
+                    applicationCache.getRequestList(appId));
         }
 
         ApplicationIdToken appToken = new ApplicationIdToken();
@@ -284,7 +276,7 @@ public class ApplicationManager implements IApplicationManager {
         }
 
         // Cache the request list for this appId
-        requestListsByAppIdCache.put(appId, requestSummaries);
+        applicationCache.putRequestList(appId, requestSummaries);
 
         // Convert from sdk request list to pojo request list
         List<RequestPojo> requests = createRequestPojoList(appId,

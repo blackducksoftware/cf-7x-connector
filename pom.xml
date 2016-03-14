@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.blackducksoftware.tools</groupId>
 	<artifactId>cf-7x-connector</artifactId>
-	<version>1.4.8</version>
+	<version>1.4.9-SNAPSHOT</version>
 
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>

@@ -25,4 +25,24 @@ public interface IRequestManager {
      * @throws CommonFrameworkException
      */
     void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability) throws CommonFrameworkException;
+
+    /**
+     * Create a new component request on an application.
+     *
+     * @param appId
+     * @param compId
+     * @param licenseId
+     * @param submit
+     * @return
+     * @throws CommonFrameworkException
+     */
+    String createRequest(String appId, String compId, String licenseId, boolean submit) throws CommonFrameworkException;
+
+    /**
+     * Delete a component request from an application.
+     *
+     * @param requestId
+     * @throws CommonFrameworkException
+     */
+    void deleteRequest(String appId, String requestId) throws CommonFrameworkException;
 }

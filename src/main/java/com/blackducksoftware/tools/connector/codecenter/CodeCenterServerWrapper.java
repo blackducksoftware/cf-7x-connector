@@ -27,6 +27,7 @@ import com.blackducksoftware.tools.connector.codecenter.application.ApplicationM
 import com.blackducksoftware.tools.connector.codecenter.application.IApplicationManager;
 import com.blackducksoftware.tools.connector.codecenter.attribute.AttributeDefinitionManager;
 import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefinitionManager;
+import com.blackducksoftware.tools.connector.codecenter.common.ApplicationCache;
 import com.blackducksoftware.tools.connector.codecenter.component.ComponentManager;
 import com.blackducksoftware.tools.connector.codecenter.component.ICodeCenterComponentManager;
 import com.blackducksoftware.tools.connector.codecenter.externalId.ExternalIdManager;
@@ -104,13 +105,16 @@ public class CodeCenterServerWrapper implements ICodeCenterServerWrapper {
         licenseManager = new LicenseManager(apiWrapper);
         attributeDefinitionManager = new AttributeDefinitionManager(apiWrapper);
         userManager = new CodeCenterUserManager(apiWrapper);
-        requestManager = new RequestManager(apiWrapper);
+        ApplicationCache applicationCache = new ApplicationCache();
+        requestManager = new RequestManager(apiWrapper, applicationCache);
 
         // Higher-level managers with dependencies on other managers
         componentManager = new ComponentManager(apiWrapper,
                 attributeDefinitionManager, licenseManager);
+
         applicationManager = new ApplicationManager(apiWrapper,
-                attributeDefinitionManager, componentManager, userManager);
+                attributeDefinitionManager, componentManager, userManager,
+                applicationCache);
 
         externalIdManager = new ExternalIdManager(apiWrapper);
 

@@ -6,8 +6,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
 import com.blackducksoftware.sdk.codecenter.attribute.data.VulnerabilityStatusNameToken;
+import com.blackducksoftware.sdk.codecenter.cola.data.ComponentIdToken;
+import com.blackducksoftware.sdk.codecenter.cola.data.LicenseIdToken;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
+import com.blackducksoftware.sdk.codecenter.request.data.RequestApplicationComponentToken;
+import com.blackducksoftware.sdk.codecenter.request.data.RequestCreate;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestIdToken;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestVulnerabilityPageFilter;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestVulnerabilityUpdate;
@@ -15,6 +20,7 @@ import com.blackducksoftware.sdk.codecenter.vulnerability.data.RequestVulnerabil
 import com.blackducksoftware.sdk.codecenter.vulnerability.data.VulnerabilityIdToken;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
+import com.blackducksoftware.tools.connector.codecenter.common.ApplicationCache;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestVulnerabilityPojo;
 
 public class RequestManager implements IRequestManager {
@@ -23,8 +29,11 @@ public class RequestManager implements IRequestManager {
 
     private final CodeCenterAPIWrapper ccApiWrapper;
 
-    public RequestManager(CodeCenterAPIWrapper ccApiWrapper) {
+    private final ApplicationCache applicationCache;
+
+    public RequestManager(CodeCenterAPIWrapper ccApiWrapper, ApplicationCache applicationCache) {
         this.ccApiWrapper = ccApiWrapper;
+        this.applicationCache = applicationCache;
     }
 
     @Override
@@ -95,5 +104,53 @@ public class RequestManager implements IRequestManager {
                 sdkVuln.getComments(), sdkVuln.getReviewStatusName().getName(),
                 sdkVuln.getTargetRemediateDate(), sdkVuln.getActualRemediateDate());
         return vuln;
+    }
+
+    @Override
+    public String createRequest(String appId, String compId, String licenseId, boolean submit) throws CommonFrameworkException {
+        RequestCreate request = new RequestCreate();
+
+        // Should this be requested
+        request.setSubmit(submit);
+
+        RequestApplicationComponentToken token = new RequestApplicationComponentToken();
+        ApplicationIdToken appToken = new ApplicationIdToken();
+        appToken.setId(appId);
+        token.setApplicationId(appToken);
+        ComponentIdToken componentIdToken = new ComponentIdToken();
+        componentIdToken.setId(compId);
+        token.setComponentId(componentIdToken);
+
+        request.setApplicationComponentToken(token);
+        LicenseIdToken licenseIdToken = new LicenseIdToken();
+        licenseIdToken.setId(licenseId);
+        request.setLicenseId(licenseIdToken);
+
+        RequestIdToken requestIdToken;
+        try {
+            requestIdToken = ccApiWrapper.getRequestApi().createRequest(request);
+        } catch (SdkFault e) {
+            String msg = "requestApi.createRequest() failed for appId / compId: " + appId + " / " + compId + ": "
+                    + e.getMessage();
+            log.error(msg);
+            throw new CommonFrameworkException(msg);
+        }
+        applicationCache.removeRequestsFromCache(appId); // we've just invalidated the cache
+        return requestIdToken.getId();
+    }
+
+    @Override
+    public void deleteRequest(String appId, String requestId) throws CommonFrameworkException {
+        RequestIdToken token = new RequestIdToken();
+        token.setId(requestId);
+        try {
+            ccApiWrapper.getRequestApi().deleteRequest(token);
+        } catch (SdkFault e) {
+            String msg = "requestApi.deleteRequest() failed for requestId " + requestId + ": "
+                    + e.getMessage();
+            log.error(msg);
+            throw new CommonFrameworkException(msg);
+        }
+        applicationCache.removeRequestsFromCache(appId); // we've just invalidated the cache
     }
 }
