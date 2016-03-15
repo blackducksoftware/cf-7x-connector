@@ -31,11 +31,11 @@ public class NameVersion {
         }
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected String getVersion() {
+    public String getVersion() {
         return version;
     }
 

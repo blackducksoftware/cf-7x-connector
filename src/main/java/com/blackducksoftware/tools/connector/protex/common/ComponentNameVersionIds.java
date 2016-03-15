@@ -17,6 +17,8 @@
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.blackducksoftware.sdk.protex.common.ComponentKey;
 import com.blackducksoftware.sdk.protex.component.Component;
 import com.blackducksoftware.sdk.protex.project.bom.BomComponent;
@@ -106,7 +108,9 @@ public class ComponentNameVersionIds {
             ComponentNameVersionIds nameVersionIds) {
         ComponentKey key = new ComponentKey();
         key.setComponentId(nameVersionIds.getNameId());
-        key.setVersionId(nameVersionIds.getVersionId());
+        if (!StringUtils.isBlank(nameVersionIds.getVersionId())) {
+            key.setVersionId(nameVersionIds.getVersionId());
+        }
         return key;
     }
 }
