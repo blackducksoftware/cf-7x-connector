@@ -29,7 +29,6 @@ import javax.activation.DataHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blackducksoftware.sdk.codecenter.application.ApplicationApi;
 import com.blackducksoftware.sdk.codecenter.application.data.Application;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationAttachment;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationAttachmentCreate;
@@ -153,8 +152,10 @@ public class ApplicationManager implements IApplicationManager {
         List<Application> ccApps;
 
         try {
+            log.info("SDK: Searching applications for '" + searchString + "'");
             ccApps = ccApiWrapper.getApplicationApi().searchApplications(searchString,
                     pageFilter);
+            log.debug("SDK: Done searching applications");
         } catch (SdkFault e) {
             throw new CommonFrameworkException("Error getting applications "
                     + firstRow + " to " + lastRow + ": " + e.getMessage());
@@ -189,7 +190,9 @@ public class ApplicationManager implements IApplicationManager {
         appToken.setVersion(version);
         Application app = null;
         try {
+            log.debug("SDK: Getting application " + name + " / " + version);
             app = ccApiWrapper.getApplicationApi().getApplication(appToken);
+            log.debug("SDK: Done getting application");
         } catch (SdkFault e) {
             throw new CommonFrameworkException("Error getting application "
                     + name + " / " + version + ": " + e.getMessage());
@@ -232,7 +235,9 @@ public class ApplicationManager implements IApplicationManager {
         appToken.setId(applicationId);
         Application app = null;
         try {
+            log.debug("SDK: Getting application ID " + applicationId);
             app = ccApiWrapper.getApplicationApi().getApplication(appToken);
+            log.debug("SDK: Done getting application");
         } catch (SdkFault e) {
             throw new CommonFrameworkException(
                     "Error getting application with ID " + applicationId + ": "
@@ -267,8 +272,10 @@ public class ApplicationManager implements IApplicationManager {
         pageFilter.setLastRowIndex(Integer.MAX_VALUE);
         List<RequestSummary> requestSummaries;
         try {
+            log.debug("SDK: Searching application requests for app ID " + appId);
             requestSummaries = ccApiWrapper.getApplicationApi()
                     .searchApplicationRequests(appToken, null, pageFilter);
+            log.debug("SDK: Done searching applications");
         } catch (SdkFault e) {
             throw new CommonFrameworkException(
                     "Error fetching requests for application ID " + appId
@@ -402,8 +409,10 @@ public class ApplicationManager implements IApplicationManager {
 
         List<ApplicationRoleAssignment> roleAssignments = null;
         try {
+            log.debug("SDK: Searching application with ID " + appId + " for all users on team");
             roleAssignments = ccApiWrapper.getApplicationApi()
                     .searchUserInApplicationTeam(appToken, "", userFilter);
+            log.debug("SDK: Done searching application for users");
         } catch (SdkFault e) {
             throw new CommonFrameworkException(
                     "Error getting User's assigned to this Application :"
@@ -486,10 +495,12 @@ public class ApplicationManager implements IApplicationManager {
             return;
         }
         try {
+            log.debug("SDK: Adding " + userIdTokens.size() + " users to application " + app.getName() + " / " + app.getVersion());
             ccApiWrapper
                     .getApplicationApi()
                     .addUserToApplicationTeam(app.getNameVersion(), userIdTokens,
                             roleNameTokens);
+            log.debug("SDK: Done adding users to application");
         } catch (SdkFault e) {
             String msg = "Error adding users to application " +
                     app.getName() + " / " + app.getVersion() + ": " + e.getMessage();
@@ -585,10 +596,12 @@ public class ApplicationManager implements IApplicationManager {
         roleIdToken.setId(roleId);
 
         try {
+            log.debug("SDK: Removing user " + userId + " / role ID " + roleId + " from application " + app.getName() + " / " + app.getVersion());
             ccApiWrapper
                     .getApplicationApi()
                     .removeUserInApplicationTeam(app.getNameVersion(), userIdToken,
                             roleIdToken);
+            log.debug("SDK: Done removing user from application");
         } catch (SdkFault e) {
             throw new CommonFrameworkException("Error removing user ID " + userId + " from application " +
                     app.getName() + " / " + app.getVersion() + ": " + e.getMessage());
@@ -636,12 +649,13 @@ public class ApplicationManager implements IApplicationManager {
 
                 RoleIdToken roleToken = getRoleToken(originalTeamMemberRole);
                 try {
+                    log.debug("SDK: Removing user " + username + " / role ID " + roleToken.getId() + " from application " + appToken.getName() + " / "
+                            + appToken.getVersion());
                     ccApiWrapper
                             .getApplicationApi()
                             .removeUserInApplicationTeam(appToken, userToken,
                                     roleToken);
-                    log.debug("Removal of user " + username
-                            + " was successful");
+                    log.debug("SDK: Done removing user " + username);
                     userDeletionStatus
                             .add(new UserStatus(username, true, null));
                 } catch (SdkFault e) {
@@ -712,8 +726,10 @@ public class ApplicationManager implements IApplicationManager {
         pageFilter.setLastRowIndex(Integer.MAX_VALUE);
         List<ApplicationAttachment> sdkAttachments;
         try {
+            log.debug("SDK: Searching for application attachment " + comp.getId());
             sdkAttachments = ccApiWrapper.getApplicationApi()
                     .searchApplicationAttachments("", pageFilter, comp.getId());
+            log.debug("SDK: Done searching for application attachment");
         } catch (SdkFault e) {
             throw new CommonFrameworkException(
                     "Error searching attachments for application ID "
@@ -752,8 +768,10 @@ public class ApplicationManager implements IApplicationManager {
         attachmentToken.setFileName(filename);
         AttachmentContent content;
         try {
+            log.debug("SDK: Getting application attachment content for application ID " + applicationId + " filename " + filename);
             content = ccApiWrapper.getApplicationApi()
                     .getApplicationAttachmentContent(attachmentToken);
+            log.debug("SDK: Done getting application attachment");
         } catch (SdkFault e) {
             throw new CommonFrameworkException(
                     "Error getting data handler for application ID "
@@ -787,9 +805,10 @@ public class ApplicationManager implements IApplicationManager {
         DataHandler dataHandler = new DataHandler(url);
         attachmentCreateBean.setAttachmentContent(dataHandler);
         try {
-
+            log.debug("SDK: Creating application attachment on application " + applicationId + " sourceFilePath " + sourceFilePath);
             ccApiWrapper.getApplicationApi().createApplicationAttachment(
                     attachmentCreateBean);
+            log.debug("SDK: Done creating application attachment");
         } catch (SdkFault e) {
             throw new CommonFrameworkException(
                     "Error creating application attachment on application ID "
@@ -809,8 +828,10 @@ public class ApplicationManager implements IApplicationManager {
         attachmentToken.setApplicationId(applicationIdToken);
         attachmentToken.setFileName(filename);
         try {
+            log.debug("SDK: Deleting application attachment on application " + applicationId + " / filename " + filename);
             ccApiWrapper.getApplicationApi().deleteApplicationAttachment(
                     attachmentToken);
+            log.debug("SDK: Done deleting application attachment");
         } catch (SdkFault e) {
             throw new CommonFrameworkException("Error deleting file "
                     + filename + " from application ID " + applicationId + ": "
@@ -820,11 +841,12 @@ public class ApplicationManager implements IApplicationManager {
     }
 
     private void lock(Application app, boolean lockValue) throws SdkFault {
-        ApplicationApi applicationApi = ccApiWrapper.getApplicationApi();
         ApplicationIdToken appToken = new ApplicationIdToken();
         appToken.setId(app.getId().getId());
 
-        applicationApi.lockApplication(appToken, lockValue);
+        log.debug("SDK: Changing application " + app.getName() + " / " + app.getVersion() + " lock value to: " + lockValue);
+        ccApiWrapper.getApplicationApi().lockApplication(appToken, lockValue);
+        log.debug("SDK: Done changing lock");
     }
 
 }
