@@ -58,6 +58,7 @@ public class RequestManager implements IRequestManager {
         List<RequestVulnerabilityPojo> vulns = new ArrayList<>(requestVulnerabilitySummaries.size());
 
         for (RequestVulnerabilitySummary sdkVuln : requestVulnerabilitySummaries) {
+            sdkVuln.setRequestId(requestIdToken); // Workaround for Protex 7.3 bug PROTEX-21157
             RequestVulnerabilityPojo requestVulnerabilityPojo = toPojo(sdkVuln);
             vulns.add(requestVulnerabilityPojo);
         }
