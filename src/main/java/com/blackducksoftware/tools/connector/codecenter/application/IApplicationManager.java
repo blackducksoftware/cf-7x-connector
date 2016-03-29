@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.application;
 
@@ -23,6 +23,7 @@ import java.util.Set;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
+import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 import com.blackducksoftware.tools.connector.codecenter.user.UserStatus;
@@ -231,4 +232,13 @@ public interface IApplicationManager {
      */
     void deleteAttachment(String applicationId, String filename)
             throws CommonFrameworkException;
+
+    /**
+     * Update some attribute values on the given application.
+     *
+     * @param appId
+     * @param changedAttrValues
+     * @throws CommonFrameworkException
+     */
+    void updateAttributeValues(String appId, List<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException;
 }

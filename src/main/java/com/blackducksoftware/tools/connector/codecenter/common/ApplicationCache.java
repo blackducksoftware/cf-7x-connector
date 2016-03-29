@@ -42,6 +42,12 @@ public class ApplicationCache {
         appsByIdCache.put(app.getId().getId(), app);
     }
 
+    public void removeApplication(Application app) {
+        NameVersion nameVersion = new NameVersion(app.getName(), app.getVersion());
+        appsByNameVersionCache.remove(nameVersion);
+        appsByIdCache.remove(app.getId().getId());
+    }
+
     public boolean containsRequestList(String appId) {
         return requestListsByAppIdCache.containsKey(appId);
     }

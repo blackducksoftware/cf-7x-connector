@@ -36,8 +36,11 @@ import com.blackducksoftware.sdk.codecenter.application.data.ApplicationAttachme
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationNameVersionToken;
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationPageFilter;
+import com.blackducksoftware.sdk.codecenter.application.data.ApplicationUpdate;
+import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
 import com.blackducksoftware.sdk.codecenter.common.data.AttachmentContent;
 import com.blackducksoftware.sdk.codecenter.common.data.AttachmentPageFilter;
+import com.blackducksoftware.sdk.codecenter.common.data.AttributeValue;
 import com.blackducksoftware.sdk.codecenter.common.data.UserRolePageFilter;
 import com.blackducksoftware.sdk.codecenter.fault.SdkFault;
 import com.blackducksoftware.sdk.codecenter.request.data.RequestPageFilter;
@@ -55,6 +58,7 @@ import com.blackducksoftware.tools.connector.codecenter.attribute.IAttributeDefi
 import com.blackducksoftware.tools.connector.codecenter.common.ApplicationCache;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentUtils;
+import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.AttributeValues;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.NameVersion;
@@ -847,6 +851,48 @@ public class ApplicationManager implements IApplicationManager {
                     + e.getMessage());
         }
 
+    }
+
+    /**
+     * Update some attribute values on the given application.
+     *
+     * Only supports single-value attributes.
+     */
+    @Override
+    public void updateAttributeValues(String appId, List<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException {
+
+        log.info("updateAttributeValues() called with application ID: " + appId);
+        Application app = getSdkApplicationByIdCached(appId);
+
+        ApplicationUpdate applicationUpdate = new ApplicationUpdate();
+
+        applicationUpdate.setId(app.getId());
+
+        for (AttributeValuePojo attrValue : changedAttrValues) {
+
+            String attrName = attrValue.getName();
+
+            AttributeValue attrValueObject = new AttributeValue();
+            AttributeIdToken attrIdToken = new AttributeIdToken();
+            attrIdToken.setId(attrValue.getAttrId());
+            attrValueObject.setAttributeId(attrIdToken);
+            attrValueObject.getValues().add(attrValue.getValue());
+
+            log.info("Setting attribute " + attrName + " to "
+                    + attrValue.getValue());
+            applicationUpdate.getAttributeValues().add(attrValueObject);
+        }
+
+        try {
+            log.debug("SDK: Updating custom attribute values on application");
+            ccApiWrapper.getApplicationApi().updateApplication(applicationUpdate);
+            log.debug("SDK: Done updating custom attribute values on application");
+        } catch (SdkFault e) {
+            log.error("SDK: Error updating custom attribute values on application");
+            throw new CommonFrameworkException("Error updating attribute values on application " + app.getName() + ": "
+                    + e.getMessage());
+        }
+        applicationCache.removeApplication(app); // remove stale cache entry
     }
 
     private void lock(Application app, boolean lockValue) throws SdkFault {

@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License version 2
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter.common;
 
@@ -25,31 +25,37 @@ package com.blackducksoftware.tools.connector.codecenter.common;
  */
 public class AttributeValuePojo {
     private final String attrId;
+
     private final String name;
-    private final String value;
+
+    private String value;
 
     public AttributeValuePojo(String attrId, String name, String value) {
-	this.attrId = attrId;
-	this.name = name;
-	this.value = value;
+        this.attrId = attrId;
+        this.name = name;
+        this.value = value;
     }
 
     public String getAttrId() {
-	return attrId;
+        return attrId;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public String getValue() {
-	return value;
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
     public String toString() {
-	return "AttributeValuePojo [attrId=" + attrId + ", name=" + name
-		+ ", value=" + value + "]";
+        return "AttributeValuePojo [attrId=" + attrId + ", name=" + name
+                + ", value=" + value + "]";
     }
 
 }
