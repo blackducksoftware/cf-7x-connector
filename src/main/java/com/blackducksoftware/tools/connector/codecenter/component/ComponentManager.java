@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.codecenter.application.data.ApplicationIdToken;
+import com.blackducksoftware.sdk.codecenter.attribute.data.AttributeIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.ColaApi;
 import com.blackducksoftware.sdk.codecenter.cola.data.Component;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentAttachment;
@@ -41,6 +42,7 @@ import com.blackducksoftware.sdk.codecenter.cola.data.ComponentAttachmentToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentNameVersionToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentPageFilter;
+import com.blackducksoftware.sdk.codecenter.cola.data.ComponentUpdate;
 import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentReleaseIdToken;
 import com.blackducksoftware.sdk.codecenter.common.data.AttachmentContent;
@@ -62,6 +64,14 @@ import com.blackducksoftware.tools.connector.common.ILicenseManager;
 import com.blackducksoftware.tools.connector.common.LicensePojo;
 import com.blackducksoftware.tools.connector.common.Licenses;
 
+/**
+ * Code Center Component Manager.
+ *
+ * Limited to single-value attribute types.
+ *
+ * @author sbillings
+ *
+ */
 public class ComponentManager implements ICodeCenterComponentManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
             .getName());
@@ -490,6 +500,12 @@ public class ComponentManager implements ICodeCenterComponentManager {
         componentsByNameVersionCache.put(nameVersion, sdkComp);
     }
 
+    private <T extends CodeCenterComponentPojo> void removeFromCache(T comp) {
+        componentsByIdCache.remove(comp.getId());
+        NameVersion nameVersion = new NameVersion(comp.getName(), comp.getVersion());
+        componentsByNameVersionCache.remove(nameVersion);
+    }
+
     @Override
     public <T extends CodeCenterComponentPojo> T instantiatePojo(
             Class<T> pojoClass) throws CommonFrameworkException {
@@ -519,4 +535,52 @@ public class ComponentManager implements ICodeCenterComponentManager {
         return componentPojo;
     }
 
+    /**
+     * Update some custom attribute values on the given component.
+     *
+     * Limited to single-value attribute types.
+     *
+     * @param pojoClass
+     * @param compId
+     * @param changedAttrValues
+     * @throws CommonFrameworkException
+     */
+    @Override
+    public <T extends CodeCenterComponentPojo> void updateAttributeValues(Class<T> pojoClass, String compId, List<AttributeValuePojo> changedAttrValues)
+            throws CommonFrameworkException {
+        log.info("updateAttributeValues() called with component ID: " + compId);
+        T comp = getComponentById(pojoClass, compId, null);
+
+        ComponentUpdate componentUpdate = new ComponentUpdate();
+
+        ComponentIdToken componentIdToken = new ComponentIdToken();
+        componentIdToken.setId(comp.getId());
+        componentUpdate.setId(componentIdToken);
+
+        for (AttributeValuePojo attrValue : changedAttrValues) {
+
+            String attrName = attrValue.getName();
+
+            AttributeValue attrValueObject = new AttributeValue();
+            AttributeIdToken attrIdToken = new AttributeIdToken();
+            attrIdToken.setId(attrValue.getAttrId());
+            attrValueObject.setAttributeId(attrIdToken);
+            attrValueObject.getValues().add(attrValue.getValue());
+
+            log.info("Setting attribute " + attrName + " to "
+                    + attrValue.getValue());
+            componentUpdate.getAttributeValues().add(attrValueObject);
+        }
+
+        try {
+            log.debug("SDK: Updating custom attribute values on component");
+            codeCenterApiWrapper.getColaApi().updateCatalogComponent(componentUpdate);
+            log.debug("SDK: Done updating custom attribute values on component");
+        } catch (SdkFault e) {
+            log.error("SDK: Error updating custom attribute values on component");
+            throw new CommonFrameworkException("Error updating attribute values on component " + comp.getName() + ": "
+                    + e.getMessage());
+        }
+        removeFromCache(comp); // remove stale cache entry
+    }
 }

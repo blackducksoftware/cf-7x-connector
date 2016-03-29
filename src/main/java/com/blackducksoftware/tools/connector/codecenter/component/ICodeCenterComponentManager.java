@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
+import com.blackducksoftware.tools.connector.codecenter.common.AttributeValuePojo;
 import com.blackducksoftware.tools.connector.codecenter.common.CodeCenterComponentPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestPojo;
 import com.blackducksoftware.tools.connector.common.ApprovalStatus;
@@ -149,6 +150,16 @@ public interface ICodeCenterComponentManager {
      * @param attachmentId
      */
     void deleteAttachment(String componentId, String filename)
+            throws CommonFrameworkException;
+
+    /**
+     * Update the attribute values on an application.
+     *
+     * @param app
+     *            The application to be updated, with the new attribute values.
+     * @throws CommonFrameworkException
+     */
+    <T extends CodeCenterComponentPojo> void updateAttributeValues(Class<T> pojoClass, String compId, List<AttributeValuePojo> changedAttrValues)
             throws CommonFrameworkException;
 
 }
