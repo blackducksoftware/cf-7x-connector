@@ -859,7 +859,7 @@ public class ApplicationManager implements IApplicationManager {
      * Only supports single-value attributes.
      */
     @Override
-    public void updateAttributeValues(String appId, List<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException {
+    public void updateAttributeValues(String appId, Set<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException {
 
         log.info("updateAttributeValues() called with application ID: " + appId);
         Application app = getSdkApplicationByIdCached(appId);

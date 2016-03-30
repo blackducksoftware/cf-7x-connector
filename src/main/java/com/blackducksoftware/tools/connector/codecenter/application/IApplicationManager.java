@@ -240,5 +240,5 @@ public interface IApplicationManager {
      * @param changedAttrValues
      * @throws CommonFrameworkException
      */
-    void updateAttributeValues(String appId, List<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException;
+    void updateAttributeValues(String appId, Set<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException;
 }

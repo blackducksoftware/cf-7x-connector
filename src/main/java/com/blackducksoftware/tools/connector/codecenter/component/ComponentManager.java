@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 
@@ -546,7 +547,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
      * @throws CommonFrameworkException
      */
     @Override
-    public <T extends CodeCenterComponentPojo> void updateAttributeValues(Class<T> pojoClass, String compId, List<AttributeValuePojo> changedAttrValues)
+    public <T extends CodeCenterComponentPojo> void updateAttributeValues(Class<T> pojoClass, String compId, Set<AttributeValuePojo> changedAttrValues)
             throws CommonFrameworkException {
         log.info("updateAttributeValues() called with component ID: " + compId);
         T comp = getComponentById(pojoClass, compId, null);

@@ -23,7 +23,7 @@ package com.blackducksoftware.tools.connector.codecenter.common;
  * @author sbillings
  *
  */
-public class AttributeValuePojo {
+public class AttributeValuePojo implements Comparable {
     private final String attrId;
 
     private final String name;
@@ -56,6 +56,51 @@ public class AttributeValuePojo {
     public String toString() {
         return "AttributeValuePojo [attrId=" + attrId + ", name=" + name
                 + ", value=" + value + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((attrId == null) ? 0 : attrId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        AttributeValuePojo other = (AttributeValuePojo) obj;
+        if (attrId == null) {
+            if (other.attrId != null) {
+                return false;
+            }
+        } else if (!attrId.equals(other.attrId)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int compareTo(Object obj) {
+        if (this == obj) {
+            return 0;
+        }
+        if (obj == null) {
+            return -1;
+        }
+        if (getClass() != obj.getClass()) {
+            return -1;
+        }
+        AttributeValuePojo other = (AttributeValuePojo) obj;
+        return getAttrId().compareTo(other.getAttrId());
     }
 
 }

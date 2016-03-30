@@ -19,6 +19,7 @@ package com.blackducksoftware.tools.connector.codecenter.component;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
@@ -159,7 +160,7 @@ public interface ICodeCenterComponentManager {
      *            The application to be updated, with the new attribute values.
      * @throws CommonFrameworkException
      */
-    <T extends CodeCenterComponentPojo> void updateAttributeValues(Class<T> pojoClass, String compId, List<AttributeValuePojo> changedAttrValues)
+    <T extends CodeCenterComponentPojo> void updateAttributeValues(Class<T> pojoClass, String compId, Set<AttributeValuePojo> changedAttrValues)
             throws CommonFrameworkException;
 
 }
