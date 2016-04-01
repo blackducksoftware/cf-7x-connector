@@ -156,10 +156,10 @@ public class ApplicationManager implements IApplicationManager {
         List<Application> ccApps;
 
         try {
-            log.info("SDK: Searching applications for '" + searchString + "'");
+            log.info("SDK: Searching applications for '" + searchString + "'" + " index " + firstRow + "-" + lastRow);
             ccApps = ccApiWrapper.getApplicationApi().searchApplications(searchString,
                     pageFilter);
-            log.debug("SDK: Done searching applications");
+            log.debug("SDK: Done searching applications; got: " + ccApps.size());
         } catch (SdkFault e) {
             throw new CommonFrameworkException("Error getting applications "
                     + firstRow + " to " + lastRow + ": " + e.getMessage());
@@ -195,6 +195,7 @@ public class ApplicationManager implements IApplicationManager {
             }
             int firstRowAsInt = (int) firstRow;
             int lastRowAsInt = (int) lastRow;
+            log.debug("Fetching applications: index " + firstRowAsInt + "-" + lastRowAsInt);
             List<ApplicationPojo> partialAppList = getApplications(firstRowAsInt, lastRowAsInt, "");
             if (partialAppList.size() == 0) {
                 break; // there are no more
