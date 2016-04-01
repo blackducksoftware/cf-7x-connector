@@ -65,6 +65,25 @@ public interface IApplicationManager {
             throws CommonFrameworkException;
 
     /**
+     * Get all applications.
+     *
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<ApplicationPojo> getAllApplications()
+            throws CommonFrameworkException;
+
+    /**
+     * Get all applications, building the full list by retrieving subsets of size chunksize.
+     *
+     * @param chunkSize
+     * @return
+     * @throws CommonFrameworkException
+     */
+    List<ApplicationPojo> getAllApplications(int chunkSize)
+            throws CommonFrameworkException;
+
+    /**
      * Get an application by name/version.
      *
      * @param name

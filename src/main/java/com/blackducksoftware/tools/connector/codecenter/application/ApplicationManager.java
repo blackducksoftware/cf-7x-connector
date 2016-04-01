@@ -175,6 +175,44 @@ public class ApplicationManager implements IApplicationManager {
 
     }
 
+    @Override
+    public List<ApplicationPojo> getAllApplications(int chunkSize)
+            throws CommonFrameworkException {
+        List<ApplicationPojo> fullAppList = new ArrayList<>();
+
+        if ((chunkSize < 1) || (chunkSize >= (Integer.MAX_VALUE - 1))) {
+            return getAllApplications();
+        }
+
+        long firstRow = 0;
+        long lastRow = chunkSize - 1;
+        while (true) {
+            if (firstRow > Integer.MAX_VALUE) {
+                break;
+            }
+            if (lastRow > Integer.MAX_VALUE) {
+                lastRow = Integer.MAX_VALUE;
+            }
+            int firstRowAsInt = (int) firstRow;
+            int lastRowAsInt = (int) lastRow;
+            List<ApplicationPojo> partialAppList = getApplications(firstRowAsInt, lastRowAsInt, "");
+            if (partialAppList.size() == 0) {
+                break; // there are no more
+            }
+            fullAppList.addAll(partialAppList);
+            firstRow += chunkSize;
+            lastRow += chunkSize;
+        }
+
+        return fullAppList;
+    }
+
+    @Override
+    public List<ApplicationPojo> getAllApplications()
+            throws CommonFrameworkException {
+        return getApplications(0, Integer.MAX_VALUE);
+    }
+
     /**
      * Get an application by name/version.
      *
