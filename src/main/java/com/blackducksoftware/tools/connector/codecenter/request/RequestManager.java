@@ -18,10 +18,12 @@ import com.blackducksoftware.sdk.codecenter.request.data.RequestVulnerabilityPag
 import com.blackducksoftware.sdk.codecenter.request.data.RequestVulnerabilityUpdate;
 import com.blackducksoftware.sdk.codecenter.vulnerability.data.RequestVulnerabilitySummary;
 import com.blackducksoftware.sdk.codecenter.vulnerability.data.VulnerabilityIdToken;
+import com.blackducksoftware.sdk.codecenter.vulnerability.data.VulnerabilitySeverityEnum;
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.common.ApplicationCache;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestVulnerabilityPojo;
+import com.blackducksoftware.tools.connector.codecenter.common.VulnerabilitySeverity;
 
 public class RequestManager implements IRequestManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass()
@@ -98,13 +100,27 @@ public class RequestManager implements IRequestManager {
         }
     }
 
-    private RequestVulnerabilityPojo toPojo(RequestVulnerabilitySummary sdkVuln) {
+    private RequestVulnerabilityPojo toPojo(RequestVulnerabilitySummary sdkVuln) throws CommonFrameworkException {
         RequestVulnerabilityPojo vuln = new RequestVulnerabilityPojo(sdkVuln.getId().getId(), sdkVuln.getName().getName(),
-                sdkVuln.getDescription(), sdkVuln.getBasescore(), sdkVuln.getExploitabilityscore(),
+                sdkVuln.getDescription(), convertSeverity(sdkVuln.getSeverity()),
+                sdkVuln.getBasescore(), sdkVuln.getExploitabilityscore(),
                 sdkVuln.getImpactscore(), sdkVuln.getCreated(), sdkVuln.getModified(), sdkVuln.getPublished(), sdkVuln.getRequestId().getId(),
                 sdkVuln.getComments(), sdkVuln.getReviewStatusName().getName(),
                 sdkVuln.getTargetRemediateDate(), sdkVuln.getActualRemediateDate());
         return vuln;
+    }
+
+    private VulnerabilitySeverity convertSeverity(VulnerabilitySeverityEnum sdkSeverity) throws CommonFrameworkException {
+        switch (sdkSeverity) {
+        case HIGH:
+            return VulnerabilitySeverity.HIGH;
+        case LOW:
+            return VulnerabilitySeverity.LOW;
+        case MEDIUM:
+            return VulnerabilitySeverity.MEDIUM;
+        default:
+            throw new CommonFrameworkException("Unsupported vulnerability severity: " + sdkSeverity);
+        }
     }
 
     @Override
