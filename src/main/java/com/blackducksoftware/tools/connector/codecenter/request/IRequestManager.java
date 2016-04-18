@@ -27,6 +27,17 @@ public interface IRequestManager {
     void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability) throws CommonFrameworkException;
 
     /**
+     * Update the given request vulnerability with values in the given POJO.
+     * The request ID and vulnerability ID must be the original values. These identify the request vulnerability
+     * to change. This method updates the following request vulnerability values: Remediation status,
+     * target/actual remediation dates, and comments.
+     *
+     * @param updatedRequestVulnerability
+     * @throws CommonFrameworkException
+     */
+    void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability, boolean setUnreviewedAsNull) throws CommonFrameworkException;
+
+    /**
      * Create a new component request on an application.
      *
      * @param appId

@@ -70,6 +70,13 @@ public class RequestManager implements IRequestManager {
 
     @Override
     public void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability) throws CommonFrameworkException {
+        updateRequestVulnerability(updatedRequestVulnerability,
+                false);
+    }
+
+    @Override
+    public void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability,
+            boolean setUnreviewedAsNull) throws CommonFrameworkException {
         log.debug("updatedRequestVulnerability(): " + updatedRequestVulnerability);
         RequestVulnerabilityUpdate requestVulnerabilityUpdate = new RequestVulnerabilityUpdate();
 
@@ -85,8 +92,14 @@ public class RequestManager implements IRequestManager {
         requestVulnerabilityUpdate.setTargetRemediateDate(updatedRequestVulnerability.getTargetRemediationDate());
         requestVulnerabilityUpdate.setComment(updatedRequestVulnerability.getComments());
 
-        VulnerabilityStatusNameToken vulnerabilityStatusNameToken = new VulnerabilityStatusNameToken();
-        vulnerabilityStatusNameToken.setName(updatedRequestVulnerability.getReviewStatusName());
+        VulnerabilityStatusNameToken vulnerabilityStatusNameToken;
+        if (setUnreviewedAsNull && "Unreviewed".equals(updatedRequestVulnerability.getReviewStatusName())) {
+            log.debug("Setting vuln status to Unreviewed by setting it to null (the pre-CC 7.1.1 way)");
+            vulnerabilityStatusNameToken = null; // Workaround for CC versions before 7.1.1
+        } else {
+            vulnerabilityStatusNameToken = new VulnerabilityStatusNameToken();
+            vulnerabilityStatusNameToken.setName(updatedRequestVulnerability.getReviewStatusName());
+        }
         requestVulnerabilityUpdate
                 .setVulnerabilityStatus(vulnerabilityStatusNameToken);
 
