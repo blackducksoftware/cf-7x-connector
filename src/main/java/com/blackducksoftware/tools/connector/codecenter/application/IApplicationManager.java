@@ -41,15 +41,16 @@ import com.blackducksoftware.tools.connector.common.ApprovalStatus;
 public interface IApplicationManager {
 
     /**
-     * Get all applications the current user can see that (if search string provided) match
-     * the given search string.
+     * Get all applications the current user can see that (if search string
+     * provided) match the given search string.
      *
      * @param searchString
      *            set to null for all applications
      * @return
      * @throws CommonFrameworkException
      */
-    List<ApplicationPojo> getApplications(int firstRow, int lastRow, String searchString) throws CommonFrameworkException;
+    List<ApplicationPojo> getApplications(int firstRow, int lastRow,
+	    String searchString) throws CommonFrameworkException;
 
     /**
      * Get a subset (or all) of the applications that the user can access.
@@ -62,7 +63,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<ApplicationPojo> getApplications(int firstRow, int lastRow)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
      * Get all applications.
@@ -70,18 +71,18 @@ public interface IApplicationManager {
      * @return
      * @throws CommonFrameworkException
      */
-    List<ApplicationPojo> getAllApplications()
-            throws CommonFrameworkException;
+    List<ApplicationPojo> getAllApplications() throws CommonFrameworkException;
 
     /**
-     * Get all applications, building the full list by retrieving subsets of size chunksize.
+     * Get all applications, building the full list by retrieving subsets of
+     * size chunksize.
      *
      * @param chunkSize
      * @return
      * @throws CommonFrameworkException
      */
     List<ApplicationPojo> getAllApplications(int chunkSize)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
      * Get an application by name/version.
@@ -92,7 +93,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     ApplicationPojo getApplicationByNameVersion(String name, String version)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
      * Get an application by ID.
@@ -102,7 +103,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     ApplicationPojo getApplicationById(String id)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
      * Get an application's requests, by application ID.
@@ -112,7 +113,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<RequestPojo> getRequestsByAppId(String appId)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
      * Get an application's components, optionally recursively, by application
@@ -134,9 +135,9 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     <T extends CodeCenterComponentPojo> List<T> getComponentsByAppId(
-            Class<T> pojoClass, String appId,
-            List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
-            throws CommonFrameworkException;
+	    Class<T> pojoClass, String appId,
+	    List<ApprovalStatus> limitToApprovalStatusValues, boolean recursive)
+	    throws CommonFrameworkException;
 
     /**
      * Gets all User's that are assigned to the specified Application.
@@ -147,10 +148,11 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<ApplicationUserPojo> getAllUsersAssignedToApplication(String appId)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
-     * Add the given set of users (user IDs) to the given application, each with the given roles.
+     * Add the given set of users (user IDs) to the given application, each with
+     * the given roles.
      *
      * @param appId
      *            Application ID
@@ -159,15 +161,17 @@ public interface IApplicationManager {
      * @param roleNames
      *            Role names
      * @param circumventLock
-     *            if true: if application is locked, unlock it, add users, re-lock it
+     *            if true: if application is locked, unlock it, add users,
+     *            re-lock it
      * @throws CommonFrameworkException
      */
-    void addUsersByIdToApplicationTeam(String appId, Set<String> userIds, Set<String> roleNames,
-            boolean circumventLock)
-            throws CommonFrameworkException;
+    void addUsersByIdToApplicationTeam(String appId, Set<String> userIds,
+	    Set<String> roleNames, boolean circumventLock)
+	    throws CommonFrameworkException;
 
     /**
-     * Add the given set of users (usernames) to the given application, each with the given roles.
+     * Add the given set of users (usernames) to the given application, each
+     * with the given roles.
      *
      * @param appId
      *            Application ID
@@ -176,12 +180,13 @@ public interface IApplicationManager {
      * @param roleNames
      *            Role names
      * @param circumventLock
-     *            if true: if application is locked, unlock it, add users, re-lock it
+     *            if true: if application is locked, unlock it, add users,
+     *            re-lock it
      * @throws CommonFrameworkException
      */
-    void addUsersByNameToApplicationTeam(String appId, Set<String> userNames, Set<String> roleNames,
-            boolean circumventLock)
-            throws CommonFrameworkException;
+    void addUsersByNameToApplicationTeam(String appId, Set<String> userNames,
+	    Set<String> roleNames, boolean circumventLock)
+	    throws CommonFrameworkException;
 
     /**
      * Remove the given user+role from the given application's team.
@@ -193,22 +198,26 @@ public interface IApplicationManager {
      * @param roleId
      *            Role ID
      * @param circumventLock
-     *            if true: if application is locked, unlock it, remove users, re-lock it
+     *            if true: if application is locked, unlock it, remove users,
+     *            re-lock it
      * @throws CommonFrameworkException
      */
-    void removeUserByIdFromApplicationTeam(String appId, String userId, String roleId,
-            boolean circumventLock)
-            throws CommonFrameworkException;
+    void removeUserByIdFromApplicationTeam(String appId, String userId,
+	    String roleId, boolean circumventLock)
+	    throws CommonFrameworkException;
 
     /**
-     * Remove a given set of users (by username), all roles, from the given application.
+     * Remove a given set of users (by username), all roles, from the given
+     * application.
      *
      * @param appId
      * @param usernames
      * @param circumventLock
      * @throws CommonFrameworkException
      */
-    List<UserStatus> removeUsersByNameFromApplicationAllRoles(String appId, Set<String> usernames, boolean circumventLock) throws CommonFrameworkException;
+    List<UserStatus> removeUsersByNameFromApplicationAllRoles(String appId,
+	    Set<String> usernames, boolean circumventLock)
+	    throws CommonFrameworkException;
 
     /**
      * Get attachment details for a given set of attachments from the given
@@ -220,7 +229,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     List<AttachmentDetails> searchAttachments(String applicationId,
-            String searchString) throws CommonFrameworkException;
+	    String searchString) throws CommonFrameworkException;
 
     /**
      * Download an Application attachment to the given directory.
@@ -231,7 +240,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     File downloadAttachment(String applicationId, String filename,
-            String targetDirPath) throws CommonFrameworkException;
+	    String targetDirPath) throws CommonFrameworkException;
 
     /**
      * Attach the named file to the given Application.
@@ -242,7 +251,7 @@ public interface IApplicationManager {
      * @throws CommonFrameworkException
      */
     void attachFile(String applicationId, String sourceFilePath,
-            String description) throws CommonFrameworkException;
+	    String description) throws CommonFrameworkException;
 
     /**
      * Delete the given attachment from the given application.
@@ -250,7 +259,7 @@ public interface IApplicationManager {
      * @param attachmentId
      */
     void deleteAttachment(String applicationId, String filename)
-            throws CommonFrameworkException;
+	    throws CommonFrameworkException;
 
     /**
      * Update some attribute values on the given application.
@@ -259,5 +268,28 @@ public interface IApplicationManager {
      * @param changedAttrValues
      * @throws CommonFrameworkException
      */
-    void updateAttributeValues(String appId, Set<AttributeValuePojo> changedAttrValues) throws CommonFrameworkException;
+    void updateAttributeValues(String appId,
+	    Set<AttributeValuePojo> changedAttrValues)
+	    throws CommonFrameworkException;
+
+    /**
+     * Remove the application with the given ID (and its requests) from the
+     * cache (if it is there).
+     * 
+     * @param id
+     * @throws CommonFrameworkException
+     */
+    void removeApplicationFromCacheById(String id)
+	    throws CommonFrameworkException;
+
+    /**
+     * Remove the application with the given name/version (and its requests)
+     * from the cache (if it is there).
+     * 
+     * @param name
+     * @param version
+     * @throws CommonFrameworkException
+     */
+    void removeApplicationFromCacheByNameVersion(String name, String version)
+	    throws CommonFrameworkException;
 }
