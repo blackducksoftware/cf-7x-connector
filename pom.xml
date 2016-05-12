@@ -251,22 +251,23 @@
 			<name>JCenter</name>
 			<url>http://jcenter.bintray.com</url>
 		</repository>
+		<repository>
+			<id>bds-int-public</id>
+			<name>BDS Integration</name>
+			<url>https://updates.suite.blackducksoftware.com/integrations</url>
+		</repository>
 	</repositories>
 
-	<!-- Install archives into local Black Duck repo -->
+	<!-- Install archives into Black Duck repo -->
 
 	<distributionManagement>
-
 		<repository>
-			<id>artifactory.blackducksoftware.com</id>
-			<name>artifactory.blackducksoftware.com-releases</name>
-			<url>http://artifactory.blackducksoftware.com:8081/artifactory/soleng</url>
+			<id>bds-int-public</id>
+			<url>https://updates.suite.blackducksoftware.com/integrations</url>
 		</repository>
 		<snapshotRepository>
-			<id>artifactory.blackducksoftware.com</id>
-			<name>artifactory.blackducksoftware.com-snapshots</name>
-			<url>http://artifactory.blackducksoftware.com:8081/artifactory/soleng</url>
+			<id>bds-int-public</id>
+			<url>https://updates.suite.blackducksoftware.com/integrations</url>
 		</snapshotRepository>
-
 	</distributionManagement>
 </project>
