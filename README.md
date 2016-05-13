@@ -4,6 +4,7 @@ The CommonFramework 7x library contains SDK-based utility classes frequently use
 ## Build ##
 
 [![Build Status](https://travis-ci.org/blackducksoftware/cf-7x-connector.svg?branch=master)](https://travis-ci.org/blackducksoftware/cf-7x-connector)
+[![Coverage Status](https://coveralls.io/repos/github/blackducksoftware/cf-7x-connector/badge.svg?branch=master)](https://coveralls.io/github/blackducksoftware/cf-7x-connector?branch=master)
 
 ## Where can I get the latest release? ##
 You can download the latest source from GitHub: https://github.com/blackducksoftware/cf-7x-connector. 

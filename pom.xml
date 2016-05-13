@@ -8,7 +8,6 @@
 	<name>CommonFramework 7.x Connector</name>
 	<url>https://confluence.blackducksoftware.com/display/SE/Connectors</url>
 
-
 	<description>
 		A connector for the 7.X SDK to be used in conjunction with the Common Framework
 	</description>
@@ -17,24 +16,26 @@
 		<name>Black Duck Software</name>
 		<url>http://www.blackducksoftware.com/</url>
 	</organization>
+
 	<licenses>
 		<license>
 			<name>GNU General Public License v2.0 only</name>
 			<url>http://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html</url>
 		</license>
 	</licenses>
+
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<!-- Build system complaining about UTF 8 -->
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-
 		<!-- Protex, Code Center SDK versions -->
 		<protex.sdk.version>7.2.0</protex.sdk.version>
 		<codecenter.sdk.version>7.1.0</codecenter.sdk.version>
 		<!-- Common Framework Version -->
 		<common.framework.version>1.6.5</common.framework.version>
 	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -57,14 +58,12 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.9.5</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -76,7 +75,6 @@
 			<version>1.7.7</version>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- Protex, from product-protex repo -->
 		<dependency>
 			<groupId>com.blackducksoftware.protex.sdkclient</groupId>
@@ -98,16 +96,12 @@
 			<artifactId>codecenter-sdk-client</artifactId>
 			<version>${codecenter.sdk.version}</version>
 		</dependency>
-
-
-
 		<!-- Common Framework, from soleng repo -->
 		<dependency>
 			<groupId>com.blackducksoftware.tools</groupId>
 			<artifactId>common-framework</artifactId>
 			<version>${common.framework.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.univocity</groupId>
 			<artifactId>univocity-parsers</artifactId>
@@ -145,6 +139,36 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.6.201602180812</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.1.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
 				<executions>
@@ -156,7 +180,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -179,7 +202,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -200,7 +222,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
@@ -231,11 +252,9 @@
 				</executions>
 			</plugin>
 		</plugins>
-
 	</build>
 
 	<repositories>
-
 		<repository>
 			<id>bintray-bds-tools</id>
 			<name>BDS Bintray for Common Framework</name>
@@ -246,7 +265,7 @@
 			<name>BDS Bintray for SDK</name>
 			<url>http://dl.bintray.com/bds/sdk</url>
 		</repository>
-				<repository>
+		<repository>
 			<id>jcenter</id>
 			<name>JCenter</name>
 			<url>http://jcenter.bintray.com</url>
@@ -259,7 +278,6 @@
 	</repositories>
 
 	<!-- Install archives into Black Duck repo -->
-
 	<distributionManagement>
 		<repository>
 			<id>bds-int-public</id>
@@ -270,4 +288,5 @@
 			<url>https://updates.suite.blackducksoftware.com/integrations</url>
 		</snapshotRepository>
 	</distributionManagement>
+
 </project>
