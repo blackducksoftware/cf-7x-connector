@@ -17,7 +17,7 @@
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.protex;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,124 +31,145 @@ import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeRequest;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeType;
 import com.blackducksoftware.sdk.protex.project.codetree.NodeCountType;
 import com.blackducksoftware.sdk.protex.util.CodeTreeUtilities;
+import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 
 /**
  * Code Tree Assister Only to be retrieved from the Protex Wrapper
- *
+ * 
  * @author akamen
- *
+ * 
  */
 public class CodeTreeHelper extends ApiHelper {
 
-    private static final Logger log = LoggerFactory
-	    .getLogger(CodeTreeHelper.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(CodeTreeHelper.class.getName());
 
-    private static CodeTreeApi codeTreeApi;
+	private static CodeTreeApi codeTreeApi;
 
-    public CodeTreeHelper(ProtexAPIWrapper apiWrapper) {
-	super(apiWrapper);
-	init();
-    }
+	private static final String ROOT = "/";
 
-    private void init() {
-	codeTreeApi = apiWrapper.getCodeTreeApi();
-
-    }
-
-    /**
-     * Based on a project, return the total pending id count. Where total
-     * includes all types: Code, Search, Dependency.
-     *
-     * @param project
-     * @return
-     */
-    public Long getTotalPendingIDCount(ProjectPojo project) {
-	return getTotalPendingIDCount(project, "/");
-    }
-
-    /**
-     * Based on a project, return the total pending id count for a given subset
-     * of the tree, specified by a path. Where total includes all types: Code,
-     * Search, Dependency.
-     *
-     * @param project
-     * @return
-     */
-    public Long getTotalPendingIDCount(ProjectPojo project, String path) {
-	long totalCount = -1;
-	log.debug("Getting Total Pending Count for Project: "
-		+ project.getProjectName());
-
-	try {
-	    totalCount = checkCountForPending(project.getProjectKey(), path,
-		    NodeCountType.PENDING_ID_ALL);
-	    log.debug("Retrieved Total Pending Count for Project: "
-		    + totalCount);
-	} catch (Exception e) {
-	    log.error("Could not get total pending count: " + e.getMessage());
+	public CodeTreeHelper(final ProtexAPIWrapper apiWrapper) {
+		super(apiWrapper);
+		init();
 	}
 
-	return totalCount;
-    }
+	private void init() {
+		codeTreeApi = apiWrapper.getCodeTreeApi();
 
-    /**
-     * Returns all the file paths associated with this component
-     *
-     * @param componentId
-     * @return
-     */
-    public List<String> getAllFilePathsForComponent(String componentId) {
-	List<String> filePaths = new ArrayList<String>();
-
-	try {
-
-	} catch (Exception e) {
-	    log.error("Unable to determine file paths for component: "
-		    + componentId, e);
 	}
 
-	return filePaths;
-    }
-
-    // Check the count for specific types
-    private static long checkCountForPending(String projectKey, String path,
-	    NodeCountType... types) throws Exception {
-	CodeTreeNodeRequest ctrRequest = new CodeTreeNodeRequest();
-
-	// ctrRequest.setDepth(CodeTreeUtilities.INFINITE_DEPTH);
-	ctrRequest.setDepth(CodeTreeUtilities.SINGLE_NODE); // 9/25/2014 changed
-							    // from
-							    // INFINITE_DEPTH to
-							    // SINGLE_NODE
-
-	ctrRequest.setIncludeParentNode(true);
-	List<CodeTreeNodeType> nodeTypes = ctrRequest.getIncludedNodeTypes();
-	nodeTypes.add(CodeTreeNodeType.FILE);
-
-	List<NodeCountType> countsForCheck = ctrRequest.getCounts();
-	for (NodeCountType type : types) {
-	    countsForCheck.add(type);
-	}
-
-	long totalCount = 0;
-	try {
-	    List<CodeTreeNode> nodes = codeTreeApi.getCodeTreeNodes(projectKey,
-		    path, ctrRequest);
-	    log.debug("Code tree notes fetched: " + nodes.size());
-	    for (CodeTreeNode node : nodes) {
-		Map<NodeCountType, Long> map = CodeTreeUtilities
-			.getNodeCountMap(node);
-		long pendingIdCount = map.get(NodeCountType.PENDING_ID_ALL);
-		if (pendingIdCount > 0) {
-		    totalCount = pendingIdCount;
+	public Long getTotalCountByType(final ProjectPojo project, final NodeCountType type)
+			throws CommonFrameworkException {
+		try {
+			return checkCountForPending(project.getProjectKey(), ROOT, type);
+		} catch (final CommonFrameworkException e) {
+			throw new CommonFrameworkException("Error while retrieving count by type: " + e.getMessage());
 		}
-	    }
-
-	} catch (SdkFault e) {
-	    throw new Exception("Fatal, count not determine count: "
-		    + e.getMessage());
 	}
-	return totalCount;
-    }
+
+	/**
+	 * Based on a project, return the total pending id count. Where total
+	 * includes all types: Code, Search, Dependency.
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Long getTotalPendingIDCount(final ProjectPojo project) {
+		return getTotalPendingIDCount(project, ROOT);
+	}
+
+	/**
+	 * Based on a project, return the total pending id count for a given subset
+	 * of the tree, specified by a path. Where total includes all types: Code,
+	 * Search, Dependency.
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Long getTotalPendingIDCount(final ProjectPojo project, final String path) {
+		long totalCount = -1;
+		log.debug("Getting Total Pending Count for Project: " + project.getProjectName());
+
+		try {
+			totalCount = checkCountForPending(project.getProjectKey(), path, NodeCountType.PENDING_ID_ALL);
+			log.debug("Retrieved Total Pending Count for Project: " + totalCount);
+		} catch (final Exception e) {
+			log.error("Could not get total pending count: " + e.getMessage());
+		}
+
+		return totalCount;
+	}
+
+	/**
+	 * Returns a map of counts, keys of type NodeCountType
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Map<NodeCountType, Long> getAllCountsForProjects(final ProjectPojo project) {
+		Map<NodeCountType, Long> mappedCounts = new HashMap<NodeCountType, Long>();
+		log.debug("Getting Total File Count for Project: " + project.getProjectName());
+
+		try {
+			mappedCounts = checkCountForTypes(project.getProjectKey(), ROOT, NodeCountType.values());
+			log.debug("Retrieved all mapped counts: " + mappedCounts);
+		} catch (final Exception e) {
+			log.error("Could not get all mapped counts:  " + e.getMessage());
+		}
+
+		return mappedCounts;
+	}
+
+	// Check the count for specific types
+	private long checkCountForPending(final String projectKey, final String path, final NodeCountType... types)
+			throws CommonFrameworkException {
+		final CodeTreeNodeRequest ctrRequest = new CodeTreeNodeRequest();
+
+		long totalCount = 0;
+		try {
+
+			final Map<NodeCountType, Long> map = checkCountForTypes(projectKey, path, types);
+
+			final long pendingIdCount = map.get(NodeCountType.PENDING_ID_ALL);
+			if (pendingIdCount > 0) {
+				totalCount = pendingIdCount;
+
+			}
+
+		} catch (final Exception e) {
+			throw new CommonFrameworkException("Fatal, count not determine count: " + e.getMessage());
+		}
+		return totalCount;
+	}
+
+	// Check the count for specific types
+	private static Map<NodeCountType, Long> checkCountForTypes(final String projectKey, final String path,
+			final NodeCountType... types) throws CommonFrameworkException {
+
+		final CodeTreeNodeRequest ctrRequest = new CodeTreeNodeRequest();
+		Map<NodeCountType, Long> map = new HashMap<NodeCountType, Long>();
+
+		ctrRequest.setDepth(CodeTreeUtilities.SINGLE_NODE);
+
+		ctrRequest.setIncludeParentNode(true);
+		final List<CodeTreeNodeType> nodeTypes = ctrRequest.getIncludedNodeTypes();
+		nodeTypes.add(CodeTreeNodeType.FILE);
+
+		final List<NodeCountType> countsForCheck = ctrRequest.getCounts();
+		for (final NodeCountType type : types) {
+			countsForCheck.add(type);
+		}
+
+		try {
+			final List<CodeTreeNode> nodesWithCounts = codeTreeApi.getCodeTreeNodes(projectKey, path, ctrRequest);
+			for (final CodeTreeNode node : nodesWithCounts) {
+				map = CodeTreeUtilities.getNodeCountMap(node);
+			}
+
+		} catch (final SdkFault e) {
+			throw new CommonFrameworkException("Fatal, count not get map with counts: " + e.getMessage());
+		}
+		return map;
+	}
+
 }
