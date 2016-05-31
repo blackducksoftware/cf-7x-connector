@@ -18,5 +18,5 @@ Lastly, release tab on GitHub will contain the latest artifacts.
 All documentation for common framework can be found on the base project:  https://github.com/blackducksoftware/common-framework/wiki
 
 ## License ##
-GNU General Public License v2.0 only.
+Apache License 2.0
 
