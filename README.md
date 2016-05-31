@@ -1,5 +1,5 @@
 ## Overview ##
-The CommonFramework 7x library contains SDK-based utility classes frequently used by utilities written against the Black Duck product SDKs for working with 6.X versions of Protex and Code Center.
+The CommonFramework 7x library contains SDK-based utility classes frequently used by utilities written against the Black Duck product SDKs for working with 7.X versions of Protex and Code Center.
 
 ## Build ##
 
