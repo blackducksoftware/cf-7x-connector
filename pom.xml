@@ -29,15 +29,13 @@
   </distributionManagement>
 
   <properties>
-    <codecenter.sdk.version>7.1.0</codecenter.sdk.version>
     <!-- Common Framework Version -->
     <common.framework.version>1.6.6</common.framework.version>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
     <!-- Build system complaining about UTF 8 -->
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     <!-- Protex, Code Center SDK versions -->
     <protex.sdk.version>7.2.0</protex.sdk.version>
+    <codecenter.sdk.version>7.1.0</codecenter.sdk.version>
   </properties>
 
   <repositories>
