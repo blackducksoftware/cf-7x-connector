@@ -11,7 +11,7 @@
 
   <groupId>com.blackducksoftware.tools</groupId>
   <artifactId>cf-7x-connector</artifactId>
-  <version>1.4.13</version>
+  <version>1.5.0-SNAPSHOT</version>
 
   <name>CommonFramework 7.x Connector</name>
   <description>A connector for the 7.X SDK to be used in conjunction with the Common Framework Base project</description>
@@ -35,7 +35,7 @@
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     <!-- Protex, Code Center SDK versions -->
     <protex.sdk.version>7.2.0</protex.sdk.version>
-    <codecenter.sdk.version>7.1.0</codecenter.sdk.version>
+    <codecenter.sdk.version>7.1.2</codecenter.sdk.version>
   </properties>
 
   <repositories>
