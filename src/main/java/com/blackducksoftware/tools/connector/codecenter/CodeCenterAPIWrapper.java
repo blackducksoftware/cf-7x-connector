@@ -1,24 +1,24 @@
 /*******************************************************************************
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- *
+ * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
  * regarding copyright ownership. The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
- *  with the License. You may obtain a copy of the License at
- *
+ * with the License. You may obtain a copy of the License at
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
+ * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
- *  under the License.
- *
+ * under the License.
+ * 
  *******************************************************************************/
 package com.blackducksoftware.tools.connector.codecenter;
 
@@ -30,6 +30,7 @@ import com.blackducksoftware.sdk.codecenter.attribute.AttributeApi;
 import com.blackducksoftware.sdk.codecenter.client.util.CodeCenterServerProxyV7_0;
 import com.blackducksoftware.sdk.codecenter.cola.ColaApi;
 import com.blackducksoftware.sdk.codecenter.externalid.ExternalIdApi;
+import com.blackducksoftware.sdk.codecenter.report.ReportApi;
 import com.blackducksoftware.sdk.codecenter.request.RequestApi;
 import com.blackducksoftware.sdk.codecenter.settings.SettingsApi;
 import com.blackducksoftware.sdk.codecenter.user.UserApi;
@@ -69,6 +70,8 @@ public class CodeCenterAPIWrapper extends APIWrapper {
 
     private SettingsApi settingsApi;
 
+    private ReportApi reportApi;
+
     public CodeCenterAPIWrapper(ServerBean bean, ConfigurationManager manager)
             throws Exception {
         super(manager, bean);
@@ -95,6 +98,7 @@ public class CodeCenterAPIWrapper extends APIWrapper {
             attributeApi = ccProxy.getAttributeApi();
             requestApi = ccProxy.getRequestApi();
             settingsApi = ccProxy.getSettingsApi();
+            reportApi = ccProxy.getReportApi();
 
         } catch (Exception e) {
             errorMessage = e.getMessage();
@@ -141,4 +145,11 @@ public class CodeCenterAPIWrapper extends APIWrapper {
         return settingsApi;
     }
 
+    public ReportApi getReportApi() {
+        return reportApi;
+    }
+
+    public void setReportApi(ReportApi reportApi) {
+        this.reportApi = reportApi;
+    }
 }
