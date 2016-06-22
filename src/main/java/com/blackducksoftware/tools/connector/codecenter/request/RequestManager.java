@@ -48,161 +48,189 @@ import com.blackducksoftware.tools.connector.codecenter.common.RequestVulnerabil
 import com.blackducksoftware.tools.connector.codecenter.common.VulnerabilitySeverity;
 
 public class RequestManager implements IRequestManager {
-    private final Logger log = LoggerFactory.getLogger(this.getClass()
-            .getName());
+	private final Logger log = LoggerFactory.getLogger(this.getClass()
+			.getName());
 
-    private final CodeCenterAPIWrapper ccApiWrapper;
+	private final CodeCenterAPIWrapper ccApiWrapper;
 
-    private final ApplicationCache applicationCache;
+	private final ApplicationCache applicationCache;
 
-    public RequestManager(CodeCenterAPIWrapper ccApiWrapper, ApplicationCache applicationCache) {
-        this.ccApiWrapper = ccApiWrapper;
-        this.applicationCache = applicationCache;
-    }
+	public RequestManager(final CodeCenterAPIWrapper ccApiWrapper, final ApplicationCache applicationCache) {
+		this.ccApiWrapper = ccApiWrapper;
+		this.applicationCache = applicationCache;
+	}
 
-    @Override
-    public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(String requestId) throws CommonFrameworkException {
+	@Override
+	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(final String requestId) throws CommonFrameworkException {
 
-        RequestIdToken requestIdToken = new RequestIdToken();
-        requestIdToken.setId(requestId);
-        RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
-        filter.setFirstRowIndex(0);
-        filter.setLastRowIndex(Integer.MAX_VALUE);
-        List<RequestVulnerabilitySummary> requestVulnerabilitySummaries;
-        try {
-            requestVulnerabilitySummaries = ccApiWrapper.getRequestApi()
-                    .searchVulnerabilities(requestIdToken, filter);
-        } catch (SdkFault e) {
-            String msg = "Error getting vulnerabilities for request ID " + requestId +
-                    ": " + e.getMessage();
-            log.error(msg);
-            throw new CommonFrameworkException(msg);
-        }
+		final RequestIdToken requestIdToken = new RequestIdToken();
+		requestIdToken.setId(requestId);
+		final RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
+		filter.setFirstRowIndex(0);
+		filter.setLastRowIndex(Integer.MAX_VALUE);
+		final List<RequestVulnerabilityPojo> vulns = getVulnerabilitiesByRequestIdTokenPageFilter(requestIdToken,
+				filter);
 
-        List<RequestVulnerabilityPojo> vulns = new ArrayList<>(requestVulnerabilitySummaries.size());
+		return vulns;
+	}
 
-        for (RequestVulnerabilitySummary sdkVuln : requestVulnerabilitySummaries) {
-            sdkVuln.setRequestId(requestIdToken); // Workaround for Protex 7.3 bug PROTEX-21157
-            RequestVulnerabilityPojo requestVulnerabilityPojo = toPojo(sdkVuln);
-            vulns.add(requestVulnerabilityPojo);
-        }
+	@Override
+	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestIdRemediationStatus(final String requestId,
+			final String remediationStatusName) throws CommonFrameworkException {
 
-        return vulns;
-    }
+		final RequestIdToken requestIdToken = new RequestIdToken();
+		requestIdToken.setId(requestId);
 
-    @Override
-    public void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability) throws CommonFrameworkException {
-        updateRequestVulnerability(updatedRequestVulnerability,
-                false);
-    }
+		final VulnerabilityStatusNameToken remediationStatusNameToken = new VulnerabilityStatusNameToken();
+		remediationStatusNameToken.setName(remediationStatusName);
 
-    @Override
-    public void updateRequestVulnerability(RequestVulnerabilityPojo updatedRequestVulnerability,
-            boolean setUnreviewedAsNull) throws CommonFrameworkException {
-        log.debug("updatedRequestVulnerability(): " + updatedRequestVulnerability);
-        RequestVulnerabilityUpdate requestVulnerabilityUpdate = new RequestVulnerabilityUpdate();
+		final RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
+		filter.setFirstRowIndex(0);
+		filter.setLastRowIndex(Integer.MAX_VALUE);
 
-        RequestIdToken requestIdToken = new RequestIdToken();
-        requestIdToken.setId(updatedRequestVulnerability.getRequestId());
-        requestVulnerabilityUpdate.setRequestId(requestIdToken);
+		filter.setReviewStatus(remediationStatusNameToken);
+		final List<RequestVulnerabilityPojo> vulns = getVulnerabilitiesByRequestIdTokenPageFilter(requestIdToken,
+				filter);
 
-        VulnerabilityIdToken vulnerabilityIdToken = new VulnerabilityIdToken();
-        vulnerabilityIdToken.setId(updatedRequestVulnerability.getVulnerabilityId());
-        requestVulnerabilityUpdate.setVulnerability(vulnerabilityIdToken);
+		return vulns;
+	}
 
-        requestVulnerabilityUpdate.setActualRemediateDate(updatedRequestVulnerability.getActualRemediationDate());
-        requestVulnerabilityUpdate.setTargetRemediateDate(updatedRequestVulnerability.getTargetRemediationDate());
-        requestVulnerabilityUpdate.setComment(updatedRequestVulnerability.getComments());
+	private List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestIdTokenPageFilter(
+			final RequestIdToken requestIdToken, final RequestVulnerabilityPageFilter filter) throws CommonFrameworkException {
+		List<RequestVulnerabilitySummary> requestVulnerabilitySummaries;
+		try {
+			requestVulnerabilitySummaries = ccApiWrapper.getRequestApi()
+					.searchVulnerabilities(requestIdToken, filter);
+		} catch (final SdkFault e) {
+			final String msg = "Error getting vulnerabilities for request ID " + requestIdToken.getId() +
+					": " + e.getMessage();
+			log.error(msg);
+			throw new CommonFrameworkException(msg);
+		}
 
-        VulnerabilityStatusNameToken vulnerabilityStatusNameToken;
-        if (setUnreviewedAsNull && "Unreviewed".equals(updatedRequestVulnerability.getReviewStatusName())) {
-            log.debug("Setting vuln status to Unreviewed by setting it to null (the pre-CC 7.1.1 way)");
-            vulnerabilityStatusNameToken = null; // Workaround for CC versions before 7.1.1
-        } else {
-            vulnerabilityStatusNameToken = new VulnerabilityStatusNameToken();
-            vulnerabilityStatusNameToken.setName(updatedRequestVulnerability.getReviewStatusName());
-        }
-        requestVulnerabilityUpdate
-                .setVulnerabilityStatus(vulnerabilityStatusNameToken);
+		final List<RequestVulnerabilityPojo> vulns = new ArrayList<>(requestVulnerabilitySummaries.size());
 
-        try {
-            ccApiWrapper.getRequestApi().setVulnerabilityStatus(requestVulnerabilityUpdate);
-        } catch (SdkFault e) {
-            String msg = "requestApi.setVulnerabilityStatus(requestVulnerabilityUpdate) failed: "
-                    + e.getMessage();
-            log.error(msg);
-            throw new CommonFrameworkException(msg);
-        }
-    }
+		for (final RequestVulnerabilitySummary sdkVuln : requestVulnerabilitySummaries) {
+			sdkVuln.setRequestId(requestIdToken); // Workaround for Protex 7.3 bug PROTEX-21157
+			final RequestVulnerabilityPojo requestVulnerabilityPojo = toPojo(sdkVuln);
+			vulns.add(requestVulnerabilityPojo);
+		}
+		return vulns;
+	}
 
-    private RequestVulnerabilityPojo toPojo(RequestVulnerabilitySummary sdkVuln) throws CommonFrameworkException {
-        RequestVulnerabilityPojo vuln = new RequestVulnerabilityPojo(sdkVuln.getId().getId(), sdkVuln.getName().getName(),
-                sdkVuln.getDescription(), convertSeverity(sdkVuln.getSeverity()),
-                sdkVuln.getBasescore(), sdkVuln.getExploitabilityscore(),
-                sdkVuln.getImpactscore(), sdkVuln.getCreated(), sdkVuln.getModified(), sdkVuln.getPublished(), sdkVuln.getRequestId().getId(),
-                sdkVuln.getComments(), sdkVuln.getReviewStatusName().getName(),
-                sdkVuln.getTargetRemediateDate(), sdkVuln.getActualRemediateDate());
-        return vuln;
-    }
+	@Override
+	public void updateRequestVulnerability(final RequestVulnerabilityPojo updatedRequestVulnerability) throws CommonFrameworkException {
+		updateRequestVulnerability(updatedRequestVulnerability,
+				false);
+	}
 
-    private VulnerabilitySeverity convertSeverity(VulnerabilitySeverityEnum sdkSeverity) throws CommonFrameworkException {
-        switch (sdkSeverity) {
-        case HIGH:
-            return VulnerabilitySeverity.HIGH;
-        case LOW:
-            return VulnerabilitySeverity.LOW;
-        case MEDIUM:
-            return VulnerabilitySeverity.MEDIUM;
-        default:
-            throw new CommonFrameworkException("Unsupported vulnerability severity: " + sdkSeverity);
-        }
-    }
+	@Override
+	public void updateRequestVulnerability(final RequestVulnerabilityPojo updatedRequestVulnerability,
+			final boolean setUnreviewedAsNull) throws CommonFrameworkException {
+		log.debug("updatedRequestVulnerability(): " + updatedRequestVulnerability);
+		final RequestVulnerabilityUpdate requestVulnerabilityUpdate = new RequestVulnerabilityUpdate();
 
-    @Override
-    public String createRequest(String appId, String compId, String licenseId, boolean submit) throws CommonFrameworkException {
-        RequestCreate request = new RequestCreate();
+		final RequestIdToken requestIdToken = new RequestIdToken();
+		requestIdToken.setId(updatedRequestVulnerability.getRequestId());
+		requestVulnerabilityUpdate.setRequestId(requestIdToken);
 
-        // Should this be requested
-        request.setSubmit(submit);
+		final VulnerabilityIdToken vulnerabilityIdToken = new VulnerabilityIdToken();
+		vulnerabilityIdToken.setId(updatedRequestVulnerability.getVulnerabilityId());
+		requestVulnerabilityUpdate.setVulnerability(vulnerabilityIdToken);
 
-        RequestApplicationComponentToken token = new RequestApplicationComponentToken();
-        ApplicationIdToken appToken = new ApplicationIdToken();
-        appToken.setId(appId);
-        token.setApplicationId(appToken);
-        ComponentIdToken componentIdToken = new ComponentIdToken();
-        componentIdToken.setId(compId);
-        token.setComponentId(componentIdToken);
+		requestVulnerabilityUpdate.setActualRemediateDate(updatedRequestVulnerability.getActualRemediationDate());
+		requestVulnerabilityUpdate.setTargetRemediateDate(updatedRequestVulnerability.getTargetRemediationDate());
+		requestVulnerabilityUpdate.setComment(updatedRequestVulnerability.getComments());
 
-        request.setApplicationComponentToken(token);
-        LicenseIdToken licenseIdToken = new LicenseIdToken();
-        licenseIdToken.setId(licenseId);
-        request.setLicenseId(licenseIdToken);
+		VulnerabilityStatusNameToken vulnerabilityStatusNameToken;
+		if (setUnreviewedAsNull && "Unreviewed".equals(updatedRequestVulnerability.getReviewStatusName())) {
+			log.debug("Setting vuln status to Unreviewed by setting it to null (the pre-CC 7.1.1 way)");
+			vulnerabilityStatusNameToken = null; // Workaround for CC versions before 7.1.1
+		} else {
+			vulnerabilityStatusNameToken = new VulnerabilityStatusNameToken();
+			vulnerabilityStatusNameToken.setName(updatedRequestVulnerability.getReviewStatusName());
+		}
+		requestVulnerabilityUpdate
+		.setVulnerabilityStatus(vulnerabilityStatusNameToken);
 
-        RequestIdToken requestIdToken;
-        try {
-            requestIdToken = ccApiWrapper.getRequestApi().createRequest(request);
-        } catch (SdkFault e) {
-            String msg = "requestApi.createRequest() failed for appId / compId: " + appId + " / " + compId + ": "
-                    + e.getMessage();
-            log.error(msg);
-            throw new CommonFrameworkException(msg);
-        }
-        applicationCache.removeRequestsFromCache(appId); // we've just invalidated the cache
-        return requestIdToken.getId();
-    }
+		try {
+			ccApiWrapper.getRequestApi().setVulnerabilityStatus(requestVulnerabilityUpdate);
+		} catch (final SdkFault e) {
+			final String msg = "requestApi.setVulnerabilityStatus(requestVulnerabilityUpdate) failed: "
+					+ e.getMessage();
+			log.error(msg);
+			throw new CommonFrameworkException(msg);
+		}
+	}
 
-    @Override
-    public void deleteRequest(String appId, String requestId) throws CommonFrameworkException {
-        RequestIdToken token = new RequestIdToken();
-        token.setId(requestId);
-        try {
-            ccApiWrapper.getRequestApi().deleteRequest(token);
-        } catch (SdkFault e) {
-            String msg = "requestApi.deleteRequest() failed for requestId " + requestId + ": "
-                    + e.getMessage();
-            log.error(msg);
-            throw new CommonFrameworkException(msg);
-        }
-        applicationCache.removeRequestsFromCache(appId); // we've just invalidated the cache
-    }
+	private RequestVulnerabilityPojo toPojo(final RequestVulnerabilitySummary sdkVuln) throws CommonFrameworkException {
+		final RequestVulnerabilityPojo vuln = new RequestVulnerabilityPojo(sdkVuln.getId().getId(), sdkVuln.getName().getName(),
+				sdkVuln.getDescription(), convertSeverity(sdkVuln.getSeverity()),
+				sdkVuln.getBasescore(), sdkVuln.getExploitabilityscore(),
+				sdkVuln.getImpactscore(), sdkVuln.getCreated(), sdkVuln.getModified(), sdkVuln.getPublished(), sdkVuln.getRequestId().getId(),
+				sdkVuln.getComments(), sdkVuln.getReviewStatusName().getName(),
+				sdkVuln.getTargetRemediateDate(), sdkVuln.getActualRemediateDate());
+		return vuln;
+	}
+
+	private VulnerabilitySeverity convertSeverity(final VulnerabilitySeverityEnum sdkSeverity) throws CommonFrameworkException {
+		switch (sdkSeverity) {
+		case HIGH:
+			return VulnerabilitySeverity.HIGH;
+		case LOW:
+			return VulnerabilitySeverity.LOW;
+		case MEDIUM:
+			return VulnerabilitySeverity.MEDIUM;
+		default:
+			throw new CommonFrameworkException("Unsupported vulnerability severity: " + sdkSeverity);
+		}
+	}
+
+	@Override
+	public String createRequest(final String appId, final String compId, final String licenseId, final boolean submit) throws CommonFrameworkException {
+		final RequestCreate request = new RequestCreate();
+
+		// Should this be requested
+		request.setSubmit(submit);
+
+		final RequestApplicationComponentToken token = new RequestApplicationComponentToken();
+		final ApplicationIdToken appToken = new ApplicationIdToken();
+		appToken.setId(appId);
+		token.setApplicationId(appToken);
+		final ComponentIdToken componentIdToken = new ComponentIdToken();
+		componentIdToken.setId(compId);
+		token.setComponentId(componentIdToken);
+
+		request.setApplicationComponentToken(token);
+		final LicenseIdToken licenseIdToken = new LicenseIdToken();
+		licenseIdToken.setId(licenseId);
+		request.setLicenseId(licenseIdToken);
+
+		RequestIdToken requestIdToken;
+		try {
+			requestIdToken = ccApiWrapper.getRequestApi().createRequest(request);
+		} catch (final SdkFault e) {
+			final String msg = "requestApi.createRequest() failed for appId / compId: " + appId + " / " + compId + ": "
+					+ e.getMessage();
+			log.error(msg);
+			throw new CommonFrameworkException(msg);
+		}
+		applicationCache.removeRequestsFromCache(appId); // we've just invalidated the cache
+		return requestIdToken.getId();
+	}
+
+	@Override
+	public void deleteRequest(final String appId, final String requestId) throws CommonFrameworkException {
+		final RequestIdToken token = new RequestIdToken();
+		token.setId(requestId);
+		try {
+			ccApiWrapper.getRequestApi().deleteRequest(token);
+		} catch (final SdkFault e) {
+			final String msg = "requestApi.deleteRequest() failed for requestId " + requestId + ": "
+					+ e.getMessage();
+			log.error(msg);
+			throw new CommonFrameworkException(msg);
+		}
+		applicationCache.removeRequestsFromCache(appId); // we've just invalidated the cache
+	}
 }
