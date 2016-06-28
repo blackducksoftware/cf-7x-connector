@@ -75,6 +75,7 @@ public class RequestManager implements IRequestManager {
 	}
 
 	private List<RequestVulnerabilityPojo> fetchVulnerabilities(final String requestId) throws CommonFrameworkException {
+		log.debug("Fetching request with ID " + requestId + " from CodeCenter");
 		final RequestIdToken requestIdToken = new RequestIdToken();
 		requestIdToken.setId(requestId);
 		final RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
@@ -207,6 +208,7 @@ public class RequestManager implements IRequestManager {
 		if (oldVuln == null) {
 			throw new CommonFrameworkException("Failed to find vulnerability with ID " + vulnId + " in list");
 		}
+		cachedVulns.remove(oldVuln);
 		return oldVuln;
 	}
 
