@@ -24,6 +24,8 @@ package com.blackducksoftware.tools.connector.codecenter.request;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +48,9 @@ import com.blackducksoftware.tools.connector.codecenter.CodeCenterAPIWrapper;
 import com.blackducksoftware.tools.connector.codecenter.common.ApplicationCache;
 import com.blackducksoftware.tools.connector.codecenter.common.RequestVulnerabilityPojo;
 import com.blackducksoftware.tools.connector.codecenter.common.VulnerabilitySeverity;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 public class RequestManager implements IRequestManager {
 	private final Logger log = LoggerFactory.getLogger(this.getClass()
@@ -55,14 +60,21 @@ public class RequestManager implements IRequestManager {
 
 	private final ApplicationCache applicationCache;
 
+	private final LoadingCache<String, List<RequestVulnerabilityPojo>> vulnsByRequestIdCache;
+
 	public RequestManager(final CodeCenterAPIWrapper ccApiWrapper, final ApplicationCache applicationCache) {
 		this.ccApiWrapper = ccApiWrapper;
 		this.applicationCache = applicationCache;
+		this.vulnsByRequestIdCache = CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(60, TimeUnit.MINUTES)
+				.build(new CacheLoader<String, List<RequestVulnerabilityPojo>>() {
+					@Override
+					public List<RequestVulnerabilityPojo> load(final String requestId) throws CommonFrameworkException {
+						return fetchVulnerabilities(requestId);
+					}
+				});
 	}
 
-	@Override
-	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(final String requestId) throws CommonFrameworkException {
-
+	private List<RequestVulnerabilityPojo> fetchVulnerabilities(final String requestId) throws CommonFrameworkException {
 		final RequestIdToken requestIdToken = new RequestIdToken();
 		requestIdToken.setId(requestId);
 		final RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
@@ -75,24 +87,15 @@ public class RequestManager implements IRequestManager {
 	}
 
 	@Override
-	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestIdRemediationStatus(final String requestId,
-			final String remediationStatusName) throws CommonFrameworkException {
+	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(final String requestId)
+			throws CommonFrameworkException {
+		try {
+			return vulnsByRequestIdCache.get(requestId);
+		} catch (final ExecutionException e) {
+			throw new CommonFrameworkException("Error getting vulnerabilities for request ID '" + requestId
+					+ "' from cache: " + e.getMessage());
+		}
 
-		final RequestIdToken requestIdToken = new RequestIdToken();
-		requestIdToken.setId(requestId);
-
-		final VulnerabilityStatusNameToken remediationStatusNameToken = new VulnerabilityStatusNameToken();
-		remediationStatusNameToken.setName(remediationStatusName);
-
-		final RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
-		filter.setFirstRowIndex(0);
-		filter.setLastRowIndex(Integer.MAX_VALUE);
-
-		filter.setReviewStatus(remediationStatusNameToken);
-		final List<RequestVulnerabilityPojo> vulns = getVulnerabilitiesByRequestIdTokenPageFilter(requestIdToken,
-				filter);
-
-		return vulns;
 	}
 
 	private List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestIdTokenPageFilter(
@@ -128,6 +131,7 @@ public class RequestManager implements IRequestManager {
 	public void updateRequestVulnerability(final RequestVulnerabilityPojo updatedRequestVulnerability,
 			final boolean setUnreviewedAsNull) throws CommonFrameworkException {
 		log.debug("updatedRequestVulnerability(): " + updatedRequestVulnerability);
+
 		final RequestVulnerabilityUpdate requestVulnerabilityUpdate = new RequestVulnerabilityUpdate();
 
 		final RequestIdToken requestIdToken = new RequestIdToken();
@@ -161,6 +165,49 @@ public class RequestManager implements IRequestManager {
 			log.error(msg);
 			throw new CommonFrameworkException(msg);
 		}
+
+		updateCache(updatedRequestVulnerability);
+	}
+
+	private void updateCache(final RequestVulnerabilityPojo updatedRequestVulnerability)
+			throws CommonFrameworkException {
+		final String requestId = updatedRequestVulnerability.getRequestId();
+		final List<RequestVulnerabilityPojo> cachedVulns = getCachedVulns(requestId);
+		log.debug("cachedVulns: " + cachedVulns);
+
+		final RequestVulnerabilityPojo oldVuln = removeOldVulnFromList(cachedVulns,
+				updatedRequestVulnerability.getVulnerabilityId());
+		log.debug("Removed old vuln from cached list: " + oldVuln);
+		cachedVulns.add(updatedRequestVulnerability);
+		log.debug("Added updated vuln to cached list: " + updatedRequestVulnerability);
+		vulnsByRequestIdCache.put(requestId, cachedVulns);
+	}
+
+	private List<RequestVulnerabilityPojo> getCachedVulns(final String requestId) throws CommonFrameworkException {
+		List<RequestVulnerabilityPojo> cachedVulns;
+		try {
+			cachedVulns = vulnsByRequestIdCache.get(requestId);
+		} catch (final ExecutionException e) {
+			throw new CommonFrameworkException("Error getting vulnerabilities for request ID '" + requestId
+					+ "' from cache: " + e.getMessage());
+		}
+		return cachedVulns;
+	}
+
+	private RequestVulnerabilityPojo removeOldVulnFromList(final List<RequestVulnerabilityPojo> cachedVulns,
+			final String vulnId) throws CommonFrameworkException {
+
+		RequestVulnerabilityPojo oldVuln = null;
+		for (final RequestVulnerabilityPojo cachedVuln : cachedVulns) {
+			if (cachedVuln.getVulnerabilityId().equals(vulnId)) {
+				oldVuln = cachedVuln;
+				break;
+			}
+		}
+		if (oldVuln == null) {
+			throw new CommonFrameworkException("Failed to find vulnerability with ID " + vulnId + " in list");
+		}
+		return oldVuln;
 	}
 
 	private RequestVulnerabilityPojo toPojo(final RequestVulnerabilitySummary sdkVuln) throws CommonFrameworkException {
