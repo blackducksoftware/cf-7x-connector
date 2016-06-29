@@ -75,7 +75,7 @@ public class RequestManager implements IRequestManager {
 	}
 
 	private List<RequestVulnerabilityPojo> fetchVulnerabilities(final String requestId) throws CommonFrameworkException {
-		log.debug("Fetching request with ID " + requestId + " from CodeCenter");
+		log.debug("Fetching vulnerabilities for request with ID " + requestId + " from CodeCenter");
 		final RequestIdToken requestIdToken = new RequestIdToken();
 		requestIdToken.setId(requestId);
 		final RequestVulnerabilityPageFilter filter = new RequestVulnerabilityPageFilter();
@@ -90,6 +90,13 @@ public class RequestManager implements IRequestManager {
 	@Override
 	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(final String requestId)
 			throws CommonFrameworkException {
+		if (vulnsByRequestIdCache.size() > 0) {
+			try {
+
+				log.debug("TODO: TEMP: During GET: " + vulnsByRequestIdCache.get(requestId).get(0).getReviewStatusName());
+			} catch (final Exception e1) {
+			}
+		}
 		try {
 			return vulnsByRequestIdCache.get(requestId);
 		} catch (final ExecutionException e) {
@@ -173,15 +180,63 @@ public class RequestManager implements IRequestManager {
 	private void updateCache(final RequestVulnerabilityPojo updatedRequestVulnerability)
 			throws CommonFrameworkException {
 		final String requestId = updatedRequestVulnerability.getRequestId();
+
+		try {
+			log.debug("TODO: TEMP: Before: " + vulnsByRequestIdCache.get(requestId).get(0).getReviewStatusName());
+		} catch (final ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 		final List<RequestVulnerabilityPojo> cachedVulns = getCachedVulns(requestId);
 		log.debug("cachedVulns: " + cachedVulns);
 
-		final RequestVulnerabilityPojo oldVuln = removeOldVulnFromList(cachedVulns,
+		// TODO the next 2 variables and their use is temp, to be sure this
+		// method works
+		final int origVulnCount = cachedVulns.size();
+		final String origVulnListString = toString(cachedVulns);
+
+		final int originalIndex = removeOldVulnFromList(cachedVulns,
 				updatedRequestVulnerability.getVulnerabilityId());
-		log.debug("Removed old vuln from cached list: " + oldVuln);
-		cachedVulns.add(updatedRequestVulnerability);
+		log.debug("Removed old vuln from cached list at index: " + originalIndex);
+		cachedVulns.add(originalIndex, updatedRequestVulnerability);
 		log.debug("Added updated vuln to cached list: " + updatedRequestVulnerability);
-		vulnsByRequestIdCache.put(requestId, cachedVulns);
+		if (cachedVulns.size() != origVulnCount) {
+			throw new CommonFrameworkException("Vulnerability count changed during updateCache(); was " + origVulnCount
+					+ "; changed to " + cachedVulns.size());
+		}
+		final String newVulnListString = toString(cachedVulns);
+		if (!newVulnListString.equals(origVulnListString)) {
+			throw new CommonFrameworkException("Vulnerability list changed during updateCache(); was "
+					+ origVulnListString + "; changed to " + newVulnListString);
+		}
+		log.debug("updateCache(): vulnerability list order has been preserved at: " + newVulnListString);
+		try {
+			log.debug("TODO: TEMP: Midway: " + vulnsByRequestIdCache.get(requestId).get(0).getReviewStatusName());
+		} catch (final ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		vulnsByRequestIdCache.put(requestId, cachedVulns); // TODO this has no
+		// effect since the
+		// changed list is
+		// live
+		try {
+			log.debug("TODO: TEMP: After: " + vulnsByRequestIdCache.get(requestId).get(0).getReviewStatusName());
+		} catch (final ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private String toString(final List<RequestVulnerabilityPojo> vulns) {
+		final StringBuilder sb = new StringBuilder();
+		for (final RequestVulnerabilityPojo vuln : vulns) {
+			sb.append(vuln.getVulnerabilityName());
+			sb.append("|");
+		}
+		return sb.toString();
 	}
 
 	private List<RequestVulnerabilityPojo> getCachedVulns(final String requestId) throws CommonFrameworkException {
@@ -195,21 +250,23 @@ public class RequestManager implements IRequestManager {
 		return cachedVulns;
 	}
 
-	private RequestVulnerabilityPojo removeOldVulnFromList(final List<RequestVulnerabilityPojo> cachedVulns,
+	private int removeOldVulnFromList(final List<RequestVulnerabilityPojo> cachedVulns,
 			final String vulnId) throws CommonFrameworkException {
 
+		int currentIndex = 0;
 		RequestVulnerabilityPojo oldVuln = null;
 		for (final RequestVulnerabilityPojo cachedVuln : cachedVulns) {
 			if (cachedVuln.getVulnerabilityId().equals(vulnId)) {
 				oldVuln = cachedVuln;
 				break;
 			}
+			currentIndex++;
 		}
 		if (oldVuln == null) {
 			throw new CommonFrameworkException("Failed to find vulnerability with ID " + vulnId + " in list");
 		}
-		cachedVulns.remove(oldVuln);
-		return oldVuln;
+		cachedVulns.remove(currentIndex);
+		return currentIndex; // where we found it
 	}
 
 	private RequestVulnerabilityPojo toPojo(final RequestVulnerabilitySummary sdkVuln) throws CommonFrameworkException {
