@@ -65,6 +65,7 @@ public class RequestManager implements IRequestManager {
 	public RequestManager(final CodeCenterAPIWrapper ccApiWrapper, final ApplicationCache applicationCache) {
 		this.ccApiWrapper = ccApiWrapper;
 		this.applicationCache = applicationCache;
+		log.debug("Initializing cache");
 		this.vulnsByRequestIdCache = CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(60, TimeUnit.MINUTES)
 				.build(new CacheLoader<String, List<RequestVulnerabilityPojo>>() {
 					@Override
@@ -83,20 +84,27 @@ public class RequestManager implements IRequestManager {
 		filter.setLastRowIndex(Integer.MAX_VALUE);
 		final List<RequestVulnerabilityPojo> vulns = getVulnerabilitiesByRequestIdTokenPageFilter(requestIdToken,
 				filter);
-
+		log.debug("Fetched " + vulns.size() + " vulnerabilities from Code Center");
 		return vulns;
 	}
 
 	@Override
 	public List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(final String requestId)
 			throws CommonFrameworkException {
+		log.debug("getVulnerabilitiesByRequestId() called for request ID: " + requestId);
 		try {
-			return vulnsByRequestIdCache.get(requestId);
+			return getVulnsFromCache(requestId);
 		} catch (final ExecutionException e) {
 			throw new CommonFrameworkException("Error getting vulnerabilities for request ID '" + requestId
 					+ "' from cache: " + e.getMessage());
 		}
 
+	}
+
+	private List<RequestVulnerabilityPojo> getVulnsFromCache(final String requestId) throws ExecutionException {
+		log.debug("Requesting from cache vulnerabilities for request ID " + requestId);
+		final List<RequestVulnerabilityPojo> vulns = vulnsByRequestIdCache.get(requestId);
+		return vulns;
 	}
 
 	private List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestIdTokenPageFilter(
@@ -185,7 +193,7 @@ public class RequestManager implements IRequestManager {
 	private List<RequestVulnerabilityPojo> getCachedVulns(final String requestId) throws CommonFrameworkException {
 		List<RequestVulnerabilityPojo> cachedVulns;
 		try {
-			cachedVulns = vulnsByRequestIdCache.get(requestId);
+			cachedVulns = getVulnsFromCache(requestId);
 		} catch (final ExecutionException e) {
 			throw new CommonFrameworkException("Error getting vulnerabilities for request ID '" + requestId
 					+ "' from cache: " + e.getMessage());
