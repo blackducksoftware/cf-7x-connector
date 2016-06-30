@@ -111,9 +111,12 @@ public class RequestManager implements IRequestManager {
 			final RequestIdToken requestIdToken, final RequestVulnerabilityPageFilter filter) throws CommonFrameworkException {
 		List<RequestVulnerabilitySummary> requestVulnerabilitySummaries;
 		try {
+			log.debug("SDK: Getting vulnerabilities");
 			requestVulnerabilitySummaries = ccApiWrapper.getRequestApi()
 					.searchVulnerabilities(requestIdToken, filter);
+			log.debug("SDK: Done getting vulnerabilities");
 		} catch (final SdkFault e) {
+			log.debug("SDK: Error getting vulnerabilities");
 			final String msg = "Error getting vulnerabilities for request ID " + requestIdToken.getId() +
 					": " + e.getMessage();
 			log.error(msg);
