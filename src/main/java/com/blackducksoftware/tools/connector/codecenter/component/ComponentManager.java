@@ -48,6 +48,7 @@ import com.blackducksoftware.sdk.codecenter.cola.data.ComponentAttachmentToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentNameVersionToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentPageFilter;
+import com.blackducksoftware.sdk.codecenter.cola.data.ComponentSearchTypeEnum;
 import com.blackducksoftware.sdk.codecenter.cola.data.ComponentUpdate;
 import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentIdToken;
 import com.blackducksoftware.sdk.codecenter.cola.data.KbComponentReleaseIdToken;
@@ -592,5 +593,59 @@ public class ComponentManager implements ICodeCenterComponentManager {
 					+ e.getMessage());
 		}
 		removeFromCache(comp); // remove stale cache entry
+	}
+
+	@Override
+	public void populateComponentCacheFromCatalog(final int batchSize) throws CommonFrameworkException {
+		log.info("Preloading components into component cache");
+
+		final ComponentPageFilter pageFilter = new ComponentPageFilter();
+		pageFilter.setComponentType(ComponentSearchTypeEnum.ALL);
+		pageFilter.setIncludeDeprecated(false);
+
+		int firstRow = 0;
+		int lastRow = batchSize - 1;
+		int totalLoaded = 0;
+		while (true) {
+
+			log.debug("Preloading components into component cache: index " + firstRow + "-" + lastRow);
+
+			pageFilter.setFirstRowIndex(firstRow);
+			pageFilter.setLastRowIndex(lastRow);
+			List<Component> partialSdkCompList;
+			try {
+				log.debug("SDK: Getting catalog components");
+				partialSdkCompList = codeCenterApiWrapper.getColaApi().searchCatalogComponents("", pageFilter);
+				// TODO:
+				// The above SDK method is deprecated, but the replacement
+				// (searchAllIndexedCatalogComponents)
+				// returns diff type; might have all the fields we need though.
+				log.debug("SDK: Done getting catalog components");
+			} catch (final SdkFault e) {
+				log.debug("SDK: Error getting catalog components");
+				throw new CommonFrameworkException("Error preloading components into component cache; firstRowIndex: "
+						+ firstRow + "; lastRow: " + lastRow + ": " + e.getMessage());
+			}
+			log.debug("Actually loaded " + partialSdkCompList.size() + " components; adding them to cache");
+			for (final Component sdkComp : partialSdkCompList) {
+				// Add to caches
+				final NameVersion nameVersion = new NameVersion(sdkComp.getName(), sdkComp.getVersion());
+				addToCache(nameVersion, sdkComp);
+			}
+			log.debug("Done adding this batch of components to cache");
+			if (partialSdkCompList.size() == 0) {
+				break; // there are no more
+			}
+			totalLoaded += partialSdkCompList.size();
+
+			if (partialSdkCompList.size() < batchSize) {
+				break; // we've reached the end of the catalog
+			}
+			firstRow += batchSize;
+			lastRow += batchSize;
+
+		}
+		log.info("Done preloading components into component cache; Total components preloaded: " + totalLoaded
+				+ "; # components currently in cache: " + componentsByIdCache.size());
 	}
 }
