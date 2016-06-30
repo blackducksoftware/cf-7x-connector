@@ -2,7 +2,6 @@ package com.blackducksoftware.tools.connector.codecenter.component;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
@@ -23,7 +22,7 @@ public class ComponentManagerTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
+	// @Test
 	public void testPopulateComponentCacheFromCatalog() throws CommonFrameworkException {
 		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
 		final IAttributeDefinitionManager mockAttrDefMgr = Mockito.mock(AttributeDefinitionManager.class);
