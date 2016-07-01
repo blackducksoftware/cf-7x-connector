@@ -27,6 +27,10 @@ import com.blackducksoftware.tools.connector.common.LicensePojo;
 
 public class ComponentManagerTest {
 
+	private static final String TEST_COMP_VERSION = "testCompVersion";
+	private static final String TEST_COMP_NAME = "testComp1";
+	private static final String TEST_COMP_ID = "testCompId";
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -43,8 +47,7 @@ public class ComponentManagerTest {
 
 		final List<Component> testComponents = generateTestComponentList();
 		final ColaApi mockColaApi = Mockito.mock(ColaApi.class);
-		Mockito.when(mockColaApi.searchCatalogComponents(Mockito.anyString(), Mockito.any(ComponentPageFilter.class)))
-		.thenReturn(testComponents);
+
 		Mockito.when(mockCodeCenterApiWrapper.getColaApi()).thenReturn(mockColaApi);
 
 		final ComponentManager compMgr = new ComponentManager(mockCodeCenterApiWrapper, mockAttrDefMgr,
@@ -53,9 +56,9 @@ public class ComponentManagerTest {
 		Mockito.when(mockColaApi.getCatalogComponent(Mockito.any(ComponentNameVersionOrIdToken.class))).thenReturn(
 				testComponents.get(0));
 
-		compMgr.getComponentById(CodeCenterComponentPojo.class, "testCompId");
+		compMgr.getComponentById(CodeCenterComponentPojo.class, TEST_COMP_ID);
 
-		// Make sure component was fetched from cache, not Code Center
+		// Make sure component was fetched from Code Center
 		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
 	}
 
@@ -75,24 +78,133 @@ public class ComponentManagerTest {
 
 		compMgr.populateComponentCacheFromCatalog(1000);
 
-		compMgr.getComponentById(CodeCenterComponentPojo.class, "testCompId");
+		compMgr.getComponentById(CodeCenterComponentPojo.class, TEST_COMP_ID);
 
 		// Make sure component was fetched from cache, not Code Center
 		Mockito.verify(mockColaApi, Mockito.times(0)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
 	}
 
+
+	@Test
+	public void testGetComponentByNameVersionFromCodeCenter() throws CommonFrameworkException, SdkFault {
+		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
+		final IAttributeDefinitionManager mockAttrDefMgr = Mockito.mock(AttributeDefinitionManager.class);
+		final ILicenseManager<LicensePojo> mockLicenseManager = Mockito.mock(LicenseManager.class);
+
+		final List<Component> testComponents = generateTestComponentList();
+		final ColaApi mockColaApi = Mockito.mock(ColaApi.class);
+
+		Mockito.when(mockCodeCenterApiWrapper.getColaApi()).thenReturn(mockColaApi);
+
+		final ComponentManager compMgr = new ComponentManager(mockCodeCenterApiWrapper, mockAttrDefMgr,
+				mockLicenseManager);
+
+		Mockito.when(mockColaApi.getCatalogComponent(Mockito.any(ComponentNameVersionOrIdToken.class))).thenReturn(
+				testComponents.get(0));
+
+		compMgr.getComponentByNameVersion(CodeCenterComponentPojo.class, TEST_COMP_NAME, TEST_COMP_VERSION);
+
+		// Make sure component was fetched from Code Center
+		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+	}
+
+	// TODO get by name/version from cache
+
+	@Test
+	public void testGetComponentByNameVersionFromCache() throws CommonFrameworkException, SdkFault {
+		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
+		final IAttributeDefinitionManager mockAttrDefMgr = Mockito.mock(AttributeDefinitionManager.class);
+		final ILicenseManager<LicensePojo> mockLicenseManager = Mockito.mock(LicenseManager.class);
+
+		final List<Component> testComponents = generateTestComponentList();
+		final ColaApi mockColaApi = Mockito.mock(ColaApi.class);
+		Mockito.when(mockColaApi.searchCatalogComponents(Mockito.anyString(), Mockito.any(ComponentPageFilter.class)))
+		.thenReturn(testComponents);
+		Mockito.when(mockCodeCenterApiWrapper.getColaApi()).thenReturn(mockColaApi);
+
+		final ComponentManager compMgr = new ComponentManager(mockCodeCenterApiWrapper, mockAttrDefMgr,
+				mockLicenseManager);
+
+		compMgr.populateComponentCacheFromCatalog(1000);
+
+		compMgr.getComponentByNameVersion(CodeCenterComponentPojo.class, TEST_COMP_NAME, TEST_COMP_VERSION);
+
+		// Make sure component was fetched from cache, not Code Center
+		Mockito.verify(mockColaApi, Mockito.times(0)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+	}
+
+	// TODO get by name version populates by ID cache
+
+	@Test
+	public void testGetComponentByNameVersionPopulatesByIdCache() throws CommonFrameworkException, SdkFault {
+		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
+		final IAttributeDefinitionManager mockAttrDefMgr = Mockito.mock(AttributeDefinitionManager.class);
+		final ILicenseManager<LicensePojo> mockLicenseManager = Mockito.mock(LicenseManager.class);
+
+		final List<Component> testComponents = generateTestComponentList();
+		final ColaApi mockColaApi = Mockito.mock(ColaApi.class);
+
+		Mockito.when(mockCodeCenterApiWrapper.getColaApi()).thenReturn(mockColaApi);
+
+		final ComponentManager compMgr = new ComponentManager(mockCodeCenterApiWrapper, mockAttrDefMgr,
+				mockLicenseManager);
+
+		Mockito.when(mockColaApi.getCatalogComponent(Mockito.any(ComponentNameVersionOrIdToken.class))).thenReturn(
+				testComponents.get(0));
+
+		compMgr.getComponentByNameVersion(CodeCenterComponentPojo.class, TEST_COMP_NAME, TEST_COMP_VERSION);
+
+		// Make sure component was fetched from Code Center
+		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+
+		compMgr.getComponentById(CodeCenterComponentPojo.class, TEST_COMP_ID);
+
+		// Make sure component was fetched from cache
+		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+	}
+
+	// TODO get by ID populates by name/version cache
+
+	@Test
+	public void testGetComponentByIdPopulatesByNameVersionCache() throws CommonFrameworkException, SdkFault {
+		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
+		final IAttributeDefinitionManager mockAttrDefMgr = Mockito.mock(AttributeDefinitionManager.class);
+		final ILicenseManager<LicensePojo> mockLicenseManager = Mockito.mock(LicenseManager.class);
+
+		final List<Component> testComponents = generateTestComponentList();
+		final ColaApi mockColaApi = Mockito.mock(ColaApi.class);
+
+		Mockito.when(mockCodeCenterApiWrapper.getColaApi()).thenReturn(mockColaApi);
+
+		final ComponentManager compMgr = new ComponentManager(mockCodeCenterApiWrapper, mockAttrDefMgr,
+				mockLicenseManager);
+
+		Mockito.when(mockColaApi.getCatalogComponent(Mockito.any(ComponentNameVersionOrIdToken.class))).thenReturn(
+				testComponents.get(0));
+
+		compMgr.getComponentById(CodeCenterComponentPojo.class, TEST_COMP_ID);
+
+		// Make sure component was fetched from Code Center
+		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+
+		compMgr.getComponentByNameVersion(CodeCenterComponentPojo.class, TEST_COMP_NAME, TEST_COMP_VERSION);
+
+		// Make sure component was fetched from cache
+		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+	}
+
 	private List<Component> generateTestComponentList() {
 		final List<Component> testComponents = new ArrayList<>();
 		final Component comp = new Component();
-		comp.setName("testComp1");
+		comp.setName(TEST_COMP_NAME);
 		final ComponentIdToken compIdToken = new ComponentIdToken();
-		compIdToken.setId("testCompId");
+		compIdToken.setId(TEST_COMP_ID);
 		comp.setId(compIdToken);
 		final ComponentNameVersionToken compNameVersionToken = new ComponentNameVersionToken();
-		compNameVersionToken.setName("testComp1");
-		compNameVersionToken.setVersion("testCompVersion");
+		compNameVersionToken.setName(TEST_COMP_NAME);
+		compNameVersionToken.setVersion(TEST_COMP_VERSION);
 		comp.setNameVersion(compNameVersionToken);
-		comp.setVersion("testCompVersion");
+		comp.setVersion(TEST_COMP_VERSION);
 		comp.setApprovalStatus(ApprovalStatusEnum.APPROVED);
 		testComponents.add(comp);
 		return testComponents;
