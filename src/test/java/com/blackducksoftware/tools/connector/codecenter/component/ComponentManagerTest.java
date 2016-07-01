@@ -1,7 +1,10 @@
 package com.blackducksoftware.tools.connector.codecenter.component;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -185,6 +188,35 @@ public class ComponentManagerTest {
 
 		// Make sure component was fetched from cache
 		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+	}
+
+	@Test
+	public void testCacheReset() throws CommonFrameworkException, SdkFault {
+		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
+		final IAttributeDefinitionManager mockAttrDefMgr = Mockito.mock(AttributeDefinitionManager.class);
+		final ILicenseManager<LicensePojo> mockLicenseManager = Mockito.mock(LicenseManager.class);
+
+		final List<Component> testComponents = generateTestComponentList();
+		final ColaApi mockColaApi = Mockito.mock(ColaApi.class);
+		Mockito.when(mockColaApi.searchCatalogComponents(Mockito.anyString(), Mockito.any(ComponentPageFilter.class)))
+		.thenReturn(testComponents);
+		Mockito.when(mockCodeCenterApiWrapper.getColaApi()).thenReturn(mockColaApi);
+
+		final ComponentManager compMgr = new ComponentManager(mockCodeCenterApiWrapper, mockAttrDefMgr,
+				mockLicenseManager);
+
+		compMgr.populateComponentCacheFromCatalog(1000);
+
+		compMgr.getComponentById(CodeCenterComponentPojo.class, TEST_COMP_ID);
+
+		// Make sure component was fetched from cache, not Code Center
+		Mockito.verify(mockColaApi, Mockito.times(0)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
+
+		long numCacheEntriesDiscarded = compMgr.resetComponentCache(50000, 7, TimeUnit.DAYS);
+		assertEquals(1, numCacheEntriesDiscarded);
+
+		numCacheEntriesDiscarded = compMgr.resetComponentCache(1000, 30, TimeUnit.MINUTES);
+		assertEquals(0, numCacheEntriesDiscarded);
 	}
 
 	private List<Component> generateTestComponentList() {

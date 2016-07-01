@@ -83,6 +83,12 @@ import com.google.common.cache.LoadingCache;
  *
  */
 public class ComponentManager implements ICodeCenterComponentManager {
+	private static final TimeUnit CACHE_TIMEOUT_UNITS_DEFAULT = TimeUnit.MINUTES;
+
+	private static final int CACHE_TIMEOUT_DEFAULT = 60;
+
+	private static final int CACHE_SIZE_DEFAULT = 1000;
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass()
 			.getName());
 
@@ -92,9 +98,9 @@ public class ComponentManager implements ICodeCenterComponentManager {
 
 	private final ILicenseManager<LicensePojo> licenseManager;
 
-	private final LoadingCache<NameVersion, Component> componentsByNameVersionCache;
+	private LoadingCache<NameVersion, Component> componentsByNameVersionCache;
 
-	private final LoadingCache<String, Component> componentsByIdCache;
+	private LoadingCache<String, Component> componentsByIdCache;
 
 	public ComponentManager(final CodeCenterAPIWrapper codeCenterApiWrapper,
 			final IAttributeDefinitionManager attrDefMgr,
@@ -102,12 +108,27 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		this.codeCenterApiWrapper = codeCenterApiWrapper;
 		this.attrDefMgr = attrDefMgr;
 		this.licenseManager = licenseManager;
-		final int componentCacheSize = 50000; // TODO cache params:
-		// configurable?
-		this.componentsByIdCache = CacheBuilder.newBuilder().maximumSize(componentCacheSize)
-				.expireAfterWrite(60, TimeUnit.MINUTES).build(new ComponentByIdCacheLoader());
-		this.componentsByNameVersionCache = CacheBuilder.newBuilder().maximumSize(componentCacheSize)
-				.expireAfterWrite(60, TimeUnit.MINUTES).build(new ComponentByNameVersionCacheLoader());
+
+		this.componentsByIdCache = CacheBuilder.newBuilder().maximumSize(CACHE_SIZE_DEFAULT)
+				.expireAfterWrite(CACHE_TIMEOUT_DEFAULT, CACHE_TIMEOUT_UNITS_DEFAULT)
+				.build(new ComponentByIdCacheLoader());
+		this.componentsByNameVersionCache = CacheBuilder.newBuilder().maximumSize(CACHE_SIZE_DEFAULT)
+				.expireAfterWrite(CACHE_TIMEOUT_DEFAULT, CACHE_TIMEOUT_UNITS_DEFAULT)
+				.build(new ComponentByNameVersionCacheLoader());
+	}
+
+	@Override
+	public long resetComponentCache(final int sizeLimit, final int expireTime, final TimeUnit expireTimeUnits) {
+		final long numCacheEntriesDiscarded = componentsByIdCache.size();
+		log.info("resetComponentCache() discarding " + componentsByIdCache.size()
+				+ " cached components; changing size limit to " + sizeLimit + " and expireTime to " + expireTime + " "
+				+ expireTimeUnits);
+		this.componentsByIdCache = CacheBuilder.newBuilder().maximumSize(sizeLimit)
+				.expireAfterWrite(expireTime, expireTimeUnits).build(new ComponentByIdCacheLoader());
+		this.componentsByNameVersionCache = CacheBuilder.newBuilder().maximumSize(sizeLimit)
+				.expireAfterWrite(expireTime, expireTimeUnits).build(new ComponentByNameVersionCacheLoader());
+
+		return numCacheEntriesDiscarded;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ package com.blackducksoftware.tools.connector.codecenter.component;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.blackducksoftware.tools.commonframework.core.exception.CommonFrameworkException;
 import com.blackducksoftware.tools.connector.codecenter.common.AttachmentDetails;
@@ -177,5 +178,15 @@ public interface ICodeCenterComponentManager {
 	 * @throws CommonFrameworkException
 	 */
 	void populateComponentCacheFromCatalog(int batchSize) throws CommonFrameworkException;
+
+	/**
+	 * Discard the Component cache and re-create it with the given parameters.
+	 *
+	 * @param sizeLimit
+	 * @param expireTime
+	 * @param expireTimeUnits
+	 * @return the number of cache entries discarded by this action
+	 */
+	long resetComponentCache(final int sizeLimit, final int expireTime, final TimeUnit expireTimeUnits);
 
 }
