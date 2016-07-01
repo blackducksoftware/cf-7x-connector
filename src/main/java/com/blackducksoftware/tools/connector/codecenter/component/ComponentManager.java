@@ -107,15 +107,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		this.componentsByIdCache = CacheBuilder.newBuilder().maximumSize(componentCacheSize)
 				.expireAfterWrite(60, TimeUnit.MINUTES).build(new ComponentByIdCacheLoader());
 		this.componentsByNameVersionCache = CacheBuilder.newBuilder().maximumSize(componentCacheSize)
-				.expireAfterWrite(60, TimeUnit.MINUTES).build(new CacheLoader<NameVersion, Component>() {
-					@Override
-					public Component load(final NameVersion nameVersion) throws CommonFrameworkException {
-						final Component sdkComp = getSdkComponentByNameVersion(nameVersion.getName(),
-								nameVersion.getVersion());
-						componentsByIdCache.put(sdkComp.getId().getId(), sdkComp);
-						return sdkComp;
-					}
-				});
+				.expireAfterWrite(60, TimeUnit.MINUTES).build(new ComponentByNameVersionCacheLoader());
 	}
 
 	@Override
@@ -677,6 +669,15 @@ public class ComponentManager implements ICodeCenterComponentManager {
 			final Component sdkComp = getSdkComponentById(componentId);
 			final NameVersion nameVersion = new NameVersion(sdkComp.getName(), sdkComp.getVersion());
 			componentsByNameVersionCache.put(nameVersion, sdkComp);
+			return sdkComp;
+		}
+	}
+
+	private class ComponentByNameVersionCacheLoader extends CacheLoader<NameVersion, Component> {
+		@Override
+		public Component load(final NameVersion nameVersion) throws CommonFrameworkException {
+			final Component sdkComp = getSdkComponentByNameVersion(nameVersion.getName(), nameVersion.getVersion());
+			componentsByIdCache.put(sdkComp.getId().getId(), sdkComp);
 			return sdkComp;
 		}
 	}
