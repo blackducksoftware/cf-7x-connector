@@ -108,8 +108,6 @@ public class ComponentManagerTest {
 		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
 	}
 
-	// TODO get by name/version from cache
-
 	@Test
 	public void testGetComponentByNameVersionFromCache() throws CommonFrameworkException, SdkFault {
 		final CodeCenterAPIWrapper mockCodeCenterApiWrapper = Mockito.mock(CodeCenterAPIWrapper.class);
@@ -132,8 +130,6 @@ public class ComponentManagerTest {
 		// Make sure component was fetched from cache, not Code Center
 		Mockito.verify(mockColaApi, Mockito.times(0)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
 	}
-
-	// TODO get by name version populates by ID cache
 
 	@Test
 	public void testGetComponentByNameVersionPopulatesByIdCache() throws CommonFrameworkException, SdkFault {
@@ -162,8 +158,6 @@ public class ComponentManagerTest {
 		// Make sure component was fetched from cache
 		Mockito.verify(mockColaApi, Mockito.times(1)).getCatalogComponent(Mockito.any(ComponentIdToken.class));
 	}
-
-	// TODO get by ID populates by name/version cache
 
 	@Test
 	public void testGetComponentByIdPopulatesByNameVersionCache() throws CommonFrameworkException, SdkFault {

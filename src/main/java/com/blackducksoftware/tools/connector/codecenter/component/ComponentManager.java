@@ -105,15 +105,7 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		final int componentCacheSize = 50000; // TODO cache params:
 		// configurable?
 		this.componentsByIdCache = CacheBuilder.newBuilder().maximumSize(componentCacheSize)
-				.expireAfterWrite(60, TimeUnit.MINUTES).build(new CacheLoader<String, Component>() {
-					@Override
-					public Component load(final String componentId) throws CommonFrameworkException {
-						final Component sdkComp = getSdkComponentById(componentId);
-						final NameVersion nameVersion = new NameVersion(sdkComp.getName(), sdkComp.getVersion());
-						componentsByNameVersionCache.put(nameVersion, sdkComp);
-						return sdkComp;
-					}
-				});
+				.expireAfterWrite(60, TimeUnit.MINUTES).build(new ComponentByIdCacheLoader());
 		this.componentsByNameVersionCache = CacheBuilder.newBuilder().maximumSize(componentCacheSize)
 				.expireAfterWrite(60, TimeUnit.MINUTES).build(new CacheLoader<NameVersion, Component>() {
 					@Override
@@ -677,5 +669,15 @@ public class ComponentManager implements ICodeCenterComponentManager {
 		}
 		log.info("Done preloading components into component cache; Total components preloaded: " + totalLoaded
 				+ "; # components currently in cache: " + componentsByIdCache.size());
+	}
+
+	private class ComponentByIdCacheLoader extends CacheLoader<String, Component> {
+		@Override
+		public Component load(final String componentId) throws CommonFrameworkException {
+			final Component sdkComp = getSdkComponentById(componentId);
+			final NameVersion nameVersion = new NameVersion(sdkComp.getName(), sdkComp.getVersion());
+			componentsByNameVersionCache.put(nameVersion, sdkComp);
+			return sdkComp;
+		}
 	}
 }
