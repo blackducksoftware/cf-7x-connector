@@ -38,18 +38,6 @@ public interface IRequestManager {
 	List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestId(String requestId) throws CommonFrameworkException;
 
 	/**
-	 * Get those vulnerabilities associated with a request that have the given
-	 * remediation status.
-	 * 
-	 * @param requestId
-	 * @param remediationStatusName
-	 * @return
-	 * @throws CommonFrameworkException
-	 */
-	List<RequestVulnerabilityPojo> getVulnerabilitiesByRequestIdRemediationStatus(String requestId,
-			String remediationStatusName) throws CommonFrameworkException;
-
-	/**
 	 * Update the given request vulnerability with values in the given POJO.
 	 * The request ID and vulnerability ID must be the original values. These identify the request vulnerability
 	 * to change. This method updates the following request vulnerability values: Remediation status,
