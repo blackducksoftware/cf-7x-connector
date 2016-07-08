@@ -41,9 +41,9 @@ import com.blackducksoftware.tools.commonframework.standard.common.ProjectPojo;
 
 /**
  * Code Tree Assister Only to be retrieved from the Protex Wrapper
- * 
+ *
  * @author akamen
- * 
+ *
  */
 public class CodeTreeHelper extends ApiHelper {
 
@@ -75,7 +75,7 @@ public class CodeTreeHelper extends ApiHelper {
 	/**
 	 * Based on a project, return the total pending id count. Where total
 	 * includes all types: Code, Search, Dependency.
-	 * 
+	 *
 	 * @param project
 	 * @return
 	 */
@@ -87,7 +87,7 @@ public class CodeTreeHelper extends ApiHelper {
 	 * Based on a project, return the total pending id count for a given subset
 	 * of the tree, specified by a path. Where total includes all types: Code,
 	 * Search, Dependency.
-	 * 
+	 *
 	 * @param project
 	 * @return
 	 */
@@ -107,7 +107,7 @@ public class CodeTreeHelper extends ApiHelper {
 
 	/**
 	 * Returns a map of counts, keys of type NodeCountType
-	 * 
+	 *
 	 * @param project
 	 * @return
 	 */
@@ -154,7 +154,8 @@ public class CodeTreeHelper extends ApiHelper {
 		final CodeTreeNodeRequest ctrRequest = new CodeTreeNodeRequest();
 		Map<NodeCountType, Long> map = new HashMap<NodeCountType, Long>();
 
-		ctrRequest.setDepth(CodeTreeUtilities.SINGLE_NODE);
+		// github issue #63: Steve B: Changed from SINGLE_NODE to INFINITE_DEPTH
+		ctrRequest.setDepth(CodeTreeUtilities.INFINITE_DEPTH);
 
 		ctrRequest.setIncludeParentNode(true);
 		final List<CodeTreeNodeType> nodeTypes = ctrRequest.getIncludedNodeTypes();
