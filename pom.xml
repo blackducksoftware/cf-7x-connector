@@ -44,6 +44,11 @@
       <name>BDS Bintray for Common Framework</name>
       <url>http://dl.bintray.com/bds/sdk/</url>
     </repository>
+    <repository>
+      <id>bds-integration</id>
+      <name>BDS Artifactory</name>
+      <url>https://test-repo.blackducksoftware.com/artifactory/bds-integrations-snapshot</url>
+    </repository>
   </repositories>
 
   <dependencyManagement>
