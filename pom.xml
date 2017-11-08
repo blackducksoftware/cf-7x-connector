@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.blackducksoftware.integration</groupId>
     <artifactId>common-maven-parent</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1-SNAPSHOT</version>
     <relativePath>../common-maven-parent</relativePath>
   </parent>
 
@@ -29,7 +29,6 @@
   </distributionManagement>
 
   <properties>
-    <bds.int.public.repository.url>https://prd-eng-repo02.dc2.lan/artifactory/integrations/bds-integrations-release/</bds.int.public.repository.url>
     <codecenter.sdk.version>7.1.2</codecenter.sdk.version>
     <!-- Common Framework Version -->
     <common.framework.version>1.6.7</common.framework.version>
@@ -40,10 +39,6 @@
   </properties>
 
   <repositories>
-    <repository>
-      <id>ha-bds-artifactory</id>
-      <url>https://prd-eng-repo02.dc2.lan/artifactory/integrations/bds-integrations-release/</url>
-    </repository>
     <repository>
       <id>bintray-bds-tools</id>
       <name>BDS Bintray for Common Framework</name>
