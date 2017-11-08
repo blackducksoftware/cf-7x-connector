@@ -41,7 +41,7 @@
   <repositories>
     <repository>
       <id>bds-int-public</id>
-      <url>https://updates.suite.blackducksoftware.com/integrations/</url>
+      <url>https://prd-eng-repo02.dc2.lan/artifactory/integrations/bds-integrations-release/</url>
     </repository>
     <repository>
       <id>bintray-bds-tools</id>
