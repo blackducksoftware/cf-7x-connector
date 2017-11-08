@@ -31,7 +31,7 @@
   <properties>
     <codecenter.sdk.version>7.1.2</codecenter.sdk.version>
     <!-- Common Framework Version -->
-    <common.framework.version>1.6.7</common.framework.version>
+    <common.framework.version>1.6.8-SNAPSHOT</common.framework.version>
     <!-- Build system complaining about UTF 8 -->
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     <!-- Protex, Code Center SDK versions -->
