@@ -40,7 +40,7 @@
 
   <repositories>
     <repository>
-      <id>bds-int-public</id>
+      <id>ha-bds-artifactory</id>
       <url>https://prd-eng-repo02.dc2.lan/artifactory/integrations/bds-integrations-release/</url>
     </repository>
     <repository>
