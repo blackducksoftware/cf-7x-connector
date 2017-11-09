@@ -45,6 +45,11 @@
       <url>http://dl.bintray.com/bds/sdk/</url>
     </repository>
     <repository>
+      <id>bds-integration-release</id>
+      <name>BDS Artifactory</name>
+      <url>https://prd-eng-repo02.dc2.lan/artifactory/bds-integrations-release</url>
+    </repository>
+    <repository>
       <id>bds-integration</id>
       <name>BDS Artifactory</name>
       <url>https://prd-eng-repo02.dc2.lan/artifactory/bds-integrations-snapshot</url>
