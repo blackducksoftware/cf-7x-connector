@@ -35,7 +35,7 @@
     <!-- Build system complaining about UTF 8 -->
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     <!-- Protex, Code Center SDK versions -->
-    <protex.sdk.version>7.2.0</protex.sdk.version>
+    <protex.sdk.version>7.5.0</protex.sdk.version>
   </properties>
 
   <repositories>
@@ -48,6 +48,11 @@
       <id>bds-integration</id>
       <name>BDS Artifactory</name>
       <url>https://prd-eng-repo02.dc2.lan/artifactory/bds-integrations-snapshot</url>
+    </repository>
+    <repository>
+      <id>suite</id>
+      <name>BDS Artifactory</name>
+      <url>https://prd-eng-repo02.dc2.lan/artifactory/bds-suite-repo</url>
     </repository>
   </repositories>
 
@@ -62,6 +67,16 @@
         <groupId>com.blackducksoftware.protex.sdkclient</groupId>
         <artifactId>protex-sdk-utilities</artifactId>
         <version>${protex.sdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
+        <artifactId>codecenter-sdk-client</artifactId>
+        <version>${codecenter.sdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.blackducksoftware.codecenter.sdkclient</groupId>
+        <artifactId>codecenter-sdk-utilities</artifactId>
+        <version>${codecenter.sdk.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
