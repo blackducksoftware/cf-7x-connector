@@ -11,7 +11,7 @@
 
   <groupId>com.blackducksoftware.tools</groupId>
   <artifactId>cf-7x-connector</artifactId>
-  <version>1.5.3</version>
+  <version>1.5.4</version>
 
   <name>CommonFramework 7.x Connector</name>
   <description>A connector for the 7.X SDK to be used in conjunction with the Common Framework Base project</description>
@@ -29,7 +29,7 @@
   </distributionManagement>
 
   <properties>
-    <codecenter.sdk.version>7.1.2</codecenter.sdk.version>
+    <codecenter.sdk.version>7.4.0</codecenter.sdk.version>
     <!-- Common Framework Version -->
     <common.framework.version>1.6.8</common.framework.version>
     <!-- Build system complaining about UTF 8 -->

@@ -28,7 +28,7 @@ import java.util.Map;
 
 import com.blackducksoftware.sdk.codecenter.application.ApplicationApi;
 import com.blackducksoftware.sdk.codecenter.attribute.AttributeApi;
-import com.blackducksoftware.sdk.codecenter.client.util.CodeCenterServerProxyV7_0;
+import com.blackducksoftware.sdk.codecenter.client.util.CodeCenterServerProxy;
 import com.blackducksoftware.sdk.codecenter.cola.ColaApi;
 import com.blackducksoftware.sdk.codecenter.externalid.ExternalIdApi;
 import com.blackducksoftware.sdk.codecenter.report.ReportApi;
@@ -47,7 +47,7 @@ import com.blackducksoftware.tools.connector.protex.APIWrapper;
 public class CodeCenterAPIWrapper extends APIWrapper {
 
     /** The cc proxy. */
-    private CodeCenterServerProxyV7_0 ccProxy;
+    private CodeCenterServerProxy ccProxy;
 
     /** The vulnerability api. */
     private VulnerabilityApi vulnerabilityApi;
@@ -73,21 +73,19 @@ public class CodeCenterAPIWrapper extends APIWrapper {
 
     private ReportApi reportApi;
 
-    public CodeCenterAPIWrapper(ServerBean bean, ConfigurationManager manager)
-            throws Exception {
+    public CodeCenterAPIWrapper(final ServerBean bean, final ConfigurationManager manager) throws Exception {
         super(manager, bean);
         getAllApis(bean, manager);
     }
 
-    private void getAllApis(ServerBean bean, ConfigurationManager manager)
-            throws Exception {
+    private void getAllApis(final ServerBean bean, final ConfigurationManager manager) throws Exception {
         String errorMessage = "";
         try {
-            ccProxy = new CodeCenterServerProxyV7_0(bean.getServerName(), bean.getUserName(), bean.getPassword());
+            ccProxy = new CodeCenterServerProxy(bean.getServerName(), bean.getUserName(), bean.getPassword());
 
             // Optional SSO -- sets the auth methods
-            SSOBean ssoBean = manager.getSsoBean();
-            Map<String, List<String>> cookies = getAuthCookies(ssoBean);
+            final SSOBean ssoBean = manager.getSsoBean();
+            final Map<String, List<String>> cookies = getAuthCookies(ssoBean);
             ccProxy.setRequestHeaders(cookies);
 
             // Get all the APIs
@@ -101,7 +99,7 @@ public class CodeCenterAPIWrapper extends APIWrapper {
             settingsApi = ccProxy.getSettingsApi();
             reportApi = ccProxy.getReportApi();
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             errorMessage = e.getMessage();
             if (e.getCause() != null) {
                 errorMessage += ": " + e.getCause().getMessage();
@@ -110,7 +108,7 @@ public class CodeCenterAPIWrapper extends APIWrapper {
         }
     }
 
-    public CodeCenterServerProxyV7_0 getProxy() {
+    public CodeCenterServerProxy getProxy() {
         return ccProxy;
     }
 
@@ -150,7 +148,7 @@ public class CodeCenterAPIWrapper extends APIWrapper {
         return reportApi;
     }
 
-    public void setReportApi(ReportApi reportApi) {
+    public void setReportApi(final ReportApi reportApi) {
         this.reportApi = reportApi;
     }
 }
